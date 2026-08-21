@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Joc de classe · V0.3.2 ONLINE</title>
+<title>KahootFasia · V0.4 PERFILS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -72,9 +72,34 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 <div class="app">
 
 <section id="home" class="screen active"><div class="inner">
-  <div class="hero center"><div style="font-size:64px">🎮</div><h1 class="big">PREPARAT PER JUGAR?</h1><p class="muted">ESCRIU EL CODI PER ENTRAR</p></div>
-  <div class="card" style="max-width:440px;margin:22px auto 0"><input id="entryCode" class="code" maxlength="6" placeholder="CODI"><button id="enterBtn" class="btn" style="width:100%;margin-top:14px">ENTRAR</button><p id="homeMsg" class="muted center"></p></div>
+  <div class="hero center"><div style="font-size:64px">🎮</div><h1 class="big">PREPARAT PER JUGAR?</h1><p class="muted">ESCRIU EL TEU NOM PER ENTRAR</p></div>
+  <div class="card" style="max-width:440px;margin:22px auto 0"><input id="entryCode" class="code" maxlength="20" placeholder="EL TEU NOM"><button id="enterBtn" class="btn" style="width:100%;margin-top:14px">ENTRAR</button><p id="homeMsg" class="muted center"></p></div>
 </div></section>
+
+
+<section id="profileHome" class="screen"><div class="inner">
+  <div class="hero row">
+    <div><span class="chip">EL TEU PERFIL</span><h2 id="profileName" class="big" style="margin-top:10px">ALUMNE</h2></div>
+    <button id="profileLogout" class="btn secondary">SORTIR</button>
+  </div>
+  <div class="grid grid3" style="margin-top:18px">
+    <div class="card center"><p class="muted">MONEDES</p><div id="profileCoins" class="big" style="font-size:54px">0 🪙</div></div>
+    <div class="card center"><p class="muted">PERSONATGES</p><div class="big" style="font-size:42px">6</div><p class="muted">12 VERSIONS</p></div>
+    <div class="card center"><p class="muted">BOTIGA</p><div style="font-size:52px">🛍️</div><p class="muted">PROPERAMENT</p></div>
+  </div>
+  <button id="playFromProfile" class="btn" style="width:100%;margin-top:18px;font-size:24px">🎮 JUGAR</button>
+</div></section>
+
+<section id="profileGameCode" class="screen"><div class="inner">
+  <div class="hero center"><span class="chip">JUGAR</span><h2 class="big" style="margin-top:12px">POSA EL CODI DE PARTIDA</h2><p class="muted">EL PROFESSOR EL MOSTRARÀ A LA PANTALLA</p></div>
+  <div class="card" style="max-width:440px;margin:22px auto 0">
+    <input id="profileGameCodeInput" class="code" maxlength="4" placeholder="CODI">
+    <button id="profileJoinGameBtn" class="btn" style="width:100%;margin-top:14px">ENTRAR A LA PARTIDA</button>
+    <button id="backToProfile" class="btn secondary" style="width:100%;margin-top:10px">← TORNAR AL PERFIL</button>
+    <p id="profileGameCodeMsg" class="muted center"></p>
+  </div>
+</div></section>
+
 
 <section id="teacherTopics" class="screen"><div class="inner">
   <div class="hero row"><div><span class="chip">PROFESSOR</span><h2 class="big" style="margin-top:10px">QUÈ JUGUEM AVUI?</h2></div><button class="btn secondary goHome">SORTIR</button></div>
@@ -105,9 +130,9 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 
 <section id="studentInfo" class="screen"><div class="inner">
   <div class="hero row"><div><span class="chip">JUGADOR</span><h2 class="big" style="margin-top:10px">QUI ETS?</h2></div><div class="row"><button id="backToTeacherFromInfo" class="btn secondary hidden">← TORNAR A PROFESSOR</button><button class="btn secondary goHome">SORTIR</button></div></div>
-  <div class="card grid grid2" style="margin-top:18px">
-    <label><b>NOM</b><input id="studentName" class="text" placeholder="EL TEU NOM"></label>
-    <label><b>SOBRENOM</b><input id="studentNick" class="text" placeholder="EL TEU SOBRENOM"></label>
+  <div class="card" style="margin-top:18px">
+    <p class="muted">JUGADOR</p><h3 id="studentProfileLabel"></h3>
+    <label><b>SOBRENOM PER A AQUESTA PARTIDA</b><input id="studentNick" class="text" placeholder="EL TEU SOBRENOM"></label>
   </div>
   <button id="toAnimal" class="btn" style="width:100%;margin-top:18px">SEGÜENT →</button>
 </div></section>
@@ -206,12 +231,35 @@ const api=async(path,options={})=>{
   if(!r.ok) throw new Error((data&&data.message)||text||("HTTP "+r.status));
   return data;
 };
+
+function normalizeName(value){
+  return (value||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");
+}
+async function loadProfileByName(name){
+  const rows=await api(`profiles?name=eq.${encodeURIComponent(normalizeName(name))}&select=id,name,display_name,coins,role&limit=1`);
+  return rows&&rows[0]?rows[0]:null;
+}
+async function refreshCurrentProfile(){
+  if(!currentProfile||!currentProfile.id)return;
+  const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role&limit=1`);
+  if(rows&&rows[0])currentProfile=rows[0];
+  $("#profileName").textContent=currentProfile.display_name;
+  $("#profileCoins").textContent=`${Number(currentProfile.coins||0)} 🪙`;
+}
+async function addCoinsToProfile(profileId,amount){
+  const rows=await api(`profiles?id=eq.${profileId}&select=coins&limit=1`);
+  const old=rows&&rows[0]?Number(rows[0].coins||0):0;
+  const total=old+Number(amount||0);
+  await api(`profiles?id=eq.${profileId}`,{method:"PATCH",body:JSON.stringify({coins:total})});
+  return total;
+}
 let onlineGameId=null, onlinePlayerId=null, lobbyPoll=null, studentPoll=null, answerPoll=null, studentLastQuestion=-1, studentAnsweredQuestion=-1, questionFinished=false;
+let currentProfile=null;
 function stopOnlinePolls(){clearInterval(lobbyPoll);clearInterval(studentPoll);clearInterval(answerPoll);lobbyPoll=studentPoll=answerPoll=null}
 function imageForVariant(v){for(const base of Object.keys(variantData||{})){const hit=variantData[base].find(x=>x[0]===v);if(hit)return hit[1]}return ""}
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
- try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,name,nickname,avatar,score,coins&order=created_at.asc`);
+ try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
  players=(rows||[]).map(p=>({id:p.id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:p.score||0,coins:p.coins||0}));renderPlayers();}
  catch(e){console.error(e)}
 }
@@ -284,21 +332,22 @@ async function submitStudentAnswer(questionIndex,answerIndex,clickedButton){
 
 
 async function showStudentResult(questionIndex){
-  if(!onlinePlayerId) return;
+  if(!onlinePlayerId)return;
   try{
-    const [ansRows, playerRows]=await Promise.all([
+    const [ansRows,playerRows]=await Promise.all([
       api(`answers?game_id=eq.${onlineGameId}&player_id=eq.${onlinePlayerId}&question_number=eq.${questionIndex}&select=correct,points&limit=1`),
       api(`players?id=eq.${onlinePlayerId}&select=score,coins&limit=1`)
     ]);
-    const a=ansRows&&ansRows[0] ? ansRows[0] : {correct:false,points:0};
-    const p=playerRows&&playerRows[0] ? playerRows[0] : {score:0,coins:0};
+    const a=ansRows&&ansRows[0]?ansRows[0]:{correct:false,points:0};
+    const p=playerRows&&playerRows[0]?playerRows[0]:{score:0,coins:0};
+    if(currentProfile)await refreshCurrentProfile();
     $("#studentResultIcon").textContent=a.correct?"✅":"❌";
     $("#studentResultTitle").textContent=a.correct?"CORRECTE!":"AQUESTA NO!";
     $("#studentPointsEarned").textContent=`+${Math.max(0,Number(a.points||0))}`;
     $("#studentTotalScore").textContent=`${Number(p.score||0)} PTS`;
-    $("#studentCoins").textContent=`${Number(p.coins||0)} 🪙`;
-    if(!$("#studentResult").classList.contains("active")) show("studentResult");
-  }catch(e){ console.error("Error mostrant resultat alumne:",e); }
+    $("#studentCoins").textContent=currentProfile?`${Number(currentProfile.coins||0)} 🪙 TOTAL`:`${Number(p.coins||0)} 🪙`;
+    if(!$("#studentResult").classList.contains("active"))show("studentResult");
+  }catch(e){console.error("Error mostrant resultat alumne:",e)}
 }
 
 function startStudentGamePolling(){
@@ -334,17 +383,47 @@ let players=[], currentQuestion=0, timer=40, timerId=null;
 let chosenBase="", chosenVariant="", chosenImg="", previewMode=false, generatedCode="";
 
 $("#enterBtn").onclick=async()=>{
- const c=$("#entryCode").value.trim().toUpperCase();
- $("#homeMsg").textContent="";
- if(c==="YV"){previewMode=false;show("teacherTopics");return}
- if(!/^\d{4}$/.test(c)){ $("#homeMsg").textContent="CODI INCORRECTE";return }
- try{
-   const g=await api(`games?code=eq.${encodeURIComponent(c)}&status=eq.waiting&select=id,code&limit=1`);
-   if(!g||!g.length){$("#homeMsg").textContent="AQUESTA PARTIDA NO EXISTEIX O JA HA COMENÇAT";return}
-   generatedCode=c;onlineGameId=g[0].id;previewMode=false;show("studentInfo");
- }catch(e){$("#homeMsg").textContent="ERROR DE CONNEXIÓ: "+e.message}
+  const raw=$("#entryCode").value.trim();
+  const code=raw.toUpperCase();
+  $("#homeMsg").textContent="";
+  if(code==="YV"){
+    previewMode=false;
+    currentProfile={id:null,name:"professor",display_name:"PROFESSOR",coins:0,role:"teacher"};
+    show("teacherTopics");
+    return;
+  }
+  try{
+    const p=await loadProfileByName(raw);
+    if(!p||p.role!=="student"){
+      $("#homeMsg").textContent="NOM NO RECONEGUT";
+      return;
+    }
+    currentProfile=p;
+    await refreshCurrentProfile();
+    show("profileHome");
+  }catch(e){
+    console.error(e);
+    $("#homeMsg").textContent="NO S'HA POGUT CARREGAR EL PERFIL";
+  }
 };
 $("#entryCode").addEventListener("keydown",e=>{if(e.key==="Enter") $("#enterBtn").click();});
+
+$("#profileLogout").onclick=()=>{currentProfile=null;onlineGameId=null;onlinePlayerId=null;$("#entryCode").value="";show("home")};
+$("#playFromProfile").onclick=()=>{$("#profileGameCodeInput").value="";$("#profileGameCodeMsg").textContent="";show("profileGameCode")};
+$("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
+$("#profileJoinGameBtn").onclick=async()=>{
+  const c=$("#profileGameCodeInput").value.trim();
+  if(!/^\d{4}$/.test(c)){$("#profileGameCodeMsg").textContent="CODI INCORRECTE";return}
+  try{
+    const rows=await api(`games?code=eq.${encodeURIComponent(c)}&status=eq.waiting&select=id,code,topic,status&limit=1`);
+    if(!rows||!rows.length){$("#profileGameCodeMsg").textContent="NO HI HA CAP PARTIDA AMB AQUEST CODI";return}
+    onlineGameId=rows[0].id;
+    $("#studentProfileLabel").textContent=currentProfile.display_name;
+    show("studentInfo");
+  }catch(e){console.error(e);$("#profileGameCodeMsg").textContent="ERROR DE CONNEXIÓ"}
+};
+$("#profileGameCodeInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("#profileJoinGameBtn").click();});
+
 $$(".goHome").forEach(b=>b.onclick=()=>show("home"));
 
 $$(".topic").forEach(t=>t.onclick=()=>{
@@ -373,9 +452,7 @@ $("#backToTeacherFromInfo").onclick=()=>{previewMode=false;$("#backToTeacherFrom
 $("#backTopics").onclick=()=>show("teacherTopics");
 
 $("#toAnimal").onclick=()=>{
- const name=$("#studentName").value.trim().toUpperCase();
  const nick=$("#studentNick").value.trim().toUpperCase();
- if(!name){alert("FALTA EL NOM");return}
  if(!nick){alert("FALTA EL SOBRENOM");return}
  show("studentAnimal");
 };
@@ -398,14 +475,14 @@ $("#backAnimal").onclick=()=>{chosenVariant="";chosenImg="";show("studentAnimal"
 
 $("#joinLobby").onclick=async()=>{
  if(!chosenVariant){$("#studentMsg").textContent="TRIA UNA DE LES DUES VERSIONS";return}
- const name=$("#studentName").value.trim().toUpperCase(), nick=$("#studentNick").value.trim().toUpperCase();
+ const name=currentProfile?currentProfile.display_name.toUpperCase():"ALUMNE", nick=$("#studentNick").value.trim().toUpperCase();
  if(previewMode){$("#waitImg").src=chosenImg;$("#waitNickname").textContent=nick;show("studentWait");return}
  if(!onlineGameId){$("#studentMsg").textContent="NO HI HA CAP PARTIDA CONNECTADA";return}
  const btn=$("#joinLobby");btn.disabled=true;$("#studentMsg").textContent="CONNECTANT...";
  try{
    const existing=await api(`players?game_id=eq.${onlineGameId}&nickname=eq.${encodeURIComponent(nick)}&select=id&limit=1`);
    if(existing&&existing.length)throw new Error("AQUEST SOBRENOM JA ESTÀ EN ÚS");
-   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,name,nickname:nick,avatar:chosenVariant,score:0,coins:0})});
+   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,score:0,coins:0})});
    onlinePlayerId=rows&&rows[0]&&rows[0].id;$("#waitImg").src=chosenImg;$("#waitNickname").textContent=nick;$("#studentMsg").textContent="";show("studentWait");
    studentLastQuestion=-1;studentAnsweredQuestion=-1;startStudentGamePolling();
  }catch(e){$("#studentMsg").textContent=e.message}finally{btn.disabled=false}
@@ -487,7 +564,7 @@ async function finishQuestion(){
     // Llegim respostes en ordre d'arribada i jugadors reals.
     const [answerRows, playerRows]=await Promise.all([
       api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id,player_id,correct,points,created_at&order=created_at.asc`),
-      api(`players?game_id=eq.${onlineGameId}&select=id,name,nickname,avatar,score,coins&order=created_at.asc`)
+      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
     ]);
 
     const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
@@ -504,10 +581,12 @@ async function finishQuestion(){
       const newScore=Number(p.score||0)+earned;
       const newCoins=Number(p.coins||0)+(a.correct?1:0);
 
-      await Promise.all([
+      const updates=[
         api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
         api(`answers?id=eq.${a.id}`,{method:"PATCH",body:JSON.stringify({points:earned})})
-      ]);
+      ];
+      if(a.correct&&p.profile_id)updates.push(addCoinsToProfile(p.profile_id,1));
+      await Promise.all(updates);
       p.score=newScore; p.coins=newCoins;
     }
 
@@ -532,9 +611,16 @@ $("#finishQuestion").onclick=()=>finishQuestion();
 $("#nextQuestion").onclick=async()=>{
   if(currentQuestion>=questions.length-1){
     try{
-      if(onlineGameId) await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
       await refreshOnlinePlayers();
       players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+      const bonuses=[2,1,1];
+      for(let i=0;i<Math.min(3,players.length);i++){
+        const p=players[i],bonus=bonuses[i];
+        if(p.profile_id)await addCoinsToProfile(p.profile_id,bonus);
+        p.coins=Number(p.coins||0)+bonus;
+        await api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({coins:p.coins})});
+      }
+      if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
       renderRanking("#finalRanking");
       show("end");
     }catch(e){alert("NO S'HA POGUT ACABAR LA PARTIDA: "+e.message)}
@@ -544,12 +630,6 @@ $("#nextQuestion").onclick=async()=>{
       if(onlineGameId) await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:currentQuestion})});
       await loadQuestion();
     }catch(e){alert("NO S'HA POGUT PASSAR DE PREGUNTA: "+e.message)}
-  }
-};
-  }else{
-    currentQuestion++;
-    try{if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:currentQuestion})});}catch(e){alert("NO S'HA POGUT CANVIAR DE PREGUNTA ONLINE: "+e.message);return}
-    loadQuestion();
   }
 };
 $("#startGame").onclick=async()=>{
