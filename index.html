@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KahootFasia · V0.4 PERFILS</title>
+<title>KahootFasia · V0.4.1 PERFILS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -217,12 +217,12 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 <section id="end" class="screen"><div class="inner">
   <div class="hero center"><div style="font-size:60px">🏆</div><h2 class="big">PARTIDA ACABADA!</h2></div>
   <div class="card" style="margin-top:18px"><div id="finalRanking"></div></div>
-  <button class="btn goHome" style="width:100%;margin-top:18px">TORNAR A L'INICI</button>
+  <button id="endReturnBtn" class="btn" style="width:100%;margin-top:18px">TORNAR A L'INICI</button>
 </div></section>
 
 </div>
 <script>
-// V0.3 ONLINE · connexió Supabase
+// V0.4.1 ONLINE · puntuació per temps + retorn al perfil
 const SUPABASE_URL="https://gzbvcxputhkyunemxzjm.supabase.co";
 const SUPABASE_KEY="sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
 const api=async(path,options={})=>{
@@ -367,6 +367,8 @@ function startStudentGamePolling(){
       }else if(game.status==="results"){
         await showStudentResult(qIndex);
       }else if(game.status==="finished"){
+        if(currentProfile) await refreshCurrentProfile();
+        configureEndScreen();
         show("end");
       }
     }catch(e){
@@ -379,7 +381,7 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const screens=$$(".screen");
 const show=id=>{screens.forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active");window.scrollTo(0,0)};
 
-let players=[], currentQuestion=0, timer=40, timerId=null;
+let players=[], currentQuestion=0, timer=40, timerId=null, questionStartedAt=null;
 let chosenBase="", chosenVariant="", chosenImg="", previewMode=false, generatedCode="";
 
 $("#enterBtn").onclick=async()=>{
@@ -411,6 +413,27 @@ $("#entryCode").addEventListener("keydown",e=>{if(e.key==="Enter") $("#enterBtn"
 $("#profileLogout").onclick=()=>{currentProfile=null;onlineGameId=null;onlinePlayerId=null;$("#entryCode").value="";show("home")};
 $("#playFromProfile").onclick=()=>{$("#profileGameCodeInput").value="";$("#profileGameCodeMsg").textContent="";show("profileGameCode")};
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
+
+async function returnStudentToProfile(){
+  stopOnlinePolls();
+  try{await refreshCurrentProfile();}catch(e){console.error("Error actualitzant perfil:",e)}
+  onlineGameId=null;
+  onlinePlayerId=null;
+  studentLastQuestion=-1;
+  studentAnsweredQuestion=-1;
+  show("profileHome");
+}
+
+function configureEndScreen(){
+  const btn=$("#endReturnBtn");
+  if(currentProfile && currentProfile.role==="student"){
+    btn.textContent="← TORNAR AL PERFIL";
+    btn.onclick=()=>returnStudentToProfile();
+  }else{
+    btn.textContent="TORNAR A L'INICI";
+    btn.onclick=()=>{stopOnlinePolls();show("home")};
+  }
+}
 $("#profileJoinGameBtn").onclick=async()=>{
   const c=$("#profileGameCodeInput").value.trim();
   if(!/^\d{4}$/.test(c)){$("#profileGameCodeMsg").textContent="CODI INCORRECTE";return}
@@ -503,6 +526,7 @@ $("#simulatePlayer").onclick=()=>{if(players.length>=10)return;players.push({...
 
 async function loadQuestion(){
   questionFinished=false;
+  questionStartedAt=Date.now();
   const q=questions[currentQuestion];
   $("#questionCounter").textContent=`PREGUNTA ${currentQuestion+1}/${questions.length}`;
   $("#questionText").textContent=q.text;
@@ -568,15 +592,17 @@ async function finishQuestion(){
     ]);
 
     const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
-    let correctOrder=0;
 
     for(const a of (answerRows||[])){
       const p=byPlayer.get(a.player_id);
       if(!p) continue;
       let earned=0;
       if(a.correct){
-        earned=Math.max(100,1000-(correctOrder*100));
-        correctOrder++;
+        // Puntuació per velocitat: 1000 punts si respon gairebé al moment
+        // i baixa progressivament fins a 500 punts als 40 segons.
+        const answeredAt=new Date(a.created_at).getTime();
+        const elapsedSeconds=Math.max(0,Math.min(40,(answeredAt-questionStartedAt)/1000));
+        earned=Math.round(1000-(elapsedSeconds/40)*500);
       }
       const newScore=Number(p.score||0)+earned;
       const newCoins=Number(p.coins||0)+(a.correct?1:0);
@@ -622,6 +648,7 @@ $("#nextQuestion").onclick=async()=>{
       }
       if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
       renderRanking("#finalRanking");
+      configureEndScreen();
       show("end");
     }catch(e){alert("NO S'HA POGUT ACABAR LA PARTIDA: "+e.message)}
   }else{
