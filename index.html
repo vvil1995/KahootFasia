@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KahootFasia · V0.5.9 SYNC + POLIT VISUAL</title>
+<title>KahootFasia · V0.6.1 AVATARS QUADRATS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -601,6 +601,305 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
  .teacher-class-pool{grid-template-columns:repeat(2,1fr)}
 }
 
+
+/* ===== V0.6.0 · PERSONATGES / BOTIGA ===== */
+.profile-character-card{
+  border:2px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+  font:inherit;
+}
+.profile-character-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+
+.shop-balance{font-size:18px!important}
+.shop-warning{
+  background:#fff7df;
+  border-color:#f0c75e;
+  text-align:center;
+  font-weight:800;
+}
+
+.characters-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(150px,1fr));
+  gap:16px;
+}
+.character-card{
+  position:relative;
+  border:4px solid var(--border);
+  border-radius:22px;
+  overflow:hidden;
+  background:#fff;
+  cursor:pointer;
+  padding:0;
+  min-height:260px;
+  color:var(--text);
+  font:inherit;
+  transition:.2s ease;
+}
+.character-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.character-card-media{
+  position:relative;
+  height:205px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ebe8ff,#fff7e8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.character-card-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transition:filter .25s ease,transform .25s ease;
+}
+.character-card.locked .character-card-media img{filter:grayscale(100%)}
+.character-card.locked:hover .character-card-media img{filter:grayscale(0%)}
+.character-card:hover .character-card-media img{transform:scale(1.035)}
+.character-card-info{padding:12px;text-align:center}
+.character-card-info strong{font-size:18px}
+.character-card-info small{display:block;margin-top:4px;color:var(--muted)}
+.character-lock{
+  position:absolute;top:10px;right:10px;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(16,18,34,.78);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+}
+.character-exclusive{
+  position:absolute;left:10px;top:10px;
+  background:#f3c849;border-radius:999px;padding:6px 9px;
+  font-weight:950;font-size:11px;
+}
+.avatar-fallback{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;font-size:62px;
+  background:linear-gradient(135deg,#ece8ff,#fff4d9);
+}
+.avatar-fallback small{font-size:12px;font-weight:900;color:#756f8a}
+
+.skin-shop-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(220px,1fr));
+  gap:18px;
+}
+.skin-shop-card{
+  border:3px solid var(--border);
+  border-radius:22px;
+  background:#fff;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-height:410px;
+}
+.skin-shop-card.owned{border-color:#62b96a}
+.skin-shop-card.equipped{border-color:var(--accent);box-shadow:0 0 0 4px rgba(92,75,225,.12)}
+.skin-shop-media{
+  height:245px;
+  background:linear-gradient(135deg,#f5f3ff,#fff8e9);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.skin-shop-media img{
+  width:100%;height:100%;object-fit:cover;object-position:center;
+}
+.skin-shop-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1}
+.skin-shop-name{font-size:21px;font-weight:950}
+.skin-state{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:max-content;max-width:100%;
+  border-radius:999px;padding:7px 10px;
+  font-size:12px;font-weight:950;
+}
+.skin-state.owned{background:#e8f8eb;color:#19723a}
+.skin-state.equipped{background:#ebe8ff;color:#4030b5}
+.skin-price{
+  font-size:25px;font-weight:1000;color:#b62424;
+  display:flex;align-items:center;gap:6px;
+}
+.skin-shop-actions{margin-top:auto}
+.skin-shop-actions .btn{width:100%}
+.skin-shop-actions .btn + .btn{margin-top:8px}
+.skin-img-missing{
+  padding:10px;border-radius:12px;background:#fff4d9;
+  font-size:12px;font-weight:900;text-align:center;color:#795d00;
+}
+
+.shop-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(10,12,25,.7);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.shop-overlay.hidden{display:none!important}
+.shop-modal{
+  width:min(520px,100%);
+  background:var(--bg);
+  border:3px solid var(--border);
+  border-radius:26px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 25px 70px rgba(0,0,0,.35);
+}
+.shop-modal-preview{
+  width:190px;height:190px;
+  margin:0 auto 15px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.shop-modal-preview img{width:100%;height:100%;object-fit:cover}
+
+@media(max-width:1000px){
+  .characters-grid{grid-template-columns:repeat(3,1fr)}
+  .skin-shop-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .characters-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .character-card{min-height:220px}
+  .character-card-media{height:165px}
+  .skin-shop-grid{grid-template-columns:1fr}
+  .skin-shop-card{min-height:0}
+  .skin-shop-media{height:260px}
+}
+
+
+/* ===== V0.6.1 · AVATARS QUADRATS ===== */
+
+/* PAS 2/3: cada animal és REALMENT quadrat */
+#studentAnimal .avatar-grid{
+  grid-template-columns:repeat(6,minmax(150px,190px))!important;
+  justify-content:center!important;
+  align-items:start!important;
+  gap:14px!important;
+}
+#studentAnimal .avatar-card{
+  width:100%!important;
+  aspect-ratio:1 / 1!important;
+  min-height:0!important;
+  height:auto!important;
+  border-radius:20px!important;
+  overflow:hidden!important;
+  position:relative!important;
+  padding:0!important;
+}
+#studentAnimal .avatar-card > div:first-child,
+#studentAnimal .avatar-card img{
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:1 / 1!important;
+}
+#studentAnimal .avatar-card img{
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+#studentAnimal .avatar-card > span{
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:8px!important;
+  margin:0!important;
+  padding:8px 6px!important;
+  border-radius:12px!important;
+  background:rgba(12,15,30,.72)!important;
+  color:#fff!important;
+  text-align:center!important;
+  font-weight:950!important;
+  z-index:3!important;
+}
+
+/* PAS 3/3: les variants també segueixen la mateixa proporció */
+#studentVariant .variant-grid{
+  grid-template-columns:repeat(2,minmax(250px,320px))!important;
+  justify-content:center!important;
+  align-items:start!important;
+  gap:18px!important;
+}
+#studentVariant .variant-card{
+  width:100%!important;
+  aspect-ratio:1 / 1!important;
+  min-height:0!important;
+  height:auto!important;
+  display:block!important;
+  position:relative!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border-radius:22px!important;
+}
+#studentVariant .variant-card img{
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:1 / 1!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+#studentVariant .variant-card strong{
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:8px!important;
+  margin:0!important;
+  padding:9px 7px!important;
+  border-radius:12px!important;
+  background:rgba(12,15,30,.76)!important;
+  color:#fff!important;
+  text-align:center!important;
+  font-size:15px!important;
+  z-index:3!important;
+}
+
+/* Espera: la skin seleccionada queda quadrada */
+#studentWait .wait-avatar{
+  width:250px!important;
+  height:250px!important;
+  aspect-ratio:1 / 1!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  margin:0 auto!important;
+}
+#studentWait .wait-avatar img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+}
+
+/* Miniatures de classificació: botó d'enviar centrat */
+.classify-board > .match-submit{
+  display:block!important;
+  width:min(420px,100%)!important;
+  margin:14px auto 0!important;
+}
+
+/* També centrem els botons d'ordenar per coherència */
+.order-board > .match-submit{
+  display:block!important;
+  width:min(420px,100%)!important;
+  margin:14px auto 0!important;
+}
+
+@media(max-width:1000px){
+  #studentAnimal .avatar-grid{
+    grid-template-columns:repeat(3,minmax(150px,190px))!important;
+  }
+}
+@media(max-width:650px){
+  #studentAnimal .avatar-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  #studentVariant .variant-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  #studentWait .wait-avatar{
+    width:210px!important;
+    height:210px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -617,13 +916,74 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
     <div><span class="chip">EL TEU PERFIL</span><h2 id="profileName" class="big" style="margin-top:10px">ALUMNE</h2></div>
     <button id="profileLogout" class="btn secondary">SORTIR</button>
   </div>
-  <div class="grid grid3" style="margin-top:18px">
+  <div class="grid grid2" style="margin-top:18px">
     <div class="card center"><p class="muted">MONEDES</p><div id="profileCoins" class="big" style="font-size:54px">0 <span class="coin-img" aria-label="moneda"></span></div></div>
-    <div class="card center"><p class="muted">PERSONATGES</p><div class="big" style="font-size:42px">6</div><p class="muted">12 VERSIONS</p></div>
-    <div class="card center"><p class="muted">BOTIGA</p><div style="font-size:52px">🛍️</div><p class="muted">PROPERAMENT</p></div>
+    <button id="openCharacters" class="card center profile-character-card" type="button">
+      <p class="muted">PERSONATGES</p>
+      <div id="profileCharacterCount" class="big" style="font-size:42px">6</div>
+      <p id="profileSkinCount" class="muted">12 SKINS</p>
+      <div style="font-size:34px;margin-top:8px">🧑‍🎤</div>
+    </button>
   </div>
   <button id="playFromProfile" class="btn" style="width:100%;margin-top:18px;font-size:24px">🎮 JUGAR</button>
 </div></section>
+
+
+<section id="charactersHome" class="screen"><div class="inner">
+  <div class="hero row">
+    <div>
+      <span class="chip">EL TEU PERFIL</span>
+      <h2 class="big" style="margin-top:10px">PERSONATGES</h2>
+      <p class="muted">COL·LECCIÓ · SELECCIÓ · BOTIGA</p>
+    </div>
+    <div class="row">
+      <span id="charactersCoins" class="chip shop-balance">0 <span class="coin-img" aria-label="moneda"></span></span>
+      <button id="backCharactersProfile" class="btn secondary">← PERFIL</button>
+    </div>
+  </div>
+  <div id="shopPersistenceWarning" class="card shop-warning hidden" style="margin-top:14px"></div>
+  <div id="charactersGrid" class="characters-grid" style="margin-top:18px"></div>
+</div></section>
+
+<section id="characterDetail" class="screen"><div class="inner">
+  <div class="hero row">
+    <div>
+      <span class="chip">PERSONATGES</span>
+      <h2 id="characterDetailTitle" class="big" style="margin-top:10px">PERSONATGE</h2>
+      <p id="characterDetailSubtitle" class="muted">TRIA UNA SKIN</p>
+    </div>
+    <div class="row">
+      <span id="characterDetailCoins" class="chip shop-balance">0 <span class="coin-img" aria-label="moneda"></span></span>
+      <button id="backCharactersList" class="btn secondary">← TORNAR</button>
+    </div>
+  </div>
+  <div id="characterSkinsGrid" class="skin-shop-grid" style="margin-top:18px"></div>
+</div></section>
+
+<div id="shopConfirmOverlay" class="shop-overlay hidden" role="dialog" aria-modal="true">
+  <div class="shop-modal">
+    <div id="shopConfirmPreview" class="shop-modal-preview"></div>
+    <h2>CONFIRMAR COMPRA</h2>
+    <p id="shopConfirmText"></p>
+    <div class="grid grid2">
+      <button id="shopConfirmBuy" class="btn">COMPRAR</button>
+      <button id="shopConfirmCancel" class="btn secondary">CANCEL·LAR</button>
+    </div>
+  </div>
+</div>
+
+<div id="shopSuccessOverlay" class="shop-overlay hidden" role="dialog" aria-modal="true">
+  <div class="shop-modal">
+    <div style="font-size:52px">🎉</div>
+    <h2>NOVA SKIN DESBLOQUEJADA!</h2>
+    <div id="shopSuccessPreview" class="shop-modal-preview"></div>
+    <h3 id="shopSuccessName"></h3>
+    <div class="grid grid2">
+      <button id="shopSuccessEquip" class="btn">EQUIPAR</button>
+      <button id="shopSuccessContinue" class="btn secondary">CONTINUAR MIRANT</button>
+    </div>
+  </div>
+</div>
 
 <section id="profileGameCode" class="screen"><div class="inner">
   <div class="hero center"><span class="chip">JUGAR</span><h2 class="big" style="margin-top:12px">POSA EL CODI DE PARTIDA</h2><p class="muted">EL PROFESSOR EL MOSTRARÀ A LA PANTALLA</p></div>
@@ -792,16 +1152,48 @@ const api=async(path,options={})=>{
 function normalizeName(value){
   return (value||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ");
 }
+let shopPersistenceReady=true;
+
+function normalizeOwnedSkins(raw){
+  if(Array.isArray(raw))return raw;
+  if(typeof raw==="string"){
+    try{const parsed=JSON.parse(raw);return Array.isArray(parsed)?parsed:[]}catch{return []}
+  }
+  return [];
+}
+function normalizeShopProfile(p){
+  if(!p)return p;
+  p.owned_skins=normalizeOwnedSkins(p.owned_skins);
+  p.equipped_skin=p.equipped_skin||"";
+  return p;
+}
 async function loadProfileByName(name){
-  const rows=await api(`profiles?name=eq.${encodeURIComponent(normalizeName(name))}&select=id,name,display_name,coins,role&limit=1`);
-  return rows&&rows[0]?rows[0]:null;
+  const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
+  try{
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    shopPersistenceReady=true;
+    return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
+  }catch(e){
+    console.warn("Botiga: camps de persistència encara no disponibles.",e);
+    shopPersistenceReady=false;
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role&limit=1`);
+    return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
+  }
 }
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
-  const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role&limit=1`);
-  if(rows&&rows[0])currentProfile=rows[0];
+  try{
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
+    shopPersistenceReady=true;
+  }catch(e){
+    shopPersistenceReady=false;
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role&limit=1`);
+    if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
+  }
   $("#profileName").textContent=currentProfile.display_name;
   $("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+  updateProfileCharacterSummary();
 }
 async function addCoinsToProfile(profileId,amount){
   const rows=await api(`profiles?id=eq.${profileId}&select=coins&limit=1`);
@@ -823,6 +1215,308 @@ const variantData = {
 };
 
 function imageForVariant(v){for(const base of Object.keys(variantData||{})){const hit=variantData[base].find(x=>x[0]===v);if(hit)return hit[1]}return ""}
+
+const SHOP_CONFIG={
+  characters:[
+    {id:"gat",name:"GAT",emoji:"🐱",free:true,skins:variantData["GAT"].map((x,i)=>({id:`gat_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+    {id:"gos",name:"GOS",emoji:"🐶",free:true,skins:variantData["GOS"].map((x,i)=>({id:`gos_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+    {id:"gorilla",name:"GORIL·LA",emoji:"🦍",free:true,skins:variantData["GORIL·LA"].map((x,i)=>({id:`gorilla_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+    {id:"zebra",name:"ZEBRA",emoji:"🦓",free:true,skins:variantData["ZEBRA"].map((x,i)=>({id:`zebra_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+    {id:"mussol",name:"MUSSOL",emoji:"🦉",free:true,skins:variantData["MUSSOL"].map((x,i)=>({id:`mussol_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+    {id:"capibara",name:"CAPIBARA",emoji:"🦫",free:true,skins:variantData["CAPIBARA"].map((x,i)=>({id:`capibara_${i}`,name:x[0],price:0,image:x[1],free:true}))},
+
+    {id:"ratoli",name:"RATOLÍ",emoji:"🐭",skins:[
+      {id:"ratoli_dentista",name:"RATOLÍ DENTISTA",price:15,image:"img/avatars/ratoli/dentista.png"},
+      {id:"ratoli_pilot",name:"RATOLÍ PILOT D'AVIÓ",price:15,image:"img/avatars/ratoli/pilot.png"},
+      {id:"ratoli_hawaii",name:"RATOLÍ HAWAIÀ",price:15,image:"img/avatars/ratoli/hawaii.png"}
+    ]},
+    {id:"tauro",name:"TAURÓ",emoji:"🦈",skins:[
+      {id:"tauro_rosa",name:"TAURÓ ROSA",price:25,image:"img/avatars/tauro/rosa.png"},
+      {id:"tauro_metge",name:"TAURÓ METGE",price:30,image:"img/avatars/tauro/metge.png"},
+      {id:"tauro_futbolista",name:"TAURÓ FUTBOLISTA",price:40,image:"img/avatars/tauro/futbolista.png"}
+    ]},
+    {id:"lleo",name:"LLEÓ",emoji:"🦁",skins:[
+      {id:"lleo_groc",name:"LLEÓ GROC",price:50,image:"img/avatars/lleo/groc.png"},
+      {id:"lleo_rapero",name:"LLEÓ RAPERO",price:60,image:"img/avatars/lleo/rapero.png"},
+      {id:"lleo_rei",name:"LLEÓ REI DE LA SELVA",price:70,image:"img/avatars/lleo/rei.png"}
+    ]},
+    {id:"tuca",name:"TUCÀ",emoji:"🐦",exclusive:true,skins:[
+      {id:"tuca_bronze",name:"TUCÀ BRONZE",price:50,image:"img/avatars/tuca/bronze.png"},
+      {id:"tuca_plata",name:"TUCÀ PLATA",price:75,image:"img/avatars/tuca/plata.png"},
+      {id:"tuca_daurat",name:"TUCÀ DAURAT",price:100,image:"img/avatars/tuca/daurat.png"}
+    ]}
+  ]
+};
+
+const FREE_SKIN_IDS=new Set(
+  SHOP_CONFIG.characters.flatMap(c=>c.skins.filter(s=>s.free).map(s=>s.id))
+);
+let activeShopCharacterId="";
+let pendingPurchaseSkinId="";
+let lastPurchasedSkinId="";
+let shopPurchaseBusy=false;
+
+function allShopSkins(){
+  return SHOP_CONFIG.characters.flatMap(c=>c.skins.map(s=>({...s,characterId:c.id,characterName:c.name,emoji:c.emoji})));
+}
+function findShopCharacter(idOrName){
+  return SHOP_CONFIG.characters.find(c=>c.id===idOrName||c.name===idOrName)||null;
+}
+function findShopSkin(skinId){
+  for(const c of SHOP_CONFIG.characters){
+    const s=c.skins.find(x=>x.id===skinId);
+    if(s)return {...s,characterId:c.id,characterName:c.name,emoji:c.emoji};
+  }
+  return null;
+}
+function ownedSkinSet(){
+  const purchased=new Set(normalizeOwnedSkins(currentProfile?.owned_skins));
+  FREE_SKIN_IDS.forEach(id=>purchased.add(id));
+  return purchased;
+}
+function isSkinOwned(skinId){return ownedSkinSet().has(skinId)}
+function ownedSkinsForCharacter(c){return c.skins.filter(s=>isSkinOwned(s.id))}
+function isCharacterUnlocked(c){return ownedSkinsForCharacter(c).length>0}
+function equippedSkin(){return findShopSkin(currentProfile?.equipped_skin||"")}
+function characterPreviewSkin(c){
+  const eq=equippedSkin();
+  if(eq&&eq.characterId===c.id)return eq;
+  const owned=ownedSkinsForCharacter(c);
+  return owned[0]||c.skins[0]||null;
+}
+function countUnlockedCharacters(){return SHOP_CONFIG.characters.filter(isCharacterUnlocked).length}
+function countOwnedSkins(){return allShopSkins().filter(s=>isSkinOwned(s.id)).length}
+
+function updateProfileCharacterSummary(){
+  const cc=$("#profileCharacterCount"),sc=$("#profileSkinCount");
+  if(cc)cc.textContent=countUnlockedCharacters();
+  if(sc)sc.textContent=`${countOwnedSkins()} SKINS`;
+}
+
+function setShopCoins(){
+  const html=`${Number(currentProfile?.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+  if($("#charactersCoins"))$("#charactersCoins").innerHTML=html;
+  if($("#characterDetailCoins"))$("#characterDetailCoins").innerHTML=html;
+}
+
+function makeImageOrFallback(src,alt,emoji){
+  const wrap=document.createElement("div");
+  wrap.style.width="100%";wrap.style.height="100%";wrap.style.position="relative";
+  const fallback=document.createElement("div");
+  fallback.className="avatar-fallback";
+  fallback.innerHTML=`<div>${emoji||"🎭"}</div><small>IMATGE PENDENT</small>`;
+  const img=document.createElement("img");
+  img.src=src||"";img.alt=alt||"AVATAR";
+  img.onload=()=>{fallback.style.display="none";img.style.display="block"};
+  img.onerror=()=>{img.style.display="none";fallback.style.display="flex"};
+  wrap.append(fallback,img);
+  return {wrap,img,fallback};
+}
+
+async function openCharactersScreen(){
+  await refreshCurrentProfile();
+  setShopCoins();
+  const warn=$("#shopPersistenceWarning");
+  if(shopPersistenceReady){
+    warn.classList.add("hidden");
+  }else{
+    warn.classList.remove("hidden");
+    warn.innerHTML="<b>PERSISTÈNCIA DE LA BOTIGA PENDENT D'ACTIVAR A SUPABASE.</b><br>Les skins gratuïtes es poden veure, però les compres quedaran desactivades fins executar l'SQL de configuració.";
+  }
+  renderCharactersGrid();
+  show("charactersHome");
+}
+
+function renderCharactersGrid(){
+  const grid=$("#charactersGrid");grid.innerHTML="";
+  SHOP_CONFIG.characters.forEach(c=>{
+    const unlocked=isCharacterUnlocked(c);
+    const preview=characterPreviewSkin(c);
+    const card=document.createElement("button");
+    card.type="button";
+    card.className=`character-card${unlocked?"":" locked"}`;
+    card.dataset.characterId=c.id;
+
+    const media=document.createElement("div");media.className="character-card-media";
+    const visual=makeImageOrFallback(preview?.image,c.name,c.emoji);media.appendChild(visual.wrap);
+    if(!unlocked){
+      const lock=document.createElement("div");lock.className="character-lock";lock.textContent="🔒";media.appendChild(lock);
+    }
+    if(c.exclusive){
+      const badge=document.createElement("div");badge.className="character-exclusive";badge.textContent="EXCLUSIU";media.appendChild(badge);
+    }
+    const info=document.createElement("div");info.className="character-card-info";
+    info.innerHTML=`<strong>${c.name}</strong><small>${unlocked?`${ownedSkinsForCharacter(c).length} A LA COL·LECCIÓ`:"BLOQUEJAT"}</small>`;
+    card.append(media,info);
+    card.onclick=()=>openCharacterDetail(c.id);
+    grid.appendChild(card);
+  });
+  updateProfileCharacterSummary();
+}
+
+function openCharacterDetail(characterId){
+  activeShopCharacterId=characterId;
+  const c=findShopCharacter(characterId);if(!c)return;
+  $("#characterDetailTitle").textContent=c.name;
+  $("#characterDetailSubtitle").textContent=isCharacterUnlocked(c)?"LA TEVA COL·LECCIÓ I SKINS DISPONIBLES":"COMPRA UNA SKIN PER DESBLOQUEJAR L'ANIMAL";
+  setShopCoins();
+  renderCharacterSkins(c);
+  show("characterDetail");
+}
+
+function renderCharacterSkins(c){
+  const grid=$("#characterSkinsGrid");grid.innerHTML="";
+  c.skins.forEach(s=>{
+    const owned=isSkinOwned(s.id);
+    const equipped=currentProfile?.equipped_skin===s.id;
+    const card=document.createElement("div");
+    card.className=`skin-shop-card${owned?" owned":""}${equipped?" equipped":""}`;
+
+    const media=document.createElement("div");media.className="skin-shop-media";
+    const visual=makeImageOrFallback(s.image,s.name,c.emoji);
+    media.appendChild(visual.wrap);
+
+    const body=document.createElement("div");body.className="skin-shop-body";
+    const state=equipped
+      ? `<span class="skin-state equipped">EQUIPAT</span>`
+      : owned
+        ? `<span class="skin-state owned">A LA COL·LECCIÓ</span>`
+        : `<div class="skin-price">${s.price} <span class="coin-img" aria-label="moneda"></span></div>`;
+    body.innerHTML=`<div class="skin-shop-name">${s.name}</div>${state}`;
+    const actions=document.createElement("div");actions.className="skin-shop-actions";
+
+    if(owned){
+      const equip=document.createElement("button");
+      equip.className="btn"+(equipped?" secondary":"");
+      equip.disabled=equipped||!shopPersistenceReady;
+      equip.textContent=equipped?"EQUIPAT":"EQUIPAR";
+      equip.onclick=()=>equipShopSkin(s.id);
+      actions.appendChild(equip);
+    }else{
+      const buy=document.createElement("button");
+      buy.className="btn";
+      buy.textContent="COMPRAR";
+      buy.disabled=!shopPersistenceReady;
+      // If the image path is still missing, disable buying automatically.
+      visual.img.onload=()=>{visual.fallback.style.display="none";visual.img.style.display="block";buy.disabled=!shopPersistenceReady};
+      visual.img.onerror=()=>{
+        visual.img.style.display="none";visual.fallback.style.display="flex";
+        buy.disabled=true;
+        buy.textContent="IMATGE PENDENT";
+      };
+      buy.onclick=()=>openPurchaseConfirm(s.id);
+      actions.appendChild(buy);
+      if(!shopPersistenceReady){
+        const note=document.createElement("div");note.className="skin-img-missing";note.textContent="ACTIVA LA PERSISTÈNCIA A SUPABASE";actions.appendChild(note);
+      }
+    }
+    body.appendChild(actions);
+    card.append(media,body);
+    grid.appendChild(card);
+  });
+}
+
+function setModalPreview(container,skin){
+  container.innerHTML="";
+  const v=makeImageOrFallback(skin.image,skin.name,skin.emoji);
+  container.appendChild(v.wrap);
+}
+function openPurchaseConfirm(skinId){
+  const s=findShopSkin(skinId);if(!s||isSkinOwned(skinId))return;
+  pendingPurchaseSkinId=skinId;
+  setModalPreview($("#shopConfirmPreview"),s);
+  $("#shopConfirmText").innerHTML=`SEGUR QUE VOLS COMPRAR <b>${s.name}</b> PER <b>${s.price} MONEDES</b>?`;
+  $("#shopConfirmOverlay").classList.remove("hidden");
+}
+function closePurchaseConfirm(){
+  pendingPurchaseSkinId="";
+  $("#shopConfirmOverlay").classList.add("hidden");
+}
+
+async function processSkinPurchase(){
+  if(shopPurchaseBusy||!pendingPurchaseSkinId)return;
+  if(!shopPersistenceReady){alert("CAL ACTIVAR LA PERSISTÈNCIA DE LA BOTIGA A SUPABASE");return}
+  shopPurchaseBusy=true;
+  $("#shopConfirmBuy").disabled=true;
+  try{
+    const skin=findShopSkin(pendingPurchaseSkinId);
+    if(!skin)throw new Error("SKIN NO TROBADA");
+    await refreshCurrentProfile();
+    if(isSkinOwned(skin.id)){
+      closePurchaseConfirm();
+      renderCharacterSkins(findShopCharacter(activeShopCharacterId));
+      return;
+    }
+    const balance=Number(currentProfile.coins||0);
+    if(balance<skin.price){
+      alert("MONEDES INSUFICIENTS");
+      return;
+    }
+    const owned=normalizeOwnedSkins(currentProfile.owned_skins);
+    if(!owned.includes(skin.id))owned.push(skin.id);
+    const newBalance=balance-skin.price;
+
+    await api(`profiles?id=eq.${currentProfile.id}`,{
+      method:"PATCH",
+      body:JSON.stringify({coins:newBalance,owned_skins:owned})
+    });
+    currentProfile.coins=newBalance;
+    currentProfile.owned_skins=owned;
+    lastPurchasedSkinId=skin.id;
+    closePurchaseConfirm();
+
+    setShopCoins();
+    renderCharactersGrid();
+    renderCharacterSkins(findShopCharacter(activeShopCharacterId));
+    setModalPreview($("#shopSuccessPreview"),skin);
+    $("#shopSuccessName").textContent=skin.name;
+    $("#shopSuccessOverlay").classList.remove("hidden");
+  }catch(e){
+    console.error("Error comprant skin:",e);
+    alert("NO S'HA POGUT COMPLETAR LA COMPRA");
+  }finally{
+    shopPurchaseBusy=false;
+    $("#shopConfirmBuy").disabled=false;
+  }
+}
+
+async function equipShopSkin(skinId){
+  if(!shopPersistenceReady)return alert("CAL ACTIVAR LA PERSISTÈNCIA DE LA BOTIGA A SUPABASE");
+  if(!isSkinOwned(skinId))return;
+  try{
+    await api(`profiles?id=eq.${currentProfile.id}`,{
+      method:"PATCH",
+      body:JSON.stringify({equipped_skin:skinId})
+    });
+    currentProfile.equipped_skin=skinId;
+    if(activeShopCharacterId)renderCharacterSkins(findShopCharacter(activeShopCharacterId));
+    renderCharactersGrid();
+  }catch(e){
+    console.error(e);
+    alert("NO S'HA POGUT EQUIPAR LA SKIN");
+  }
+}
+
+function renderGameAnimalPicker(){
+  const grid=$("#studentAnimal .avatar-grid");
+  if(!grid)return;
+  grid.innerHTML="";
+  SHOP_CONFIG.characters.filter(isCharacterUnlocked).forEach(c=>{
+    const preview=characterPreviewSkin(c);
+    const btn=document.createElement("button");
+    btn.type="button";btn.className="avatar-card";btn.dataset.base=c.name;
+    const visual=makeImageOrFallback(preview?.image,c.name,c.emoji);
+    btn.appendChild(visual.wrap);
+    const label=document.createElement("span");label.textContent=c.name;btn.appendChild(label);
+    grid.appendChild(btn);
+  });
+}
+function shopVariantsForBase(base){
+  const c=findShopCharacter(base);
+  if(!c)return [];
+  return ownedSkinsForCharacter(c).map(s=>[s.name,s.image,s.id]);
+}
+
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
  try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
@@ -1260,6 +1954,7 @@ $("#enterBtn").onclick=async()=>{
     }
     currentProfile=p;
     await refreshCurrentProfile();
+    updateProfileCharacterSummary();
     show("profileHome");
   }catch(e){
     console.error(e);
@@ -1279,6 +1974,18 @@ function resetStudentGameChoices(){
   const vg=$("#variantGrid"); if(vg)vg.innerHTML="";
   const vt=$("#variantTitle"); if(vt)vt.textContent="TRIA LA VERSIÓ";
 }
+
+
+$("#openCharacters").onclick=()=>openCharactersScreen();
+$("#backCharactersProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
+$("#backCharactersList").onclick=()=>{renderCharactersGrid();setShopCoins();show("charactersHome")};
+$("#shopConfirmCancel").onclick=()=>closePurchaseConfirm();
+$("#shopConfirmBuy").onclick=()=>processSkinPurchase();
+$("#shopSuccessContinue").onclick=()=>$("#shopSuccessOverlay").classList.add("hidden");
+$("#shopSuccessEquip").onclick=async()=>{
+  if(lastPurchasedSkinId)await equipShopSkin(lastPurchasedSkinId);
+  $("#shopSuccessOverlay").classList.add("hidden");
+};
 
 $("#profileLogout").onclick=()=>{currentProfile=null;onlineGameId=null;onlinePlayerId=null;$("#entryCode").value="";show("home")};
 $("#playFromProfile").onclick=()=>{resetStudentGameChoices();$("#profileGameCodeInput").value="";$("#profileGameCodeMsg").textContent="";show("profileGameCode")};
@@ -1419,6 +2126,7 @@ $("#backTopics").onclick=()=>show("scienceSessionDetail");
 $("#toAnimal").onclick=()=>{
  const nick=$("#studentNick").value.trim().toUpperCase();
  if(!nick){alert("FALTA EL SOBRENOM");return}
+ renderGameAnimalPicker();
  show("studentAnimal");
 };
 $("#backInfo").onclick=()=>show("studentInfo");
@@ -1426,7 +2134,7 @@ $("#backInfo").onclick=()=>show("studentInfo");
 
 function openVariantSelector(base, card){
   try{
-    const variants = variantData && variantData[base];
+    const variants = shopVariantsForBase(base);
     if(!Array.isArray(variants) || !variants.length){
       alert("NO S'HAN TROBAT LES VERSIONS DE "+base);
       return;
