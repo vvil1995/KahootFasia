@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Joc de classe · V0.3.1 ONLINE</title>
+<title>Joc de classe · V0.3.2 ONLINE</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -159,6 +159,23 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 </div></section>
 
 
+
+<section id="studentResult" class="screen"><div class="inner">
+  <div class="hero center">
+    <span class="chip">RESULTAT</span>
+    <div id="studentResultIcon" style="font-size:64px;margin:18px 0">✅</div>
+    <h2 id="studentResultTitle" class="big">MOLT BÉ!</h2>
+    <p class="muted">PUNTS D'AQUESTA PREGUNTA</p>
+    <div id="studentPointsEarned" class="big" style="font-size:54px">+0</div>
+  </div>
+  <div class="card center" style="margin-top:18px">
+    <p class="muted">PUNTUACIÓ TOTAL</p>
+    <h2 id="studentTotalScore" class="big">0 PTS</h2>
+    <p id="studentCoins" class="muted">0 🪙</p>
+    <p style="margin-top:22px"><b>ESPERA QUE EL PROFESSOR PASSI A LA SEGÜENT PREGUNTA.</b></p>
+  </div>
+</div></section>
+
 <section id="question" class="screen"><div class="inner">
   <div class="row"><span id="questionCounter" class="chip">PREGUNTA 1/6</span><div class="row"><div class="timer"><span id="timer">40</span>s</div><button id="addTime" class="btn secondary">+10 SEGONS</button></div></div>
   <div class="hero" style="margin-top:16px"><p class="muted"><b>CIÈNCIA I EXPERIMENTS</b></p><h2 id="questionText" class="big"></h2></div>
@@ -189,8 +206,8 @@ const api=async(path,options={})=>{
   if(!r.ok) throw new Error((data&&data.message)||text||("HTTP "+r.status));
   return data;
 };
-let onlineGameId=null, onlinePlayerId=null, lobbyPoll=null, studentPoll=null, studentLastQuestion=-1, studentAnsweredQuestion=-1;
-function stopOnlinePolls(){clearInterval(lobbyPoll);clearInterval(studentPoll);lobbyPoll=studentPoll=null}
+let onlineGameId=null, onlinePlayerId=null, lobbyPoll=null, studentPoll=null, answerPoll=null, studentLastQuestion=-1, studentAnsweredQuestion=-1, questionFinished=false;
+function stopOnlinePolls(){clearInterval(lobbyPoll);clearInterval(studentPoll);clearInterval(answerPoll);lobbyPoll=studentPoll=answerPoll=null}
 function imageForVariant(v){for(const base of Object.keys(variantData||{})){const hit=variantData[base].find(x=>x[0]===v);if(hit)return hit[1]}return ""}
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
@@ -265,6 +282,25 @@ async function submitStudentAnswer(questionIndex,answerIndex,clickedButton){
   }
 }
 
+
+async function showStudentResult(questionIndex){
+  if(!onlinePlayerId) return;
+  try{
+    const [ansRows, playerRows]=await Promise.all([
+      api(`answers?game_id=eq.${onlineGameId}&player_id=eq.${onlinePlayerId}&question_number=eq.${questionIndex}&select=correct,points&limit=1`),
+      api(`players?id=eq.${onlinePlayerId}&select=score,coins&limit=1`)
+    ]);
+    const a=ansRows&&ansRows[0] ? ansRows[0] : {correct:false,points:0};
+    const p=playerRows&&playerRows[0] ? playerRows[0] : {score:0,coins:0};
+    $("#studentResultIcon").textContent=a.correct?"✅":"❌";
+    $("#studentResultTitle").textContent=a.correct?"CORRECTE!":"AQUESTA NO!";
+    $("#studentPointsEarned").textContent=`+${Math.max(0,Number(a.points||0))}`;
+    $("#studentTotalScore").textContent=`${Number(p.score||0)} PTS`;
+    $("#studentCoins").textContent=`${Number(p.coins||0)} 🪙`;
+    if(!$("#studentResult").classList.contains("active")) show("studentResult");
+  }catch(e){ console.error("Error mostrant resultat alumne:",e); }
+}
+
 function startStudentGamePolling(){
   clearInterval(studentPoll);
   studentPoll=setInterval(async()=>{
@@ -273,16 +309,21 @@ function startStudentGamePolling(){
       const g=await api(`games?id=eq.${onlineGameId}&select=status,current_question&limit=1`);
       if(!g || !g[0]) return;
       const game=g[0];
+      const qIndex=Number(game.current_question||0);
+
       if(game.status==="playing"){
-        const qIndex=Number(game.current_question||0);
-        if(qIndex!==studentLastQuestion){
+        if(qIndex!==studentLastQuestion || !$("#studentQuestion").classList.contains("active")){
           loadStudentQuestion(qIndex);
         }
+      }else if(game.status==="results"){
+        await showStudentResult(qIndex);
+      }else if(game.status==="finished"){
+        show("end");
       }
     }catch(e){
       console.error("Error comprovant estat de partida:",e);
     }
-  },700);
+  },600);
 }
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -383,36 +424,128 @@ function renderPlayers(){
 }
 $("#simulatePlayer").onclick=()=>{if(players.length>=10)return;players.push({...samples[players.length%samples.length]});renderPlayers()};
 
-function loadQuestion(){
- const q=questions[currentQuestion];
- $("#questionCounter").textContent=`PREGUNTA ${currentQuestion+1}/${questions.length}`;
- $("#questionText").textContent=q.text;$("#answeredCount").textContent="0";$("#activeCount").textContent=Math.max(players.length,4);
- const box=$("#answers");box.innerHTML="";
- q.answers.forEach((a,i)=>{const b=document.createElement("button");b.className="answer";b.textContent=`${String.fromCharCode(65+i)} · ${a}`;b.onclick=()=>{if(b.disabled)return;b.disabled=true;$("#answeredCount").textContent=Number($("#answeredCount").textContent)+1;if(Number($("#answeredCount").textContent)>=Number($("#activeCount").textContent))finishQuestion()};box.appendChild(b)});
- show("question");startTimer();
+async function loadQuestion(){
+  questionFinished=false;
+  const q=questions[currentQuestion];
+  $("#questionCounter").textContent=`PREGUNTA ${currentQuestion+1}/${questions.length}`;
+  $("#questionText").textContent=q.text;
+  $("#answeredCount").textContent="0";
+
+  try{ await refreshOnlinePlayers(); }catch(e){ console.error(e); }
+  $("#activeCount").textContent=players.length;
+
+  const box=$("#answers"); box.innerHTML="";
+  q.answers.forEach((a,i)=>{
+    const b=document.createElement("button");
+    b.className="answer";
+    b.textContent=`${String.fromCharCode(65+i)} · ${a}`;
+    b.disabled=true; // la pantalla del professor només mostra les opcions
+    box.appendChild(b);
+  });
+
+  show("question");
+  startTimer();
+  startTeacherAnswerPolling();
 }
+
+function startTeacherAnswerPolling(){
+  clearInterval(answerPoll);
+  answerPoll=setInterval(async()=>{
+    try{
+      if(!onlineGameId || questionFinished) return;
+      const rows=await api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id`);
+      const n=(rows||[]).length;
+      $("#answeredCount").textContent=n;
+      $("#activeCount").textContent=players.length;
+      if(players.length>0 && n>=players.length){
+        finishQuestion();
+      }
+    }catch(e){ console.error("Error comptant respostes:",e); }
+  },500);
+}
+
 function startTimer(){clearInterval(timerId);timer=40;$("#timer").textContent=timer;timerId=setInterval(()=>{timer--;$("#timer").textContent=timer;if(timer<=0)finishQuestion()},1000)}
 $("#addTime").onclick=()=>{timer+=10;$("#timer").textContent=timer};
 function renderRanking(target){
  const box=$(target);box.innerHTML="";
  players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";r.innerHTML=`<div><b>${i+1}</b></div><div class="player"><div class="face"><img src="${p.img}" alt="${p.variant}"></div><div><b>${p.nick}</b><div class="muted">${p.coins} 🪙</div></div></div><b>${p.score} PTS</b>`;box.appendChild(r)});
 }
-function finishQuestion(){
- clearInterval(timerId);const q=questions[currentQuestion];
- $$("#answers .answer").forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add("correct");else b.classList.add("wrong")});
- if(!players.length)players=samples.map(x=>({...x}));
- players.forEach((p,i)=>{p.score+=[970,860,740,510][i%4];p.coins+=1});
- players.sort((a,b)=>b.score-a.score);
- $("#correctAnswer").textContent=`${String.fromCharCode(65+q.correct)} · ${q.answers[q.correct]}`;
- renderRanking("#ranking");
- $("#nextQuestion").textContent=currentQuestion===questions.length-1?"VEURE RESULTAT FINAL":"SEGÜENT PREGUNTA";
- show("results");
+async function finishQuestion(){
+  if(questionFinished) return;
+  questionFinished=true;
+  clearInterval(timerId);
+  clearInterval(answerPoll);
+
+  const q=questions[currentQuestion];
+  $$("#answers .answer").forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.correct)b.classList.add("correct");
+    else b.classList.add("wrong");
+  });
+
+  try{
+    // Llegim respostes en ordre d'arribada i jugadors reals.
+    const [answerRows, playerRows]=await Promise.all([
+      api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id,player_id,correct,points,created_at&order=created_at.asc`),
+      api(`players?game_id=eq.${onlineGameId}&select=id,name,nickname,avatar,score,coins&order=created_at.asc`)
+    ]);
+
+    const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
+    let correctOrder=0;
+
+    for(const a of (answerRows||[])){
+      const p=byPlayer.get(a.player_id);
+      if(!p) continue;
+      let earned=0;
+      if(a.correct){
+        earned=Math.max(100,1000-(correctOrder*100));
+        correctOrder++;
+      }
+      const newScore=Number(p.score||0)+earned;
+      const newCoins=Number(p.coins||0)+(a.correct?1:0);
+
+      await Promise.all([
+        api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
+        api(`answers?id=eq.${a.id}`,{method:"PATCH",body:JSON.stringify({points:earned})})
+      ]);
+      p.score=newScore; p.coins=newCoins;
+    }
+
+    // El professor passa a la pantalla de resultats i els alumnes també.
+    await api(`games?id=eq.${onlineGameId}`,{
+      method:"PATCH",
+      body:JSON.stringify({status:"results",current_question:currentQuestion})
+    });
+
+    await refreshOnlinePlayers();
+    players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+    $("#correctAnswer").textContent=`${String.fromCharCode(65+q.correct)} · ${q.answers[q.correct]}`;
+    renderRanking("#ranking");
+    $("#nextQuestion").textContent=currentQuestion===questions.length-1?"VEURE RESULTAT FINAL":"SEGÜENT PREGUNTA";
+    show("results");
+  }catch(e){
+    questionFinished=false;
+    alert("ERROR EN TANCAR LA PREGUNTA: "+e.message);
+  }
 }
-$("#finishQuestion").onclick=finishQuestion;
+$("#finishQuestion").onclick=()=>finishQuestion();
 $("#nextQuestion").onclick=async()=>{
   if(currentQuestion>=questions.length-1){
-    try{if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});}catch(e){console.error(e)}
-    renderRanking("#finalRanking");show("end");
+    try{
+      if(onlineGameId) await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
+      await refreshOnlinePlayers();
+      players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+      renderRanking("#finalRanking");
+      show("end");
+    }catch(e){alert("NO S'HA POGUT ACABAR LA PARTIDA: "+e.message)}
+  }else{
+    currentQuestion++;
+    try{
+      if(onlineGameId) await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:currentQuestion})});
+      await loadQuestion();
+    }catch(e){alert("NO S'HA POGUT PASSAR DE PREGUNTA: "+e.message)}
+  }
+};
   }else{
     currentQuestion++;
     try{if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:currentQuestion})});}catch(e){alert("NO S'HA POGUT CANVIAR DE PREGUNTA ONLINE: "+e.message);return}
@@ -421,7 +554,7 @@ $("#nextQuestion").onclick=async()=>{
 };
 $("#startGame").onclick=async()=>{
  try{if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:0})});}catch(e){alert("NO S'HA POGUT INICIAR ONLINE: "+e.message);return}
- currentQuestion=0;loadQuestion();
+ currentQuestion=0;await loadQuestion();
 };
 </script>
 </body>
