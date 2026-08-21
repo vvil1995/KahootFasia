@@ -216,13 +216,19 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 
 <section id="end" class="screen"><div class="inner">
   <div class="hero center"><div style="font-size:60px">🏆</div><h2 class="big">PARTIDA ACABADA!</h2></div>
+  <div id="studentEndCoinsCard" class="card center hidden" style="margin-top:18px">
+    <p class="muted"><b>MONEDES ACONSEGUIDES</b></p>
+    <div id="studentEndCoinsTotal" class="big" style="font-size:54px">+0 🪙</div>
+    <p id="studentEndCoinsBreakdown" class="muted"></p>
+    <p id="studentEndBalance" style="font-size:20px;font-weight:900"></p>
+  </div>
   <div class="card" style="margin-top:18px"><div id="finalRanking"></div></div>
   <button id="endReturnBtn" class="btn" style="width:100%;margin-top:18px">TORNAR A L'INICI</button>
 </div></section>
 
 </div>
 <script>
-// V0.4.1 ONLINE · puntuació per temps + retorn al perfil
+// V0.4.2 ONLINE · bonus de podi + resum de monedes final
 const SUPABASE_URL="https://gzbvcxputhkyunemxzjm.supabase.co";
 const SUPABASE_KEY="sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
 const api=async(path,options={})=>{
@@ -260,7 +266,7 @@ function imageForVariant(v){for(const base of Object.keys(variantData||{})){cons
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
  try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
- players=(rows||[]).map(p=>({id:p.id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:p.score||0,coins:p.coins||0}));renderPlayers();}
+ players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:p.score||0,coins:p.coins||0}));renderPlayers();}
  catch(e){console.error(e)}
 }
 const questions=[
@@ -367,9 +373,10 @@ function startStudentGamePolling(){
       }else if(game.status==="results"){
         await showStudentResult(qIndex);
       }else if(game.status==="finished"){
-        if(currentProfile) await refreshCurrentProfile();
+        await showStudentEndCoins();
         configureEndScreen();
         show("end");
+        stopOnlinePolls();
       }
     }catch(e){
       console.error("Error comprovant estat de partida:",e);
@@ -424,12 +431,33 @@ async function returnStudentToProfile(){
   show("profileHome");
 }
 
+async function showStudentEndCoins(){
+  if(!onlinePlayerId || !currentProfile || currentProfile.role!=="student") return;
+  try{
+    const [playerRows, correctRows]=await Promise.all([
+      api(`players?id=eq.${onlinePlayerId}&select=coins&limit=1`),
+      api(`answers?game_id=eq.${onlineGameId}&player_id=eq.${onlinePlayerId}&correct=eq.true&select=id`)
+    ]);
+    const gameCoins=playerRows&&playerRows[0]?Number(playerRows[0].coins||0):0;
+    const correctCoins=(correctRows||[]).length;
+    const podiumBonus=Math.max(0,gameCoins-correctCoins);
+    await refreshCurrentProfile();
+    $("#studentEndCoinsTotal").textContent=`+${gameCoins} 🪙`;
+    $("#studentEndCoinsBreakdown").textContent=podiumBonus>0
+      ? `ENCERTS: +${correctCoins} · BONUS PODI: +${podiumBonus}`
+      : `ENCERTS: +${correctCoins} · SENSE BONUS DE PODI`;
+    $("#studentEndBalance").textContent=`SALDO TOTAL: ${Number(currentProfile.coins||0)} 🪙`;
+    $("#studentEndCoinsCard").classList.remove("hidden");
+  }catch(e){console.error("Error carregant resum final de monedes:",e)}
+}
+
 function configureEndScreen(){
   const btn=$("#endReturnBtn");
   if(currentProfile && currentProfile.role==="student"){
     btn.textContent="← TORNAR AL PERFIL";
     btn.onclick=()=>returnStudentToProfile();
   }else{
+    $("#studentEndCoinsCard").classList.add("hidden");
     btn.textContent="TORNAR A L'INICI";
     btn.onclick=()=>{stopOnlinePolls();show("home")};
   }
