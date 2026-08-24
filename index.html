@@ -2190,6 +2190,25 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 }
 </style>
 
+
+<style>
+/* V0.13.9 · FIX FINAL TROPHY + PROFESSOR RETURN */
+#studentEarnedTrophy.trophy-earned{
+  background:linear-gradient(145deg,#07122f 0%,#0a1b45 58%,#15103a 100%) !important;
+  border:2px solid #6d5cff !important;
+  box-shadow:0 0 28px rgba(109,92,255,.24), inset 0 0 36px rgba(65,105,225,.06) !important;
+  color:#fff !important;
+}
+#studentEarnedTrophy.trophy-earned *{color:#fff !important;}
+#studentEarnedTrophy.trophy-earned .big{
+  color:#ffd85a !important;
+  text-shadow:0 0 16px rgba(255,216,90,.26) !important;
+}
+#studentEarnedTrophy.trophy-earned img{
+  filter:drop-shadow(0 0 18px rgba(255,194,67,.30)) !important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3911,13 +3930,20 @@ async function showStudentEndCoins(){
 
 function configureEndScreen(){
   const btn=$("#endReturnBtn");
-  if(currentProfile && currentProfile.role==="student"){
+  const isStudent=!!(currentProfile && currentProfile.role==="student" && onlinePlayerId);
+  if(isStudent){
     btn.textContent="← TORNAR AL PERFIL";
     btn.onclick=()=>returnStudentToProfile();
   }else{
     $("#studentEndCoinsCard").classList.add("hidden");
     btn.textContent="← TORNAR A PROFESSOR";
-    btn.onclick=()=>{stopOnlinePolls();show("teacherTopics")};
+    btn.onclick=()=>{
+      stopOnlinePolls();
+      onlineGameId=null;
+      onlinePlayerId=null;
+      show("teacherTopics");
+      window.scrollTo(0,0);
+    };
   }
 }
 $("#profileJoinGameBtn").onclick=async()=>{
