@@ -5028,3 +5028,153 @@ document.addEventListener("keydown",e=>{
   --text:#17192b;
 }
 </style>
+
+
+<style id="fasiaverse-v0134-prelobby-fixes">
+/* ===== V0.13.4 · PREPARTIDA FASIA VERSE + FIXOS VISUALS ===== */
+
+/* 1) V/F: CERT completament verd i FALS completament vermell.
+   Més especificitat que els colors clàssics nth-child. */
+#question #answers .answer.vf-true,
+#studentQuestion #studentAnswers .answer.vf-true,
+#question .answer.vf-true,
+#studentQuestion .answer.vf-true {
+  background:#0f9f49!important;
+  background-image:linear-gradient(135deg,#087b36,#17bb58)!important;
+  border-color:#42ff93!important;
+  color:#fff!important;
+  box-shadow:0 0 22px rgba(66,255,147,.28),inset 0 0 0 1px rgba(255,255,255,.08)!important;
+}
+#question #answers .answer.vf-false,
+#studentQuestion #studentAnswers .answer.vf-false,
+#question .answer.vf-false,
+#studentQuestion .answer.vf-false {
+  background:#c51f2d!important;
+  background-image:linear-gradient(135deg,#991b1b,#ef3340)!important;
+  border-color:#ff626c!important;
+  color:#fff!important;
+  box-shadow:0 0 22px rgba(255,70,82,.24),inset 0 0 0 1px rgba(255,255,255,.07)!important;
+}
+#question #answers .answer.vf-true *,#studentQuestion #studentAnswers .answer.vf-true *,
+#question #answers .answer.vf-false *,#studentQuestion #studentAnswers .answer.vf-false *{color:#fff!important;}
+
+/* 2) Etiquetes sota imatges: text clar sobre banda fosca, sempre llegible */
+#question .teacher-visual-card strong,
+#results .teacher-visual-card strong,
+#studentQuestion .teacher-visual-card strong,
+#studentResult .teacher-visual-card strong,
+#question .rich-drag strong,
+#results .rich-drag strong,
+#studentQuestion .rich-drag strong,
+#studentResult .rich-drag strong,
+#question .visual-choice-label,
+#results .visual-choice-label,
+#studentQuestion .visual-choice-label,
+#studentResult .visual-choice-label {
+  display:block!important;
+  width:100%!important;
+  padding:7px 9px!important;
+  border-radius:10px!important;
+  background:linear-gradient(90deg,rgba(22,23,55,.94),rgba(36,27,74,.94))!important;
+  color:#f7f4ff!important;
+  text-shadow:0 1px 7px rgba(0,0,0,.65)!important;
+  font-weight:950!important;
+  line-height:1.12!important;
+}
+
+/* 3) Pantalles prepartida + personatges en estil Fasia Verse */
+#studentInfo,#studentAnimal,#studentVariant,#charactersHome,#characterDetail{
+  background:
+    radial-gradient(circle at 16% 12%,rgba(147,49,255,.20),transparent 28%),
+    radial-gradient(circle at 83% 17%,rgba(34,119,255,.16),transparent 30%),
+    linear-gradient(145deg,#040817 0%,#080b25 50%,#09051d 100%)!important;
+  color:#f7f4ff!important;
+  position:relative;
+  overflow-x:hidden;
+}
+#studentInfo:before,#studentAnimal:before,#studentVariant:before,#charactersHome:before,#characterDetail:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.42) 0 1px,transparent 1.6px),
+    radial-gradient(circle,rgba(153,104,255,.28) 0 1px,transparent 1.7px);
+  background-size:92px 92px,132px 132px;background-position:15px 22px,55px 70px;opacity:.20;
+}
+#studentInfo>.inner,#studentAnimal>.inner,#studentVariant>.inner,#charactersHome>.inner,#characterDetail>.inner{position:relative;z-index:1;}
+
+#studentInfo .hero,#studentInfo .card,
+#charactersHome .hero,#characterDetail .hero{
+  background:linear-gradient(145deg,rgba(10,15,48,.96),rgba(15,11,49,.95))!important;
+  border:1px solid rgba(132,87,255,.70)!important;
+  color:#fff!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.34),0 0 28px rgba(114,66,255,.12)!important;
+}
+#studentInfo .big,#studentAnimal .big,#studentVariant .big,#charactersHome .big,#characterDetail .big,
+#studentInfo h2,#studentAnimal h2,#studentVariant h2,#charactersHome h2,#characterDetail h2,
+#studentInfo h3,#charactersHome h3,#characterDetail h3{color:#fff!important;text-shadow:0 0 18px rgba(159,102,255,.20)!important;}
+#studentInfo .muted,#studentAnimal .muted,#studentVariant .muted,#charactersHome .muted,#characterDetail .muted{color:#b9bdd5!important;}
+#studentInfo .chip,#studentAnimal .chip,#studentVariant .chip,#charactersHome .chip,#characterDetail .chip{
+  background:linear-gradient(135deg,rgba(124,42,255,.35),rgba(29,103,255,.25))!important;
+  color:#f2ddff!important;border:1px solid rgba(166,97,255,.55)!important;
+}
+#studentInfo .btn,#studentAnimal .btn,#studentVariant .btn,#charactersHome .btn,#characterDetail .btn{
+  background:linear-gradient(135deg,#a521f4,#238cff)!important;
+  color:#fff!important;border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 8px 24px rgba(66,65,255,.25)!important;
+}
+#studentInfo .btn.secondary,#studentAnimal .btn.secondary,#studentVariant .btn.secondary,#charactersHome .btn.secondary,#characterDetail .btn.secondary{
+  background:rgba(12,19,54,.93)!important;border:1px solid rgba(116,91,255,.78)!important;color:#fff!important;
+}
+#studentInfo input.text{
+  background:rgba(10,16,46,.92)!important;color:#fff!important;border-color:#8d4cff!important;
+  box-shadow:0 0 18px rgba(125,72,255,.10)!important;
+}
+#studentInfo input.text::placeholder{color:#8d92b3!important;}
+
+/* Animal selector: mateixa geometria, nova pell */
+#studentAnimal .avatar-card{
+  background:linear-gradient(180deg,rgba(14,20,59,.96),rgba(9,13,42,.98))!important;
+  border-color:rgba(107,91,255,.52)!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.28),0 0 16px rgba(109,75,255,.08)!important;
+}
+#studentAnimal .avatar-card:hover{border-color:#c13dff!important;transform:translateY(-3px)!important;box-shadow:0 16px 32px rgba(0,0,0,.34),0 0 24px rgba(177,44,255,.18)!important;}
+#studentAnimal .avatar-card.selected{border-color:#d85cff!important;box-shadow:0 0 0 2px rgba(216,92,255,.24),0 0 30px rgba(123,66,255,.28)!important;}
+#studentAnimal .avatar-card span{
+  background:linear-gradient(90deg,rgba(10,14,40,.92),rgba(25,18,58,.92))!important;color:#fff!important;
+}
+
+/* Skin selector */
+#studentVariant .variant-card{
+  background:linear-gradient(180deg,rgba(14,20,59,.96),rgba(9,13,42,.98))!important;
+  border-color:rgba(107,91,255,.55)!important;color:#fff!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.30),0 0 18px rgba(103,72,255,.10)!important;
+}
+#studentVariant .variant-card strong{color:#fff!important;background:linear-gradient(90deg,rgba(10,14,40,.94),rgba(26,18,59,.94))!important;}
+#studentVariant .variant-card:hover{border-color:#c13dff!important;transform:translateY(-3px)!important;}
+#studentVariant .variant-card.selected{border-color:#d85cff!important;box-shadow:0 0 0 3px rgba(216,92,255,.22),0 0 34px rgba(123,66,255,.30)!important;}
+
+/* Personatges / botiga */
+#charactersHome .characters-card,#charactersHome .character-card,
+#characterDetail .skin-shop-card{
+  background:linear-gradient(180deg,rgba(14,20,59,.96),rgba(9,13,42,.98))!important;
+  border-color:rgba(107,91,255,.48)!important;color:#fff!important;
+  box-shadow:0 14px 30px rgba(0,0,0,.28),0 0 16px rgba(103,72,255,.08)!important;
+}
+#characterDetail .skin-shop-card.owned{border-color:#52cf77!important;}
+#characterDetail .skin-shop-card.equipped{border-color:#d85cff!important;box-shadow:0 0 0 3px rgba(216,92,255,.20),0 0 28px rgba(123,66,255,.24)!important;}
+#characterDetail .skin-shop-name{color:#fff!important;}
+#characterDetail .skin-shop-body,#characterDetail .skin-shop-body .muted{color:#c0c4dc!important;}
+#charactersHome .shop-balance,#characterDetail .shop-balance{color:#ffd45c!important;}
+
+/* Modals de compra, per coherència quan s'obren */
+.shop-overlay{background:rgba(1,3,14,.80)!important;backdrop-filter:blur(6px);}
+.shop-modal{
+  background:linear-gradient(145deg,rgba(10,15,48,.99),rgba(16,11,50,.99))!important;
+  border:1px solid rgba(158,83,255,.72)!important;color:#fff!important;
+  box-shadow:0 20px 70px rgba(0,0,0,.55),0 0 40px rgba(119,63,255,.18)!important;
+}
+.shop-modal h2,.shop-modal h3{color:#fff!important;}.shop-modal p{color:#c2c5da!important;}
+
+@media(max-width:700px){
+  #studentInfo,#studentAnimal,#studentVariant,#charactersHome,#characterDetail{padding:16px!important;}
+}
+</style>
