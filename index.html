@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.1 · El Preu Just</title>
+<title>Fasia Verse · V0.14.2 · El Preu Just</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -2406,6 +2406,402 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 }
 </style>
 
+
+<style id="pj-fasia-v0142">
+/* ============================================================
+   V0.14.2 · EL PREU JUST · FASIA VERSE UI
+   Només presentació/UX. No canvia puntuació, Supabase ni lògica.
+   ============================================================ */
+#priceRecipes,
+#pricePrep,
+#priceTeacherQuestion,
+#priceTeacherResults,
+#priceStudentQuestion,
+#priceStudentResult,
+#priceTeacherFinal,
+#priceStudentFinal,
+#priceEnd{
+  font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(circle at 12% 10%,rgba(111,82,244,.13),transparent 28%),
+    radial-gradient(circle at 88% 15%,rgba(255,178,42,.15),transparent 27%),
+    linear-gradient(180deg,#f8f6f2 0%,#f3f0eb 100%);
+}
+#priceRecipes .inner,
+#pricePrep .inner,
+#priceTeacherQuestion .inner,
+#priceTeacherResults .inner,
+#priceStudentQuestion .inner,
+#priceStudentResult .inner,
+#priceTeacherFinal .inner,
+#priceStudentFinal .inner,
+#priceEnd .inner{width:min(1380px,100%)}
+
+.pj-hero{
+  border:1.5px solid #ded8d1!important;
+  border-radius:30px!important;
+  background:
+    radial-gradient(circle at 90% 12%,rgba(255,195,77,.30),transparent 27%),
+    linear-gradient(110deg,#eee9ff 0%,#fffdf9 54%,#fff3d7 100%)!important;
+  box-shadow:0 14px 34px rgba(49,42,90,.10)!important;
+}
+.pj-chip{
+  background:linear-gradient(135deg,#7255f4,#563bd5)!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.45)!important;
+  box-shadow:0 5px 12px rgba(83,58,190,.20);
+  letter-spacing:.04em;
+}
+#priceRecipes .big,
+#pricePrep .big,
+#priceTeacherQuestion .big,
+#priceTeacherResults .big,
+#priceStudentQuestion .big,
+#priceStudentResult .big,
+#priceTeacherFinal .big,
+#priceStudentFinal .big,
+#priceEnd .big{
+  letter-spacing:-.025em;
+  color:#101328;
+}
+
+/* ---------- Selecció de receptes ---------- */
+#priceRecipes .pj-hero{padding:26px 30px}
+#priceRecipes .pj-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px!important;
+  margin-top:18px!important;
+}
+#priceRecipes .pj-recipe-card{
+  position:relative;
+  min-height:260px!important;
+  border:1.5px solid #ded9d2!important;
+  border-radius:28px!important;
+  background:#fff!important;
+  box-shadow:0 12px 28px rgba(48,43,69,.08)!important;
+  overflow:hidden;
+  transform:none!important;
+}
+#priceRecipes .pj-recipe-card:before{
+  content:"";
+  position:absolute;inset:0 auto 0 0;width:7px;
+  background:linear-gradient(180deg,#7558f4,#ffad19);
+  z-index:3;
+}
+#priceRecipes .pj-recipe-card:hover{
+  transform:translateY(-4px)!important;
+  border-color:#9b8cf2!important;
+  box-shadow:0 18px 36px rgba(67,50,157,.15)!important;
+}
+#priceRecipes .pj-recipe-visual{
+  min-height:165px!important;
+  font-size:86px!important;
+  background:
+    radial-gradient(circle at 75% 15%,rgba(255,194,64,.30),transparent 28%),
+    linear-gradient(145deg,#eee9ff,#fbf9ff 55%,#fff0cf)!important;
+  border-bottom:1.5px solid #e5e0da;
+}
+#priceRecipes .pj-recipe-copy{padding:18px 22px 20px!important}
+#priceRecipes .pj-recipe-copy h3{
+  font-size:23px;margin:7px 0 0;color:#17192b;line-height:1.05
+}
+#priceRecipes .session-number{
+  display:inline-flex;
+  align-items:center;
+  min-height:27px;
+  padding:5px 10px;
+  border-radius:999px;
+  color:#fff!important;
+  background:linear-gradient(135deg,#6d50ef,#5338d2);
+  font-size:12px;
+}
+#priceRecipes .pj-recipe-copy small{color:#707586!important}
+
+/* ---------- Preparació professor ---------- */
+#pricePrep .card,
+#priceTeacherResults .card,
+#priceStudentResult .card,
+#priceTeacherFinal .card,
+#priceStudentFinal .card,
+#priceEnd .card{
+  border:1.5px solid #ded9d2!important;
+  border-radius:26px!important;
+  box-shadow:0 10px 26px rgba(48,43,69,.07)!important;
+}
+#pricePrep .pj-warning{
+  border:1.5px solid #efc65c!important;
+  background:linear-gradient(135deg,#fff7dc,#fffdf6)!important;
+  border-radius:18px!important;
+  color:#684d10!important;
+}
+#pricePrep .pj-product-row{
+  border:1.5px solid #e0dbd5!important;
+  border-radius:20px!important;
+  box-shadow:0 6px 14px rgba(34,29,70,.04);
+}
+#pricePrep .pj-product-row:not(.off){background:linear-gradient(90deg,#fff,#fcfbff)!important}
+#pricePrep .pj-toggle.on{
+  background:linear-gradient(135deg,#35c768,#159b43)!important;
+  color:#fff!important;border-color:transparent!important;
+  box-shadow:0 5px 12px rgba(21,155,67,.20)
+}
+#pricePrep .pj-field{
+  border:1.5px solid #ddd8d1!important;
+  background:#fbfaf8!important;
+}
+#pricePrep .pj-field:focus{outline:3px solid rgba(91,76,224,.14);border-color:#7966ec!important}
+
+/* ---------- Pregunta professor ---------- */
+#priceTeacherQuestion .inner{width:min(1320px,100%)}
+#priceTeacherQuestion .pj-stage{gap:18px!important}
+#priceTeacherQuestion .pj-product-card{
+  border:1.5px solid #ded9d2!important;
+  border-radius:30px!important;
+  background:#fff!important;
+  box-shadow:0 14px 32px rgba(48,43,69,.09);
+}
+#priceTeacherQuestion .pj-product-image{
+  background:linear-gradient(145deg,#f0edff,#fffaf0)!important;
+  border:1.5px solid #ded9d2!important;
+  box-shadow:inset 0 0 0 5px rgba(255,255,255,.65);
+}
+#priceTeacherQuestion .pj-question-card{
+  background:
+    radial-gradient(circle at 88% 12%,rgba(255,190,64,.28),transparent 25%),
+    linear-gradient(135deg,#684eea,#5137c8)!important;
+  border-radius:30px!important;
+  box-shadow:0 16px 36px rgba(79,54,186,.23);
+}
+#priceTeacherQuestion #pjTeacherAsk{
+  display:inline-flex;align-items:center;justify-content:center;
+  align-self:center;
+  min-width:260px;
+  padding:12px 20px;
+  border-radius:20px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32);
+}
+#priceTeacherQuestion .pj-player-pill{border:1px solid rgba(255,255,255,.55)}
+#priceTeacherQuestion .pj-player-pill.done{box-shadow:0 3px 10px rgba(0,0,0,.10)}
+
+/* ---------- Alumne: tot en una pantalla ---------- */
+#priceStudentQuestion{
+  padding:12px 20px!important;
+  justify-content:center!important;
+}
+#priceStudentQuestion .inner{
+  display:grid;
+  grid-template-columns:minmax(360px,.92fr) minmax(420px,1.08fr);
+  grid-template-areas:"calc product";
+  gap:18px;
+  align-items:stretch;
+  max-height:calc(100vh - 24px);
+}
+#priceStudentQuestion .hero{
+  grid-area:product;
+  margin:0!important;
+  min-height:0!important;
+  padding:18px 20px!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border:1.5px solid #ded9d2!important;
+  border-radius:30px!important;
+  box-shadow:0 14px 32px rgba(48,43,69,.09)!important;
+}
+#priceStudentQuestion .card{
+  grid-area:calc;
+  margin:0!important;
+  min-height:0!important;
+  padding:18px 22px!important;
+  border:1.5px solid #ded9d2!important;
+  border-radius:30px!important;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(111,82,244,.11),transparent 23%),
+    #fff!important;
+  box-shadow:0 14px 32px rgba(48,43,69,.09)!important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+#priceStudentQuestion .card h2{
+  margin:0 0 10px;
+  color:#4e39d7;
+  font-size:clamp(24px,2.5vw,38px);
+  letter-spacing:-.02em;
+}
+#priceStudentQuestion .pj-product-image{
+  width:min(370px,92%)!important;
+  height:min(36vh,300px)!important;
+  min-height:180px;
+  margin:12px auto 10px!important;
+  border:1.5px solid #ded9d2!important;
+  background:linear-gradient(145deg,#eee9ff,#fff9ec)!important;
+  box-shadow:0 8px 20px rgba(34,29,70,.06);
+}
+#priceStudentQuestion #pjStudentProduct{
+  font-size:clamp(25px,2.3vw,34px)!important;
+  margin:3px 0!important
+}
+#priceStudentQuestion #pjStudentFormat{margin:4px 0!important}
+#priceStudentQuestion #pjStudentNeed{margin:6px 0 0!important}
+#priceStudentQuestion .pj-display{
+  width:min(380px,100%)!important;
+  padding:11px 14px!important;
+  font-size:clamp(32px,4.2vw,52px)!important;
+  border:3px solid #6550e8!important;
+  border-radius:18px!important;
+  box-shadow:0 6px 16px rgba(82,57,198,.10);
+}
+#priceStudentQuestion .pj-keypad{
+  width:min(380px,100%)!important;
+  gap:7px!important;
+  margin:10px auto 0!important;
+}
+#priceStudentQuestion .pj-key{
+  padding:10px 8px!important;
+  min-height:48px;
+  font-size:23px!important;
+  border:1.5px solid #ddd8d1!important;
+  border-radius:15px!important;
+  box-shadow:0 3px 0 #d8d2ca!important;
+}
+#priceStudentQuestion .pj-key:hover{border-color:#806ef0!important;background:#f8f6ff!important}
+#priceStudentQuestion #pjStudentConfirm{
+  width:min(380px,100%)!important;
+  margin:10px auto 0!important;
+  padding:12px 16px!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,#2bc35a,#149b42)!important;
+  box-shadow:0 7px 16px rgba(20,155,66,.20);
+}
+#priceStudentQuestion .pj-warning,
+#priceStudentQuestion .pj-error{
+  width:min(380px,100%)!important;
+  margin:8px auto 0!important;
+  padding:9px 12px!important;
+  font-size:14px;
+}
+
+/* ---------- Resultats ---------- */
+.pj-result-price{color:#543bd2!important}
+.pj-result-row{
+  border:1.5px solid #e0dbd5!important;
+  border-radius:18px!important;
+  box-shadow:0 5px 12px rgba(34,29,70,.035);
+}
+.pj-result-row.closest{
+  border-color:#efbf47!important;
+  background:linear-gradient(90deg,#fffaf0,#fff)!important;
+}
+.pj-mini-rank{
+  border:1.5px solid #e2ddd6;
+  border-radius:16px;
+  background:#fff;
+  padding:10px 13px!important;
+  margin-bottom:7px;
+}
+.pj-coins-line{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px
+}
+.pj-coins-line .coin-img{width:42px;height:42px;margin-left:0}
+
+/* ---------- Ronda final ---------- */
+.pj-final-banner{
+  background:
+    radial-gradient(circle at 90% 10%,rgba(255,188,45,.32),transparent 24%),
+    linear-gradient(135deg,#5e46dc,#3f2ca7)!important;
+  border-radius:30px!important;
+  box-shadow:0 16px 34px rgba(66,45,167,.22);
+}
+.pj-summary-card{
+  border:1.5px solid #ded9d2!important;
+  border-radius:20px!important;
+  box-shadow:0 7px 16px rgba(34,29,70,.05);
+}
+#priceStudentFinal{padding:14px 20px!important}
+#priceStudentFinal .inner{max-height:calc(100vh - 28px)}
+#priceStudentFinal .pj-final-banner{padding:15px 20px!important}
+#priceStudentFinal .pj-final-banner .big{font-size:28px!important;margin-top:7px!important}
+#priceStudentFinal .pj-summary-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin-top:10px!important;
+  max-height:27vh;overflow:auto;
+}
+#priceStudentFinal .pj-summary-card{padding:8px!important;font-size:13px}
+#priceStudentFinal .pj-summary-card .pj-prod-visual{width:48px!important;height:48px!important;font-size:26px!important}
+#priceStudentFinal .card{margin-top:10px!important;padding:14px!important}
+#priceStudentFinal .pj-display{padding:10px!important;font-size:38px!important}
+#priceStudentFinal .pj-keypad{margin-top:8px!important;gap:7px!important}
+#priceStudentFinal .pj-key{padding:9px!important;min-height:44px!important;font-size:22px!important}
+#priceStudentFinal #pjFinalConfirm{margin-top:9px!important;padding:11px!important;background:linear-gradient(135deg,#2bc35a,#149b42)!important}
+
+/* Botons PJ amb acabat Fasia Verse */
+#priceRecipes .btn,
+#pricePrep .btn,
+#priceTeacherQuestion .btn,
+#priceTeacherResults .btn,
+#priceStudentQuestion .btn,
+#priceStudentResult .btn,
+#priceTeacherFinal .btn,
+#priceStudentFinal .btn,
+#priceEnd .btn{
+  border-radius:16px;
+  box-shadow:0 6px 14px rgba(56,42,145,.14);
+}
+#priceRecipes .btn:not(.secondary),
+#pricePrep .btn:not(.secondary),
+#priceTeacherResults .btn:not(.secondary),
+#priceTeacherFinal .btn:not(.secondary),
+#priceStudentFinal .btn:not(.secondary),
+#priceEnd .btn:not(.secondary){
+  background:linear-gradient(135deg,#6c52ee,#5137cc)
+}
+#priceRecipes .btn.secondary,
+#pricePrep .btn.secondary,
+#priceTeacherQuestion .btn.secondary{
+  background:#fff!important;
+  border:1.5px solid #ddd8d1!important;
+}
+
+/* Responsive */
+@media(max-width:950px){
+  #priceRecipes .pj-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #priceStudentQuestion{padding:12px!important}
+  #priceStudentQuestion .inner{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  #priceStudentQuestion .pj-product-image{height:230px!important}
+}
+@media(max-width:720px){
+  #priceStudentQuestion{padding:10px!important;justify-content:flex-start!important}
+  #priceStudentQuestion .inner{
+    display:flex;
+    flex-direction:column;
+    max-height:none;
+  }
+  #priceStudentQuestion .card{order:1}
+  #priceStudentQuestion .hero{order:2}
+  #priceStudentQuestion .pj-product-image{height:210px!important}
+  #priceRecipes .pj-grid{grid-template-columns:1fr!important}
+}
+</style>
+
+
+<style id="pj-coin-fix-v0142">
+#priceTeacherResults .pj-coins-line .coin-img,
+#priceStudentResult .pj-coins-line .coin-img,
+#priceEnd .pj-coins-line .coin-img,
+#priceEnd #pjEndBalance .coin-img,
+#priceEnd #pjEndCoins .coin-img,
+.pj-mini-ranking .coin-img{width:22px;height:22px;margin-left:2px;vertical-align:middle}
+#pjStudentPendingCoins .coin-img{width:38px;height:38px}
+#pjEndCoins{display:flex;align-items:center;justify-content:center;gap:12px}
+#pjEndCoins .coin-img{width:54px!important;height:54px!important}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -2792,7 +3188,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   </div>
   <div class="grid grid2" style="margin-top:16px">
     <div class="card center"><p class="muted"><b>PUNTS AQUESTA RONDA</b></p><div id="pjStudentRoundPoints" class="big">+0</div></div>
-    <div class="card center"><p class="muted"><b>MONEDES PENDENTS</b></p><div id="pjStudentPendingCoins" class="big">0 🪙</div></div>
+    <div class="card center"><p class="muted"><b>MONEDES PENDENTS</b></p><div id="pjStudentPendingCoins" class="big pj-coins-line">0 <span class="coin-img" aria-label="moneda"></span></div></div>
   </div>
   <div class="card center" style="margin-top:16px"><b>ESPERA QUE EL PROFESSOR CONTINUÏ.</b></div>
 </div></section>
@@ -5340,7 +5736,7 @@ document.addEventListener("keydown",e=>{
     const box=$("#pjRoundResults");box.innerHTML="";
     rows.forEach((s,i)=>{
       const pl=by.get(s.player_id)||{},df=diffText(Number(s.answer_index||0),real),d=document.createElement("div");d.className="pj-result-row"+(s.closest?" closest":"");
-      d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b>+${s.totalCoins??s.coins} 🪙</b></div>`;
+      d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b class="pj-coins-line">+${s.totalCoins??s.coins} <span class="coin-img" aria-label="moneda"></span></b></div>`;
       box.appendChild(d);
     });
     players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
@@ -5406,7 +5802,7 @@ document.addEventListener("keydown",e=>{
     const box=$(selector);if(!box)return;box.innerHTML="";
     (list||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)).forEach((p,i)=>{
       const d=document.createElement("div");d.className="pj-mini-rank";
-      d.innerHTML=`<b>${i+1}${i===0?"r":i===1?"n":i===2?"r":"è"}</b><div><b>${p.nick||p.nickname||"ALUMNE"}</b><div class="pj-inline-note">${Number(p.coins||0)} 🪙 PENDENTS</div></div><b>${Number(p.score||0)} PTS</b>`;
+      d.innerHTML=`<b>${i+1}${i===0?"r":i===1?"n":i===2?"r":"è"}</b><div><b>${p.nick||p.nickname||"ALUMNE"}</b><div class="pj-inline-note pj-coins-line">${Number(p.coins||0)} <span class="coin-img" aria-label="moneda"></span> PENDENTS</div></div><b>${Number(p.score||0)} PTS</b>`;
       box.appendChild(d);
     });
   }
@@ -5428,8 +5824,8 @@ document.addEventListener("keydown",e=>{
       const list=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
       renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
       if(isStudent&&onlinePlayerId){
-        const me=list.find(p=>p.id===onlinePlayerId);$("#pjEndStudentCoins").classList.remove("hidden");$("#pjEndCoins").textContent=`+${Number(me?.coins||0)} 🪙`;
-        if(currentProfile){await refreshCurrentProfile();$("#pjEndBalance").textContent=`SALDO TOTAL: ${Number(currentProfile.coins||0)} 🪙`}
+        const me=list.find(p=>p.id===onlinePlayerId);$("#pjEndStudentCoins").classList.remove("hidden");$("#pjEndCoins").innerHTML=`+${Number(me?.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+        if(currentProfile){await refreshCurrentProfile();$("#pjEndBalance").innerHTML=`SALDO TOTAL: ${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`}
         $("#pjEndReturn").textContent="← TORNAR AL PERFIL";
       }else{$("#pjEndStudentCoins").classList.add("hidden");$("#pjEndReturn").textContent="← TORNAR A PROFESSOR"}
       show("priceEnd");
@@ -5487,7 +5883,7 @@ document.addEventListener("keydown",e=>{
       const close=Math.abs(Number(a.answer_index||0)-real)===min;
       $("#pjStudentResultIcon").textContent=Number(a.answer_index||0)===real?"🎯":close?"🏆":"🛒";
       $("#pjStudentResultTitle").textContent=isFinal?"RESULTAT FINAL DE LA COMPRA":(Number(a.answer_index||0)===real?"PREU JUST!":close?"HAS ESTAT DELS MÉS PROPERS!":"RESULTAT DE LA RONDA");
-      $("#pjStudentRealPrice").textContent=euro(real);$("#pjStudentDifference").className=`pj-diff ${df.cls}`;$("#pjStudentDifference").textContent=df.text;$("#pjStudentRoundPoints").textContent=`+${Number(a.points||0)}`;$("#pjStudentPendingCoins").textContent=`${Number(me.coins||0)} 🪙`;
+      $("#pjStudentRealPrice").textContent=euro(real);$("#pjStudentDifference").className=`pj-diff ${df.cls}`;$("#pjStudentDifference").textContent=df.text;$("#pjStudentRoundPoints").textContent=`+${Number(a.points||0)}`;$("#pjStudentPendingCoins").innerHTML=`${Number(me.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
       show("priceStudentResult");
     }catch(e){console.error(e)}
   }
