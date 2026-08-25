@@ -1,0 +1,8 @@
+FASIA VERSE · KAHOOT ASSETS
+Base64 detectades al banc S1-S14: 178
+Fitxers WebP nous creats (deduplicats per sessió): 145
+SVG convertits: 36
+Raster convertits: 109
+Referències externes ja existents copiades: 36
+Base64 restants dins sessionQuestionBanks: 0
+Referències assets/kahoot sense fitxer: 0
