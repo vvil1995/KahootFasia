@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.2 · El Preu Just</title>
+<title>Fasia Verse · V0.14.3 · El Preu Just</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -2802,6 +2802,167 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 #pjEndCoins .coin-img{width:54px!important;height:54px!important}
 </style>
 
+
+<style id="pj-v0143-student-fix">
+/* V0.14.3: alumne compacte, sense foto i sense scroll */
+#priceStudentQuestion{
+  padding:0!important;
+  min-height:100vh;
+  height:100vh;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 18% 16%,rgba(110,82,244,.20),transparent 27%),
+    radial-gradient(circle at 82% 82%,rgba(255,174,32,.18),transparent 25%),
+    linear-gradient(145deg,#f7f4ff 0%,#fffdf8 54%,#f7f2e8 100%)!important;
+}
+#priceStudentQuestion .pj-student-shell{
+  width:min(1080px,calc(100% - 28px))!important;
+  height:calc(100vh - 24px);
+  margin:12px auto;
+  display:flex!important;
+  flex-direction:column;
+  gap:12px!important;
+}
+#priceStudentQuestion .pj-student-top{
+  flex:0 0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-height:48px;
+}
+#priceStudentQuestion .pj-student-mode{
+  font-weight:950;
+  letter-spacing:.08em;
+  color:#5140c9;
+  font-size:14px;
+}
+#priceStudentQuestion .pj-student-game{
+  flex:1 1 auto;
+  min-height:0;
+  display:grid;
+  grid-template-columns:.78fr 1.22fr;
+  gap:16px;
+  align-items:stretch;
+}
+#priceStudentQuestion .pj-student-product,
+#priceStudentQuestion .pj-student-calculator{
+  border:1.5px solid #ddd7d0;
+  border-radius:28px;
+  background:#fff;
+  box-shadow:0 15px 34px rgba(48,43,69,.10);
+}
+#priceStudentQuestion .pj-student-product{
+  padding:26px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(255,184,46,.25),transparent 24%),
+    linear-gradient(145deg,#eee9ff,#fff 62%,#fff3d7);
+  text-align:left;
+}
+#priceStudentQuestion .pj-student-eyebrow{
+  display:inline-flex;
+  width:max-content;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#5d46dc;
+  color:#fff;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+#priceStudentQuestion #pjStudentProduct{
+  margin:18px 0 8px!important;
+  font-size:clamp(32px,4.5vw,58px)!important;
+  line-height:.98;
+  color:#15162a!important;
+}
+#priceStudentQuestion .pj-student-product p{
+  margin:0;
+  color:#6f7280;
+  font-weight:850;
+  line-height:1.35;
+}
+#priceStudentQuestion .pj-student-calculator{
+  padding:18px 22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:0;
+}
+#priceStudentQuestion .pj-display{
+  width:min(430px,100%)!important;
+  margin:0 auto 10px!important;
+  padding:10px 14px!important;
+  font-size:clamp(36px,5vh,54px)!important;
+  line-height:1!important;
+  border:3px solid #6049df!important;
+  border-radius:18px!important;
+  background:#fbfaff!important;
+}
+#priceStudentQuestion .pj-keypad{
+  width:min(430px,100%)!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:7px!important;
+  margin:0 auto!important;
+}
+#priceStudentQuestion .pj-key{
+  min-height:0!important;
+  height:clamp(43px,6.2vh,58px)!important;
+  padding:5px!important;
+  border-radius:14px!important;
+  font-size:clamp(20px,2.8vh,27px)!important;
+  box-shadow:0 3px 0 #d7d1c9!important;
+}
+#priceStudentQuestion #pjStudentConfirm{
+  width:min(430px,100%)!important;
+  margin:10px auto 0!important;
+  padding:11px 14px!important;
+  min-height:46px;
+  border-radius:15px!important;
+  background:linear-gradient(135deg,#2bc35a,#159b43)!important;
+}
+#priceStudentQuestion .pj-error,
+#priceStudentQuestion .pj-warning{
+  width:min(430px,100%)!important;
+  margin:8px auto 0!important;
+  padding:8px 10px!important;
+  font-size:13px!important;
+}
+
+/* Monedes PJ: mateixa moneda de Fasia Verse, amb mida llegible */
+#priceStudentResult #pjStudentPendingCoins,
+#priceEnd #pjEndCoins,
+#priceEnd #pjEndBalance,
+#priceTeacherResults .pj-coins,
+#priceTeacherResults .pj-inline-note.pj-coins-line{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center;
+  gap:8px!important;
+}
+#priceStudentResult #pjStudentPendingCoins .coin-img{width:48px!important;height:48px!important;flex:0 0 48px}
+#priceTeacherResults .pj-coins .coin-img,
+#priceTeacherResults .pj-inline-note.pj-coins-line .coin-img{width:26px!important;height:26px!important;flex:0 0 26px}
+#priceEnd #pjEndCoins .coin-img{width:58px!important;height:58px!important;flex:0 0 58px}
+#priceEnd #pjEndBalance .coin-img{width:28px!important;height:28px!important;flex:0 0 28px}
+
+/* mòbil: segueix sense foto; només apilem si realment no hi ha amplada */
+@media(max-width:680px){
+  #priceStudentQuestion{height:auto;min-height:100vh;overflow:auto!important}
+  #priceStudentQuestion .pj-student-shell{height:auto;min-height:calc(100vh - 16px);margin:8px auto}
+  #priceStudentQuestion .pj-student-game{grid-template-columns:1fr;gap:10px}
+  #priceStudentQuestion .pj-student-product{padding:14px 18px}
+  #priceStudentQuestion #pjStudentProduct{font-size:30px!important;margin:8px 0 4px!important}
+  #priceStudentQuestion .pj-student-product p{font-size:12px}
+  #priceStudentQuestion .pj-student-calculator{padding:12px 16px}
+  #priceStudentQuestion .pj-key{height:44px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3161,21 +3322,24 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   <button id="pjNextRound" class="btn" style="width:100%;margin-top:16px">SEGÜENT PRODUCTE</button>
 </div></section>
 
-<section id="priceStudentQuestion" class="screen"><div class="inner">
-  <div class="hero center pj-hero">
+<section id="priceStudentQuestion" class="screen"><div class="inner pj-student-shell">
+  <div class="pj-student-top">
     <span id="pjStudentCounter" class="chip pj-chip">PRODUCTE 1/1</span>
-    <div id="pjStudentImage" class="pj-product-image" style="margin-top:16px">🛒</div>
-    <h2 id="pjStudentProduct" class="big" style="font-size:30px"></h2>
-    <p id="pjStudentFormat" class="muted"></p>
-    <p id="pjStudentNeed" style="font-weight:900"></p>
+    <span class="pj-student-mode">🛒 EL PREU JUST</span>
   </div>
-  <div class="card center" style="margin-top:16px">
-    <h2>QUANT CREUS QUE COSTA?</h2>
-    <div id="pjStudentDisplay" class="pj-display">0,00 €</div>
-    <div id="pjStudentKeypad" class="pj-keypad"></div>
-    <button id="pjStudentConfirm" class="btn" style="width:min(430px,100%);margin-top:14px">CONFIRMAR PREU</button>
-    <div id="pjStudentError" class="pj-error hidden"></div>
-    <div id="pjStudentSent" class="pj-warning hidden" style="width:min(520px,100%);margin:14px auto 0">✅ RESPOSTA ENVIADA · ESPERA EL PROFESSOR</div>
+  <div class="pj-student-game">
+    <div class="pj-student-product">
+      <div class="pj-student-eyebrow">QUIN PREU TÉ?</div>
+      <h2 id="pjStudentProduct" class="big"></h2>
+      <p>OBSERVA EL PRODUCTE A LA PANTALLA DEL PROFESSOR</p>
+    </div>
+    <div class="pj-student-calculator">
+      <div id="pjStudentDisplay" class="pj-display">0,00 €</div>
+      <div id="pjStudentKeypad" class="pj-keypad"></div>
+      <button id="pjStudentConfirm" class="btn">CONFIRMAR PREU</button>
+      <div id="pjStudentError" class="pj-error hidden"></div>
+      <div id="pjStudentSent" class="pj-warning hidden">✅ RESPOSTA ENVIADA · ESPERA EL PROFESSOR</div>
+    </div>
   </div>
 </div></section>
 
@@ -5852,8 +6016,7 @@ document.addEventListener("keydown",e=>{
   function loadStudentQuestion(index){
     studentState="playing";studentIndex=index;
     const it=payload.items[index],p=product(it.id),act=activeIndices(payload),pos=act.indexOf(index)+1;
-    $("#pjStudentCounter").textContent=`PRODUCTE ${pos}/${act.length}`;$("#pjStudentImage").innerHTML=visual(p);$("#pjStudentProduct").textContent=p.name;$("#pjStudentFormat").textContent=p.format;
-    $("#pjStudentNeed").textContent=`NECESSITEM: ${it.needed||""}${it.units>1?` · ${it.units} ENVASOS/UNITATS`:""}`;
+    $("#pjStudentCounter").textContent=`PRODUCTE ${pos}/${act.length}`;$("#pjStudentProduct").textContent=p.name;
     studentInput="";updateDisplay("#pjStudentDisplay","");$("#pjStudentError").classList.add("hidden");$("#pjStudentSent").classList.add("hidden");$("#pjStudentConfirm").disabled=false;
     buildKeypad("#pjStudentKeypad",()=>studentInput,v=>studentInput=v,"#pjStudentDisplay","#pjStudentError");show("priceStudentQuestion");
   }
