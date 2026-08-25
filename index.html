@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.12.7</title>
+<title>Fasia Verse · V0.14.0 · El Preu Just</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -2270,6 +2270,142 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 }
 </style>
 
+
+<style>
+/* ===== V0.14.0 · EL PREU JUST ===== */
+.pj-hero{
+  background:
+    radial-gradient(circle at 88% 18%,rgba(255,213,79,.32),transparent 24%),
+    radial-gradient(circle at 12% 82%,rgba(91,76,224,.16),transparent 30%),
+    linear-gradient(135deg,#f3efff,#fffaf0)!important;
+}
+.pj-chip{background:#fff0b8!important;color:#5c4210!important}
+.pj-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pj-recipe-card{
+  border:3px solid var(--border);border-radius:26px;background:#fff;
+  padding:0;overflow:hidden;cursor:pointer;text-align:left;min-height:230px;
+  transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease;
+}
+.pj-recipe-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 30px rgba(26,23,58,.10)}
+.pj-recipe-visual{
+  min-height:145px;display:flex;align-items:center;justify-content:center;
+  font-size:78px;background:linear-gradient(135deg,#eee9ff,#fff4d5);
+}
+.pj-recipe-copy{padding:16px 18px 18px}
+.pj-recipe-copy small{display:block;color:var(--muted);font-weight:900;margin-top:6px}
+.pj-product-list{display:grid;gap:12px}
+.pj-product-row{
+  display:grid;grid-template-columns:auto 66px minmax(170px,1.2fr) minmax(150px,.8fr) 120px 110px;
+  gap:12px;align-items:center;background:#fff;border:2px solid var(--border);border-radius:20px;padding:12px;
+}
+.pj-product-row.off{opacity:.5;background:#f2f0ed}
+.pj-toggle{
+  width:46px;height:46px;border:3px solid var(--border);border-radius:14px;background:#fff;
+  font-size:25px;font-weight:950;cursor:pointer;
+}
+.pj-toggle.on{background:#e9fff0;border-color:#22c55e;color:#15803d}
+.pj-prod-visual{
+  width:66px;height:66px;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#eee9ff,#fff4d5);
+  display:flex;align-items:center;justify-content:center;font-size:34px;border:2px solid var(--border)
+}
+.pj-prod-visual img{width:100%;height:100%;object-fit:contain}
+.pj-field{width:100%;padding:11px 12px;border:2px solid var(--border);border-radius:13px;background:#fff;font-weight:800}
+.pj-price-field{text-align:center;font-size:19px}
+.pj-warning{
+  background:#fff7d6;border:2px solid #f1ca4f;border-radius:18px;padding:13px 15px;font-weight:800;
+}
+.pj-stage{
+  display:grid;grid-template-columns:minmax(280px,.9fr) minmax(330px,1.1fr);gap:20px;align-items:stretch;
+}
+.pj-product-card{
+  background:#fff;border:3px solid var(--border);border-radius:28px;padding:20px;text-align:center;
+  display:flex;flex-direction:column;justify-content:center;min-height:390px;
+}
+.pj-product-image{
+  width:min(310px,100%);height:240px;margin:0 auto 16px;border-radius:24px;
+  background:linear-gradient(135deg,#eee9ff,#fff4d5);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:92px;overflow:hidden
+}
+.pj-product-image img{width:100%;height:100%;object-fit:contain}
+.pj-question-card{
+  background:linear-gradient(135deg,#5b4ce0,#7568eb);color:#fff;border-radius:28px;padding:25px;
+  display:flex;flex-direction:column;justify-content:center;text-align:center;min-height:390px
+}
+.pj-question-card .muted{color:rgba(255,255,255,.78)}
+.pj-question-price{font-size:clamp(38px,5vw,72px);font-weight:950;margin:14px 0}
+.pj-answers-status{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px
+}
+.pj-player-pill{
+  padding:8px 11px;border-radius:999px;background:#eeeaf9;font-weight:900;color:#696078
+}
+.pj-player-pill.done{background:#dcfce7;color:#166534}
+.pj-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(430px,100%);margin:18px auto 0}
+.pj-key{
+  border:2px solid var(--border);background:#fff;border-radius:18px;padding:17px 10px;
+  font-size:27px;font-weight:950;cursor:pointer;box-shadow:0 3px 0 #d9d4cc
+}
+.pj-key:active{transform:translateY(2px);box-shadow:0 1px 0 #d9d4cc}
+.pj-key.action{background:#eee9ff;color:#4e3fc7}
+.pj-key.danger{background:#fff0f0;color:#b42318}
+.pj-display{
+  width:min(430px,100%);margin:0 auto;padding:18px;border:3px solid var(--accent);border-radius:20px;
+  background:#fff;font-size:44px;font-weight:950;text-align:center;letter-spacing:.04em
+}
+.pj-inline-note{font-size:15px;color:var(--muted);font-weight:800}
+.pj-error{
+  width:min(520px,100%);margin:12px auto 0;padding:12px 15px;border-radius:16px;background:#fff0df;
+  border:2px solid #f3a34a;color:#864800;font-weight:900;text-align:center
+}
+.pj-result-price{
+  font-size:clamp(48px,7vw,86px);font-weight:950;color:#4b3bc9;margin:8px 0 4px
+}
+.pj-results-table{display:grid;gap:10px}
+.pj-result-row{
+  display:grid;grid-template-columns:50px minmax(120px,1fr) 110px 150px 120px 110px;
+  align-items:center;gap:10px;background:#fff;border:2px solid var(--border);border-radius:18px;padding:10px 12px
+}
+.pj-result-row.closest{border-color:#f0b429;background:#fffaf0}
+.pj-result-rank{font-size:22px;font-weight:950;text-align:center}
+.pj-diff.up{color:#b42318}.pj-diff.down{color:#166534}.pj-diff.exact{color:#4b3bc9}
+.pj-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pj-summary-card{
+  border:2px solid var(--border);border-radius:18px;background:#fff;padding:12px;text-align:center
+}
+.pj-summary-card .pj-prod-visual{margin:0 auto 8px}
+.pj-final-banner{
+  background:linear-gradient(135deg,#17192b,#343655);color:#fff;border-radius:26px;padding:22px;text-align:center
+}
+.pj-final-banner .muted{color:#d4d6e0}
+.pj-mini-ranking{display:grid;gap:8px}
+.pj-mini-rank{
+  display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;
+  padding:9px 11px;border-bottom:1px solid var(--border)
+}
+.pj-money-earned{font-size:52px;font-weight:950}
+.pj-disabled{opacity:.45;pointer-events:none}
+@media(max-width:950px){
+  .pj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pj-product-row{grid-template-columns:auto 58px 1fr 130px}
+  .pj-product-row .pj-format-edit{grid-column:3/5}
+  .pj-product-row .pj-units-edit{grid-column:3/4}
+  .pj-product-row .pj-price-edit{grid-column:4/5}
+  .pj-stage{grid-template-columns:1fr}
+  .pj-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pj-result-row{grid-template-columns:42px 1fr 90px 120px}
+  .pj-result-row .pj-points,.pj-result-row .pj-coins{display:none}
+}
+@media(max-width:620px){
+  .pj-grid{grid-template-columns:1fr}
+  .pj-product-row{grid-template-columns:auto 52px 1fr}
+  .pj-product-row .pj-format-edit,.pj-product-row .pj-units-edit,.pj-product-row .pj-price-edit{grid-column:3/4}
+  .pj-summary-grid{grid-template-columns:1fr 1fr}
+  .pj-result-row{grid-template-columns:38px 1fr 92px}
+  .pj-result-row .pj-diff{display:none}
+  .pj-display{font-size:38px}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -2435,7 +2571,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   <div class="hero row"><div><span class="chip">PROFESSOR</span><h2 class="big" style="margin-top:10px">QUÈ JUGUEM AVUI?</h2></div><button class="btn secondary goHome">SORTIR</button></div>
   <div class="grid grid3" style="margin-top:18px">
     <div class="card topic" data-topic="CIÈNCIA I EXPERIMENTS">🧪<h3>CIÈNCIA I EXPERIMENTS</h3><p class="muted">SESSIONS DE FÍSICA</p></div>
-    <div class="card topic" data-topic="PREU JUST">💰<h3>PREU JUST</h3><p class="muted">PROPERAMENT</p></div>
+    <div class="card topic" data-topic="PREU JUST">🛒<h3>EL PREU JUST</h3><p class="muted">RECEPTES · COMPRA · EUROS</p></div>
     <div class="card topic" data-topic="ESPORT">🏀<h3>ESPORT</h3><p class="muted">PROPERAMENT</p></div>
   </div>
 </div></section>
@@ -2573,6 +2709,129 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   <div id="studentEarnedTrophy" class="trophy-earned hidden"></div>
   <div class="card" style="margin-top:18px"><div id="finalRanking"></div></div>
   <button id="endReturnBtn" class="btn" style="width:100%;margin-top:18px">TORNAR A L'INICI</button>
+</div></section>
+
+
+<!-- ===== V0.14.0 · EL PREU JUST ===== -->
+<section id="priceRecipes" class="screen"><div class="inner">
+  <div class="hero row pj-hero">
+    <div><span class="chip pj-chip">🛒 EL PREU JUST</span><h2 class="big" style="margin-top:10px">TRIA UNA RECEPTA</h2><p class="muted">ESCULL QUÈ CUINAREM I PREPAREM LA COMPRA</p></div>
+    <button id="pjBackTopics" class="btn secondary">← TORNAR</button>
+  </div>
+  <div id="pjRecipeGrid" class="pj-grid" style="margin-top:18px"></div>
+</div></section>
+
+<section id="pricePrep" class="screen"><div class="inner">
+  <div class="hero row pj-hero">
+    <div><span class="chip pj-chip">🛒 EL PREU JUST</span><h2 id="pjPrepTitle" class="big" style="margin-top:10px">RECEPTA</h2><p class="muted">ACTIVA ELS PRODUCTES QUE VOLS JUGAR I REVISA ELS PREUS</p></div>
+    <button id="pjBackRecipes" class="btn secondary">← RECEPTES</button>
+  </div>
+  <div class="pj-warning" style="margin-top:16px">💡 Els preus s'editen aquí i queden compartits entre receptes. Els formats i fotos de Mercadona que encara no estiguin verificats es marquen com a pendents: no els inventem.</div>
+  <div class="card" style="margin-top:16px">
+    <div class="row"><div><h3>PRODUCTES DE LA RECEPTA</h3><p id="pjPrepCount" class="muted"></p></div><button id="pjGenerateCode" class="btn">GENERAR CODI</button></div>
+    <div id="pjProductList" class="pj-product-list" style="margin-top:14px"></div>
+    <p id="pjPrepMsg" class="pj-error hidden"></p>
+  </div>
+</div></section>
+
+<section id="priceTeacherQuestion" class="screen"><div class="inner">
+  <div class="row"><span id="pjTeacherCounter" class="chip pj-chip">PRODUCTE 1/1</span><button id="pjSkipProduct" class="btn secondary">SALTAR PRODUCTE</button></div>
+  <div class="pj-stage" style="margin-top:16px">
+    <div class="pj-product-card">
+      <div id="pjTeacherImage" class="pj-product-image">🛒</div>
+      <h2 id="pjTeacherProduct" class="big" style="font-size:30px"></h2>
+      <p id="pjTeacherFormat" class="muted"></p>
+      <p id="pjTeacherNeed" style="font-weight:900"></p>
+    </div>
+    <div class="pj-question-card">
+      <span class="chip" style="align-self:center">EL PREU JUST</span>
+      <h2 style="font-size:clamp(28px,4vw,48px)">QUANT CREUS QUE COSTA?</h2>
+      <div id="pjTeacherAsk" class="pj-question-price">1 UNITAT</div>
+      <p class="muted">ELS ALUMNES ESCRIUEN EL PREU A LA SEVA PANTALLA</p>
+      <div id="pjTeacherAnswerStatus" class="pj-answers-status"></div>
+      <button id="pjCloseRound" class="btn" style="margin-top:18px;background:#fff;color:#4b3bc9" disabled>REVELAR PREU</button>
+    </div>
+  </div>
+</div></section>
+
+<section id="priceTeacherResults" class="screen"><div class="inner">
+  <div class="hero center pj-hero">
+    <span id="pjResultBadge" class="chip pj-chip">PREU REAL</span>
+    <div id="pjRealPrice" class="pj-result-price">0,00 €</div>
+    <h2 id="pjResultTitle" class="big" style="font-size:30px"></h2>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>🎯 RESULTAT DE LA RONDA</h3><div id="pjRoundResults" class="pj-results-table"></div></div>
+  <div class="card" style="margin-top:16px"><h3>🏆 CLASSIFICACIÓ GENERAL</h3><div id="pjTeacherRanking" class="pj-mini-ranking"></div></div>
+  <button id="pjNextRound" class="btn" style="width:100%;margin-top:16px">SEGÜENT PRODUCTE</button>
+</div></section>
+
+<section id="priceStudentQuestion" class="screen"><div class="inner">
+  <div class="hero center pj-hero">
+    <span id="pjStudentCounter" class="chip pj-chip">PRODUCTE 1/1</span>
+    <div id="pjStudentImage" class="pj-product-image" style="margin-top:16px">🛒</div>
+    <h2 id="pjStudentProduct" class="big" style="font-size:30px"></h2>
+    <p id="pjStudentFormat" class="muted"></p>
+    <p id="pjStudentNeed" style="font-weight:900"></p>
+  </div>
+  <div class="card center" style="margin-top:16px">
+    <h2>QUANT CREUS QUE COSTA?</h2>
+    <div id="pjStudentDisplay" class="pj-display">0,00 €</div>
+    <div id="pjStudentKeypad" class="pj-keypad"></div>
+    <button id="pjStudentConfirm" class="btn" style="width:min(430px,100%);margin-top:14px">CONFIRMAR PREU</button>
+    <div id="pjStudentError" class="pj-error hidden"></div>
+    <div id="pjStudentSent" class="pj-warning hidden" style="width:min(520px,100%);margin:14px auto 0">✅ RESPOSTA ENVIADA · ESPERA EL PROFESSOR</div>
+  </div>
+</div></section>
+
+<section id="priceStudentResult" class="screen"><div class="inner">
+  <div class="hero center pj-hero">
+    <div id="pjStudentResultIcon" style="font-size:70px">🎯</div>
+    <h2 id="pjStudentResultTitle" class="big">RESULTAT</h2>
+    <div id="pjStudentRealPrice" class="pj-result-price">0,00 €</div>
+    <p id="pjStudentDifference" style="font-size:24px;font-weight:950"></p>
+  </div>
+  <div class="grid grid2" style="margin-top:16px">
+    <div class="card center"><p class="muted"><b>PUNTS AQUESTA RONDA</b></p><div id="pjStudentRoundPoints" class="big">+0</div></div>
+    <div class="card center"><p class="muted"><b>MONEDES PENDENTS</b></p><div id="pjStudentPendingCoins" class="big">0 🪙</div></div>
+  </div>
+  <div class="card center" style="margin-top:16px"><b>ESPERA QUE EL PROFESSOR CONTINUÏ.</b></div>
+</div></section>
+
+<section id="priceTeacherFinal" class="screen"><div class="inner">
+  <div class="pj-final-banner">
+    <span class="chip">🧾 RONDA FINAL</span>
+    <h2 class="big" style="margin-top:12px;color:#fff">QUANT COSTA TOTA LA COMPRA?</h2>
+    <p class="muted">RECORDA ELS PREUS. NO ELS TORNAREM A MOSTRAR.</p>
+  </div>
+  <div id="pjTeacherFinalSummary" class="pj-summary-grid" style="margin-top:16px"></div>
+  <div class="card center" style="margin-top:16px">
+    <h3>RESPOSTES</h3>
+    <div id="pjFinalAnswerStatus" class="pj-answers-status"></div>
+    <button id="pjCloseFinal" class="btn" style="margin-top:14px" disabled>REVELAR PREU TOTAL</button>
+  </div>
+</div></section>
+
+<section id="priceStudentFinal" class="screen"><div class="inner">
+  <div class="pj-final-banner">
+    <span class="chip">🧾 RONDA FINAL</span>
+    <h2 class="big" style="margin-top:12px;color:#fff">QUANT COSTA TOTA LA COMPRA?</h2>
+    <p class="muted">FES MEMÒRIA I APROXIMA EL TOTAL</p>
+  </div>
+  <div id="pjStudentFinalSummary" class="pj-summary-grid" style="margin-top:16px"></div>
+  <div class="card center" style="margin-top:16px">
+    <div id="pjFinalDisplay" class="pj-display">0,00 €</div>
+    <div id="pjFinalKeypad" class="pj-keypad"></div>
+    <button id="pjFinalConfirm" class="btn" style="width:min(430px,100%);margin-top:14px">CONFIRMAR TOTAL</button>
+    <div id="pjFinalError" class="pj-error hidden"></div>
+    <div id="pjFinalSent" class="pj-warning hidden" style="width:min(520px,100%);margin:14px auto 0">✅ TOTAL ENVIAT · ESPERA EL PROFESSOR</div>
+  </div>
+</div></section>
+
+<section id="priceEnd" class="screen"><div class="inner">
+  <div class="hero center pj-hero"><div style="font-size:64px">🛒🏆</div><h2 class="big">EL PREU JUST ACABAT!</h2><p id="pjEndRecipe" class="muted"></p></div>
+  <div id="pjEndStudentCoins" class="card center hidden" style="margin-top:16px"><p class="muted"><b>MONEDES ACONSEGUIDES</b></p><div id="pjEndCoins" class="pj-money-earned">+0 🪙</div><p id="pjEndBalance" style="font-weight:900"></p></div>
+  <div class="card" style="margin-top:16px"><h3>🏆 CLASSIFICACIÓ FINAL</h3><div id="pjFinalRanking" class="pj-mini-ranking"></div></div>
+  <button id="pjEndReturn" class="btn" style="width:100%;margin-top:16px">TORNAR</button>
 </div></section>
 
 </div>
@@ -4821,6 +5080,485 @@ document.addEventListener("keydown",e=>{
 </style>
 
 
+
+
+<script>
+/* ===== V0.14.0 · EL PREU JUST ===== */
+(function(){
+  const PJ_STORE_KEY="fasiaverse_pj_products_v1";
+  const euro=c=>(Number(c||0)/100).toFixed(2).replace(".",",")+" €";
+
+  const PRODUCTS={
+    arr:{name:"ARRÒS",emoji:"🍚",format:"FORMAT MERCADONA PENDENT",image:""},
+    pes:{name:"PÈSOLS",emoji:"🟢",format:"FORMAT MERCADONA PENDENT",image:""},
+    pas:{name:"PASTANAGA",emoji:"🥕",format:"FORMAT MERCADONA PENDENT",image:""},
+    ous:{name:"OUS",emoji:"🥚",format:"FORMAT MERCADONA PENDENT",image:""},
+    per:{name:"PERNIL DOLÇ",emoji:"🥓",format:"FORMAT MERCADONA PENDENT",image:""},
+    oli:{name:"OLI D'OLIVA",emoji:"🫒",format:"FORMAT MERCADONA PENDENT",image:""},
+    sal:{name:"SAL",emoji:"🧂",format:"FORMAT MERCADONA PENDENT",image:""},
+    xoc:{name:"XOCOLATA",emoji:"🍫",format:"FORMAT MERCADONA PENDENT",image:""},
+    frs:{name:"FRUITS SECS",emoji:"🥜",format:"FORMAT MERCADONA PENDENT",image:""},
+    fus:{name:"FRUITA SECA",emoji:"🍇",format:"FORMAT MERCADONA PENDENT",image:""},
+    lli:{name:"LLIMONA",emoji:"🍋",format:"FORMAT MERCADONA PENDENT",image:""},
+    tar:{name:"TARONJA",emoji:"🍊",format:"FORMAT MERCADONA PENDENT",image:""},
+    pet:{name:"PETA ZETAS",emoji:"✨",format:"FORMAT MERCADONA PENDENT",image:""},
+    lle:{name:"LLET",emoji:"🥛",format:"FORMAT MERCADONA PENDENT",image:""},
+    sals:{name:"SALSITXES",emoji:"🌭",format:"FORMAT MERCADONA PENDENT",image:""},
+    fmo:{name:"FARINA DE BLAT DE MORO",emoji:"🌽",format:"FORMAT MERCADONA PENDENT",image:""},
+    fbl:{name:"FARINA DE BLAT",emoji:"🌾",format:"FORMAT MERCADONA PENDENT",image:""},
+    llev:{name:"LLEVAT QUÍMIC",emoji:"🧁",format:"FORMAT MERCADONA PENDENT",image:""},
+    car:{name:"CARBASSÓ",emoji:"🥒",format:"FORMAT MERCADONA PENDENT",image:""},
+    pat:{name:"PATATA",emoji:"🥔",format:"FORMAT MERCADONA PENDENT",image:""},
+    ceb:{name:"CEBA",emoji:"🧅",format:"FORMAT MERCADONA PENDENT",image:""},
+    bro:{name:"BROU DE VERDURES",emoji:"🥣",format:"FORMAT MERCADONA PENDENT",image:""},
+    fmt:{name:"FORMATGETS",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""},
+    feta:{name:"FORMATGE FETA",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""},
+    pvr:{name:"PEBROT VERMELL",emoji:"🫑",format:"FORMAT MERCADONA PENDENT",image:""},
+    pvd:{name:"PEBROT VERD",emoji:"🫑",format:"FORMAT MERCADONA PENDENT",image:""},
+    ore:{name:"ORENGA",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
+    all:{name:"ALL",emoji:"🧄",format:"FORMAT MERCADONA PENDENT",image:""},
+    alp:{name:"ALL EN POLS",emoji:"🧄",format:"FORMAT MERCADONA PENDENT",image:""},
+    peb:{name:"PEBRE NEGRE",emoji:"⚫",format:"FORMAT MERCADONA PENDENT",image:""},
+    cig:{name:"CIGRONS CUITS",emoji:"🫘",format:"FORMAT MERCADONA PENDENT",image:""},
+    pan:{name:"PANSES",emoji:"🍇",format:"FORMAT MERCADONA PENDENT",image:""},
+    fcg:{name:"FARINA DE CIGRÓ",emoji:"🫘",format:"FORMAT MERCADONA PENDENT",image:""},
+    esp:{name:"ESPÈCIES",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
+    ars:{name:"ARRÒS PER SUSHI",emoji:"🍚",format:"FORMAT MERCADONA PENDENT",image:""},
+    vin:{name:"VINAGRE D'ARRÒS",emoji:"🍶",format:"FORMAT MERCADONA PENDENT",image:""},
+    suc:{name:"SUCRE",emoji:"🧂",format:"FORMAT MERCADONA PENDENT",image:""},
+    nor:{name:"ALGA NORI",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
+    sur:{name:"SURIMI",emoji:"🦀",format:"FORMAT MERCADONA PENDENT",image:""},
+    alv:{name:"ALVOCAT",emoji:"🥑",format:"FORMAT MERCADONA PENDENT",image:""},
+    cog:{name:"COGOMBRE",emoji:"🥒",format:"FORMAT MERCADONA PENDENT",image:""},
+    ses:{name:"SÈSAM TORRAT",emoji:"🌾",format:"FORMAT MERCADONA PENDENT",image:""},
+    mai:{name:"MAIONESA",emoji:"🥫",format:"FORMAT MERCADONA PENDENT",image:""},
+    soja:{name:"SALSA DE SOJA",emoji:"🥢",format:"FORMAT MERCADONA PENDENT",image:""},
+    pasf:{name:"PASTA DE FULL",emoji:"🥐",format:"FORMAT MERCADONA PENDENT",image:""},
+    pesto:{name:"PESTO",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
+    frr:{name:"FORMATGE RATLLAT",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""}
+  };
+
+  const RECIPES=[
+    {id:"r1",name:"ARRÒS TRES DELÍCIES",emoji:"🍚",items:[["arr","200 g",1],["pes","100 g",1],["pas","1 pastanaga",1],["ous","2 ous",1],["per","100 g",1],["oli","oli d'oliva",1],["sal","sal",1]]},
+    {id:"r2",name:"BOMBONS SORPRESA",emoji:"🍫",items:[["xoc","3 tauletes diferents",3],["frs","fruits secs",1],["fus","fruita seca",1],["lli","pell de llimona",1],["tar","pell de taronja",1],["pet","Peta Zetas",1]]},
+    {id:"r3",name:"CORN DOGS",emoji:"🌭",items:[["sals","12 salsitxes",1],["fmo","300 g",1],["fbl","300 g",1],["ous","3 ous",1],["lle","450 ml",1],["llev","3 culleradetes",1],["sal","una mica",1],["oli","oli per fregir",1]]},
+    {id:"r4",name:"CREMA DE CARBASSÓ",emoji:"🥒",items:[["car","2 carbassons",1],["pat","1 patata",1],["ceb","1 ceba",1],["bro","500 ml",1],["fmt","2 formatgets",1],["oli","oli d'oliva",1],["sal","sal",1]]},
+    {id:"r5",name:"FORMATGE FETA AMB VERDURES",emoji:"🧀",items:[["feta","200 g",1],["ceb","1 ceba",1],["pvr","1 pebrot vermell",1],["pvd","1 pebrot verd",1],["ore","orenga seca",1],["alp","all en pols",1],["peb","pebre negre",1],["oli","oli d'oliva verge extra",1]]},
+    {id:"r6",name:"HAMBURGUESES DE CIGRONS",emoji:"🍔",items:[["cig","400 g",1],["ceb","1 ceba",1],["all","1 gra",1],["pas","1 pastanaga",1],["ous","1 ou",1],["pan","un grapat",1],["fcg","2 cullerades",1],["esp","espècies",1],["oli","oli d'oliva verge extra",1]]},
+    {id:"r7",name:"MAKI CALIFÒRNIA",emoji:"🍣",items:[["ars","2 tasses",1],["vin","4 cullerades",1],["suc","2 cullerades",1],["sal","1/2 culleradeta",1],["nor","fulls",1],["sur","surimi",1],["alv","alvocat",1],["cog","cogombre",1],["ses","sèsam torrat",1],["mai","opcional",1],["soja","per servir",1]]},
+    {id:"r8",name:"PALMERES AL PESTO",emoji:"🌿",items:[["pasf","1 làmina",1],["pesto","pesto",1],["frr","60 g",1],["ous","1 ou",1]]},
+    {id:"r9",name:"TRUITA DE PATATES",emoji:"🥔",items:[["pat","4 patates",1],["ous","4 ous",1],["ceb","1 ceba (opcional)",1],["oli","oli d'oliva",1],["sal","sal",1]]}
+  ];
+
+  let saved={};
+  try{saved=JSON.parse(localStorage.getItem(PJ_STORE_KEY)||"{}")||{}}catch{}
+  Object.entries(PRODUCTS).forEach(([id,p])=>{
+    if(saved[id]){
+      if(Number.isFinite(Number(saved[id].price)))p.price=Number(saved[id].price);
+      if(saved[id].format)p.format=String(saved[id].format);
+    }
+    if(!Number.isFinite(Number(p.price)))p.price=null;
+  });
+  const saveStore=()=>{
+    const x={};Object.entries(PRODUCTS).forEach(([id,p])=>x[id]={price:p.price,format:p.format});
+    localStorage.setItem(PJ_STORE_KEY,JSON.stringify(x));
+  };
+
+  let mode=false,recipe=null,selection=new Set(),payload=null,teacherIndex=0,roundPoll=null,locked=false,rewardsCommitted=false;
+  let studentInput="",finalInput="",studentState="",studentIndex=-1;
+
+  const originalJoin=$("#profileJoinGameBtn").onclick;
+  const originalPolling=startStudentGamePolling;
+  const originalStart=$("#startGame").onclick;
+  const originalBack=$("#backTopics").onclick;
+
+  const product=id=>PRODUCTS[id]||{name:id,emoji:"🛒",format:"FORMAT PENDENT",image:""};
+  const recipeById=id=>RECIPES.find(r=>r.id===id);
+  const visual=p=>p.image?`<img src="${p.image}" alt="${p.name}">`:(p.emoji||"🛒");
+
+  function topicFromPayload(x){
+    const items=x.items.map(a=>`${a.id}.${a.price}.${a.units}`).join(",");
+    return `PJ|${x.recipe}|${items}|${(x.skipped||[]).join(".")}`;
+  }
+  function payloadFromTopic(topic){
+    const s=String(topic||"");if(!s.startsWith("PJ|"))return null;
+    const p=s.split("|");
+    return {
+      recipe:p[1],
+      items:(p[2]||"").split(",").filter(Boolean).map(v=>{const [id,price,units]=v.split(".");return{id,price:Number(price||0),units:Number(units||1)}}),
+      skipped:(p[3]||"").split(".").filter(Boolean).map(Number)
+    };
+  }
+  const activeIndices=x=>{const sk=new Set(x?.skipped||[]);return (x?.items||[]).map((_,i)=>i).filter(i=>!sk.has(i))};
+  const nextActive=(x,after)=>activeIndices(x).find(i=>i>after);
+  const totalPrice=x=>activeIndices(x).reduce((sum,i)=>sum+x.items[i].price*x.items[i].units,0);
+
+  function renderRecipes(){
+    const grid=$("#pjRecipeGrid");grid.innerHTML="";
+    RECIPES.forEach((r,i)=>{
+      const b=document.createElement("button");b.type="button";b.className="pj-recipe-card";
+      b.innerHTML=`<div class="pj-recipe-visual">${r.emoji}</div><div class="pj-recipe-copy"><span class="session-number">RECEPTA ${i+1}</span><h3>${r.name}</h3><small>${r.items.length} PRODUCTES / INGREDIENTS</small></div>`;
+      b.onclick=()=>openPrep(r.id);grid.appendChild(b);
+    });
+  }
+
+  function openPrep(id){
+    recipe=recipeById(id);mode=true;selection=new Set(recipe.items.map((_,i)=>i));
+    $("#pjPrepTitle").textContent=recipe.name;renderPrep();show("pricePrep");
+  }
+
+  function renderPrep(){
+    const list=$("#pjProductList");list.innerHTML="";
+    recipe.items.forEach(([pid,needed,defaultUnits],i)=>{
+      const p=product(pid),row=document.createElement("div");
+      row.className="pj-product-row"+(selection.has(i)?"":" off");
+      const toggle=document.createElement("button");toggle.className="pj-toggle "+(selection.has(i)?"on":"");toggle.textContent=selection.has(i)?"✓":"";
+      toggle.onclick=()=>{selection.has(i)?selection.delete(i):selection.add(i);renderPrep()};
+      const vis=document.createElement("div");vis.className="pj-prod-visual";vis.innerHTML=visual(p);
+      const info=document.createElement("div");info.innerHTML=`<b>${p.name}</b><div class="pj-inline-note">RECEPTA: ${needed}</div>`;
+      const fmt=document.createElement("input");fmt.className="pj-field pj-format-edit";fmt.value=p.format||"";fmt.placeholder="FORMAT MERCADONA";
+      fmt.onchange=()=>{p.format=fmt.value.trim()||"FORMAT MERCADONA PENDENT";saveStore()};
+      const units=document.createElement("input");units.className="pj-field pj-units-edit";units.type="number";units.min="1";units.max="20";units.step="1";units.value=defaultUnits||1;
+      const price=document.createElement("input");price.className="pj-field pj-price-field pj-price-edit";price.inputMode="decimal";price.placeholder="0,00 €";
+      price.value=Number.isFinite(Number(p.price))?Number(p.price).toFixed(2).replace(".",","):"";
+      price.onchange=()=>{
+        const v=Number(price.value.replace(",",".").replace(/[^\d.]/g,""));
+        p.price=Number.isFinite(v)&&v>0?v:null;saveStore();
+        price.value=p.price?Number(p.price).toFixed(2).replace(".",","):"";
+      };
+      row.append(toggle,vis,info,fmt,units,price);list.appendChild(row);
+    });
+    $("#pjPrepCount").textContent=`${selection.size} DE ${recipe.items.length} PRODUCTES ACTIVATS`;
+    $("#pjPrepMsg").classList.add("hidden");
+  }
+
+  async function generateGame(){
+    const btn=$("#pjGenerateCode");btn.disabled=true;
+    try{
+      const rows=[...$("#pjProductList").children],items=[],missing=[];
+      recipe.items.forEach(([pid,needed,defaultUnits],i)=>{
+        if(!selection.has(i))return;
+        const p=product(pid),units=Math.max(1,Math.min(20,Number(rows[i]?.querySelector(".pj-units-edit")?.value||defaultUnits||1))),cents=Math.round(Number(p.price||0)*100);
+        if(!cents)missing.push(p.name);
+        items.push({id:pid,price:cents,units,needed});
+      });
+      if(missing.length){const m=$("#pjPrepMsg");m.textContent="FALTEN PREUS: "+missing.join(", ");m.classList.remove("hidden");return}
+      if(!items.length){const m=$("#pjPrepMsg");m.textContent="ACTIVA COM A MÍNIM UN PRODUCTE";m.classList.remove("hidden");return}
+      payload={recipe:recipe.id,items,skipped:[]};
+      let created=null;
+      for(let tries=0;tries<8&&!created;tries++){
+        generatedCode=String(Math.floor(1000+Math.random()*9000));
+        try{
+          const x=await api("games",{method:"POST",body:JSON.stringify({code:generatedCode,topic:topicFromPayload(payload),status:"waiting",current_question:0})});
+          created=x&&x[0];
+        }catch(e){if(!/duplicate|unique/i.test(e.message))throw e}
+      }
+      if(!created)throw new Error("NO S'HA POGUT GENERAR UN CODI ÚNIC");
+      onlineGameId=created.id;players=[];mode=true;teacherIndex=activeIndices(payload)[0]||0;rewardsCommitted=false;
+      renderPlayers();$("#gameCode").textContent=generatedCode;$("#simulateSession").classList.add("hidden");$("#backTopics").textContent="← TORNAR A LA RECEPTA";
+      show("teacherLobby");clearInterval(lobbyPoll);lobbyPoll=setInterval(refreshOnlinePlayers,1000);refreshOnlinePlayers();
+    }catch(e){alert("ERROR SUPABASE: "+e.message)}
+    finally{btn.disabled=false}
+  }
+
+  async function startTeacher(){
+    teacherIndex=activeIndices(payload)[0];
+    await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:teacherIndex,topic:topicFromPayload(payload)})});
+    loadTeacherRound();
+  }
+
+  async function loadTeacherRound(){
+    clearInterval(roundPoll);locked=false;
+    const item=payload.items[teacherIndex],p=product(item.id),act=activeIndices(payload),pos=act.indexOf(teacherIndex)+1;
+    $("#pjTeacherCounter").textContent=`PRODUCTE ${pos}/${act.length}`;
+    $("#pjTeacherImage").innerHTML=visual(p);$("#pjTeacherProduct").textContent=p.name;$("#pjTeacherFormat").textContent=p.format;
+    $("#pjTeacherNeed").textContent=`NECESSITEM: ${item.needed||""}${item.units>1?` · ${item.units} ENVASOS/UNITATS`:""}`;
+    $("#pjTeacherAsk").textContent=item.units>1?"PREU D'1 UNITAT":"PREU DE L'ENVÀS";
+    $("#pjCloseRound").disabled=true;show("priceTeacherQuestion");
+    pollAnswers(false);roundPoll=setInterval(()=>pollAnswers(false),700);
+  }
+
+  async function pollAnswers(isFinal){
+    if(!onlineGameId)return;
+    try{
+      const qn=isFinal?payload.items.length:teacherIndex;
+      const [ans,pls]=await Promise.all([
+        api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=player_id`),
+        api(`players?game_id=eq.${onlineGameId}&select=id,nickname&order=created_at.asc`)
+      ]);
+      const done=new Set((ans||[]).map(a=>a.player_id)),box=$(isFinal?"#pjFinalAnswerStatus":"#pjTeacherAnswerStatus");box.innerHTML="";
+      (pls||[]).forEach(p=>{const s=document.createElement("span");s.className="pj-player-pill"+(done.has(p.id)?" done":"");s.textContent=(done.has(p.id)?"✓ ":"○ ")+(p.nickname||"ALUMNE");box.appendChild(s)});
+      const close=$(isFinal?"#pjCloseFinal":"#pjCloseRound");close.disabled=!(pls||[]).length;
+      if((pls||[]).length&&done.size>=(pls||[]).length&&!locked){isFinal?finishFinal():finishRound()}
+    }catch(e){console.error("PJ poll",e)}
+  }
+
+  function score(ans,real,mult=1){
+    const diff=Math.abs(ans-real),pct=real>0?(diff/real)*100:999;
+    let pts=250,coins=0,label=">30%";
+    if(diff===0){pts=1000;coins=2;label="PREU JUST"}
+    else if(pct<=5){pts=900;coins=1;label="≤5%"}
+    else if(pct<=15){pts=750;coins=1;label="≤15%"}
+    else if(pct<=30){pts=500;coins=1;label="≤30%"}
+    return{diff,pct,pts:pts*mult,coins,label};
+  }
+  function diffText(ans,real){
+    const d=ans-real;
+    if(d===0)return{text:"🎯 PREU JUST!",cls:"exact"};
+    if(d>0)return{text:`⬆️ T'HAS PASSAT ${euro(Math.abs(d))}`,cls:"up"};
+    return{text:`⬇️ ET FALTAVEN ${euro(Math.abs(d))}`,cls:"down"};
+  }
+
+  async function finishRound(){
+    if(locked)return;locked=true;clearInterval(roundPoll);
+    try{
+      const real=payload.items[teacherIndex].price;
+      const [answers,pls]=await Promise.all([
+        api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${teacherIndex}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
+      ]);
+      const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
+      const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
+      for(const s of scored){
+        const p=by.get(s.player_id);if(!p)continue;
+        const b=closest.has(s.player_id)?250:0,cb=closest.has(s.player_id)?1:0,newScore=Number(p.score||0)+s.pts+b,newCoins=Number(p.coins||0)+s.coins+cb;
+        await Promise.all([
+          api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
+          api(`answers?id=eq.${s.id}`,{method:"PATCH",body:JSON.stringify({correct:s.diff===0,points:s.pts+b})})
+        ]);
+        p.score=newScore;p.coins=newCoins;s.totalPoints=s.pts+b;s.totalCoins=s.coins+cb;s.closest=closest.has(s.player_id);
+      }
+      await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"results",current_question:teacherIndex})});
+      renderTeacherResult(scored,pls,real,false);
+    }catch(e){locked=false;alert("ERROR EN REVELAR EL PREU: "+e.message)}
+  }
+
+  function renderTeacherResult(scored,pls,real,isFinal){
+    const r=recipeById(payload.recipe),p=isFinal?null:product(payload.items[teacherIndex].id);
+    $("#pjResultBadge").textContent=isFinal?"PREU TOTAL REAL":"PREU REAL";$("#pjRealPrice").textContent=euro(real);$("#pjResultTitle").textContent=isFinal?r.name:p.name;
+    const by=new Map((pls||[]).map(x=>[x.id,x])),rows=scored.slice().sort((a,b)=>a.diff-b.diff||String(a.created_at||"").localeCompare(String(b.created_at||"")));
+    const box=$("#pjRoundResults");box.innerHTML="";
+    rows.forEach((s,i)=>{
+      const pl=by.get(s.player_id)||{},df=diffText(Number(s.answer_index||0),real),d=document.createElement("div");d.className="pj-result-row"+(s.closest?" closest":"");
+      d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b>+${s.totalCoins??s.coins} 🪙</b></div>`;
+      box.appendChild(d);
+    });
+    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
+    renderRankingPJ("#pjTeacherRanking",players);
+    $("#pjNextRound").textContent=isFinal?"VEURE CLASSIFICACIÓ FINAL":(nextActive(payload,teacherIndex)===undefined?"RONDA FINAL 🧾":"SEGÜENT PRODUCTE");
+    $("#pjNextRound").dataset.finalResult=isFinal?"1":"0";show("priceTeacherResults");
+  }
+
+  async function nextRound(){
+    if($("#pjNextRound").dataset.finalResult==="1"){await finishGame();return}
+    const n=nextActive(payload,teacherIndex);if(n===undefined){await startFinal();return}
+    teacherIndex=n;await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:teacherIndex,topic:topicFromPayload(payload)})});loadTeacherRound();
+  }
+
+  async function skipRound(){
+    if(locked)return;if(!confirm("SALTAR AQUEST PRODUCTE? NO PUNTUARÀ NI COMPTARÀ AL TOTAL FINAL."))return;
+    clearInterval(roundPoll);if(!payload.skipped.includes(teacherIndex))payload.skipped.push(teacherIndex);
+    const n=nextActive(payload,teacherIndex);
+    if(n===undefined){await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({topic:topicFromPayload(payload)})});await startFinal();return}
+    teacherIndex=n;await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:teacherIndex,topic:topicFromPayload(payload)})});loadTeacherRound();
+  }
+
+  function summary(selector){
+    const box=$(selector);box.innerHTML="";
+    activeIndices(payload).forEach(i=>{
+      const it=payload.items[i],p=product(it.id),d=document.createElement("div");d.className="pj-summary-card";
+      d.innerHTML=`<div class="pj-prod-visual">${visual(p)}</div><b>${p.name}</b><div class="pj-inline-note">${p.format}</div><div style="margin-top:6px;font-weight:950">${it.units} ${it.units===1?"ENVÀS/UNITAT":"ENVASOS/UNITATS"}</div>`;
+      box.appendChild(d);
+    });
+  }
+
+  async function startFinal(){
+    locked=false;const qn=payload.items.length;
+    await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"final",current_question:qn,topic:topicFromPayload(payload)})});
+    summary("#pjTeacherFinalSummary");show("priceTeacherFinal");pollAnswers(true);clearInterval(roundPoll);roundPoll=setInterval(()=>pollAnswers(true),700);
+  }
+
+  async function finishFinal(){
+    if(locked)return;locked=true;clearInterval(roundPoll);
+    try{
+      const qn=payload.items.length,real=totalPrice(payload);
+      const [answers,pls]=await Promise.all([
+        api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
+      ]);
+      const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,2)}));
+      const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
+      for(const s of scored){
+        const p=by.get(s.player_id);if(!p)continue;
+        const cb=closest.has(s.player_id)?2:0,newScore=Number(p.score||0)+s.pts,newCoins=Number(p.coins||0)+s.coins+cb;
+        await Promise.all([
+          api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
+          api(`answers?id=eq.${s.id}`,{method:"PATCH",body:JSON.stringify({correct:s.diff===0,points:s.pts})})
+        ]);
+        p.score=newScore;p.coins=newCoins;s.totalPoints=s.pts;s.totalCoins=s.coins+cb;s.closest=closest.has(s.player_id);
+      }
+      await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"final_results",current_question:qn})});
+      renderTeacherResult(scored,pls,real,true);
+    }catch(e){locked=false;alert("ERROR EN TANCAR LA RONDA FINAL: "+e.message)}
+  }
+
+  function renderRankingPJ(selector,list){
+    const box=$(selector);if(!box)return;box.innerHTML="";
+    (list||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)).forEach((p,i)=>{
+      const d=document.createElement("div");d.className="pj-mini-rank";
+      d.innerHTML=`<b>${i+1}${i===0?"r":i===1?"n":i===2?"r":"è"}</b><div><b>${p.nick||p.nickname||"ALUMNE"}</b><div class="pj-inline-note">${Number(p.coins||0)} 🪙 PENDENTS</div></div><b>${Number(p.score||0)} PTS</b>`;
+      box.appendChild(d);
+    });
+  }
+
+  async function finishGame(){
+    if(rewardsCommitted)return;rewardsCommitted=true;
+    try{
+      await refreshOnlinePlayers();players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+      const podium=[3,2,2,1,1,1];
+      for(let i=0;i<players.length;i++){const p=players[i],b=podium[i]||0;p.coins=Number(p.coins||0)+b;await api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({coins:p.coins})})}
+      for(const p of players){if(p.profile_id&&Number(p.coins||0)>0)await addCoinsToProfile(p.profile_id,Number(p.coins||0))}
+      await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished",topic:topicFromPayload(payload)})});showEnd(false);
+    }catch(e){rewardsCommitted=false;alert("NO S'HA POGUT TANCAR EL PREU JUST: "+e.message)}
+  }
+
+  async function showEnd(isStudent){
+    try{
+      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
+      const list=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
+      renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
+      if(isStudent&&onlinePlayerId){
+        const me=list.find(p=>p.id===onlinePlayerId);$("#pjEndStudentCoins").classList.remove("hidden");$("#pjEndCoins").textContent=`+${Number(me?.coins||0)} 🪙`;
+        if(currentProfile){await refreshCurrentProfile();$("#pjEndBalance").textContent=`SALDO TOTAL: ${Number(currentProfile.coins||0)} 🪙`}
+        $("#pjEndReturn").textContent="← TORNAR AL PERFIL";
+      }else{$("#pjEndStudentCoins").classList.add("hidden");$("#pjEndReturn").textContent="← TORNAR A PROFESSOR"}
+      show("priceEnd");
+    }catch(e){console.error(e);show("priceEnd")}
+  }
+
+  function toCents(raw){const n=Number(String(raw||"").replace(".",",").replace(",","."));return Number.isFinite(n)?Math.round(n*100):0}
+  function updateDisplay(selector,raw){$(selector).textContent=euro(toCents(raw))}
+  function buildKeypad(selector,getter,setter,display,errorSelector){
+    const box=$(selector);box.innerHTML="";
+    ["1","2","3","4","5","6","7","8","9",",","0","⌫"].forEach(k=>{
+      const b=document.createElement("button");b.type="button";b.className="pj-key"+(k==="⌫"?" danger":k===","?" action":"");b.textContent=k;
+      b.onclick=()=>{
+        let raw=getter();
+        if(k==="⌫")raw=raw.slice(0,-1);
+        else if(k===","){if(!raw.includes(","))raw=(raw||"0")+","}
+        else if(raw.replace(/\D/g,"").length<4)raw+=k;
+        if(raw.includes(",")){const [a,c=""]=raw.split(",");raw=a+","+c.slice(0,2)}
+        setter(raw);updateDisplay(display,raw);$(errorSelector).classList.add("hidden");
+      };box.appendChild(b);
+    });
+  }
+
+  function loadStudentQuestion(index){
+    studentState="playing";studentIndex=index;
+    const it=payload.items[index],p=product(it.id),act=activeIndices(payload),pos=act.indexOf(index)+1;
+    $("#pjStudentCounter").textContent=`PRODUCTE ${pos}/${act.length}`;$("#pjStudentImage").innerHTML=visual(p);$("#pjStudentProduct").textContent=p.name;$("#pjStudentFormat").textContent=p.format;
+    $("#pjStudentNeed").textContent=`NECESSITEM: ${it.needed||""}${it.units>1?` · ${it.units} ENVASOS/UNITATS`:""}`;
+    studentInput="";updateDisplay("#pjStudentDisplay","");$("#pjStudentError").classList.add("hidden");$("#pjStudentSent").classList.add("hidden");$("#pjStudentConfirm").disabled=false;
+    buildKeypad("#pjStudentKeypad",()=>studentInput,v=>studentInput=v,"#pjStudentDisplay","#pjStudentError");show("priceStudentQuestion");
+  }
+
+  async function submitStudent(isFinal){
+    const raw=isFinal?finalInput:studentInput,cents=toCents(raw),max=isFinal?4999:1999,err=$(isFinal?"#pjFinalError":"#pjStudentError");
+    if(cents<=0){err.textContent="ESCRIU UN PREU ABANS DE CONFIRMAR";err.classList.remove("hidden");return}
+    if(cents>max){err.textContent=`🤔 AQUEST PREU SEMBLA MASSA ALT. POTSER T'HAS DEIXAT LA COMA? MÀXIM ${euro(max)}`;err.classList.remove("hidden");return}
+    const btn=$(isFinal?"#pjFinalConfirm":"#pjStudentConfirm");btn.disabled=true;const qn=isFinal?payload.items.length:studentIndex;
+    try{
+      const ex=await api(`answers?game_id=eq.${onlineGameId}&player_id=eq.${onlinePlayerId}&question_number=eq.${qn}&select=id&limit=1`);
+      if(ex&&ex.length)throw new Error("JA HAS ENVIAT AQUESTA RESPOSTA");
+      await api("answers",{method:"POST",body:JSON.stringify({game_id:onlineGameId,player_id:onlinePlayerId,question_number:qn,answer_index:cents,correct:false,points:0})});
+      $(isFinal?"#pjFinalSent":"#pjStudentSent").classList.remove("hidden");$$(isFinal?"#pjFinalKeypad button":"#pjStudentKeypad button").forEach(b=>b.disabled=true);
+    }catch(e){btn.disabled=false;err.textContent=e.message;err.classList.remove("hidden")}
+  }
+
+  async function showStudentResult(index,isFinal){
+    try{
+      const qn=isFinal?payload.items.length:index,real=isFinal?totalPrice(payload):payload.items[index].price;
+      const [ans,pl,all]=await Promise.all([
+        api(`answers?game_id=eq.${onlineGameId}&player_id=eq.${onlinePlayerId}&question_number=eq.${qn}&select=answer_index,points&limit=1`),
+        api(`players?id=eq.${onlinePlayerId}&select=score,coins&limit=1`),
+        api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=player_id,answer_index`)
+      ]);
+      const a=ans?.[0]||{answer_index:0,points:0},me=pl?.[0]||{score:0,coins:0},df=diffText(Number(a.answer_index||0),real),min=(all||[]).length?Math.min(...all.map(x=>Math.abs(Number(x.answer_index||0)-real))):Infinity;
+      const close=Math.abs(Number(a.answer_index||0)-real)===min;
+      $("#pjStudentResultIcon").textContent=Number(a.answer_index||0)===real?"🎯":close?"🏆":"🛒";
+      $("#pjStudentResultTitle").textContent=isFinal?"RESULTAT FINAL DE LA COMPRA":(Number(a.answer_index||0)===real?"PREU JUST!":close?"HAS ESTAT DELS MÉS PROPERS!":"RESULTAT DE LA RONDA");
+      $("#pjStudentRealPrice").textContent=euro(real);$("#pjStudentDifference").className=`pj-diff ${df.cls}`;$("#pjStudentDifference").textContent=df.text;$("#pjStudentRoundPoints").textContent=`+${Number(a.points||0)}`;$("#pjStudentPendingCoins").textContent=`${Number(me.coins||0)} 🪙`;
+      show("priceStudentResult");
+    }catch(e){console.error(e)}
+  }
+
+  function loadStudentFinal(){
+    finalInput="";updateDisplay("#pjFinalDisplay","");$("#pjFinalError").classList.add("hidden");$("#pjFinalSent").classList.add("hidden");$("#pjFinalConfirm").disabled=false;
+    summary("#pjStudentFinalSummary");buildKeypad("#pjFinalKeypad",()=>finalInput,v=>finalInput=v,"#pjFinalDisplay","#pjFinalError");show("priceStudentFinal");
+  }
+
+  function startPricePolling(){
+    clearInterval(studentPoll);
+    studentPoll=setInterval(async()=>{
+      try{
+        if(!onlineGameId)return;
+        const g=await api(`games?id=eq.${onlineGameId}&select=status,current_question,topic&limit=1`);if(!g?.[0])return;
+        const game=g[0],pl=payloadFromTopic(game.topic);if(pl)payload=pl;
+        const idx=Number(game.current_question||0),st=String(game.status||"");
+        if(st==="playing"){if(studentState!==st||studentIndex!==idx)loadStudentQuestion(idx)}
+        else if(st==="results"){if(studentState!==st){studentState=st;await showStudentResult(idx,false)}}
+        else if(st==="final"){if(studentState!==st){studentState=st;loadStudentFinal()}}
+        else if(st==="final_results"){if(studentState!==st){studentState=st;await showStudentResult(idx,true)}}
+        else if(st==="finished"){clearInterval(studentPoll);studentPoll=null;await showEnd(true)}
+      }catch(e){console.error("PJ polling",e)}
+    },650);
+  }
+
+  $$(".topic").forEach(t=>{
+    if(t.dataset.topic==="PREU JUST")t.onclick=()=>{mode=true;renderRecipes();show("priceRecipes")};
+    if(t.dataset.topic==="CIÈNCIA I EXPERIMENTS")t.onclick=()=>{mode=false;$("#simulateSession").classList.remove("hidden");$("#backTopics").textContent="← TORNAR ALS TEMES";renderScienceSessions();show("scienceSessions")};
+  });
+
+  $("#pjBackTopics").onclick=()=>{mode=false;show("teacherTopics")};
+  $("#pjBackRecipes").onclick=()=>{renderRecipes();show("priceRecipes")};
+  $("#pjGenerateCode").onclick=generateGame;$("#pjCloseRound").onclick=finishRound;$("#pjSkipProduct").onclick=skipRound;$("#pjNextRound").onclick=nextRound;$("#pjCloseFinal").onclick=finishFinal;
+  $("#pjStudentConfirm").onclick=()=>submitStudent(false);$("#pjFinalConfirm").onclick=()=>submitStudent(true);
+
+  $("#startGame").onclick=async()=>mode?startTeacher():originalStart();
+  $("#backTopics").onclick=()=>mode?show("pricePrep"):originalBack();
+
+  $("#profileJoinGameBtn").onclick=async()=>{
+    const c=$("#profileGameCodeInput").value.trim();
+    if(!/^\d{4}$/.test(c)){$("#profileGameCodeMsg").textContent="CODI INCORRECTE";return}
+    try{
+      $("#profileGameCodeMsg").textContent="COMPROVANT CODI...";
+      let rows=await api(`games?code=eq.${encodeURIComponent(c)}&select=id,code,topic,status&limit=5`);
+      if(!rows?.length){$("#profileGameCodeMsg").textContent="NO EXISTEIX CAP PARTIDA AMB AQUEST CODI";return}
+      const game=rows.find(g=>String(g.status||"").toLowerCase()==="waiting")||rows[0];
+      if(String(game.status||"").toLowerCase()!=="waiting"){$("#profileGameCodeMsg").textContent="AQUESTA PARTIDA JA NO ESTÀ EN ESPERA";return}
+      const pl=payloadFromTopic(game.topic);
+      if(pl){
+        mode=true;payload=pl;recipe=recipeById(pl.recipe);onlineGameId=game.id;resetStudentGameChoices();
+        $("#profileGameCodeMsg").textContent=`EL PREU JUST · ${recipe?.name||"RECEPTA"}`;$("#studentProfileLabel").textContent=currentProfile.display_name;show("studentInfo");return;
+      }
+      mode=false;return originalJoin();
+    }catch(e){console.error(e);$("#profileGameCodeMsg").textContent="ERROR DE CONNEXIÓ"}
+  };
+
+  startStudentGamePolling=function(){return mode?startPricePolling():originalPolling()};
+
+  $("#pjEndReturn").onclick=async()=>{
+    stopOnlinePolls();
+    if(currentProfile?.role==="student"){onlineGameId=null;onlinePlayerId=null;mode=false;await refreshCurrentProfile();show("profileHome")}
+    else{onlineGameId=null;mode=false;show("teacherTopics")}
+  };
+
+  const scienceGenerate=$("#generateCode").onclick;
+  $("#generateCode").onclick=async function(){mode=false;$("#simulateSession").classList.remove("hidden");$("#backTopics").textContent="← TORNAR ALS TEMES";return scienceGenerate.apply(this,arguments)};
+
+  console.info("Fasia Verse V0.14.0 · El Preu Just carregat");
+})();
+</script>
 
 </body>
 </html>
