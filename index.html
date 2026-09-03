@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.6 · El Preu Just</title>
+<title>Fasia Verse · V0.14.12 · Contrast + Perfil ràpid</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3062,6 +3062,41 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 @media(max-width:620px){.pj-catalog-grid{grid-template-columns:1fr}.pj-modal-fields{grid-template-columns:1fr}#pricePrep .pj-product-row{grid-template-columns:auto 52px 1fr!important}#pricePrep .pj-product-row>*:nth-child(n+4){grid-column:3!important}}
 </style>
 
+
+<style id="pj-kahoot-contrast-v01412">
+/* V0.14.12 · PREU JUST segueix el mateix criteri de contrast que el Kahoot:
+   fons fosc = text blanc; superfície clara = text blau fosc. */
+#priceTeacherResults,#priceStudentResult,#priceTeacherFinal,#priceStudentFinal,#priceEnd{color:#fff!important}
+#priceTeacherResults .hero,#priceStudentResult .hero,#priceTeacherFinal .pj-final-banner,#priceStudentFinal .pj-final-banner,#priceEnd .hero,
+#priceTeacherResults .card,#priceStudentResult .card,#priceTeacherFinal .card,#priceStudentFinal .card,#priceEnd .card{color:#fff!important}
+#priceTeacherResults .hero h1,#priceTeacherResults .hero h2,#priceTeacherResults .hero h3,#priceTeacherResults .hero b,
+#priceStudentResult .hero h1,#priceStudentResult .hero h2,#priceStudentResult .hero h3,#priceStudentResult .hero b,
+#priceStudentResult #pjStudentResultTitle,#priceStudentResult #pjStudentRoundPoints,#priceStudentResult #pjStudentPendingCoins,
+#priceTeacherFinal .pj-final-banner,#priceTeacherFinal .pj-final-banner *:not(.coin-img),
+#priceStudentFinal .pj-final-banner,#priceStudentFinal .pj-final-banner *:not(.coin-img),
+#priceEnd .hero,#priceEnd .hero *:not(.coin-img){color:#fff!important;-webkit-text-fill-color:currentColor!important}
+#priceTeacherResults #pjResultTitle,#priceTeacherResults #pjRealPrice,#priceTeacherResults #pjResultBadge{color:#fff!important}
+#priceStudentResult #pjStudentResultTitle{color:#fff!important;text-shadow:0 2px 14px rgba(0,0,0,.28)}
+#priceStudentResult #pjStudentRoundPoints,#priceStudentResult #pjStudentPendingCoins{color:#ffd45f!important}
+#priceStudentResult #pjStudentDifference{font-weight:950!important}
+
+/* Files clares dels resultats/classificació */
+#priceTeacherResults .pj-result-row,#priceTeacherResults .pj-mini-rank,
+#priceEnd .pj-mini-rank{background:#fff!important;color:#18306f!important;border-color:#ded9d2!important}
+#priceTeacherResults .pj-result-row *,#priceTeacherResults .pj-mini-rank *,#priceEnd .pj-mini-rank *{color:#18306f!important;-webkit-text-fill-color:currentColor!important}
+#priceTeacherResults .pj-result-row .pj-inline-note,#priceTeacherResults .pj-mini-rank .pj-inline-note,#priceEnd .pj-mini-rank .pj-inline-note{color:#536aa5!important}
+#priceTeacherResults .pj-result-row.closest{background:linear-gradient(90deg,#fff8df,#fff)!important;border-color:#efbf47!important}
+#priceTeacherResults .pj-result-row .pj-diff.up{color:#b42318!important}
+#priceTeacherResults .pj-result-row .pj-diff.down{color:#15803d!important}
+#priceTeacherResults .pj-result-row .pj-diff.exact{color:#4b3bc9!important}
+#priceTeacherResults .pj-result-row .pj-points{color:#4b3bc9!important}
+#priceTeacherResults .pj-result-row .pj-coins{color:#8a5a00!important}
+
+/* Targetes fosques: el text genèric no pot heretar el #17192b global */
+#priceTeacherResults .card>h3,#priceTeacherResults .card>p,#priceStudentResult .card>h3,#priceStudentResult .card>p,
+#priceTeacherFinal .card>h3,#priceTeacherFinal .card>p,#priceStudentFinal .card>h3,#priceStudentFinal .card>p,#priceEnd .card>h3,#priceEnd .card>p{color:#fff!important}
+#priceStudentResult .muted,#priceTeacherResults .muted,#priceTeacherFinal .muted,#priceStudentFinal .muted,#priceEnd .muted{color:#cbd4ff!important}
+</style>
 </head>
 <body>
 <div class="app">
@@ -3567,23 +3602,45 @@ function ordinalCat(rank){
 }
 function trophyImage(sessionId,tier){const raw=String(sessionId||""),rid=pjRecipeIdFromTopic(raw);if(rid)return PJ_TROPHY_IMAGES[rid]?.[tier]||"";const n=Number(raw.replace(/\D/g,""));return TROPHY_IMAGES[`S${n}_${tier}`]||""}
 function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=scienceSessions.find(x=>x.id===id);return s?`${s.number} · ${s.title}`:id}
+let profileTrophyCache={profileId:null,promise:null};
 async function getProfileTrophies(profileId){
   if(!profileId)return [];
-  const mine=await api(`players?profile_id=eq.${profileId}&select=id,game_id,score,created_at&order=created_at.asc`);
-  const out=[];
-  for(const me of (mine||[])){
-    try{
-      const games=await api(`games?id=eq.${me.game_id}&status=eq.finished&select=id,topic,status&limit=1`);
-      if(!games||!games[0])continue;
-      const all=await api(`players?game_id=eq.${me.game_id}&select=id,profile_id,score,created_at&order=created_at.asc`);
-      const ranked=(all||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)||String(a.created_at||"").localeCompare(String(b.created_at||"")));
+  // Compartim la mateixa càrrega entre resum, trofeu destacat i palmarès.
+  // Evita repetir desenes de consultes quan s'entra al perfil.
+  if(profileTrophyCache.profileId===profileId && profileTrophyCache.promise)return profileTrophyCache.promise;
+  const promise=(async()=>{
+    const mine=await api(`players?profile_id=eq.${profileId}&select=id,game_id,score,created_at&order=created_at.asc`);
+    if(!mine?.length)return [];
+    const ids=[...new Set(mine.map(x=>x.game_id).filter(Boolean))];
+    if(!ids.length)return [];
+    const inFilter=`in.(${ids.join(",")})`;
+    // Abans: 2 consultes per partida, una rere l'altra (N+1).
+    // Ara: 2 consultes totals en paral·lel per totes les partides del perfil.
+    const [games,allPlayers]=await Promise.all([
+      api(`games?id=${inFilter}&status=eq.finished&select=id,topic,status`),
+      api(`players?game_id=${inFilter}&select=id,game_id,profile_id,score,created_at&order=created_at.asc`)
+    ]);
+    const gamesById=new Map((games||[]).map(g=>[String(g.id),g]));
+    const playersByGame=new Map();
+    for(const p of (allPlayers||[])){
+      const key=String(p.game_id);
+      if(!playersByGame.has(key))playersByGame.set(key,[]);
+      playersByGame.get(key).push(p);
+    }
+    const out=[];
+    for(const me of mine){
+      const game=gamesById.get(String(me.game_id));
+      if(!game)continue;
+      const ranked=(playersByGame.get(String(me.game_id))||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)||String(a.created_at||"").localeCompare(String(b.created_at||"")));
       const idx=ranked.findIndex(p=>p.id===me.id); if(idx<0)continue;
-      const sessionId=String(games[0].topic||"").toUpperCase();
+      const sessionId=String(game.topic||"").toUpperCase();
       if(/^S(?:[1-9]|1[0-4])$/.test(sessionId))out.push({game_id:me.game_id,sessionId,rank:idx+1,tier:trophyTierForRank(idx+1),date:me.created_at});
       else if(/^PJ\|/i.test(sessionId)){const tr=pjTier(me.score,ranked);out.push({game_id:me.game_id,sessionId,rank:tr.rank,tier:tr.tier,date:me.created_at});}
-    }catch(e){console.warn("Palmarès: no s'ha pogut llegir una partida",me.game_id,e)}
-  }
-  return out.sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+    }
+    return out.sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+  })();
+  profileTrophyCache={profileId,promise};
+  try{return await promise}catch(e){profileTrophyCache={profileId:null,promise:null};throw e}
 }
 async function refreshTrophySummary(){
   if(!currentProfile?.id)return;
@@ -3655,8 +3712,8 @@ async function refreshCurrentProfile(){
   $("#profileName").textContent=currentProfile.display_name;
   $("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
   updateProfileCharacterSummary();
-  refreshTrophySummary();
-  renderProfileHeroVisuals();
+  profileTrophyCache={profileId:null,promise:null};
+  Promise.allSettled([refreshTrophySummary(),renderProfileHeroVisuals()]);
 }
 async function addCoinsToProfile(profileId,amount){
   const rows=await api(`profiles?id=eq.${profileId}&select=coins&limit=1`);
@@ -4835,10 +4892,16 @@ $("#enterBtn").onclick=async()=>{
       return;
     }
     currentProfile=p;
-    await refreshCurrentProfile();
+    // El perfil bàsic ja ve de loadProfileByName: el pintem immediatament.
+    // Trofeus/palmarès es carreguen després, sense bloquejar l'entrada.
+    $("#profileName").textContent=currentProfile.display_name||currentProfile.name||"ALUMNE";
+    $("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
     updateProfileCharacterSummary();
-    await renderProfileHeroVisuals();
+    profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$("#profileAvatarVisual"));
+    renderProfileRecentSkins();
     show("profileHome");
+    // No fem una segona consulta del perfil ni esperem el palmarès per mostrar la pantalla.
+    Promise.allSettled([refreshTrophySummary(),renderProfileHeroVisuals()]);
   }catch(e){
     console.error(e);
     $("#homeMsg").textContent="NO S'HA POGUT CARREGAR EL PERFIL";
@@ -6315,7 +6378,7 @@ document.addEventListener("keydown",e=>{
   const scienceGenerate=$("#generateCode").onclick;
   $("#generateCode").onclick=async function(){mode=false;$("#simulateSession").classList.remove("hidden");$("#backTopics").textContent="← TORNAR ALS TEMES";return scienceGenerate.apply(this,arguments)};
 
-  console.info("Fasia Verse V0.14.6 · El Preu Just · parche gran");
+  console.info("Fasia Verse V0.14.12 · contrast Kahoot + perfil ràpid");
 })();
 </script>
 
