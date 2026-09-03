@@ -2272,7 +2272,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 
 
 <style>
-/* ===== V0.14.0 · EL PREU JUST ===== */
+/* ===== V0.14.7 · EL PREU JUST ===== */
 .pj-hero{
   background:
     radial-gradient(circle at 88% 18%,rgba(255,213,79,.32),transparent 24%),
@@ -3006,6 +3006,53 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 #priceEnd .pj-money-earned{color:#ffd05a!important}
 </style>
 
+
+<style id="pj-fasia-v0147">
+/* V0.14.7 · El Preu Just: 70/30, catàleg complet i preparació fosca */
+#pricePrep .pj-field,#pricePrep select.pj-field{background:#090d29!important;color:#fff!important;border-color:#6257b5!important;-webkit-text-fill-color:#fff!important}
+#pricePrep select.pj-field option{background:#0b1030;color:#fff}
+#pricePrep .pj-inline-note{color:#c8d0ef!important}
+#pricePrep .pj-product-row{grid-template-columns:auto 72px minmax(190px,1.25fr) minmax(190px,1fr) 86px 104px minmax(150px,.8fr) auto!important;align-items:center}
+#pricePrep .pj-remove-product{border:1px solid rgba(255,110,130,.45);background:rgba(255,75,100,.10);color:#ffb8c3;border-radius:12px;padding:10px 12px;font-weight:950;cursor:pointer}
+#pricePrep .pj-remove-product:hover{background:rgba(255,75,100,.2)}
+#pricePrep .pj-add-row{display:flex;justify-content:center;margin-top:16px}
+#pjAddIngredient{background:linear-gradient(135deg,#6f4cff,#3b62ff)!important;box-shadow:0 9px 24px rgba(76,67,220,.32)}
+#priceTeacherQuestion .pj-stage{display:grid!important;grid-template-columns:minmax(0,7fr) minmax(300px,3fr)!important;gap:18px!important;align-items:stretch}
+#priceTeacherQuestion .pj-product-card{padding:18px!important;display:grid!important;grid-template-rows:minmax(0,1fr) auto auto auto!important;min-height:calc(100vh - 115px)!important}
+#priceTeacherQuestion .pj-product-image{height:auto!important;min-height:0!important;max-height:none!important;width:100%!important;background:#fff!important;border-radius:22px!important;padding:12px!important;overflow:hidden}
+#priceTeacherQuestion .pj-product-image img{width:100%!important;height:100%!important;max-height:62vh!important;object-fit:contain!important}
+#priceTeacherQuestion #pjTeacherProduct{color:#fff!important;font-size:clamp(26px,2.3vw,38px)!important;margin:12px 0 2px!important}
+#priceTeacherQuestion #pjTeacherFormat{margin:0!important;color:#c8d0ef!important;font-size:17px!important}
+#priceTeacherQuestion #pjTeacherNeed{margin:7px 0 0!important;color:#ffd76b!important;font-size:18px!important}
+#priceTeacherQuestion .pj-question-card{padding:22px 20px!important;min-width:0!important}
+#priceTeacherQuestion .pj-question-card h2{font-size:clamp(24px,2.4vw,34px)!important;line-height:1.08!important;margin:14px 0 12px!important}
+#priceTeacherQuestion #pjTeacherAsk{display:none!important}
+#priceTeacherQuestion .pj-question-card>.muted{font-size:13px!important;line-height:1.35!important;margin:8px 0!important}
+#priceTeacherQuestion .pj-answers-status{margin-top:10px!important;gap:7px!important}
+#priceTeacherQuestion #pjCloseRound{margin-top:14px!important;padding:14px 16px!important}
+#priceStudentQuestion #pjStudentProduct{color:#fff!important;text-shadow:0 2px 12px rgba(0,0,0,.35)!important}
+#priceStudentQuestion .pj-student-eyebrow{color:#ffd76b!important}
+#priceStudentQuestion .pj-student-product{justify-content:center!important}
+#priceStudentQuestion .pj-student-product p{color:#c8d0ef!important}
+.pj-modal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(3,5,20,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
+.pj-modal-overlay.open{display:flex}
+.pj-modal{width:min(900px,96vw);max-height:90vh;overflow:auto;background:linear-gradient(150deg,#151943,#090d2b);color:#fff;border:2px solid rgba(126,91,255,.65);border-radius:24px;box-shadow:0 25px 80px rgba(0,0,0,.55);padding:22px}
+.pj-modal h2,.pj-modal h3{margin-top:0}
+.pj-modal-tabs{display:flex;gap:8px;margin:12px 0 16px}
+.pj-modal-tab{flex:1;border:1px solid #5d55a7;background:#10163a;color:#d7dcf4;border-radius:13px;padding:12px;font-weight:950;cursor:pointer}
+.pj-modal-tab.active{background:linear-gradient(135deg,#6e4cff,#405cff);color:#fff;border-color:#9b8cff}
+.pj-catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.pj-catalog-item{background:#0e1437;border:1px solid #454a85;border-radius:15px;padding:10px;color:#fff;display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;cursor:pointer;text-align:left}
+.pj-catalog-item:hover{border-color:#8d7bff;background:#151c4a}
+.pj-catalog-item .pj-prod-visual{width:54px;height:54px}
+.pj-modal-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pj-modal input{background:#080d29;color:#fff;border:1px solid #5d55a7;border-radius:12px;padding:12px;font-weight:800;width:100%;box-sizing:border-box}
+.pj-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+.pj-generic-product{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:42px;background:radial-gradient(circle,#f7f2ff,#ece8ff);color:#5e47c8}
+@media(max-width:980px){#priceTeacherQuestion .pj-stage{grid-template-columns:1fr!important}#priceTeacherQuestion .pj-product-card{min-height:auto!important}#priceTeacherQuestion .pj-product-image{height:46vh!important}#pricePrep .pj-product-row{grid-template-columns:auto 58px 1fr 1fr!important}#pricePrep .pj-total-wrap,#pricePrep .pj-remove-product{grid-column:auto!important}.pj-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.pj-catalog-grid{grid-template-columns:1fr}.pj-modal-fields{grid-template-columns:1fr}#pricePrep .pj-product-row{grid-template-columns:auto 52px 1fr!important}#pricePrep .pj-product-row>*:nth-child(n+4){grid-column:3!important}}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3329,6 +3376,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   <div class="pj-warning" style="margin-top:16px">💡 Els preus s'editen aquí i queden compartits entre receptes. Els formats i fotos de Mercadona que encara no estiguin verificats es marquen com a pendents: no els inventem.</div>
   <div class="card" style="margin-top:16px">
     <div class="row"><div><h3>PRODUCTES DE LA RECEPTA</h3><p id="pjPrepCount" class="muted"></p></div><button id="pjGenerateCode" class="btn">GENERAR CODI</button></div>
+    <div class="pj-add-row"><button id="pjAddIngredient" class="btn" type="button">+ AFEGIR INGREDIENT</button></div>
     <div id="pjProductList" class="pj-product-list" style="margin-top:14px"></div>
     <div class="pj-warning" style="margin-bottom:14px">
   <b>SUMA FINAL:</b> desmarca-la si vols treballar el preu del producte però no cal comprar-lo avui.
@@ -3456,6 +3504,30 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
       <button id="profPasswordOk" type="button">ENTRAR</button>
     </div>
     <p id="profPasswordError"></p>
+  </div>
+</div>
+
+
+<div id="pjIngredientOverlay" class="pj-modal-overlay" aria-hidden="true">
+  <div class="pj-modal" role="dialog" aria-modal="true" aria-labelledby="pjIngredientTitle">
+    <div class="row"><div><span class="chip pj-chip">🛒 CATÀLEG GLOBAL</span><h2 id="pjIngredientTitle" style="margin-top:10px">AFEGIR INGREDIENT</h2></div><button id="pjIngredientClose" class="btn secondary" type="button">✕ TANCAR</button></div>
+    <div class="pj-modal-tabs"><button class="pj-modal-tab active" data-pj-tab="catalog" type="button">CATÀLEG DE PRODUCTES</button><button class="pj-modal-tab" data-pj-tab="new" type="button">NOU PRODUCTE</button></div>
+    <div id="pjCatalogPane">
+      <input id="pjCatalogSearch" placeholder="CERCA: OUS, CEBA, FORMATGE..." autocomplete="off">
+      <div class="pj-modal-fields" style="margin-top:10px"><input id="pjCatalogNeeded" placeholder="QUANTITAT NECESSÀRIA (ex. 2 unitats)"><input id="pjCatalogUnits" type="number" min="1" max="20" value="1" placeholder="UNITATS QUE SUMEN"></div>
+      <div id="pjCatalogGrid" class="pj-catalog-grid"></div>
+    </div>
+    <div id="pjNewPane" class="hidden">
+      <p class="muted">Si no té imatge, sortirà amb una icona genèrica de Fasia Verse. El producte quedarà guardat en aquest navegador.</p>
+      <div class="pj-modal-fields">
+        <input id="pjNewName" placeholder="NOM DEL PRODUCTE">
+        <input id="pjNewFormat" placeholder="FORMAT / ENVÀS">
+        <input id="pjNewPrice" inputmode="decimal" placeholder="PREU · 0,00 €">
+        <input id="pjNewNeeded" placeholder="QUANTITAT NECESSÀRIA">
+        <input id="pjNewUnits" type="number" min="1" max="20" value="1" placeholder="UNITATS QUE SUMEN">
+      </div>
+      <div class="pj-modal-actions"><button id="pjCreateProduct" class="btn" type="button">CREAR I AFEGIR</button></div>
+    </div>
   </div>
 </div>
 
@@ -5701,63 +5773,74 @@ document.addEventListener("keydown",e=>{
   const PRODUCTS={
     arr:{name:"ARRÒS LLARG",emoji:"🍚",format:"Bossa 1 kg",price:1.20,image:"assets/productes/arros_llarg_1kg.webp"},
     pes:{name:"PÈSOLS",emoji:"🟢",format:"Bossa 1 kg",price:1.50,image:"assets/productes/pesols_1kg.webp"},
-    pas:{name:"PASTANAGUES",emoji:"🥕",format:"Bossa 500 g",price:0.80,image:"assets/productes/pastanagues_500g.webp"},
-    ous:{name:"OUS",emoji:"🥚",format:"6 ous frescos mida L",price:1.80,image:"assets/productes/ous_6_l.webp"},
+    pas:{name:"PASTANAGUES",emoji:"🥕",format:"Bossa 500 g",price:0.80,image:"assets/productes/pastanagues_500g.webp",variants:[{label:"BOSSA 500 g · 0,80 €",format:"Bossa 500 g",price:0.80,image:"assets/productes/pastanagues_500g.webp"},{label:"BOSSA 1 kg · 1,20 €",format:"Bossa 1 kg",price:1.20,image:"assets/productes/pastanagues_1kg.webp"}]},
+    ous:{name:"OUS",emoji:"🥚",format:"6 ous frescos mida L",price:1.80,image:"assets/productes/ous_6_l.webp",variants:[{label:"6 OUS L · 1,80 €",format:"6 ous frescos mida L",price:1.80,image:"assets/productes/ous_6_l.webp"},{label:"12 OUS M · 2,85 €",format:"12 ous frescos mida M",price:2.85,image:"assets/productes/ous_12_m.webp"},{label:"24 OUS M · 5,25 €",format:"24 ous frescos mida M",price:5.25,image:"assets/productes/ous_24_m.webp"}]},
     per:{name:"PERNIL DOLÇ",emoji:"🥓",format:"Pack 2 x 225 g (450 g)",price:3.35,image:"assets/productes/pernil_dolc_pack_2x225g.webp",variants:[{label:"PACK 2 × 225 g · 3,35 €",format:"Pack 2 x 225 g (450 g)",price:3.35,image:"assets/productes/pernil_dolc_pack_2x225g.webp"},{label:"12 LONCHAS · 250 g · 1,95 €",format:"12 lonchas · 250 g",price:1.95,image:"assets/productes/pernil_dolc_12_lonchas_250g.webp"}]},
     oli:{name:"OLI D'OLIVA",emoji:"🫒",format:"Ampolla 1 L",price:3.80,image:"assets/productes/oli_oliva_1l.webp"},
+    salg:{name:"OLI DE GIRA-SOL",emoji:"🌻",format:"Ampolla 1 L",price:1.85,image:"assets/productes/oli_gira_sol_1l.webp"},
     sal:{name:"SAL FINA",emoji:"🧂",format:"Paquet 1 kg",price:0.40,image:"assets/productes/sal_fina_1kg.webp"},
-    xoc:{name:"XOCOLATA",emoji:"🍫",format:"FORMAT MERCADONA PENDENT",image:""},
-    frs:{name:"FRUITS SECS",emoji:"🥜",format:"FORMAT MERCADONA PENDENT",image:""},
-    fus:{name:"FRUITA SECA",emoji:"🍇",format:"FORMAT MERCADONA PENDENT",image:""},
-    lli:{name:"LLIMONA",emoji:"🍋",format:"FORMAT MERCADONA PENDENT",image:""},
-    tar:{name:"TARONJA",emoji:"🍊",format:"FORMAT MERCADONA PENDENT",image:""},
-    pet:{name:"PETA ZETAS",emoji:"✨",format:"FORMAT MERCADONA PENDENT",image:""},
-    lle:{name:"LLET",emoji:"🥛",format:"FORMAT MERCADONA PENDENT",image:""},
-    sals:{name:"SALSITXES",emoji:"🌭",format:"FORMAT MERCADONA PENDENT",image:""},
-    fmo:{name:"FARINA DE BLAT DE MORO",emoji:"🌽",format:"FORMAT MERCADONA PENDENT",image:""},
-    fbl:{name:"FARINA DE BLAT",emoji:"🌾",format:"FORMAT MERCADONA PENDENT",image:""},
-    llev:{name:"LLEVAT QUÍMIC",emoji:"🧁",format:"FORMAT MERCADONA PENDENT",image:""},
-    car:{name:"CARBASSÓ",emoji:"🥒",format:"FORMAT MERCADONA PENDENT",image:""},
-    pat:{name:"PATATA",emoji:"🥔",format:"FORMAT MERCADONA PENDENT",image:""},
-    ceb:{name:"CEBA",emoji:"🧅",format:"FORMAT MERCADONA PENDENT",image:""},
-    bro:{name:"BROU DE VERDURES",emoji:"🥣",format:"FORMAT MERCADONA PENDENT",image:""},
-    fmt:{name:"FORMATGETS",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""},
-    feta:{name:"FORMATGE FETA",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""},
-    pvr:{name:"PEBROT VERMELL",emoji:"🫑",format:"FORMAT MERCADONA PENDENT",image:""},
-    pvd:{name:"PEBROT VERD",emoji:"🫑",format:"FORMAT MERCADONA PENDENT",image:""},
-    ore:{name:"ORENGA",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
-    all:{name:"ALL",emoji:"🧄",format:"FORMAT MERCADONA PENDENT",image:""},
-    alp:{name:"ALL EN POLS",emoji:"🧄",format:"FORMAT MERCADONA PENDENT",image:""},
-    peb:{name:"PEBRE NEGRE",emoji:"⚫",format:"FORMAT MERCADONA PENDENT",image:""},
-    cig:{name:"CIGRONS CUITS",emoji:"🫘",format:"FORMAT MERCADONA PENDENT",image:""},
-    pan:{name:"PANSES",emoji:"🍇",format:"FORMAT MERCADONA PENDENT",image:""},
-    fcg:{name:"FARINA DE CIGRÓ",emoji:"🫘",format:"FORMAT MERCADONA PENDENT",image:""},
-    esp:{name:"ESPÈCIES",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
-    ars:{name:"ARRÒS PER SUSHI",emoji:"🍚",format:"FORMAT MERCADONA PENDENT",image:""},
-    vin:{name:"VINAGRE D'ARRÒS",emoji:"🍶",format:"FORMAT MERCADONA PENDENT",image:""},
-    suc:{name:"SUCRE",emoji:"🧂",format:"FORMAT MERCADONA PENDENT",image:""},
-    nor:{name:"ALGA NORI",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
-    sur:{name:"SURIMI",emoji:"🦀",format:"FORMAT MERCADONA PENDENT",image:""},
-    alv:{name:"ALVOCAT",emoji:"🥑",format:"FORMAT MERCADONA PENDENT",image:""},
-    cog:{name:"COGOMBRE",emoji:"🥒",format:"FORMAT MERCADONA PENDENT",image:""},
-    ses:{name:"SÈSAM TORRAT",emoji:"🌾",format:"FORMAT MERCADONA PENDENT",image:""},
-    mai:{name:"MAIONESA",emoji:"🥫",format:"FORMAT MERCADONA PENDENT",image:""},
-    soja:{name:"SALSA DE SOJA",emoji:"🥢",format:"FORMAT MERCADONA PENDENT",image:""},
-    pasf:{name:"PASTA DE FULL",emoji:"🥐",format:"FORMAT MERCADONA PENDENT",image:""},
-    pesto:{name:"PESTO",emoji:"🌿",format:"FORMAT MERCADONA PENDENT",image:""},
-    frr:{name:"FORMATGE RATLLAT",emoji:"🧀",format:"FORMAT MERCADONA PENDENT",image:""}
+    xocn:{name:"XOCOLATA NEGRA PER FONDRE",emoji:"🍫",format:"Tauleta 200 g",price:2.25,image:"assets/productes/xocolata_negra_fondre_200g.webp"},
+    xocl:{name:"XOCOLATA AMB LLET PER FONDRE",emoji:"🍫",format:"Tauleta 200 g",price:2.25,image:"assets/productes/xocolata_llet_fondre_200g.webp"},
+    xocb:{name:"XOCOLATA BLANCA PER FONDRE",emoji:"🤍",format:"Tauleta 200 g",price:2.25,image:"assets/productes/xocolata_blanca_fondre_200g.webp"},
+    frs:{name:"FRUITS SECS",emoji:"🥜",format:"Bossa 200 g",price:2.50,image:"assets/productes/nous_naturals_200g.webp",variants:[
+      {label:"NOUS NATURALS · 200 g · 2,50 €",format:"Nous naturals · 200 g",price:2.50,image:"assets/productes/nous_naturals_200g.webp"},
+      {label:"KIKOS · 170 g · 1,00 €",format:"Blat de moro torrat (kikos) · 170 g",price:1.00,image:"assets/productes/kikos_170g.webp"},
+      {label:"ANACARDS NATURALS · 200 g · 2,70 €",format:"Anacards naturals · 200 g",price:2.70,image:"assets/productes/anacards_naturals_200g.webp"},
+      {label:"AMETLLES NATURALS · 200 g · 2,30 €",format:"Ametlles naturals · 200 g",price:2.30,image:"assets/productes/ametlles_naturals_200g.webp"},
+      {label:"CACAUETS FREGITS · 250 g · 0,90 €",format:"Cacauets fregits · 250 g",price:0.90,image:"assets/productes/cacauets_fregits_250g.webp"},
+      {label:"AVELLANES TORRADES · 200 g · 4,30 €",format:"Avellanes torrades 0% sal · 200 g",price:4.30,image:"assets/productes/avellanes_torrades_200g.webp"},
+      {label:"PISTATXO NATURAL · 100 g · 2,95 €",format:"Pistatxo natural · 100 g",price:2.95,image:"assets/productes/pistatxo_natural_100g.webp"},
+      {label:"PISTATXO TORRAT AMB SAL · 250 g · 3,40 €",format:"Pistatxo torrat amb sal · 250 g",price:3.40,image:"assets/productes/pistatxo_torrat_250g.webp"}
+    ]},
+    fus:{name:"FRUITA DESHIDRATADA",emoji:"🍇",format:"Còctel de fruita deshidratada · 200 g",price:1.90,image:"assets/productes/fruita_deshidratada_200g.webp"},
+    lli:{name:"LLIMONA",emoji:"🍋",format:"1 peça · aprox. 190 g",price:0.54,image:"assets/productes/llimona_unitat.webp"},
+    tar:{name:"TARONJA",emoji:"🍊",format:"1 peça · aprox. 270 g",price:0.68,image:"assets/productes/taronja_unitat.webp"},
+    pet:{name:"PETA ZETAS MADUIXA",emoji:"💥",format:"1 sobre",price:1.00,image:"assets/productes/peta_zetas_maduixa.webp"},
+    lle:{name:"LLET SENSE LACTOSA SEMIDESNATADA",emoji:"🥛",format:"Brik 1 L",price:0.94,image:"assets/productes/llet_sense_lactosa_1l.webp"},
+    sals:{name:"FRANKFURT",emoji:"🌭",format:"Pack estalvi",price:1.80,image:"assets/productes/frankfurt_pack.webp"},
+    fmo:{name:"FARINA DE BLAT DE MORO BLANC PRECUNITA",emoji:"🌽",format:"Bossa 1 kg",price:1.60,image:"assets/productes/farina_blat_moro_1kg.webp"},
+    fbl:{name:"FARINA DE BLAT",emoji:"🌾",format:"Bossa 1 kg",price:0.72,image:"assets/productes/farina_blat_1kg.webp"},
+    llev:{name:"LLEVAT QUÍMIC ROYAL",emoji:"🧁",format:"5 sobres · 80 g",price:2.25,image:"assets/productes/llevat_royal_80g.webp"},
+    car:{name:"CARBASSÓ",emoji:"🥒",format:"1 unitat",price:0.76,image:"assets/productes/carbasso_unitat.webp"},
+    pat:{name:"PATATA NOVA",emoji:"🥔",format:"1 unitat",price:0.38,image:"assets/productes/patata_nova.webp"},
+    ceb:{name:"CEBA",emoji:"🧅",format:"Malla 1 kg",price:2.00,image:"assets/productes/ceba_malla_1kg.webp"},
+    bro:{name:"BROU DE VERDURES",emoji:"🥣",format:"Brik 1 L",price:0.95,image:"assets/productes/brou_verdures_1l.webp"},
+    fmt:{name:"FORMATGETS",emoji:"🧀",format:"24 unitats · 375 g",price:1.95,image:"",variants:[{label:"24 U · 375 g · 1,95 €",format:"24 formatgets · 375 g",price:1.95,image:""},{label:"LIGHT · 16 U · 250 g · 1,50 €",format:"Formatgets Light · 16 unitats · 250 g",price:1.50,image:"assets/productes/formatgets_light_16u_250g.webp"}]},
+    feta:{name:"FORMATGE FETA",emoji:"🧀",format:"1 envàs",price:2.40,image:"assets/productes/formatge_feta.webp"},
+    pvr:{name:"PEBROT VERMELL",emoji:"🫑",format:"1 peça · aprox. 200 g",price:0.50,image:"assets/productes/pebrot_vermell_unitat.webp"},
+    pvd:{name:"PEBROT VERD PER FREGIR",emoji:"🫑",format:"1 peça · aprox. 90 g",price:0.23,image:"assets/productes/pebrot_verd_unitat.webp"},
+    ore:{name:"ORENGA",emoji:"🌿",format:"1 pot",price:1.00,image:"assets/productes/orenga.webp"},
+    all:{name:"ALL",emoji:"🧄",format:"Malla 250 g",price:1.85,image:"assets/productes/all_malla_250g.webp"},
+    alp:{name:"ALL EN POLS",emoji:"🧄",format:"1 pot",price:1.25,image:"assets/productes/all_pols.webp"},
+    peb:{name:"PEBRE NEGRE",emoji:"⚫",format:"Pebre negre mòlt",price:1.30,image:"assets/productes/pebre_negre_molt.webp",variants:[{label:"MÒLT · 1,30 €",format:"Pebre negre mòlt",price:1.30,image:"assets/productes/pebre_negre_molt.webp"},{label:"MOLINET · 1,85 €",format:"Pebre negre amb molinet",price:1.85,image:"assets/productes/pebre_negre_molinet.webp"}]},
+    cig:{name:"CIGRONS CUITS",emoji:"🫘",format:"Pot 570 g · 400 g escorreguts",price:0.80,image:"assets/productes/cigrons_cuits_570g.webp"},
+    pan:{name:"PANSES SULTANES",emoji:"🍇",format:"Bossa 250 g",price:1.80,image:"assets/productes/panses_sultanes_250g.webp"},
+    fcg:{name:"FARINA DE CIGRONS",emoji:"🫘",format:"Bossa 500 g",price:2.00,image:"assets/productes/farina_cigrons_500g.webp"},
+    ars:{name:"ARRÒS PER SUSHI",emoji:"🍚",format:"Sushi King · 1 kg",price:3.45,image:"assets/productes/arros_sushi_1kg.webp"},
+    vin:{name:"VINAGRE D'ARRÒS",emoji:"🍶",format:"Yang-Tse · 150 ml",price:2.39,image:"assets/productes/vinagre_arros_150ml.webp"},
+    suc:{name:"SUCRE",emoji:"🧂",format:"Paquet 1 kg",price:0.90,image:"assets/productes/sucre_1kg.webp"},
+    nor:{name:"ALGA NORI",emoji:"🌿",format:"Yang-Tse · 14 g · 5 fulls",price:2.09,image:"assets/productes/alga_nori_14g.webp"},
+    sur:{name:"SURIMI",emoji:"🦀",format:"6 palets · 460 g",price:1.90,image:"assets/productes/surimi_460g.webp"},
+    alv:{name:"ALVOCAT",emoji:"🥑",format:"1 unitat",price:1.65,image:"assets/productes/alvocat_unitat.webp",variants:[{label:"1 UNITAT · 1,65 €",format:"1 unitat",price:1.65,image:"assets/productes/alvocat_unitat.webp"},{label:"SAFATA 650 g · 3,25 €",format:"Safata · 650 g",price:3.25,image:"assets/productes/alvocat_safata_650g.webp"}]},
+    cog:{name:"COGOMBRE",emoji:"🥒",format:"1 peça · aprox. 250 g",price:0.38,image:"assets/productes/cogombre_unitat.webp"},
+    ses:{name:"SÈSAM",emoji:"🌾",format:"Bossa 150 g",price:1.50,image:"assets/productes/sesam_150g.webp"},
+    mai:{name:"MAIONESA",emoji:"🥫",format:"Pot 500 ml",price:1.20,image:"assets/productes/maionesa_pot_500ml.webp",variants:[{label:"POT 500 ml · 1,20 €",format:"Pot 500 ml",price:1.20,image:"assets/productes/maionesa_pot_500ml.webp"},{label:"AMPOLLA 490 ml · 1,40 €",format:"Ampolla 490 ml",price:1.40,image:"assets/productes/maionesa_ampolla_490ml.webp"}]},
+    soja:{name:"SALSA DE SOJA",emoji:"🥢",format:"Ampolla 250 ml",price:1.20,image:"assets/productes/salsa_soja_250ml.webp"},
+    pasf:{name:"MASSA",emoji:"🥐",format:"Massa de full",price:2.40,image:"",variants:[{label:"MASSA DE FULL · 2,40 €",format:"Massa de full",price:2.40,image:""},{label:"MASSA FILO · 1,95 €",format:"Massa filo",price:1.95,image:"assets/productes/massa_filo.webp"},{label:"MASSA DE PIZZA · 2,20 €",format:"Massa de pizza",price:2.20,image:"assets/productes/massa_pizza.webp"},{label:"MASSA QUEBRADA / BRISA · 2,20 €",format:"Massa quebrada / brisa",price:2.20,image:"assets/productes/massa_quebrada_brisa.webp"}]},
+    pesto:{name:"PESTO",emoji:"🌿",format:"Pot 190 g",price:1.95,image:"assets/productes/pesto_190g.webp"},
+    frr:{name:"FORMATGE RATLLAT",emoji:"🧀",format:"Mozzarella · 200 g",price:1.60,image:"assets/productes/formatge_mozzarella_ratllat_200g.webp",variants:[{label:"MOZZARELLA · 200 g · 1,60 €",format:"Mozzarella ratllada · 200 g",price:1.60,image:"assets/productes/formatge_mozzarella_ratllat_200g.webp"},{label:"EMMENTAL · 200 g · 1,65 €",format:"Emmental ratllat · 200 g",price:1.65,image:"assets/productes/formatge_emmental_ratllat_200g.webp"},{label:"4 QUESOS · 200 g · 1,75 €",format:"4 quesos ratllat · 200 g",price:1.75,image:"assets/productes/formatge_4_quesos_ratllat_200g.webp"},{label:"ESPECIAL FONDRE · 400 g · 1,90 €",format:"Especial fondre ratllat · 400 g",price:1.90,image:"assets/productes/formatge_fondre_ratllat_400g.webp"}]}
   };
 
   const RECIPES=[
     {id:"r1",trophy:"assets/preu_just/trofeus/r1_gold.webp",name:"ARRÒS TRES DELÍCIES",emoji:"🍚",items:[["arr","200 g",1,true],["pes","100 g",1,true],["pas","1 pastanaga",1,true],["ous","2 ous",1,true],["per","100 g",1,true],["oli","oli d'oliva",1,false],["sal","sal",1,false]]},
-    {id:"r2",trophy:"assets/preu_just/trofeus/r2_gold.webp",name:"BOMBONS SORPRESA",emoji:"🍫",items:[["xoc","3 tauletes diferents",3],["frs","fruits secs",1],["fus","fruita seca",1],["lli","pell de llimona",1],["tar","pell de taronja",1],["pet","Peta Zetas",1]]},
-    {id:"r3",trophy:"assets/preu_just/trofeus/r3_gold.webp",name:"CORN DOGS",emoji:"🌭",items:[["sals","12 salsitxes",1],["fmo","300 g",1],["fbl","300 g",1],["ous","3 ous",1],["lle","450 ml",1],["llev","3 culleradetes",1],["sal","una mica",1],["oli","oli per fregir",1]]},
-    {id:"r4",trophy:"assets/preu_just/trofeus/r4_gold.webp",name:"CREMA DE CARBASSÓ",emoji:"🥒",items:[["car","2 carbassons",1],["pat","1 patata",1],["ceb","1 ceba",1],["bro","500 ml",1],["fmt","2 formatgets",1],["oli","oli d'oliva",1],["sal","sal",1]]},
-    {id:"r5",trophy:"assets/preu_just/trofeus/r5_gold.webp",name:"FORMATGE FETA AMB VERDURES",emoji:"🧀",items:[["feta","200 g",1],["ceb","1 ceba",1],["pvr","1 pebrot vermell",1],["pvd","1 pebrot verd",1],["ore","orenga seca",1],["alp","all en pols",1],["peb","pebre negre",1],["oli","oli d'oliva verge extra",1]]},
-    {id:"r6",trophy:"assets/preu_just/trofeus/r6_gold.webp",name:"HAMBURGUESES DE CIGRONS",emoji:"🍔",items:[["cig","400 g",1],["ceb","1 ceba",1],["all","1 gra",1],["pas","1 pastanaga",1],["ous","1 ou",1],["pan","un grapat",1],["fcg","2 cullerades",1],["esp","espècies",1],["oli","oli d'oliva verge extra",1]]},
-    {id:"r7",trophy:"assets/preu_just/trofeus/r7_gold.webp",name:"MAKI CALIFÒRNIA",emoji:"🍣",items:[["ars","2 tasses",1],["vin","4 cullerades",1],["suc","2 cullerades",1],["sal","1/2 culleradeta",1],["nor","fulls",1],["sur","surimi",1],["alv","alvocat",1],["cog","cogombre",1],["ses","sèsam torrat",1],["mai","opcional",1],["soja","per servir",1]]},
-    {id:"r8",trophy:"assets/preu_just/trofeus/r8_gold.webp",name:"PALMERES AL PESTO",emoji:"🌿",items:[["pasf","1 làmina",1],["pesto","pesto",1],["frr","60 g",1],["ous","1 ou",1]]},
-    {id:"r9",trophy:"assets/preu_just/trofeus/r9_gold.webp",name:"TRUITA DE PATATES",emoji:"🥔",items:[["pat","4 patates",1],["ous","4 ous",1],["ceb","1 ceba (opcional)",1],["oli","oli d'oliva",1],["sal","sal",1]]}
+    {id:"r2",trophy:"assets/preu_just/trofeus/r2_gold.webp",name:"BOMBONS SORPRESA",emoji:"🍫",items:[["xocn","xocolata negra",1,true],["xocl","xocolata amb llet",1,true],["xocb","xocolata blanca",1,true],["frs","fruits secs",1,true],["fus","fruita deshidratada",1,true],["lli","pell de llimona",1,true],["tar","pell de taronja",1,true],["pet","1 sobre",1,true]]},
+    {id:"r3",trophy:"assets/preu_just/trofeus/r3_gold.webp",name:"CORN DOGS",emoji:"🌭",items:[["sals","12 salsitxes",1,true],["fmo","300 g",1,true],["fbl","300 g",1,true],["ous","3 ous",1,true],["lle","450 ml",1,true],["llev","3 culleradetes",1,true],["sal","una mica",1,false],["salg","oli per fregir",1,false]]},
+    {id:"r4",trophy:"assets/preu_just/trofeus/r4_gold.webp",name:"CREMA DE CARBASSÓ",emoji:"🥒",items:[["car","2 carbassons",2,true],["pat","1 patata",1,true],["ceb","1 ceba",1,true],["bro","500 ml",1,true],["fmt","2 formatgets",1,true],["oli","oli d'oliva",1,false],["sal","sal",1,false]]},
+    {id:"r5",trophy:"assets/preu_just/trofeus/r5_gold.webp",name:"FORMATGE FETA AMB VERDURES",emoji:"🧀",items:[["feta","200 g",1,true],["ceb","1 ceba",1,true],["pvr","1 pebrot vermell",1,true],["pvd","1 pebrot verd",1,true],["ore","orenga seca",1,true],["alp","all en pols",1,true],["peb","pebre negre",1,true],["oli","oli d'oliva verge extra",1,false]]},
+    {id:"r6",trophy:"assets/preu_just/trofeus/r6_gold.webp",name:"HAMBURGUESES DE CIGRONS",emoji:"🍔",items:[["cig","400 g",1,true],["ceb","1 ceba",1,true],["all","1 gra",1,true],["pas","1 pastanaga",1,true],["ous","1 ou",1,true],["pan","un grapat",1,true],["fcg","2 cullerades",1,true],["oli","oli d'oliva verge extra",1,false]]},
+    {id:"r7",trophy:"assets/preu_just/trofeus/r7_gold.webp",name:"MAKI CALIFÒRNIA",emoji:"🍣",items:[["ars","2 tasses",1,true],["vin","4 cullerades",1,true],["suc","2 cullerades",1,true],["sal","1/2 culleradeta",1,false],["nor","fulls",1,true],["sur","surimi",1,true],["alv","1 alvocat",1,true],["cog","1 cogombre",1,true],["ses","sèsam",1,true],["mai","opcional",1,true],["soja","per servir",1,true]]},
+    {id:"r8",trophy:"assets/preu_just/trofeus/r8_gold.webp",name:"PALMERES AL PESTO",emoji:"🌿",items:[["pasf","1 làmina",1,true],["pesto","pesto",1,true],["frr","60 g",1,true],["ous","1 ou",1,true]]},
+    {id:"r9",trophy:"assets/preu_just/trofeus/r9_gold.webp",name:"TRUITA DE PATATES",emoji:"🥔",items:[["pat","4 patates",4,true],["ous","4 ous",1,true],["ceb","1 ceba (opcional)",1,true],["oli","oli d'oliva",1,false],["sal","sal",1,false]]}
   ];
 
   let saved={};
@@ -5773,8 +5856,13 @@ document.addEventListener("keydown",e=>{
     const x={};Object.entries(PRODUCTS).forEach(([id,p])=>x[id]={price:p.price,format:p.format});
     localStorage.setItem(PJ_STORE_KEY,JSON.stringify(x));
   };
+  const PJ_CUSTOM_KEY="fasiaverse_pj_custom_products_v1";
+  let customCatalog={};
+  try{customCatalog=JSON.parse(localStorage.getItem(PJ_CUSTOM_KEY)||"{}")||{}}catch{}
+  Object.assign(PRODUCTS,customCatalog);
+  const saveCustomCatalog=()=>localStorage.setItem(PJ_CUSTOM_KEY,JSON.stringify(customCatalog));
 
-  let mode=false,recipe=null,selection=new Set(),totalSelection=new Set(),payload=null,teacherIndex=0,roundPoll=null,locked=false,rewardsCommitted=false;
+  let mode=false,recipe=null,workingItems=[],selection=new Set(),totalSelection=new Set(),payload=null,teacherIndex=0,roundPoll=null,locked=false,rewardsCommitted=false;
   let studentInput="",finalInput="",studentState="",studentIndex=-1;
 
   const originalJoin=$("#profileJoinGameBtn").onclick;
@@ -5782,9 +5870,9 @@ document.addEventListener("keydown",e=>{
   const originalStart=$("#startGame").onclick;
   const originalBack=$("#backTopics").onclick;
 
-  const product=id=>PRODUCTS[id]||{name:id,emoji:"🛒",format:"FORMAT PENDENT",image:""};
+  const product=id=>(payload?.custom?.[id])||PRODUCTS[id]||{name:id,emoji:"🛒",format:"FORMAT PENDENT",image:""};
   const recipeById=id=>RECIPES.find(r=>r.id===id);
-  const visual=p=>p.image?`<img src="${p.image}" alt="${p.name}">`:(p.emoji||"🛒");
+  const visual=p=>p.image?`<img src="${p.image}" alt="${p.name}">`:`<div class="pj-generic-product">${p.emoji||"🛒"}</div>`;
   const itemProduct=it=>{
     const p=product(it.id);
     if(p.variants?.length){
@@ -5794,18 +5882,22 @@ document.addEventListener("keydown",e=>{
     return p;
   };
 
+  const encTxt=s=>btoa(unescape(encodeURIComponent(String(s||"")))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/g,"");
+  const decTxt=s=>{try{let x=String(s||"").replace(/-/g,"+").replace(/_/g,"/");while(x.length%4)x+="=";return decodeURIComponent(escape(atob(x)))}catch{return ""}};
   function topicFromPayload(x){
-    const items=x.items.map(a=>`${a.id}.${a.price}.${a.units}.${Number(a.variant||0)}.${a.includeTotal===false?0:1}`).join(",");
-    return `PJ|${x.recipe}|${items}|${(x.skipped||[]).join(".")}`;
+    const items=x.items.map(a=>`${a.id}.${a.price}.${a.units}.${Number(a.variant||0)}.${a.includeTotal===false?0:1}.${encTxt(a.needed||"")}`).join(",");
+    const custom={};(x.items||[]).forEach(a=>{if(String(a.id).startsWith("custom_")&&PRODUCTS[a.id]){const p=PRODUCTS[a.id];custom[a.id]={name:p.name,emoji:p.emoji||"🛒",format:p.format||"FORMAT PENDENT",price:Number(p.price||0),image:""}}});
+    const customTxt=Object.keys(custom).length?encTxt(JSON.stringify(custom)):"";
+    return `PJ|${x.recipe}|${items}|${(x.skipped||[]).join(".")}|${customTxt}`;
   }
   function payloadFromTopic(topic){
     const s=String(topic||"");if(!s.startsWith("PJ|"))return null;
-    const p=s.split("|");
+    const p=s.split("|");let custom={};try{custom=p[4]?JSON.parse(decTxt(p[4])):{} }catch{}
     return {
-      recipe:p[1],
+      recipe:p[1],custom,
       items:(p[2]||"").split(",").filter(Boolean).map(v=>{
-        const [id,price,units,variant,includeTotal]=v.split(".");
-        return{id,price:Number(price||0),units:Number(units||1),variant:Number(variant||0),includeTotal:includeTotal===undefined?true:includeTotal!=="0"};
+        const [id,price,units,variant,includeTotal,needed]=v.split(".");
+        return{id,price:Number(price||0),units:Number(units||1),variant:Number(variant||0),includeTotal:includeTotal===undefined?true:includeTotal!=="0",needed:decTxt(needed||"")};
       }),
       skipped:(p[3]||"").split(".").filter(Boolean).map(Number)
     };
@@ -5818,111 +5910,95 @@ document.addEventListener("keydown",e=>{
     const grid=$("#pjRecipeGrid");grid.innerHTML="";
     RECIPES.forEach((r,i)=>{
       const b=document.createElement("button");b.type="button";b.className="pj-recipe-card";
-      b.innerHTML=`<div class="pj-recipe-visual">${r.emoji}</div><div class="pj-recipe-copy"><span class="session-number">RECEPTA ${i+1}</span><h3>${r.name}</h3><small>${r.items.length} PRODUCTES / INGREDIENTS</small></div>`;
+      b.innerHTML=`<div class="pj-recipe-visual"><img src="${r.trophy}" alt="Trofeu ${r.name}"></div><div class="pj-recipe-copy"><span class="session-number">RECEPTA ${i+1}</span><h3>${r.name}</h3><small>${r.items.length} PRODUCTES / INGREDIENTS</small></div>`;
       b.onclick=()=>openPrep(r.id);grid.appendChild(b);
     });
   }
 
   function openPrep(id){
-    recipe=recipeById(id);mode=true;selection=new Set(recipe.items.map((_,i)=>i));totalSelection=new Set(recipe.items.map((x,i)=>x[3]===false?null:i).filter(i=>i!==null));
+    recipe=recipeById(id);mode=true;workingItems=recipe.items.map(x=>[...x]);selection=new Set(workingItems.map((_,i)=>i));totalSelection=new Set(workingItems.map((x,i)=>x[3]===false?null:i).filter(i=>i!==null));
     $("#pjPrepTitle").textContent=recipe.name;renderPrep();show("pricePrep");
+  }
+
+  function removePrepItem(i){
+    workingItems.splice(i,1);
+    const sel=[...selection].filter(x=>x!==i).map(x=>x>i?x-1:x),tot=[...totalSelection].filter(x=>x!==i).map(x=>x>i?x-1:x);
+    selection=new Set(sel);totalSelection=new Set(tot);renderPrep();
   }
 
   function renderPrep(){
     const list=$("#pjProductList");list.innerHTML="";
-    recipe.items.forEach(([pid,needed,defaultUnits,defaultInclude],i)=>{
+    workingItems.forEach(([pid,needed,defaultUnits,defaultInclude],i)=>{
       const p=product(pid),row=document.createElement("div");
       row.className="pj-product-row"+(selection.has(i)?"":" off");
 
       const toggle=document.createElement("button");
-      toggle.className="pj-toggle "+(selection.has(i)?"on":"");
-      toggle.textContent=selection.has(i)?"✓":"";
-      toggle.title="Incloure aquest producte al joc";
+      toggle.className="pj-toggle "+(selection.has(i)?"on":"");toggle.textContent=selection.has(i)?"✓":"";toggle.title="Incloure aquest producte al joc";
       toggle.onclick=()=>{selection.has(i)?selection.delete(i):selection.add(i);renderPrep()};
 
       const vis=document.createElement("div");vis.className="pj-prod-visual";vis.innerHTML=visual(p);
-      const info=document.createElement("div");info.innerHTML=`<b>${p.name}</b><div class="pj-inline-note">RECEPTA: ${needed}</div>`;
+      const info=document.createElement("div");info.innerHTML=`<b>${p.name}</b><div class="pj-inline-note">RECEPTA: ${needed||"ingredient afegit"}</div>`;
 
       let fmt;
       if(p.variants?.length){
-        fmt=document.createElement("select");
-        fmt.className="pj-field pj-variant-edit";
-        p.variants.forEach((v,idx)=>{
-          const o=document.createElement("option");o.value=idx;o.textContent=v.label||v.format;fmt.appendChild(o);
-        });
-        fmt.onchange=()=>{
-          const v=p.variants[Number(fmt.value)||0];
-          vis.innerHTML=visual({...p,...v});
-          price.value=Number(v.price).toFixed(2).replace(".",",");
-        };
+        fmt=document.createElement("select");fmt.className="pj-field pj-variant-edit";
+        p.variants.forEach((v,idx)=>{const o=document.createElement("option");o.value=idx;o.textContent=v.label||v.format;fmt.appendChild(o)});
+        fmt.onchange=()=>{const v=p.variants[Number(fmt.value)||0];vis.innerHTML=visual({...p,...v});price.value=Number(v.price).toFixed(2).replace(".",",")};
       }else{
-        fmt=document.createElement("input");fmt.className="pj-field pj-format-edit";fmt.value=p.format||"";fmt.placeholder="FORMAT MERCADONA";
-        fmt.onchange=()=>{p.format=fmt.value.trim()||"FORMAT MERCADONA PENDENT";saveStore()};
+        fmt=document.createElement("input");fmt.className="pj-field pj-format-edit";fmt.value=p.format||"";fmt.placeholder="FORMAT / ENVÀS";
+        fmt.onchange=()=>{p.format=fmt.value.trim()||"FORMAT PENDENT";if(String(pid).startsWith("custom_")){customCatalog[pid]=p;saveCustomCatalog()}saveStore()};
       }
 
-      const units=document.createElement("input");
-      units.className="pj-field pj-units-edit";units.type="number";units.min="1";units.max="20";units.step="1";units.value=defaultUnits||1;
+      const units=document.createElement("input");units.className="pj-field pj-units-edit";units.type="number";units.min="1";units.max="20";units.step="1";units.value=defaultUnits||1;
+      units.title="Nombre d'unitats/envàsos que compten a la compra final";
 
-      const price=document.createElement("input");
-      price.className="pj-field pj-price-field pj-price-edit";price.inputMode="decimal";price.placeholder="0,00 €";
+      const price=document.createElement("input");price.className="pj-field pj-price-field pj-price-edit";price.inputMode="decimal";price.placeholder="0,00 €";
       price.value=Number.isFinite(Number(p.price))?Number(p.price).toFixed(2).replace(".",","):"";
-      price.onchange=()=>{
-        const v=Number(price.value.replace(",",".").replace(/[^\d.]/g,""));
-        if(!p.variants?.length){p.price=Number.isFinite(v)&&v>0?v:null;saveStore()}
-        price.value=Number.isFinite(v)&&v>0?v.toFixed(2).replace(".",","):"";
-      };
+      price.onchange=()=>{const v=Number(price.value.replace(",",".").replace(/[^\d.]/g,""));if(!p.variants?.length){p.price=Number.isFinite(v)&&v>0?v:null;if(String(pid).startsWith("custom_")){customCatalog[pid]=p;saveCustomCatalog()}saveStore()}price.value=Number.isFinite(v)&&v>0?v.toFixed(2).replace(".",","):""};
 
-      const totalLabel=document.createElement("label");
-      totalLabel.className="pj-total-wrap"+(totalSelection.has(i)?"":" off-total");
-      totalLabel.title="El producte igualment surt al joc. Aquesta casella només decideix si es compta a la ronda final.";
-      const totalCb=document.createElement("input");
-      totalCb.type="checkbox";totalCb.className="pj-total-edit";totalCb.checked=totalSelection.has(i);
-      const totalText=document.createElement("span");totalText.textContent="SUMA FINAL";
-      totalCb.onchange=()=>{
-        totalCb.checked?totalSelection.add(i):totalSelection.delete(i);
-        totalLabel.classList.toggle("off-total",!totalCb.checked);
-      };
-      totalLabel.append(totalCb,totalText);
+      const totalLabel=document.createElement("label");totalLabel.className="pj-total-wrap"+(totalSelection.has(i)?"":" off-total");totalLabel.title="Decideix si aquest producte entra a la compra final";
+      const totalCb=document.createElement("input");totalCb.type="checkbox";totalCb.className="pj-total-edit";totalCb.checked=totalSelection.has(i);
+      const totalText=document.createElement("span");totalText.textContent="COMPRA FINAL";
+      totalCb.onchange=()=>{totalCb.checked?totalSelection.add(i):totalSelection.delete(i);totalLabel.classList.toggle("off-total",!totalCb.checked)};totalLabel.append(totalCb,totalText);
 
-      row.append(toggle,vis,info,fmt,units,price,totalLabel);list.appendChild(row);
+      const remove=document.createElement("button");remove.type="button";remove.className="pj-remove-product";remove.textContent="✕ TREURE";remove.onclick=()=>removePrepItem(i);
+      row.append(toggle,vis,info,fmt,units,price,totalLabel,remove);list.appendChild(row);
     });
-    $("#pjPrepCount").textContent=`${selection.size} DE ${recipe.items.length} PRODUCTES ACTIVATS · ${[...totalSelection].filter(i=>selection.has(i)).length} SUMEN AL TOTAL FINAL`;
+    $("#pjPrepCount").textContent=`${selection.size} DE ${workingItems.length} PRODUCTES ACTIVATS · ${[...totalSelection].filter(i=>selection.has(i)).length} A LA COMPRA FINAL`;
     $("#pjPrepMsg").classList.add("hidden");
   }
+
+  function openIngredientModal(){renderCatalog("");$("#pjIngredientOverlay").classList.add("open");$("#pjIngredientOverlay").setAttribute("aria-hidden","false")}
+  function closeIngredientModal(){$("#pjIngredientOverlay").classList.remove("open");$("#pjIngredientOverlay").setAttribute("aria-hidden","true")}
+  function renderCatalog(q=""){
+    const box=$("#pjCatalogGrid");if(!box)return;box.innerHTML="";q=String(q).trim().toLocaleLowerCase("ca");
+    Object.entries(PRODUCTS).sort((a,b)=>a[1].name.localeCompare(b[1].name)).filter(([id,p])=>!q||(`${p.name} ${p.format||""}`).toLocaleLowerCase("ca").includes(q)).forEach(([id,p])=>{
+      const b=document.createElement("button");b.type="button";b.className="pj-catalog-item";b.innerHTML=`<div class="pj-prod-visual">${visual(p)}</div><div><b>${p.name}</b><div class="pj-inline-note">${p.format||""}</div><div style="margin-top:3px;color:#ffd76b;font-weight:950">${Number(p.price||0).toFixed(2).replace(".",",")} €</div></div>`;
+      b.onclick=()=>{const needed=$("#pjCatalogNeeded").value.trim()||"ingredient afegit",units=Math.max(1,Math.min(20,Number($("#pjCatalogUnits").value||1)));workingItems.push([id,needed,units,true]);selection.add(workingItems.length-1);totalSelection.add(workingItems.length-1);closeIngredientModal();renderPrep()};box.appendChild(b);
+    });
+  }
+  function createCustomProduct(){
+    const name=$("#pjNewName").value.trim().toUpperCase(),format=$("#pjNewFormat").value.trim(),entered=Number($("#pjNewPrice").value.replace(",",".").replace(/[^\d.]/g,"")),needed=$("#pjNewNeeded").value.trim()||"ingredient afegit",units=Math.max(1,Math.min(20,Number($("#pjNewUnits").value||1)));
+    if(!name||!format||!Number.isFinite(entered)||entered<=0){alert("OMPLE NOM, FORMAT I PREU DEL NOU PRODUCTE");return}
+    const id="custom_"+Date.now().toString(36),p={name,emoji:"🛒",format,price:entered,image:""};PRODUCTS[id]=p;customCatalog[id]=p;saveCustomCatalog();workingItems.push([id,needed,units,true]);selection.add(workingItems.length-1);totalSelection.add(workingItems.length-1);closeIngredientModal();renderPrep();
+    ["#pjNewName","#pjNewFormat","#pjNewPrice","#pjNewNeeded"].forEach(s=>$(s).value="");$("#pjNewUnits").value="1";
+  }
+
   async function generateGame(){
     const btn=$("#pjGenerateCode");btn.disabled=true;
     try{
       const rows=[...$("#pjProductList").children],items=[],missing=[];
-      recipe.items.forEach(([pid,needed,defaultUnits,defaultInclude],i)=>{
-        if(!selection.has(i))return;
-        const p=product(pid);
-        const variantEl=rows[i]?.querySelector(".pj-variant-edit"),variant=variantEl?Number(variantEl.value||0):0;
-        const chosen=p.variants?.length?p.variants[variant]:p;
-        const units=Math.max(1,Math.min(20,Number(rows[i]?.querySelector(".pj-units-edit")?.value||defaultUnits||1)));
-        const priceEl=rows[i]?.querySelector(".pj-price-edit");
-        const entered=Number(String(priceEl?.value||"").replace(",",".").replace(/[^\d.]/g,""));
-        const cents=Math.round((Number.isFinite(entered)&&entered>0?entered:Number(chosen.price||0))*100);
-        const includeTotal=!!rows[i]?.querySelector(".pj-total-edit")?.checked;
-        if(!cents)missing.push(p.name);
-        items.push({id:pid,price:cents,units,needed,variant,includeTotal});
+      workingItems.forEach(([pid,needed,defaultUnits,defaultInclude],i)=>{
+        if(!selection.has(i))return;const p=product(pid),variantEl=rows[i]?.querySelector(".pj-variant-edit"),variant=variantEl?Number(variantEl.value||0):0,chosen=p.variants?.length?p.variants[variant]:p;
+        const units=Math.max(1,Math.min(20,Number(rows[i]?.querySelector(".pj-units-edit")?.value||defaultUnits||1))),priceEl=rows[i]?.querySelector(".pj-price-edit"),entered=Number(String(priceEl?.value||"").replace(",",".").replace(/[^\d.]/g,"")),cents=Math.round((Number.isFinite(entered)&&entered>0?entered:Number(chosen.price||0))*100),includeTotal=!!rows[i]?.querySelector(".pj-total-edit")?.checked;
+        if(!cents)missing.push(p.name);items.push({id:pid,price:cents,units,needed,variant,includeTotal});
       });
       if(missing.length){const m=$("#pjPrepMsg");m.textContent="FALTEN PREUS: "+missing.join(", ");m.classList.remove("hidden");return}
       if(!items.length){const m=$("#pjPrepMsg");m.textContent="ACTIVA COM A MÍNIM UN PRODUCTE";m.classList.remove("hidden");return}
-      payload={recipe:recipe.id,items,skipped:[]};
-      let created=null;
-      for(let tries=0;tries<8&&!created;tries++){
-        generatedCode=String(Math.floor(1000+Math.random()*9000));
-        try{
-          const x=await api("games",{method:"POST",body:JSON.stringify({code:generatedCode,topic:topicFromPayload(payload),status:"waiting",current_question:0})});
-          created=x&&x[0];
-        }catch(e){if(!/duplicate|unique/i.test(e.message))throw e}
-      }
-      if(!created)throw new Error("NO S'HA POGUT GENERAR UN CODI ÚNIC");
-      onlineGameId=created.id;players=[];mode=true;teacherIndex=activeIndices(payload)[0]||0;rewardsCommitted=false;
-      renderPlayers();$("#gameCode").textContent=generatedCode;$("#simulateSession").classList.add("hidden");$("#backTopics").textContent="← TORNAR A LA RECEPTA";
-      show("teacherLobby");clearInterval(lobbyPoll);lobbyPoll=setInterval(refreshOnlinePlayers,1000);refreshOnlinePlayers();
-    }catch(e){alert("ERROR SUPABASE: "+e.message)}
-    finally{btn.disabled=false}
+      payload={recipe:recipe.id,items,skipped:[],custom:{}};items.forEach(a=>{if(String(a.id).startsWith("custom_")&&PRODUCTS[a.id])payload.custom[a.id]=PRODUCTS[a.id]});
+      let created=null;for(let tries=0;tries<8&&!created;tries++){generatedCode=String(Math.floor(1000+Math.random()*9000));try{const x=await api("games",{method:"POST",body:JSON.stringify({code:generatedCode,topic:topicFromPayload(payload),status:"waiting",current_question:0})});created=x&&x[0]}catch(e){if(!/duplicate|unique/i.test(e.message))throw e}}
+      if(!created)throw new Error("NO S'HA POGUT GENERAR UN CODI ÚNIC");onlineGameId=created.id;players=[];mode=true;teacherIndex=activeIndices(payload)[0]||0;rewardsCommitted=false;renderPlayers();$("#gameCode").textContent=generatedCode;$("#simulateSession").classList.add("hidden");$("#backTopics").textContent="← TORNAR A LA RECEPTA";show("teacherLobby");clearInterval(lobbyPoll);lobbyPoll=setInterval(refreshOnlinePlayers,1000);refreshOnlinePlayers();
+    }catch(e){alert("ERROR SUPABASE: "+e.message)}finally{btn.disabled=false}
   }
 
   async function startTeacher(){
@@ -5937,7 +6013,7 @@ document.addEventListener("keydown",e=>{
     $("#pjTeacherCounter").textContent=`PRODUCTE ${pos}/${act.length}`;
     $("#pjTeacherImage").innerHTML=visual(p);$("#pjTeacherProduct").textContent=p.name;$("#pjTeacherFormat").textContent=p.format;
     $("#pjTeacherNeed").textContent=`NECESSITEM: ${item.needed||""}${item.units>1?` · ${item.units} ENVASOS/UNITATS`:""}`;
-    $("#pjTeacherAsk").textContent=item.units>1?"PREU D'1 UNITAT":"PREU DE L'ENVÀS";
+    $("#pjTeacherAsk").textContent="";
     $("#pjCloseRound").disabled=true;show("priceTeacherQuestion");
     pollAnswers(false);roundPoll=setInterval(()=>pollAnswers(false),700);
   }
@@ -5985,7 +6061,7 @@ document.addEventListener("keydown",e=>{
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
       for(const s of scored){
         const p=by.get(s.player_id);if(!p)continue;
-        const b=closest.has(s.player_id)?250:0,cb=closest.has(s.player_id)?1:0,newScore=Number(p.score||0)+s.pts+b,newCoins=Number(p.coins||0)+s.coins+cb;
+        const eligible=s.pct<=30,b=closest.has(s.player_id)?250:0,cb=(closest.has(s.player_id)&&eligible)?1:0,newScore=Number(p.score||0)+s.pts+b,newCoins=Number(p.coins||0)+s.coins+cb;
         await Promise.all([
           api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
           api(`answers?id=eq.${s.id}`,{method:"PATCH",body:JSON.stringify({correct:s.diff===0,points:s.pts+b})})
@@ -6028,7 +6104,7 @@ document.addEventListener("keydown",e=>{
   }
 
   function summary(selector){
-    const box=$(selector);box.innerHTML="";
+    const box=$(selector);if(!box)return;box.innerHTML="";
     activeIndices(payload).filter(i=>payload.items[i].includeTotal!==false).forEach(i=>{
       const it=payload.items[i],p=itemProduct(it),d=document.createElement("div");d.className="pj-summary-card";
       d.innerHTML=`<div class="pj-prod-visual">${visual(p)}</div><b>${p.name}</b><div class="pj-inline-note">${p.format}</div><div style="margin-top:6px;font-weight:950">${it.units} ${it.units===1?"ENVÀS/UNITAT":"ENVASOS/UNITATS"}</div>${it.includeTotal===false?'<div class="pj-total-badge">NO CAL COMPRAR · NO SUMA</div>':''}`;
@@ -6050,11 +6126,11 @@ document.addEventListener("keydown",e=>{
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
         api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
       ]);
-      const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,2)}));
+      const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
       for(const s of scored){
         const p=by.get(s.player_id);if(!p)continue;
-        const cb=closest.has(s.player_id)?2:0,newScore=Number(p.score||0)+s.pts,newCoins=Number(p.coins||0)+s.coins+cb;
+        const eligible=s.pct<=30,cb=(closest.has(s.player_id)&&eligible)?1:0,newScore=Number(p.score||0)+s.pts,newCoins=Number(p.coins||0)+s.coins+cb;
         await Promise.all([
           api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
           api(`answers?id=eq.${s.id}`,{method:"PATCH",body:JSON.stringify({correct:s.diff===0,points:s.pts})})
@@ -6126,7 +6202,7 @@ document.addEventListener("keydown",e=>{
 
   function loadStudentQuestion(index){
     studentState="playing";studentIndex=index;
-    const it=payload.items[index],p=product(it.id),act=activeIndices(payload),pos=act.indexOf(index)+1;
+    const it=payload.items[index],p=itemProduct(it),act=activeIndices(payload),pos=act.indexOf(index)+1;
     $("#pjStudentCounter").textContent=`PRODUCTE ${pos}/${act.length}`;$("#pjStudentProduct").textContent=p.name;
     studentInput="";updateDisplay("#pjStudentDisplay","");$("#pjStudentError").classList.add("hidden");$("#pjStudentSent").classList.add("hidden");$("#pjStudentConfirm").disabled=false;
     buildKeypad("#pjStudentKeypad",()=>studentInput,v=>studentInput=v,"#pjStudentDisplay","#pjStudentError");show("priceStudentQuestion");
@@ -6164,7 +6240,7 @@ document.addEventListener("keydown",e=>{
 
   function loadStudentFinal(){
     finalInput="";updateDisplay("#pjFinalDisplay","");$("#pjFinalError").classList.add("hidden");$("#pjFinalSent").classList.add("hidden");$("#pjFinalConfirm").disabled=false;
-    summary("#pjStudentFinalSummary");buildKeypad("#pjFinalKeypad",()=>finalInput,v=>finalInput=v,"#pjFinalDisplay","#pjFinalError");show("priceStudentFinal");
+    buildKeypad("#pjFinalKeypad",()=>finalInput,v=>finalInput=v,"#pjFinalDisplay","#pjFinalError");show("priceStudentFinal");
   }
 
   function startPricePolling(){
@@ -6189,6 +6265,10 @@ document.addEventListener("keydown",e=>{
     if(t.dataset.topic==="CIÈNCIA I EXPERIMENTS")t.onclick=()=>{mode=false;$("#simulateSession").classList.remove("hidden");$("#backTopics").textContent="← TORNAR ALS TEMES";renderScienceSessions();show("scienceSessions")};
   });
 
+  // V0.14.7 · catàleg d'ingredients
+  $("#pjAddIngredient").onclick=openIngredientModal;$("#pjIngredientClose").onclick=closeIngredientModal;$("#pjIngredientOverlay").onclick=e=>{if(e.target.id==="pjIngredientOverlay")closeIngredientModal()};
+  $("#pjCatalogSearch").oninput=e=>renderCatalog(e.target.value);$("#pjCreateProduct").onclick=createCustomProduct;
+  $$(".pj-modal-tab").forEach(b=>b.onclick=()=>{$$(".pj-modal-tab").forEach(x=>x.classList.toggle("active",x===b));const cat=b.dataset.pjTab==="catalog";$("#pjCatalogPane").classList.toggle("hidden",!cat);$("#pjNewPane").classList.toggle("hidden",cat)});
   $("#pjBackTopics").onclick=()=>{mode=false;show("teacherTopics")};
   $("#pjBackRecipes").onclick=()=>{renderRecipes();show("priceRecipes")};
   $("#pjGenerateCode").onclick=generateGame;$("#pjCloseRound").onclick=finishRound;$("#pjSkipProduct").onclick=skipRound;$("#pjNextRound").onclick=nextRound;$("#pjCloseFinal").onclick=finishFinal;
