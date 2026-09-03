@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.12 · Contrast + Perfil ràpid</title>
+<title>Fasia Verse · V0.14.6 · El Preu Just</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3062,41 +3062,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 @media(max-width:620px){.pj-catalog-grid{grid-template-columns:1fr}.pj-modal-fields{grid-template-columns:1fr}#pricePrep .pj-product-row{grid-template-columns:auto 52px 1fr!important}#pricePrep .pj-product-row>*:nth-child(n+4){grid-column:3!important}}
 </style>
 
-
-<style id="pj-kahoot-contrast-v01412">
-/* V0.14.12 · PREU JUST segueix el mateix criteri de contrast que el Kahoot:
-   fons fosc = text blanc; superfície clara = text blau fosc. */
-#priceTeacherResults,#priceStudentResult,#priceTeacherFinal,#priceStudentFinal,#priceEnd{color:#fff!important}
-#priceTeacherResults .hero,#priceStudentResult .hero,#priceTeacherFinal .pj-final-banner,#priceStudentFinal .pj-final-banner,#priceEnd .hero,
-#priceTeacherResults .card,#priceStudentResult .card,#priceTeacherFinal .card,#priceStudentFinal .card,#priceEnd .card{color:#fff!important}
-#priceTeacherResults .hero h1,#priceTeacherResults .hero h2,#priceTeacherResults .hero h3,#priceTeacherResults .hero b,
-#priceStudentResult .hero h1,#priceStudentResult .hero h2,#priceStudentResult .hero h3,#priceStudentResult .hero b,
-#priceStudentResult #pjStudentResultTitle,#priceStudentResult #pjStudentRoundPoints,#priceStudentResult #pjStudentPendingCoins,
-#priceTeacherFinal .pj-final-banner,#priceTeacherFinal .pj-final-banner *:not(.coin-img),
-#priceStudentFinal .pj-final-banner,#priceStudentFinal .pj-final-banner *:not(.coin-img),
-#priceEnd .hero,#priceEnd .hero *:not(.coin-img){color:#fff!important;-webkit-text-fill-color:currentColor!important}
-#priceTeacherResults #pjResultTitle,#priceTeacherResults #pjRealPrice,#priceTeacherResults #pjResultBadge{color:#fff!important}
-#priceStudentResult #pjStudentResultTitle{color:#fff!important;text-shadow:0 2px 14px rgba(0,0,0,.28)}
-#priceStudentResult #pjStudentRoundPoints,#priceStudentResult #pjStudentPendingCoins{color:#ffd45f!important}
-#priceStudentResult #pjStudentDifference{font-weight:950!important}
-
-/* Files clares dels resultats/classificació */
-#priceTeacherResults .pj-result-row,#priceTeacherResults .pj-mini-rank,
-#priceEnd .pj-mini-rank{background:#fff!important;color:#18306f!important;border-color:#ded9d2!important}
-#priceTeacherResults .pj-result-row *,#priceTeacherResults .pj-mini-rank *,#priceEnd .pj-mini-rank *{color:#18306f!important;-webkit-text-fill-color:currentColor!important}
-#priceTeacherResults .pj-result-row .pj-inline-note,#priceTeacherResults .pj-mini-rank .pj-inline-note,#priceEnd .pj-mini-rank .pj-inline-note{color:#536aa5!important}
-#priceTeacherResults .pj-result-row.closest{background:linear-gradient(90deg,#fff8df,#fff)!important;border-color:#efbf47!important}
-#priceTeacherResults .pj-result-row .pj-diff.up{color:#b42318!important}
-#priceTeacherResults .pj-result-row .pj-diff.down{color:#15803d!important}
-#priceTeacherResults .pj-result-row .pj-diff.exact{color:#4b3bc9!important}
-#priceTeacherResults .pj-result-row .pj-points{color:#4b3bc9!important}
-#priceTeacherResults .pj-result-row .pj-coins{color:#8a5a00!important}
-
-/* Targetes fosques: el text genèric no pot heretar el #17192b global */
-#priceTeacherResults .card>h3,#priceTeacherResults .card>p,#priceStudentResult .card>h3,#priceStudentResult .card>p,
-#priceTeacherFinal .card>h3,#priceTeacherFinal .card>p,#priceStudentFinal .card>h3,#priceStudentFinal .card>p,#priceEnd .card>h3,#priceEnd .card>p{color:#fff!important}
-#priceStudentResult .muted,#priceTeacherResults .muted,#priceTeacherFinal .muted,#priceStudentFinal .muted,#priceEnd .muted{color:#cbd4ff!important}
-</style>
+\n<style id="pj-v01413-kahoot-contrast-final">\n/* V0.14.13 · CONTRAST FINAL. Mateixa norma que Kahoot:\n   fons fosc = text blanc / fons clar = text blau fosc. */\n\n/* Pantalles i targetes fosques */\n#priceTeacherQuestion,#priceTeacherResults,#priceStudentQuestion,#priceStudentResult,#priceTeacherFinal,#priceStudentFinal,#priceEnd{color:#fff!important}\n#priceTeacherQuestion .pj-question-card,#priceTeacherQuestion .pj-product-card,\n#priceTeacherResults .hero,#priceTeacherResults .card,\n#priceStudentResult .hero,#priceStudentResult .card,\n#priceTeacherFinal .card,#priceStudentFinal .card,#priceEnd .hero,#priceEnd .card{color:#fff!important}\n\n/* Textos que tenien un color fosc explícit en CSS antic */\n#pjResultTitle,#pjStudentResultTitle,#pjStudentRoundPoints,#pjStudentPendingCoins,\n#pjEndRecipe,#pjEndCoins,#pjEndBalance,\n#priceTeacherResults .card>h3,#priceStudentResult .card>h3,#priceStudentResult .card>b,\n#priceTeacherFinal .card>h3,#priceStudentFinal .card>h3,#priceEnd .card>h3,\n#priceTeacherQuestion .pj-question-card h2,#priceTeacherQuestion #pjTeacherProduct{color:#fff!important}\n\n/* Text secundari sobre fons fosc */\n#priceTeacherResults .muted,#priceStudentResult .muted,#priceTeacherFinal .muted,#priceStudentFinal .muted,#priceEnd .muted,\n#priceTeacherQuestion .muted{color:#cbd4ff!important}\n\n/* Xips sobre fons fosc: mai blanc sobre blanc/lila pàl·lid */\n#priceTeacherQuestion .chip,#priceTeacherResults .chip,#priceStudentQuestion .chip,\n#priceStudentResult .chip,#priceTeacherFinal .chip,#priceStudentFinal .chip,#priceEnd .chip{\n  background:linear-gradient(135deg,#7255f4,#563bd5)!important;color:#fff!important;\n  border:1px solid rgba(255,255,255,.42)!important\n}\n\n/* Files CLARES de resultats/classificació */\n#priceTeacherResults .pj-result-row,#priceTeacherResults .pj-mini-rank,#priceEnd .pj-mini-rank{\n  background:#fff!important;color:#18306f!important;border-color:#ddd9d2!important\n}\n#priceTeacherResults .pj-result-row.closest{background:linear-gradient(90deg,#fff7d8,#fff)!important;border-color:#efbf47!important}\n#priceTeacherResults .pj-result-row :is(b,strong,span,div),\n#priceTeacherResults .pj-mini-rank :is(b,strong,span,div),\n#priceEnd .pj-mini-rank :is(b,strong,span,div){color:#18306f!important}\n#priceTeacherResults .pj-result-row .pj-inline-note,#priceTeacherResults .pj-mini-rank .pj-inline-note,#priceEnd .pj-mini-rank .pj-inline-note{color:#536aa5!important}\n#priceTeacherResults .pj-result-row .pj-diff.up{color:#b42318!important}\n#priceTeacherResults .pj-result-row .pj-diff.down{color:#15803d!important}\n#priceTeacherResults .pj-result-row .pj-diff.exact{color:#4b3bc9!important}\n#priceTeacherResults .pj-result-row .pj-points{color:#4b3bc9!important}\n#priceTeacherResults .pj-result-row .pj-coins{color:#8a5a00!important}\n\n/* Resultat alumne: informació principal ben visible */\n#pjStudentResultTitle{color:#fff!important;text-shadow:0 2px 12px rgba(0,0,0,.35)!important}\n#pjStudentRoundPoints,#pjStudentPendingCoins{color:#fff!important;text-shadow:0 2px 12px rgba(0,0,0,.28)!important}\n#pjStudentDifference.up{color:#ff8d82!important}\n#pjStudentDifference.down{color:#45d47c!important}\n#pjStudentDifference.exact{color:#ffd45f!important}\n\n/* Preparació: la fila és clara, camps són foscos */\n#pricePrep .pj-product-row{background:#fff!important;color:#18306f!important}\n#pricePrep .pj-product-row :is(b,strong){color:#18306f!important}\n#pricePrep .pj-product-row .pj-inline-note,#pricePrep .pj-product-row .pj-total-wrap{color:#4562ad!important}\n#pricePrep .pj-product-row .pj-field,#pricePrep .pj-product-row select.pj-field,#pricePrep .pj-product-row input{\n  background:#090d29!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#6257b5!important\n}\n#pricePrep .pj-product-row .pj-field::placeholder,#pricePrep .pj-product-row input::placeholder{color:#cbd4ff!important;opacity:1}\n</style>\n
 </head>
 <body>
 <div class="app">
@@ -3602,60 +3568,61 @@ function ordinalCat(rank){
 }
 function trophyImage(sessionId,tier){const raw=String(sessionId||""),rid=pjRecipeIdFromTopic(raw);if(rid)return PJ_TROPHY_IMAGES[rid]?.[tier]||"";const n=Number(raw.replace(/\D/g,""));return TROPHY_IMAGES[`S${n}_${tier}`]||""}
 function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=scienceSessions.find(x=>x.id===id);return s?`${s.number} · ${s.title}`:id}
-let profileTrophyCache={profileId:null,promise:null};
 async function getProfileTrophies(profileId){
   if(!profileId)return [];
-  // Compartim la mateixa càrrega entre resum, trofeu destacat i palmarès.
-  // Evita repetir desenes de consultes quan s'entra al perfil.
-  if(profileTrophyCache.profileId===profileId && profileTrophyCache.promise)return profileTrophyCache.promise;
-  const promise=(async()=>{
-    const mine=await api(`players?profile_id=eq.${profileId}&select=id,game_id,score,created_at&order=created_at.asc`);
-    if(!mine?.length)return [];
-    const ids=[...new Set(mine.map(x=>x.game_id).filter(Boolean))];
-    if(!ids.length)return [];
-    const inFilter=`in.(${ids.join(",")})`;
-    // Abans: 2 consultes per partida, una rere l'altra (N+1).
-    // Ara: 2 consultes totals en paral·lel per totes les partides del perfil.
-    const [games,allPlayers]=await Promise.all([
-      api(`games?id=${inFilter}&status=eq.finished&select=id,topic,status`),
-      api(`players?game_id=${inFilter}&select=id,game_id,profile_id,score,created_at&order=created_at.asc`)
-    ]);
-    const gamesById=new Map((games||[]).map(g=>[String(g.id),g]));
-    const playersByGame=new Map();
-    for(const p of (allPlayers||[])){
-      const key=String(p.game_id);
-      if(!playersByGame.has(key))playersByGame.set(key,[]);
-      playersByGame.get(key).push(p);
-    }
-    const out=[];
-    for(const me of mine){
-      const game=gamesById.get(String(me.game_id));
-      if(!game)continue;
-      const ranked=(playersByGame.get(String(me.game_id))||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)||String(a.created_at||"").localeCompare(String(b.created_at||"")));
-      const idx=ranked.findIndex(p=>p.id===me.id); if(idx<0)continue;
-      const sessionId=String(game.topic||"").toUpperCase();
-      if(/^S(?:[1-9]|1[0-4])$/.test(sessionId))out.push({game_id:me.game_id,sessionId,rank:idx+1,tier:trophyTierForRank(idx+1),date:me.created_at});
-      else if(/^PJ\|/i.test(sessionId)){const tr=pjTier(me.score,ranked);out.push({game_id:me.game_id,sessionId,rank:tr.rank,tier:tr.tier,date:me.created_at});}
-    }
-    return out.sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
-  })();
-  profileTrophyCache={profileId,promise};
-  try{return await promise}catch(e){profileTrophyCache={profileId:null,promise:null};throw e}
+  /* El palmarès NOMÉS es consulta quan s'obre. Tres blocs de consultes, no 2 consultes per partida. */
+  const mine=await api(`players?profile_id=eq.${profileId}&select=id,game_id,score,created_at&order=created_at.asc`);
+  if(!mine?.length)return [];
+  const gameIds=[...new Set(mine.map(x=>x.game_id).filter(Boolean))];
+  const chunk=(arr,n=35)=>Array.from({length:Math.ceil(arr.length/n)},(_,i)=>arr.slice(i*n,(i+1)*n));
+  const inFilter=ids=>ids.map(id=>`\"${String(id).replace(/\"/g,'')}\"`).join(',');
+  const gameRows=(await Promise.all(chunk(gameIds).map(ids=>api(`games?id=in.(${inFilter(ids)})&status=eq.finished&select=id,topic,status`)))).flat();
+  const finishedIds=new Set(gameRows.map(g=>g.id));
+  if(!finishedIds.size)return [];
+  const playersRows=(await Promise.all(chunk([...finishedIds]).map(ids=>api(`players?game_id=in.(${inFilter(ids)})&select=id,game_id,profile_id,score,created_at&order=created_at.asc`)))).flat();
+  const gameById=new Map(gameRows.map(g=>[g.id,g]));
+  const playersByGame=new Map();
+  for(const p of playersRows){if(!playersByGame.has(p.game_id))playersByGame.set(p.game_id,[]);playersByGame.get(p.game_id).push(p)}
+  const tierPower={green:1,bronze:2,silver:3,gold:4};
+  const best=new Map();
+  for(const me of mine){
+    if(!finishedIds.has(me.game_id))continue;
+    const game=gameById.get(me.game_id),all=(playersByGame.get(me.game_id)||[]).slice();
+    if(!game||!all.length)continue;
+    const distinct=[...new Set(all.map(p=>Number(p.score||0)))].sort((a,b)=>b-a);
+    const rank=distinct.indexOf(Number(me.score||0))+1;
+    if(rank<1)continue;
+    const sessionId=String(game.topic||'').toUpperCase();
+    let trophy=null;
+    if(/^S(?:[1-9]|1[0-4])$/.test(sessionId)) trophy={game_id:me.game_id,sessionId,rank,tier:trophyTierForRank(rank),date:me.created_at};
+    else if(/^PJ\|/i.test(sessionId)){const tr=pjTier(me.score,all);trophy={game_id:me.game_id,sessionId,rank:tr.rank,tier:tr.tier,date:me.created_at};}
+    if(!trophy)continue;
+    /* Una sola copa per sessió/recepta: sempre conservem la millor. */
+    const key=pjRecipeIdFromTopic(sessionId)?`PJ:${pjRecipeIdFromTopic(sessionId)}`:sessionId;
+    const prev=best.get(key);
+    if(!prev || tierPower[trophy.tier]>tierPower[prev.tier] || (tierPower[trophy.tier]===tierPower[prev.tier] && String(trophy.date||'')>String(prev.date||''))) best.set(key,trophy);
+  }
+  return [...best.values()].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+}
+function setTrophySummaryFromList(ts){
+  const c={gold:0,silver:0,bronze:0,green:0};(ts||[]).forEach(t=>c[t.tier]++);
+  if($('#profileTrophyCount'))$('#profileTrophyCount').textContent=`${ts.length} ${ts.length===1?'TROFEU':'TROFEUS'}`;
+  if($('#profileTrophyBreakdown'))$('#profileTrophyBreakdown').textContent=ts.length?`🥇 ${c.gold} · 🥈 ${c.silver} · 🥉 ${c.bronze} · 🟢 ${c.green}`:'ENCARA CAP TROFEU';
+  return c;
 }
 async function refreshTrophySummary(){
+  /* No es crida en entrar al perfil. Només si l'usuari obre el palmarès. */
   if(!currentProfile?.id)return;
-  try{const ts=await getProfileTrophies(currentProfile.id);const c={gold:0,silver:0,bronze:0,green:0};ts.forEach(t=>c[t.tier]++);
-    $("#profileTrophyCount").textContent=`${ts.length} ${ts.length===1?"TROFEU":"TROFEUS"}`;
-    $("#profileTrophyBreakdown").textContent=ts.length?`🥇 ${c.gold} · 🥈 ${c.silver} · 🥉 ${c.bronze} · 🟢 ${c.green}`:"ENCARA CAP TROFEU";
-  }catch(e){console.error("Error resum palmarès",e)}
+  try{setTrophySummaryFromList(await getProfileTrophies(currentProfile.id))}catch(e){console.error('Error resum palmarès',e)}
 }
 async function openTrophiesScreen(){
-  show("trophiesHome");$("#trophyStats").innerHTML="<b>CARREGANT PALMARÈS...</b>";$("#trophyCollection").innerHTML="";
-  try{const ts=await getProfileTrophies(currentProfile?.id);const c={gold:0,silver:0,bronze:0,green:0};ts.forEach(t=>c[t.tier]++);
-    $("#trophyStats").innerHTML=`<div class="big" style="font-size:36px">${ts.length} TROFEUS</div><div class="trophy-mini-row">🥇 ${c.gold} OR · 🥈 ${c.silver} PLATA · 🥉 ${c.bronze} BRONZE · 🟢 ${c.green} VERD</div>`;
-    if(!ts.length){$("#trophyCollection").innerHTML='<div class="trophy-empty card">ENCARA NO HAS ACONSEGUIT CAP TROFEU.<br>🎮 A JUGAR!</div>';return}
-    $("#trophyCollection").innerHTML=ts.map(t=>`<div class="trophy-card"><img src="${trophyImage(t.sessionId,t.tier)}" alt="Trofeu ${TROPHY_LABELS[t.tier]}"><div class="trophy-tier">${TROPHY_LABELS[t.tier]} · ${ordinalCat(t.rank)}</div><div class="trophy-session">${sessionNameById(t.sessionId)}</div><div class="trophy-date">${t.date?new Date(t.date).toLocaleDateString("ca-ES"):""}</div></div>`).join("");
-  }catch(e){$("#trophyStats").innerHTML="<b>NO S'HA POGUT CARREGAR EL PALMARÈS</b>";console.error(e)}
+  show('trophiesHome');$('#trophyStats').innerHTML='<b>CARREGANT PALMARÈS...</b>';$('#trophyCollection').innerHTML='';
+  try{
+    const ts=await getProfileTrophies(currentProfile?.id),c=setTrophySummaryFromList(ts);
+    $('#trophyStats').innerHTML=`<div class="big" style="font-size:36px">${ts.length} TROFEUS ÚNICS</div><div class="trophy-mini-row">🥇 ${c.gold} OR · 🥈 ${c.silver} PLATA · 🥉 ${c.bronze} BRONZE · 🟢 ${c.green} VERD</div>`;
+    if(!ts.length){$('#trophyCollection').innerHTML='<div class="trophy-empty card">ENCARA NO HAS ACONSEGUIT CAP TROFEU.<br>🎮 A JUGAR!</div>';return}
+    $('#trophyCollection').innerHTML=ts.map(t=>`<div class="trophy-card"><img src="${trophyImage(t.sessionId,t.tier)}" alt="Trofeu ${TROPHY_LABELS[t.tier]}"><div class="trophy-tier">${TROPHY_LABELS[t.tier]} · ${ordinalCat(t.rank)}</div><div class="trophy-session">${sessionNameById(t.sessionId)}</div><div class="trophy-date">${t.date?new Date(t.date).toLocaleDateString('ca-ES'):''}</div></div>`).join('');
+  }catch(e){$('#trophyStats').innerHTML="<b>NO S'HA POGUT CARREGAR EL PALMARÈS</b>";console.error(e)}
 }
 async function showEarnedTrophy(){
   const box=$("#studentEarnedTrophy"); if(!box)return; box.classList.add("hidden");
@@ -3709,11 +3676,10 @@ async function refreshCurrentProfile(){
     const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
   }
-  $("#profileName").textContent=currentProfile.display_name;
-  $("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+  $('#profileName').textContent=currentProfile.display_name;
+  $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
   updateProfileCharacterSummary();
-  profileTrophyCache={profileId:null,promise:null};
-  Promise.allSettled([refreshTrophySummary(),renderProfileHeroVisuals()]);
+  renderProfileHeroVisuals();
 }
 async function addCoinsToProfile(profileId,amount){
   const rows=await api(`profiles?id=eq.${profileId}&select=coins&limit=1`);
@@ -3922,22 +3888,12 @@ function renderProfileRecentSkins(){
     const empty=document.createElement("div");empty.className="profile-recent-skin profile-recent-empty";empty.textContent="ENCARA CAP COMPRA";box.appendChild(empty);
   }
 }
-async function renderProfileHeroVisuals(){
-  profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$("#profileAvatarVisual"));
+function renderProfileHeroVisuals(){
+  profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$('#profileAvatarVisual'));
   renderProfileRecentSkins();
-  const trophyBox=$("#profileFeaturedTrophy");
-  if(!trophyBox)return;
-  trophyBox.classList.add("hidden");trophyBox.innerHTML="";
-  if(!currentProfile?.id)return;
-  try{
-    const trophies=await getProfileTrophies(currentProfile.id);
-    const t=trophies[0];
-    if(!t)return;
-    const src=trophyImage(t.sessionId,t.tier);
-    if(!src)return;
-    trophyBox.innerHTML=`<img src="${src}" alt="Trofeu">`;
-    trophyBox.classList.remove("hidden");
-  }catch(e){console.warn("No s'ha pogut carregar el trofeu destacat",e)}
+  /* El trofeu destacat no bloqueja mai l'entrada al perfil. El palmarès es carrega només quan s'obre. */
+  const trophyBox=$('#profileFeaturedTrophy');
+  if(trophyBox){trophyBox.classList.add('hidden');trophyBox.innerHTML=''}
 }
 
 function updateProfileCharacterSummary(){
@@ -4875,39 +4831,34 @@ const show=id=>{screens.forEach(s=>s.classList.remove("active"));$("#"+id).class
 let players=[], currentQuestion=0, timer=40, timerId=null, questionStartedAt=null;
 let chosenBase="", chosenVariant="", chosenImg="", previewMode=false, generatedCode="";
 
-$("#enterBtn").onclick=async()=>{
-  const raw=$("#entryCode").value.trim();
+$('#enterBtn').onclick=async()=>{
+  const raw=$('#entryCode').value.trim();
   const code=raw.toUpperCase();
-  $("#homeMsg").textContent="";
-  if(code==="YV"){
+  $('#homeMsg').textContent='';
+  if(code==='YV'){
     previewMode=false;
-    currentProfile={id:null,name:"professor",display_name:"PROFESSOR",coins:0,role:"teacher"};
-    show("teacherTopics");
+    currentProfile={id:null,name:'professor',display_name:'PROFESSOR',coins:0,role:'teacher'};
+    show('teacherTopics');
     return;
   }
   try{
+    /* UNA sola consulta. loadProfileByName ja retorna tot el que necessita la portada del perfil. */
     const p=await loadProfileByName(raw);
-    if(!p||p.role!=="student"){
-      $("#homeMsg").textContent="NOM NO RECONEGUT";
-      return;
-    }
+    if(!p||p.role!=='student'){$('#homeMsg').textContent='NOM NO RECONEGUT';return}
     currentProfile=p;
-    // El perfil bàsic ja ve de loadProfileByName: el pintem immediatament.
-    // Trofeus/palmarès es carreguen després, sense bloquejar l'entrada.
-    $("#profileName").textContent=currentProfile.display_name||currentProfile.name||"ALUMNE";
-    $("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
-    updateProfileCharacterSummary();
-    profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$("#profileAvatarVisual"));
-    renderProfileRecentSkins();
-    show("profileHome");
-    // No fem una segona consulta del perfil ni esperem el palmarès per mostrar la pantalla.
-    Promise.allSettled([refreshTrophySummary(),renderProfileHeroVisuals()]);
+    $('#profileName').textContent=currentProfile.display_name;
+    $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+    /* No carreguem palmarès ni cap partida abans de mostrar el perfil. */
+    if($('#profileTrophyCount'))$('#profileTrophyCount').textContent='PALMARÈS';
+    if($('#profileTrophyBreakdown'))$('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
+    show('profileHome');
+    requestAnimationFrame(()=>{updateProfileCharacterSummary();renderProfileHeroVisuals()});
   }catch(e){
     console.error(e);
-    $("#homeMsg").textContent="NO S'HA POGUT CARREGAR EL PERFIL";
+    $('#homeMsg').textContent="NO S'HA POGUT CARREGAR EL PERFIL";
   }
 };
-$("#entryCode").addEventListener("keydown",e=>{if(e.key==="Enter") $("#enterBtn").click();});
+$('#entryCode').addEventListener("keydown",e=>{if(e.key==="Enter") $("#enterBtn").click();});
 
 const profOverlay = $("#profPasswordOverlay");
 const profInput = $("#profPasswordInput");
@@ -6378,7 +6329,7 @@ document.addEventListener("keydown",e=>{
   const scienceGenerate=$("#generateCode").onclick;
   $("#generateCode").onclick=async function(){mode=false;$("#simulateSession").classList.remove("hidden");$("#backTopics").textContent="← TORNAR ALS TEMES";return scienceGenerate.apply(this,arguments)};
 
-  console.info("Fasia Verse V0.14.12 · contrast Kahoot + perfil ràpid");
+  console.info("Fasia Verse V0.14.6 · El Preu Just · parche gran");
 })();
 </script>
 
