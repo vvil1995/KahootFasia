@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.20 · Botiga de marcs</title>
+<title>Fasia Verse · V0.14.22 · Marcs sala online</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3222,8 +3222,241 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 .rank-row .player-featured-trophy{width:38px;height:38px}
 </style>
 
-<style id="frames-shop-v01420">
-.frames-shop-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}.frames-shop-wallet{display:flex;align-items:center;gap:9px;padding:14px 18px;border:1px solid #7847d8;border-radius:18px;background:#0b1031}.frames-shop-wallet span:first-child,.frames-shop-wallet b{font-weight:1000;color:#ffd15a}.frames-shop-wallet b{font-size:28px}.frames-shop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.frame-shop-card{background:linear-gradient(180deg,#10143a,#090d28);border:1px solid #5635a4;border-radius:22px;padding:14px;text-align:center;color:#fff}.frame-shop-card.owned{border-color:#39d98a}.frame-shop-card.equipped{border-color:#ffd15a;box-shadow:0 0 0 2px rgba(255,209,90,.15)}.frame-preview{aspect-ratio:1;display:grid;place-items:center;border-radius:17px;overflow:hidden;background:radial-gradient(circle,#24325f,#0b102d)}.frame-preview img{width:100%;height:100%;object-fit:contain}.frame-shop-card h3{margin:10px 0 3px}.frame-price{font-weight:1000;color:#ffd15a;margin-bottom:10px}.frame-action{width:100%;min-height:42px;border:0;border-radius:12px;font-weight:1000;color:#fff;background:linear-gradient(135deg,#8d28ff,#2d9cff);cursor:pointer}.frame-action.buy{background:linear-gradient(135deg,#ff9b2f,#ffcf45);color:#241300}.frame-action.equipped{background:rgba(255,209,90,.14);color:#ffd15a;border:1px solid rgba(255,209,90,.5)}#equippedFrameOverlay{position:absolute;inset:-3%;width:106%;height:106%;object-fit:contain;pointer-events:none;z-index:6}@media(max-width:900px){.frames-shop-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.frames-shop-grid{grid-template-columns:1fr}.frames-shop-head{flex-direction:column;align-items:flex-start}}</style>
+<style id="frames-shop-v01421">
+/* PERFIL: MARCS/TÍTOLS sota PALMARÈS + PERSONATGES */
+.profile-v12 .profile-top-card{
+  grid-template-columns:330px minmax(280px,1fr) 235px!important;
+}
+.profile-collection-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;margin-bottom:110px;
+}
+.profile-collection-card{
+  min-height:132px;border-radius:26px;padding:22px 24px;display:grid;
+  grid-template-columns:78px 1fr 44px;align-items:center;gap:18px;text-align:left;
+  border:1px solid rgba(124,83,255,.55);background:linear-gradient(135deg,#10163e,#090d29);
+  color:white;box-shadow:0 12px 28px rgba(0,0,0,.16);
+}
+button.profile-collection-card{cursor:pointer}
+.frames-live{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 82% 20%,rgba(73,180,255,.24),transparent 34%),
+    radial-gradient(circle at 12% 90%,rgba(177,50,255,.25),transparent 36%),
+    linear-gradient(135deg,#16104b,#0b1540 55%,#08223e);
+  border-color:#7b48ff;
+}
+.frames-live:before{
+  content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.08) 48%,transparent 68%);
+  transform:translateX(-120%);transition:transform .55s ease;pointer-events:none;
+}
+.frames-live:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(87,42,255,.28)}
+.frames-live:hover:before{transform:translateX(120%)}
+.profile-collection-icon{
+  width:70px;height:70px;border-radius:20px;display:grid;place-items:center;font-size:34px;
+  background:linear-gradient(145deg,#8d28ff,#2d9cff);box-shadow:0 10px 24px rgba(71,88,255,.30);
+}
+.profile-collection-copy{display:flex;flex-direction:column;gap:4px}
+.profile-collection-kicker{font-size:12px;font-weight:1000;letter-spacing:.08em;color:#c9adff}
+.profile-collection-copy b{font-size:28px;line-height:1}
+.profile-collection-copy small{font-size:13px;font-weight:850;color:#c8cce1}
+.profile-collection-arrow{font-size:50px;line-height:1;color:#8fcaff;text-align:center}
+.titles-soon{opacity:.72;border-color:rgba(130,120,185,.34);background:linear-gradient(135deg,#11142e,#0b0e22)}
+.titles-soon .profile-collection-icon{background:#242743;box-shadow:none}
+.profile-collection-lock{text-align:center;font-size:22px}
+
+/* BOTIGA MARCS · FASIA VERSE */
+#framesHome.frames-fasia-screen{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 16% 10%,rgba(138,39,255,.20),transparent 28%),
+    radial-gradient(circle at 88% 16%,rgba(34,169,255,.16),transparent 26%),
+    linear-gradient(180deg,#070b24 0%,#090d2d 52%,#06091f 100%);
+  color:#fff;
+}
+.frames-fasia-shell{padding-top:24px!important;padding-bottom:80px!important}
+.frames-topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}
+.frames-back-btn{
+  min-height:48px;padding:0 20px;border-radius:15px;border:1px solid #7441df;
+  background:rgba(15,19,55,.92);color:#fff;font-weight:1000;cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.20)
+}
+.frames-back-btn:hover{background:#24145f;transform:translateY(-1px)}
+.frames-shop-wallet{
+  display:flex;align-items:center;gap:9px;padding:13px 18px;border:1px solid #8a50ff;border-radius:18px;
+  background:linear-gradient(135deg,#161044,#090e30);box-shadow:0 10px 26px rgba(56,26,145,.22)
+}
+.frames-shop-wallet span:first-child,.frames-shop-wallet b{font-weight:1000;color:#ffd15a}
+.frames-shop-wallet b{font-size:28px}
+.frames-shop-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:24px}
+.frames-shop-head h2{
+  margin:8px 0 6px;font-size:44px;line-height:1;font-weight:1000;letter-spacing:-.03em;color:#fff;
+  text-shadow:0 0 22px rgba(132,77,255,.34)
+}
+.frames-shop-head p{margin:0;color:#aeb6d5;font-weight:850;letter-spacing:.02em}
+.frames-kicker{display:inline-flex;align-items:center;gap:7px;color:#c89cff;font-size:14px;font-weight:1000;letter-spacing:.08em}
+.frames-shop-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.frame-shop-card{
+  position:relative;overflow:hidden;background:
+    radial-gradient(circle at 50% 8%,rgba(84,104,255,.12),transparent 34%),
+    linear-gradient(180deg,#111640,#090d29);
+  border:1px solid #5135a1;border-radius:24px;padding:14px;text-align:center;color:#fff;
+  box-shadow:0 12px 28px rgba(0,0,0,.24);transition:.18s ease
+}
+.frame-shop-card:hover{transform:translateY(-4px);border-color:#8d5bff;box-shadow:0 18px 36px rgba(32,18,92,.34)}
+.frame-shop-card.owned{border-color:#27d79a}
+.frame-shop-card.equipped{border-color:#ffd15a;box-shadow:0 0 0 2px rgba(255,209,90,.14),0 18px 36px rgba(0,0,0,.30)}
+.frame-preview{
+  aspect-ratio:1;display:grid;place-items:center;border-radius:19px;overflow:hidden;
+  background:radial-gradient(circle at 50% 42%,#24376c 0%,#141c49 58%,#0a0f2e 100%);
+  border:1px solid rgba(128,139,255,.18)
+}
+.frame-preview img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 14px rgba(0,0,0,.25))}
+.frame-shop-card h3{margin:12px 0 4px;font-size:20px}
+.frame-price{font-weight:1000;color:#ffd15a;margin-bottom:10px}
+.frame-action{
+  width:100%;min-height:44px;border:0;border-radius:13px;font-weight:1000;color:#fff;
+  background:linear-gradient(135deg,#8d28ff,#2d9cff);cursor:pointer
+}
+.frame-action:hover{filter:brightness(1.08)}
+.frame-action.buy{background:linear-gradient(135deg,#ff9b2f,#ffcf45);color:#241300}
+.frame-action.equipped{background:rgba(255,209,90,.12);color:#ffd15a;border:1px solid rgba(255,209,90,.52)}
+
+/* Marc equipat sobre l'avatar */
+#profileAvatarFrame{isolation:isolate}
+#profileAvatarVisual{position:relative;z-index:1}
+#equippedFrameOverlay{
+  position:absolute!important;left:-12px!important;top:-12px!important;
+  width:284px!important;height:284px!important;object-fit:contain!important;
+  pointer-events:none!important;z-index:3!important;max-width:none!important;
+  filter:drop-shadow(0 8px 10px rgba(0,0,0,.22))
+}
+#profileAvatarFrame:before{z-index:2}
+
+@media(max-width:1100px){
+  .profile-v12 .profile-top-card{grid-template-columns:300px 1fr 210px!important}
+}
+@media(max-width:900px){
+  .frames-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .profile-collection-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .frames-shop-grid{grid-template-columns:1fr}
+  .frames-shop-head h2{font-size:34px}
+  .frames-topbar{align-items:stretch}
+  .profile-collection-card{grid-template-columns:62px 1fr 36px}
+}
+</style>
+
+<style id="online-player-identity-v01422">
+#playersList .online-player-card{
+  min-height:92px;
+  display:grid!important;
+  grid-template-columns:84px minmax(0,1fr) 58px;
+  align-items:center;
+  gap:14px;
+  padding:12px 14px!important;
+  border-bottom:1px solid rgba(116,106,255,.22)!important;
+}
+.online-player-avatar{
+  position:relative;
+  width:70px;
+  height:70px;
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+.online-player-avatar .teacher-player-avatar-img{
+  width:58px!important;
+  height:58px!important;
+  min-width:58px!important;
+  min-height:58px!important;
+  object-fit:cover!important;
+  border-radius:14px!important;
+  position:relative;
+  z-index:1;
+  border:0!important;
+}
+.player-frame-overlay{
+  position:absolute!important;
+  inset:-5px!important;
+  width:80px!important;
+  height:80px!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  pointer-events:none!important;
+  z-index:3!important;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.32));
+}
+.online-player-info{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;
+}
+.online-player-nick{
+  font-size:18px;
+  line-height:1.05;
+  font-weight:1000;
+  color:#fff;
+}
+.online-player-name{
+  font-size:14px;
+  color:#aeb6d5;
+  font-weight:800;
+}
+.online-player-title{
+  display:inline-flex;
+  align-self:flex-start;
+  margin-top:4px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:rgba(151,68,255,.14);
+  border:1px solid rgba(151,68,255,.42);
+  color:#cfadff;
+  font-size:11px;
+  font-weight:1000;
+  letter-spacing:.04em;
+}
+.online-player-trophy-wrap{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+}
+.online-player-trophy{
+  width:48px!important;
+  height:48px!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 5px 7px rgba(0,0,0,.4));
+}
+.ranking-player-identity{
+  overflow:visible!important;
+  gap:12px!important;
+}
+.ranking-avatar{
+  width:60px;
+  height:60px;
+}
+.ranking-avatar .teacher-player-avatar-img{
+  width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important;
+}
+.ranking-avatar .player-frame-overlay{
+  width:68px!important;height:68px!important;inset:-4px!important;
+}
+.ranking-player-trophy{
+  width:34px!important;height:34px!important;object-fit:contain!important;
+  margin-left:4px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));
+}
+@media(max-width:650px){
+  #playersList .online-player-card{grid-template-columns:74px minmax(0,1fr) 46px}
+  .online-player-avatar{width:62px;height:62px}
+  .online-player-avatar .teacher-player-avatar-img{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important}
+  .player-frame-overlay{width:72px!important;height:72px!important;inset:-5px!important}
+  .online-player-trophy{width:40px!important;height:40px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3261,15 +3494,6 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
       <h2 id="profileName" class="profile-display-name">ALUMNE</h2>
     </div>
 
-    <div class="profile-quick-card profile-soon" aria-disabled="true">
-      <div class="profile-quick-icon" id="openFramesShop">▣</div>
-      <b>MARCS</b><small>BOTIGA</small>
-    </div>
-    <div class="profile-quick-card profile-soon" aria-disabled="true">
-      <div class="profile-quick-icon">♛</div>
-      <b>TÍTOLS</b><small>PROPERAMENT</small>
-    </div>
-
     <div class="profile-coins-area">
       <button id="profileLogout" class="profile-logout">SORTIR ↗</button>
       <div class="profile-coins-label">MONEDES</div>
@@ -3297,6 +3521,28 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
         <div id="profileRecentSkins" class="profile-recent-skins"></div>
       </div>
     </button>
+  </div>
+
+  <div class="profile-collection-grid">
+    <button id="openFramesShop" class="profile-collection-card frames-live" type="button">
+      <div class="profile-collection-icon">🖼️</div>
+      <div class="profile-collection-copy">
+        <span class="profile-collection-kicker">PERSONALITZA EL TEU PERFIL</span>
+        <b>MARCS</b>
+        <small>COMPRA, COL·LECCIONA I EQUIPA</small>
+      </div>
+      <div class="profile-collection-arrow">›</div>
+    </button>
+
+    <div class="profile-collection-card titles-soon" aria-disabled="true">
+      <div class="profile-collection-icon">♛</div>
+      <div class="profile-collection-copy">
+        <span class="profile-collection-kicker">PRÒXIMAMENT</span>
+        <b>TÍTOLS</b>
+        <small>DESBLOQUEJA TÍTOLS I LLUEIX-LOS AL PERFIL</small>
+      </div>
+      <div class="profile-collection-lock">🔒</div>
+    </div>
   </div>
 
   <nav class="profile-bottom-nav" aria-label="Navegació del perfil">
@@ -3348,11 +3594,15 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   </div>
 </div></section>
 
-<section id="framesHome" class="screen"><div class="inner">
-<div class="frames-shop-head"><div><span class="chip">🖼️ MARCS</span><h2 class="big" style="margin-top:10px">TRIA EL TEU MARC</h2><p class="muted">COMPRA'L UNA VEGADA I EQUIPA'L QUAN VULGUIS</p></div>
-<div class="frames-shop-wallet"><span>MONEDES</span><b id="framesCoins">0</b><span class="coin-img"></span></div></div>
+<section id="framesHome" class="screen frames-fasia-screen"><div class="inner frames-fasia-shell">
+<div class="frames-topbar">
+  <button id="backFramesProfile" class="frames-back-btn" type="button">← PERFIL</button>
+  <div class="frames-shop-wallet"><span>MONEDES</span><b id="framesCoins">0</b><span class="coin-img"></span></div>
+</div>
+<div class="frames-shop-head">
+  <div><span class="frames-kicker">🖼️ FASIA VERSE · MARCS</span><h2>TRIA EL TEU MARC</h2><p>COMPRA'L UNA VEGADA I EQUIPA'L QUAN VULGUIS</p></div>
+</div>
 <div id="framesGrid" class="frames-shop-grid"></div>
-<button id="backFramesProfile" class="btn secondary" type="button" style="margin-top:18px">← TORNAR AL PERFIL</button>
 </div></section>
 <section id="trophiesHome" class="screen"><div class="inner">
   <div class="hero row">
@@ -4158,7 +4408,16 @@ async function openFramesShop(){
 function renderProfileHeroVisuals(){
   profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$('#profileAvatarVisual'));
   renderProfileRecentSkins();
-  document.getElementById("equippedFrameOverlay")?.remove();const ef=frameById(currentProfile?.equipped_frame||"");const avatarImg=document.querySelector("#profileHome .profile-hero-card img, #profileHome .profile-avatar img, #profileHome img.profile-avatar-img");if(ef&&avatarImg?.parentElement){avatarImg.parentElement.style.position="relative";const ov=document.createElement("img");ov.id="equippedFrameOverlay";ov.src=ef.img;ov.alt="Marc equipat";avatarImg.parentElement.appendChild(ov)}
+  document.getElementById("equippedFrameOverlay")?.remove();
+  const ef=frameById(currentProfile?.equipped_frame||"");
+  const frameHost=document.getElementById("profileAvatarFrame");
+  if(ef&&frameHost){
+    const ov=document.createElement("img");
+    ov.id="equippedFrameOverlay";
+    ov.src=ef.img;
+    ov.alt="Marc equipat";
+    frameHost.appendChild(ov);
+  }
   /* Trofeu exposat: es desa al perfil i es mostra sense haver de carregar tot el palmarès. */
   const trophyBox=$('#profileFeaturedTrophy');
   if(trophyBox){
@@ -4420,8 +4679,8 @@ function shopVariantsForBase(base){
 
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
- try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`);
- players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',score:p.score||0,coins:p.coins||0}));renderPlayers();}
+ try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`);
+ players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:'',score:p.score||0,coins:p.coins||0}));renderPlayers();}
  catch(e){console.error(e)}
 }
 
@@ -5547,7 +5806,7 @@ $("#joinLobby").onclick=async()=>{
  try{
    const existing=await api(`players?game_id=eq.${onlineGameId}&nickname=eq.${encodeURIComponent(nick)}&select=id&limit=1`);
    if(existing&&existing.length)throw new Error("AQUEST SOBRENOM JA ESTÀ EN ÚS");
-   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,trophy:currentProfile?.equipped_trophy||"",score:0,coins:0})});
+   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,trophy:currentProfile?.equipped_trophy||"",frame:currentProfile?.equipped_frame||"",score:0,coins:0})});
    onlinePlayerId=rows&&rows[0]&&rows[0].id;$("#waitImg").src=chosenImg;$("#waitNickname").textContent=nick;$("#studentMsg").textContent="";show("studentWait");
    studentLastQuestion=-1;studentAnsweredQuestion=-1;startStudentGamePolling();
  }catch(e){$("#studentMsg").textContent=e.message}finally{btn.disabled=false}
@@ -5564,10 +5823,32 @@ function playerTrophyImg(key){
   const t=trophyFromEquipKey(key);
   return t?trophyImage(t.sessionId,t.tier):"";
 }
+function playerFrameImg(id){
+  const f=frameById(id);
+  return f?f.img:"";
+}
 
 function renderPlayers(){
  const l=$("#playersList");l.innerHTML="";
- players.forEach(p=>{const d=document.createElement("div");d.className="player";{const ti=playerTrophyImg(p.trophy);d.innerHTML=`<div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${ti?`<img class="player-featured-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.name}</div></div>`;}l.appendChild(d)});
+ players.forEach(p=>{
+   const d=document.createElement("div");
+   d.className="player online-player-card";
+   const ti=playerTrophyImg(p.trophy);
+   const fi=playerFrameImg(p.frame);
+   d.innerHTML=`
+     <div class="online-player-avatar">
+       <img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">
+       ${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}
+     </div>
+     <div class="online-player-info">
+       <div class="online-player-nick">${p.nick}</div>
+       <div class="online-player-name">${p.name}</div>
+       ${p.title?`<div class="online-player-title">${p.title}</div>`:""}
+     </div>
+     ${ti?`<div class="online-player-trophy-wrap"><img class="online-player-trophy" src="${ti}" alt="Trofeu exposat"></div>`:""}
+   `;
+   l.appendChild(d);
+ });
  $("#playerCount").textContent=players.length;$("#startGame").disabled=!players.length;
 }
 
@@ -5690,7 +5971,7 @@ function startTimer(){clearInterval(timerId);timer=40;$("#timer").textContent=ti
 $("#addTime").onclick=()=>{timer+=10;$("#timer").textContent=timer};
 function renderRanking(target){
  const box=$(target);box.innerHTML="";
- players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy);r.innerHTML=`<div><b>${i+1}</b></div><div class="player"><div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${ti?`<img class="player-featured-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div></div><b>${p.score} PTS</b>`;}box.appendChild(r)});
+ players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy),fi=playerFrameImg(p.frame);r.innerHTML=`<div><b>${i+1}</b></div><div class="player ranking-player-identity"><div class="online-player-avatar ranking-avatar"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div>${ti?`<img class="ranking-player-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><b>${p.score} PTS</b>`;}box.appendChild(r)});
 }
 
 function renderCorrectReview(q){
@@ -5754,7 +6035,7 @@ async function finishQuestion(){
     // Llegim respostes en ordre d'arribada i jugadors reals.
     const [answerRows, playerRows]=await Promise.all([
       api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id,player_id,correct,points,created_at&order=created_at.asc`),
-      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
+      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
     ]);
 
     const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
@@ -6434,7 +6715,7 @@ document.addEventListener("keydown",e=>{
       const real=payload.items[teacherIndex].price;
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${teacherIndex}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6462,7 +6743,7 @@ document.addEventListener("keydown",e=>{
       d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b class="pj-coins-line">+${s.totalCoins??s.coins} <span class="coin-img" aria-label="moneda"></span></b></div>`;
       box.appendChild(d);
     });
-    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
+    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:'',score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
     renderRankingPJ("#pjTeacherRanking",players);
     $("#pjNextRound").textContent=isFinal?"VEURE CLASSIFICACIÓ FINAL":(nextActive(payload,teacherIndex)===undefined?"RONDA FINAL 🧾":"SEGÜENT PRODUCTE");
     $("#pjNextRound").dataset.finalResult=isFinal?"1":"0";show("priceTeacherResults");
@@ -6503,7 +6784,7 @@ document.addEventListener("keydown",e=>{
       const qn=payload.items.length,real=totalPrice(payload);
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6550,7 +6831,7 @@ document.addEventListener("keydown",e=>{
 
   async function showEnd(isStudent){
     try{
-      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`);
+      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`);
       const list=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
       renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
       if(isStudent&&onlinePlayerId){
