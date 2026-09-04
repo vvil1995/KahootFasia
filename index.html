@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.18 · Animal Snake</title>
+<title>Fasia Verse · V0.14.19 · Trofeu exposat</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3200,6 +3200,28 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 }
 </style>
 
+
+<style id="featured-trophy-v01419">
+#trophiesHome .trophy-card{cursor:pointer;position:relative}
+#trophiesHome .trophy-card.selected-trophy{
+  border-color:#ffd15a!important;
+  box-shadow:0 0 0 3px rgba(255,209,90,.18),0 0 30px rgba(177,75,255,.30)!important;
+}
+#trophiesHome .trophy-card .expose-trophy-btn{
+  width:100%;margin-top:10px;padding:10px 12px;border:0;border-radius:12px;
+  font-weight:1000;cursor:pointer;background:linear-gradient(135deg,#8d28ff,#2d9cff);color:#fff;
+}
+#trophiesHome .trophy-card .expose-trophy-btn.is-equipped{
+  background:rgba(255,209,90,.14);color:#ffd15a;border:1px solid rgba(255,209,90,.55);cursor:default;
+}
+.face{position:relative}
+.player-featured-trophy{
+  position:absolute;right:-8px;bottom:-7px;width:34px;height:34px;object-fit:contain;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));z-index:4;
+}
+.rank-row .player-featured-trophy{width:38px;height:38px}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3743,6 +3765,28 @@ function ordinalCat(rank){
   return `${n}è`;
 }
 function trophyImage(sessionId,tier){const raw=String(sessionId||""),rid=pjRecipeIdFromTopic(raw);if(rid)return PJ_TROPHY_IMAGES[rid]?.[tier]||"";const n=Number(raw.replace(/\D/g,""));return TROPHY_IMAGES[`S${n}_${tier}`]||""}
+function trophyEquipKey(t){return t?`${String(t.sessionId||"").toUpperCase()}|${String(t.tier||"")}`:""}
+function trophyFromEquipKey(key){
+  const parts=String(key||"").split("|"); if(parts.length<2)return null;
+  const tier=parts.pop(),sessionId=parts.join("|");
+  if(!["gold","silver","bronze","green"].includes(tier))return null;
+  return {sessionId,tier};
+}
+function equippedTrophyImage(){
+  const t=trophyFromEquipKey(currentProfile?.equipped_trophy||"");
+  return t?trophyImage(t.sessionId,t.tier):"";
+}
+async function equipProfileTrophy(t){
+  if(!currentProfile?.id||!t)return;
+  const key=trophyEquipKey(t);
+  await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{
+    method:"PATCH",
+    body:JSON.stringify({equipped_trophy:key})
+  });
+  currentProfile.equipped_trophy=key;
+  renderProfileHeroVisuals();
+}
+
 function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=scienceSessions.find(x=>x.id===id);return s?`${s.number} · ${s.title}`:id}
 async function getProfileTrophies(profileId){
   if(!profileId)return [];
@@ -3797,7 +3841,32 @@ async function openTrophiesScreen(){
     const ts=await getProfileTrophies(currentProfile?.id),c=setTrophySummaryFromList(ts);
     $('#trophyStats').innerHTML=`<div class="big" style="font-size:36px">${ts.length} TROFEUS ÚNICS</div><div class="trophy-mini-row">🥇 ${c.gold} OR · 🥈 ${c.silver} PLATA · 🥉 ${c.bronze} BRONZE · 🟢 ${c.green} VERD</div>`;
     if(!ts.length){$('#trophyCollection').innerHTML='<div class="trophy-empty card">ENCARA NO HAS ACONSEGUIT CAP TROFEU.<br>🎮 A JUGAR!</div>';return}
-    $('#trophyCollection').innerHTML=ts.map(t=>`<div class="trophy-card"><img src="${trophyImage(t.sessionId,t.tier)}" alt="Trofeu ${TROPHY_LABELS[t.tier]}"><div class="trophy-tier">${TROPHY_LABELS[t.tier]} · ${ordinalCat(t.rank)}</div><div class="trophy-session">${sessionNameById(t.sessionId)}</div><div class="trophy-date">${t.date?new Date(t.date).toLocaleDateString('ca-ES'):''}</div></div>`).join('');
+    const equippedKey=currentProfile?.equipped_trophy||"";
+    $('#trophyCollection').innerHTML=ts.map((t,i)=>{
+      const key=trophyEquipKey(t),eq=key===equippedKey;
+      return `<div class="trophy-card${eq?" selected-trophy":""}" data-trophy-index="${i}">
+        <img src="${trophyImage(t.sessionId,t.tier)}" alt="Trofeu ${TROPHY_LABELS[t.tier]}">
+        <div class="trophy-tier">${TROPHY_LABELS[t.tier]} · ${ordinalCat(t.rank)}</div>
+        <div class="trophy-session">${sessionNameById(t.sessionId)}</div>
+        <div class="trophy-date">${t.date?new Date(t.date).toLocaleDateString('ca-ES'):''}</div>
+        <button type="button" class="expose-trophy-btn${eq?" is-equipped":""}" ${eq?"disabled":""}>${eq?"✓ EXPOSAT":"EXPOSAR"}</button>
+      </div>`;
+    }).join('');
+    $('#trophyCollection').querySelectorAll('.expose-trophy-btn').forEach((btn,i)=>{
+      btn.addEventListener('click',async e=>{
+        e.stopPropagation();
+        if(btn.disabled)return;
+        btn.disabled=true;btn.textContent='GUARDANT...';
+        try{
+          await equipProfileTrophy(ts[i]);
+          await openTrophiesScreen();
+        }catch(err){
+          console.error('Error exposant trofeu',err);
+          btn.disabled=false;btn.textContent='EXPOSAR';
+          alert("NO S'HA POGUT EXPOSAR EL TROFEU");
+        }
+      });
+    });
   }catch(e){$('#trophyStats').innerHTML="<b>NO S'HA POGUT CARREGAR EL PALMARÈS</b>";console.error(e)}
 }
 async function showEarnedTrophy(){
@@ -3826,12 +3895,13 @@ function normalizeShopProfile(p){
   if(!p)return p;
   p.owned_skins=normalizeOwnedSkins(p.owned_skins);
   p.equipped_skin=p.equipped_skin||"";
+  p.equipped_trophy=p.equipped_trophy||"";
   return p;
 }
 async function loadProfileByName(name){
   const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
   try{
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }catch(e){
@@ -3844,7 +3914,7 @@ async function loadProfileByName(name){
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
   try{
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }catch(e){
@@ -4067,9 +4137,18 @@ function renderProfileRecentSkins(){
 function renderProfileHeroVisuals(){
   profileSkinVisual(equippedSkin()||allShopSkins().find(s=>isSkinOwned(s.id)),$('#profileAvatarVisual'));
   renderProfileRecentSkins();
-  /* El trofeu destacat no bloqueja mai l'entrada al perfil. El palmarès es carrega només quan s'obre. */
+  /* Trofeu exposat: es desa al perfil i es mostra sense haver de carregar tot el palmarès. */
   const trophyBox=$('#profileFeaturedTrophy');
-  if(trophyBox){trophyBox.classList.add('hidden');trophyBox.innerHTML=''}
+  if(trophyBox){
+    const img=equippedTrophyImage();
+    if(img){
+      trophyBox.innerHTML=`<img src="${img}" alt="Trofeu exposat">`;
+      trophyBox.classList.remove('hidden');
+    }else{
+      trophyBox.classList.add('hidden');
+      trophyBox.innerHTML='';
+    }
+  }
 }
 
 function updateProfileCharacterSummary(){
@@ -4319,8 +4398,8 @@ function shopVariantsForBase(base){
 
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
- try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
- players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:p.score||0,coins:p.coins||0}));renderPlayers();}
+ try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`);
+ players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',score:p.score||0,coins:p.coins||0}));renderPlayers();}
  catch(e){console.error(e)}
 }
 
@@ -5444,7 +5523,7 @@ $("#joinLobby").onclick=async()=>{
  try{
    const existing=await api(`players?game_id=eq.${onlineGameId}&nickname=eq.${encodeURIComponent(nick)}&select=id&limit=1`);
    if(existing&&existing.length)throw new Error("AQUEST SOBRENOM JA ESTÀ EN ÚS");
-   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,score:0,coins:0})});
+   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,trophy:currentProfile?.equipped_trophy||"",score:0,coins:0})});
    onlinePlayerId=rows&&rows[0]&&rows[0].id;$("#waitImg").src=chosenImg;$("#waitNickname").textContent=nick;$("#studentMsg").textContent="";show("studentWait");
    studentLastQuestion=-1;studentAnsweredQuestion=-1;startStudentGamePolling();
  }catch(e){$("#studentMsg").textContent=e.message}finally{btn.disabled=false}
@@ -5456,9 +5535,15 @@ const samples=[
 {name:"PAU",nick:"P-10",base:"GOS",variant:"GOS BLANC",img:variantData["GOS"][0][1],score:0,coins:0},
 {name:"LAIA",nick:"LAIETA",base:"MUSSOL",variant:"MUSSOL GROC",img:variantData["MUSSOL"][0][1],score:0,coins:0}
 ];
+
+function playerTrophyImg(key){
+  const t=trophyFromEquipKey(key);
+  return t?trophyImage(t.sessionId,t.tier):"";
+}
+
 function renderPlayers(){
  const l=$("#playersList");l.innerHTML="";
- players.forEach(p=>{const d=document.createElement("div");d.className="player";d.innerHTML=`<div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}"></div><div><b>${p.nick}</b><div class="muted">${p.name}</div></div>`;l.appendChild(d)});
+ players.forEach(p=>{const d=document.createElement("div");d.className="player";{const ti=playerTrophyImg(p.trophy);d.innerHTML=`<div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${ti?`<img class="player-featured-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.name}</div></div>`;}l.appendChild(d)});
  $("#playerCount").textContent=players.length;$("#startGame").disabled=!players.length;
 }
 
@@ -5581,7 +5666,7 @@ function startTimer(){clearInterval(timerId);timer=40;$("#timer").textContent=ti
 $("#addTime").onclick=()=>{timer+=10;$("#timer").textContent=timer};
 function renderRanking(target){
  const box=$(target);box.innerHTML="";
- players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";r.innerHTML=`<div><b>${i+1}</b></div><div class="player"><div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}"></div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div></div><b>${p.score} PTS</b>`;box.appendChild(r)});
+ players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy);r.innerHTML=`<div><b>${i+1}</b></div><div class="player"><div class="face"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${ti?`<img class="player-featured-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div></div><b>${p.score} PTS</b>`;}box.appendChild(r)});
 }
 
 function renderCorrectReview(q){
@@ -5645,7 +5730,7 @@ async function finishQuestion(){
     // Llegim respostes en ordre d'arribada i jugadors reals.
     const [answerRows, playerRows]=await Promise.all([
       api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id,player_id,correct,points,created_at&order=created_at.asc`),
-      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
+      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
     ]);
 
     const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
@@ -5737,7 +5822,7 @@ $("#startGame").onclick=async()=>{
   try{
     let rows;
     try{
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy&limit=1`);
     }catch(shopErr){
       /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
       rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role&limit=1`);
@@ -6325,7 +6410,7 @@ document.addEventListener("keydown",e=>{
       const real=payload.items[teacherIndex].price;
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${teacherIndex}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6353,7 +6438,7 @@ document.addEventListener("keydown",e=>{
       d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b class="pj-coins-line">+${s.totalCoins??s.coins} <span class="coin-img" aria-label="moneda"></span></b></div>`;
       box.appendChild(d);
     });
-    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
+    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
     renderRankingPJ("#pjTeacherRanking",players);
     $("#pjNextRound").textContent=isFinal?"VEURE CLASSIFICACIÓ FINAL":(nextActive(payload,teacherIndex)===undefined?"RONDA FINAL 🧾":"SEGÜENT PRODUCTE");
     $("#pjNextRound").dataset.finalResult=isFinal?"1":"0";show("priceTeacherResults");
@@ -6394,7 +6479,7 @@ document.addEventListener("keydown",e=>{
       const qn=payload.items.length,real=totalPrice(payload);
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6441,7 +6526,7 @@ document.addEventListener("keydown",e=>{
 
   async function showEnd(isStudent){
     try{
-      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,score,coins&order=created_at.asc`);
+      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,score,coins&order=created_at.asc`);
       const list=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
       renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
       if(isStudent&&onlinePlayerId){
