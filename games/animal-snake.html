@@ -1013,6 +1013,33 @@
 #pauseOverlay .modal h2{margin:0!important;text-align:center!important}
 </style>
 
+
+<style id="fasia-verse-back-button">
+#fasiaVerseBackBtn{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  z-index:20;
+  padding:10px 14px;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(7,17,31,.72);
+  color:#f5f8ff;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.3px;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+  backdrop-filter:blur(6px);
+}
+#fasiaVerseBackBtn:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+#startOverlay.hidden #fasiaVerseBackBtn{
+  display:none!important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -1037,6 +1064,7 @@
         <canvas id="game" width="720" height="720"></canvas>
 
         <div class="overlay" id="startOverlay">
+          <button id="fasiaVerseBackBtn" type="button">← FASIA VERSE</button>
           <div class="modal">
             <div class="emoji">🦁</div>
             <h2>ANIMAL SNAKE</h2>
@@ -1120,6 +1148,10 @@
   const eraEmoji = document.getElementById('eraEmoji');
   const eraLabel = document.getElementById('eraLabel');
   const timeLoopEl = document.getElementById('timeLoop');
+  const fasiaVerseBackBtn = document.getElementById('fasiaVerseBackBtn');
+  fasiaVerseBackBtn?.addEventListener('click', () => {
+    window.location.href = '../index.html';
+  });
 
   const GRID = 18;
   const CELL = canvas.width / GRID;
