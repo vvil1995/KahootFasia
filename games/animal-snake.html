@@ -1150,8 +1150,57 @@
   const timeLoopEl = document.getElementById('timeLoop');
   const fasiaVerseBackBtn = document.getElementById('fasiaVerseBackBtn');
   fasiaVerseBackBtn?.addEventListener('click', () => {
-    window.location.href = '../index.html';
+    sessionStorage.setItem('fasiaVerseReturnToProfile', '1');
+    window.location.href = '../index.html?return=profile';
   });
+
+
+  /* FASIA VERSE · MONEDES GLOBALS */
+  const FV_SUPABASE_URL = "https://gzbvcxputhkyunemxzjm.supabase.co";
+  const FV_SUPABASE_KEY = "sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
+  const fvProfileId = sessionStorage.getItem("fasiaVerseProfileId");
+  let fvCoinSaveQueue = Promise.resolve();
+
+  async function addCoinToFasiaVerseProfile(){
+    if(!fvProfileId) return false;
+
+    const task = async()=>{
+      const headers = {
+        "apikey": FV_SUPABASE_KEY,
+        "Authorization": "Bearer " + FV_SUPABASE_KEY,
+        "Content-Type": "application/json"
+      };
+
+      const getRes = await fetch(
+        `${FV_SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=coins&limit=1`,
+        {headers}
+      );
+      if(!getRes.ok) throw new Error("No s'ha pogut llegir el saldo");
+      const rows = await getRes.json();
+      if(!rows || !rows[0]) throw new Error("Perfil no trobat");
+
+      const total = Number(rows[0].coins || 0) + 1;
+      const patchRes = await fetch(
+        `${FV_SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(fvProfileId)}`,
+        {
+          method:"PATCH",
+          headers:{...headers, "Prefer":"return=minimal"},
+          body:JSON.stringify({coins:total})
+        }
+      );
+      if(!patchRes.ok) throw new Error("No s'ha pogut guardar la moneda");
+      return true;
+    };
+
+    /* Cua per evitar que dues monedes seguides es trepitgin. */
+    fvCoinSaveQueue = fvCoinSaveQueue.then(task, task);
+    try{
+      return await fvCoinSaveQueue;
+    }catch(e){
+      console.error("Animal Snake · error sumant moneda al perfil:", e);
+      return false;
+    }
+  }
 
   const GRID = 18;
   const CELL = canvas.width / GRID;
@@ -1362,6 +1411,7 @@
     if(ateBonus){
       tucanCoins += 1;
       score += 250;
+      addCoinToFasiaVerseProfile();
       bonusCoin = null;
       clearTimeout(bonusCoinTimeout);
       pulseScore();

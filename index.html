@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.16 · Animal Snake</title>
+<title>Fasia Verse · V0.14.17 · Animal Snake</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5110,7 +5110,12 @@ $("#shopSuccessEquip").onclick=async()=>{
   $("#shopSuccessOverlay").classList.add("hidden");
 };
 
-$("#profileLogout").onclick=()=>{currentProfile=null;onlineGameId=null;onlinePlayerId=null;$("#entryCode").value="";show("home")};
+$("#profileLogout").onclick=()=>{
+  currentProfile=null;onlineGameId=null;onlinePlayerId=null;
+  sessionStorage.removeItem("fasiaVerseProfileId");
+  sessionStorage.removeItem("fasiaVerseReturnToProfile");
+  $("#entryCode").value="";show("home");
+};
 $("#playFromProfile").onclick=()=>{
   resetStudentGameChoices();
   $("#profileGameCodeInput").value="";
@@ -5128,6 +5133,12 @@ $("#openGameCode").onclick=()=>{
 };
 
 $("#openAnimalSnake").onclick=()=>{
+  if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
+    alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+    return;
+  }
+  sessionStorage.setItem("fasiaVerseProfileId", String(currentProfile.id));
+  sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/animal-snake.html";
 };
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
@@ -5711,6 +5722,38 @@ $("#startGame").onclick=async()=>{
  try{if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"playing",current_question:0})});}catch(e){alert("NO S'HA POGUT INICIAR ONLINE: "+e.message);return}
  currentQuestion=0;await loadQuestion();
 };
+
+/* V0.14.17 · RETORN DES D'ANIMAL SNAKE AL PERFIL */
+(async function restoreProfileAfterAnimalSnake(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("return")!=="profile" || sessionStorage.getItem("fasiaVerseReturnToProfile")!=="1") return;
+
+  const profileId = sessionStorage.getItem("fasiaVerseProfileId");
+  if(!profileId) return;
+
+  try{
+    const rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    if(!rows || !rows[0] || rows[0].role!=="student") return;
+
+    currentProfile = normalizeShopProfile(rows[0]);
+    $('#profileName').textContent=currentProfile.display_name;
+    $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+    if($('#profileTrophyCount')) $('#profileTrophyCount').textContent='PALMARÈS';
+    if($('#profileTrophyBreakdown')) $('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
+
+    show('profileHome');
+    requestAnimationFrame(()=>{updateProfileCharacterSummary();renderProfileHeroVisuals()});
+
+    /* Netegem només la marca de retorn; mantenim l'id mentre l'alumne segueix identificat. */
+    sessionStorage.removeItem("fasiaVerseReturnToProfile");
+
+    /* Traiem ?return=profile de la barra sense recarregar. */
+    history.replaceState({}, "", window.location.pathname + window.location.hash);
+  }catch(e){
+    console.error("Error restaurant el perfil després d'Animal Snake:", e);
+  }
+})();
+
 </script>
 
 
@@ -6645,37 +6688,6 @@ document.addEventListener("keydown",e=>{
 }
 #pricePrep .pj-product-row input,#pricePrep .pj-product-row select,#pricePrep .pj-product-row .pj-field{
   background:#090d29!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#6257b5!important
-}
-</style>
-
-<style id="pj-v01416-two-boxes-fix">
-/* V0.14.16 · NOMÉS ELS DOS REQUADRES ASSENYALATS */
-/* 1) Requadre "EL PREU JUST" sobre fons fosc: requadre clar + text violeta fosc */
-#priceTeacherQuestion .chip,
-#priceStudentQuestion .pj-student-mode{
-  background:#f1efff !important;
-  border:1px solid #d8d0ff !important;
-  color:#35257f !important;
-  -webkit-text-fill-color:#35257f !important;
-  font-weight:900 !important;
-}
-#priceTeacherQuestion .chip *,
-#priceStudentQuestion .pj-student-mode *{
-  color:#35257f !important;
-  -webkit-text-fill-color:#35257f !important;
-}
-
-/* 2) Requadre de resposta enviada: fons clar + text blau fosc llegible */
-#priceStudentQuestion #pjStudentSent{
-  background:#fff8df !important;
-  border:2px solid #e7b83f !important;
-  color:#18306f !important;
-  -webkit-text-fill-color:#18306f !important;
-  font-weight:900 !important;
-}
-#priceStudentQuestion #pjStudentSent *{
-  color:#18306f !important;
-  -webkit-text-fill-color:#18306f !important;
 }
 </style>
 </body>
