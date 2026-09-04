@@ -6647,6 +6647,37 @@ document.addEventListener("keydown",e=>{
   background:#090d29!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#6257b5!important
 }
 </style>
+
+<style id="pj-v01416-two-boxes-fix">
+/* V0.14.16 · NOMÉS ELS DOS REQUADRES ASSENYALATS */
+/* 1) Requadre "EL PREU JUST" sobre fons fosc: requadre clar + text violeta fosc */
+#priceTeacherQuestion .chip,
+#priceStudentQuestion .pj-student-mode{
+  background:#f1efff !important;
+  border:1px solid #d8d0ff !important;
+  color:#35257f !important;
+  -webkit-text-fill-color:#35257f !important;
+  font-weight:900 !important;
+}
+#priceTeacherQuestion .chip *,
+#priceStudentQuestion .pj-student-mode *{
+  color:#35257f !important;
+  -webkit-text-fill-color:#35257f !important;
+}
+
+/* 2) Requadre de resposta enviada: fons clar + text blau fosc llegible */
+#priceStudentQuestion #pjStudentSent{
+  background:#fff8df !important;
+  border:2px solid #e7b83f !important;
+  color:#18306f !important;
+  -webkit-text-fill-color:#18306f !important;
+  font-weight:900 !important;
+}
+#priceStudentQuestion #pjStudentSent *{
+  color:#18306f !important;
+  -webkit-text-fill-color:#18306f !important;
+}
+</style>
 </body>
 </html>
 <style>
