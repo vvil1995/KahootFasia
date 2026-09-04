@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.26 · Marc perfil 355</title>
+<title>Fasia Verse · V0.14.28 · Títol recol·locat</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3474,6 +3474,115 @@ button.profile-collection-card{cursor:pointer}
 @media(max-width:900px){.gm-layout{grid-template-columns:1fr}.gm-students-card{position:static}.gm-student-list{max-height:240px}.gm-reward-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gm-coin-actions{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:560px){.gm-reward-grid{grid-template-columns:1fr}.gm-coin-actions{grid-template-columns:repeat(2,1fr)}.gm-manual-row{grid-template-columns:1fr}.gm-profile-head{align-items:flex-start;flex-direction:column}}
 </style>
+
+<style id="titles-v01427">
+.titles-live{
+  position:relative;overflow:hidden;cursor:pointer!important;
+  background:
+    radial-gradient(circle at 82% 20%,rgba(255,208,76,.18),transparent 34%),
+    radial-gradient(circle at 10% 90%,rgba(164,67,255,.22),transparent 36%),
+    linear-gradient(135deg,#18113f,#11183d 58%,#281137)!important;
+  border-color:#8f55ff!important;
+}
+.titles-live:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(100,47,220,.28)}
+.titles-live .profile-collection-icon{
+  background:linear-gradient(145deg,#7d35ff,#ffb52d)!important;
+}
+.profile-equipped-title{
+  margin-top:8px;
+  min-height:26px;
+  display:flex;
+  align-items:center;
+}
+.fv-title{
+  display:inline-flex;align-items:center;white-space:nowrap;
+  font-size:15px;font-weight:1000;line-height:1;
+}
+.fv-title[data-title="ment_brillant"]{
+  color:#ffd45b;font-family:Georgia,"Times New Roman",serif;font-style:italic;
+  text-shadow:0 0 12px rgba(255,197,59,.34);
+}
+.fv-title[data-title="esperit_fasia"]{
+  color:#d78cff;font-family:Georgia,"Times New Roman",serif;
+  letter-spacing:.045em;text-shadow:0 0 13px rgba(194,75,255,.38);
+}
+.fv-title[data-title="explorador_verse"]{
+  color:#6fe7ff;font-family:"Arial Black",Impact,Arial,sans-serif;
+  letter-spacing:.065em;text-shadow:0 0 12px rgba(46,193,255,.30);
+}
+
+#titlesHome.titles-fasia-screen{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 14% 10%,rgba(140,42,255,.20),transparent 29%),
+    radial-gradient(circle at 86% 18%,rgba(255,183,47,.12),transparent 27%),
+    linear-gradient(180deg,#070b24 0%,#0a0d2d 52%,#06091f 100%);
+  color:#fff;
+}
+.titles-fasia-shell{padding-top:24px!important;padding-bottom:80px!important}
+.titles-topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+.titles-back-btn{
+  min-height:48px;padding:0 20px;border-radius:15px;border:1px solid #7441df;
+  background:rgba(15,19,55,.92);color:#fff;font-weight:1000;cursor:pointer
+}
+.titles-count-box{
+  display:flex;align-items:center;gap:10px;padding:13px 18px;border:1px solid #8a50ff;border-radius:18px;
+  background:linear-gradient(135deg,#161044,#090e30)
+}
+.titles-count-box span{font-size:12px;font-weight:1000;color:#caa9ff}
+.titles-count-box b{font-size:28px;color:#ffd15a}
+.titles-shop-head{margin-bottom:24px}
+.titles-shop-head h2{margin:8px 0 6px;font-size:44px;line-height:1;font-weight:1000;color:#fff}
+.titles-shop-head p{margin:0;color:#aeb6d5;font-weight:850}
+.titles-kicker{color:#c89cff;font-size:14px;font-weight:1000;letter-spacing:.08em}
+.titles-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.title-card{
+  min-height:230px;border-radius:24px;padding:22px;display:flex;flex-direction:column;
+  justify-content:space-between;background:linear-gradient(180deg,#111640,#090d29);
+  border:1px solid #5135a1;box-shadow:0 12px 28px rgba(0,0,0,.24)
+}
+.title-card.equipped{border-color:#ffd15a;box-shadow:0 0 0 2px rgba(255,209,90,.14),0 18px 36px rgba(0,0,0,.30)}
+.title-card-preview{
+  min-height:118px;border-radius:18px;display:grid;place-items:center;padding:16px;
+  background:radial-gradient(circle at 50% 35%,#202d62,#101531 67%);
+  border:1px solid rgba(126,137,255,.16)
+}
+.title-card-preview .fv-title{font-size:24px;white-space:normal;text-align:center}
+.title-card small{display:block;margin-top:12px;text-align:center;color:#9ea7ca;font-weight:800}
+.title-equip-btn{
+  margin-top:16px;width:100%;min-height:44px;border:0;border-radius:13px;font-weight:1000;color:#fff;
+  background:linear-gradient(135deg,#8d28ff,#2d9cff);cursor:pointer
+}
+.title-equip-btn.equipped{background:rgba(255,209,90,.12);color:#ffd15a;border:1px solid rgba(255,209,90,.52)}
+
+.online-player-title-slot{
+  display:flex;align-items:center;justify-content:flex-end;min-width:150px;padding:0 12px;
+}
+.online-player-title-slot .fv-title{font-size:13px;text-align:right}
+#playersList .online-player-card.has-title{
+  grid-template-columns:84px minmax(0,1fr) minmax(150px,220px) 58px!important;
+}
+.ranking-title-slot{display:flex;align-items:center;margin-left:8px}
+.ranking-title-slot .fv-title{font-size:11px}
+
+@media(max-width:900px){
+  .titles-grid{grid-template-columns:1fr}
+  #playersList .online-player-card.has-title{grid-template-columns:74px minmax(0,1fr) 46px!important}
+  .online-player-title-slot{grid-column:2/4;justify-content:flex-start;padding:0 0 4px}
+}
+</style>
+
+
+<style id="title-position-v01428">
+/* Títol equipat: desplaçat a la dreta per no quedar sota el trofeu exposat */
+.profile-equipped-title{
+  margin-top:8px !important;
+  margin-left:42px !important;
+  position:relative;
+  z-index:6;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3509,6 +3618,7 @@ button.profile-collection-card{cursor:pointer}
     <div class="profile-identity">
       <span class="profile-kicker">EL TEU PERFIL</span>
       <h2 id="profileName" class="profile-display-name">ALUMNE</h2>
+      <div id="profileEquippedTitle" class="profile-equipped-title hidden"></div>
     </div>
 
     <div class="profile-coins-area">
@@ -3551,15 +3661,15 @@ button.profile-collection-card{cursor:pointer}
       <div class="profile-collection-arrow">›</div>
     </button>
 
-    <div class="profile-collection-card titles-soon" aria-disabled="true">
+    <button id="openTitles" class="profile-collection-card titles-live" type="button">
       <div class="profile-collection-icon">♛</div>
       <div class="profile-collection-copy">
-        <span class="profile-collection-kicker">PRÒXIMAMENT</span>
+        <span class="profile-collection-kicker">IDENTITAT FASIA VERSE</span>
         <b>TÍTOLS</b>
-        <small>DESBLOQUEJA TÍTOLS I LLUEIX-LOS AL PERFIL</small>
+        <small>TRIA I EQUIPA ELS TÍTOLS QUE HAS DESBLOQUEJAT</small>
       </div>
-      <div class="profile-collection-lock">🔒</div>
-    </div>
+      <div class="profile-collection-arrow">›</div>
+    </button>
   </div>
 
   <nav class="profile-bottom-nav" aria-label="Navegació del perfil">
@@ -3621,6 +3731,19 @@ button.profile-collection-card{cursor:pointer}
 </div>
 <div id="framesGrid" class="frames-shop-grid"></div>
 </div></section>
+<section id="titlesHome" class="screen titles-fasia-screen"><div class="inner titles-fasia-shell">
+  <div class="titles-topbar">
+    <button id="backTitlesProfile" class="titles-back-btn" type="button">← PERFIL</button>
+    <div class="titles-count-box"><span>DESBLOQUEJATS</span><b id="titlesUnlockedCount">0</b></div>
+  </div>
+  <div class="titles-shop-head">
+    <span class="titles-kicker">♛ FASIA VERSE · TÍTOLS</span>
+    <h2>ELS TEUS TÍTOLS</h2>
+    <p>NOMÉS APAREIXEN ELS TÍTOLS QUE JA HAS DESBLOQUEJAT</p>
+  </div>
+  <div id="titlesGrid" class="titles-grid"></div>
+</div></section>
+
 <section id="trophiesHome" class="screen"><div class="inner">
   <div class="hero row">
     <div><span class="chip">EL TEU PERFIL</span><h2 class="big" style="margin-top:10px">🏆 PALMARÈS</h2><p class="muted">TOTS ELS TROFEUS QUE HAS ACONSEGUIT</p></div>
@@ -4247,12 +4370,14 @@ function normalizeShopProfile(p){
   p.equipped_trophy=p.equipped_trophy||"";
   p.owned_frames=Array.isArray(p.owned_frames)?p.owned_frames:[];
   p.equipped_frame=p.equipped_frame||"";
+  p.owned_titles=Array.isArray(p.owned_titles)?p.owned_titles:[];
+  p.equipped_title=p.equipped_title||"";
   return p;
 }
 async function loadProfileByName(name){
   const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
   try{
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }catch(e){
@@ -4265,7 +4390,7 @@ async function loadProfileByName(name){
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
   try{
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }catch(e){
@@ -4275,6 +4400,7 @@ async function refreshCurrentProfile(){
   }
   $('#profileName').textContent=currentProfile.display_name;
   $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+  renderEquippedProfileTitle();
   updateProfileCharacterSummary();
   renderProfileHeroVisuals();
 }
@@ -4485,6 +4611,57 @@ function renderProfileRecentSkins(){
     const empty=document.createElement("div");empty.className="profile-recent-skin profile-recent-empty";empty.textContent="ENCARA CAP COMPRA";box.appendChild(empty);
   }
 }
+
+const TITLE_CATALOG=[
+  {id:"ment_brillant",name:"MENT BRILLANT",desc:"UN TÍTOL CLÀSSIC PER COMENÇAR"},
+  {id:"esperit_fasia",name:"ESPERIT FÀSIA",desc:"PER QUI JA FORMA PART DEL VERSE"},
+  {id:"explorador_verse",name:"EXPLORADOR DEL VERSE",desc:"PER QUI SEMPRE VOL DESCOBRIR MÉS"}
+];
+const STARTER_TITLE_IDS=TITLE_CATALOG.map(t=>t.id);
+function titleById(id){return TITLE_CATALOG.find(t=>t.id===id)||null}
+function titleHtml(id){
+  const t=titleById(id); if(!t)return "";
+  return `<span class="fv-title" data-title="${t.id}">${t.name}</span>`;
+}
+async function saveTitleProfile(patch){
+  const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{
+    method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(patch)
+  });
+  currentProfile=normalizeShopProfile({...currentProfile,...((rows&&rows[0])||patch)});
+}
+function renderEquippedProfileTitle(){
+  const box=$("#profileEquippedTitle"); if(!box)return;
+  const id=currentProfile?.equipped_title||"";
+  if(!id){box.innerHTML="";box.classList.add("hidden");return}
+  box.innerHTML=titleHtml(id);
+  box.classList.toggle("hidden",!box.innerHTML);
+}
+async function openTitlesScreen(){
+  const owned=(currentProfile?.owned_titles||[]).filter(id=>titleById(id));
+  $("#titlesUnlockedCount").textContent=owned.length;
+  const equipped=currentProfile?.equipped_title||"";
+  $("#titlesGrid").innerHTML=owned.map(id=>{
+    const t=titleById(id),eq=id===equipped;
+    return `<article class="title-card ${eq?"equipped":""}">
+      <div>
+        <div class="title-card-preview">${titleHtml(id)}</div>
+        <small>${t.desc}</small>
+      </div>
+      <button class="title-equip-btn ${eq?"equipped":""}" data-title="${id}" type="button">${eq?"✓ EQUIPAT":"EQUIPAR"}</button>
+    </article>`;
+  }).join("");
+  $("#titlesGrid").querySelectorAll(".title-equip-btn").forEach(btn=>btn.onclick=async()=>{
+    const id=btn.dataset.title;if(!titleById(id))return;
+    btn.disabled=true;
+    try{
+      await saveTitleProfile({equipped_title:id});
+      renderEquippedProfileTitle();
+      openTitlesScreen();
+    }catch(e){console.error(e);alert("NO S'HA POGUT EQUIPAR EL TÍTOL");btn.disabled=false}
+  });
+  show("titlesHome");
+}
+
 const FRAME_CATALOG=[
 {id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"}];
 function frameById(id){return FRAME_CATALOG.find(f=>f.id===id)||null}
@@ -4770,8 +4947,8 @@ function shopVariantsForBase(base){
 
 async function refreshOnlinePlayers(){
  if(!onlineGameId)return;
- try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`);
- players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:'',score:p.score||0,coins:p.coins||0}));renderPlayers();}
+ try{const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,title,score,coins&order=created_at.asc`);
+ players=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:p.title||'',score:p.score||0,coins:p.coins||0}));renderPlayers();}
  catch(e){console.error(e)}
 }
 
@@ -5562,6 +5739,8 @@ $("#shopSuccessEquip").onclick=async()=>{
 };
 
 $("#openFramesShop")?.addEventListener("click",()=>openFramesShop());
+$("#openTitles")?.addEventListener("click",()=>openTitlesScreen());
+$("#backTitlesProfile")?.addEventListener("click",()=>show("profileHome"));
 $("#backFramesProfile")?.addEventListener("click",()=>show("profileHome"));
 $("#profileLogout").onclick=()=>{
   currentProfile=null;onlineGameId=null;onlinePlayerId=null;
@@ -5897,7 +6076,7 @@ $("#joinLobby").onclick=async()=>{
  try{
    const existing=await api(`players?game_id=eq.${onlineGameId}&nickname=eq.${encodeURIComponent(nick)}&select=id&limit=1`);
    if(existing&&existing.length)throw new Error("AQUEST SOBRENOM JA ESTÀ EN ÚS");
-   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,trophy:currentProfile?.equipped_trophy||"",frame:currentProfile?.equipped_frame||"",score:0,coins:0})});
+   const rows=await api("players",{method:"POST",body:JSON.stringify({game_id:onlineGameId,profile_id:currentProfile?currentProfile.id:null,name,nickname:nick,avatar:chosenVariant,trophy:currentProfile?.equipped_trophy||"",frame:currentProfile?.equipped_frame||"",title:currentProfile?.equipped_title||"",score:0,coins:0})});
    onlinePlayerId=rows&&rows[0]&&rows[0].id;$("#waitImg").src=chosenImg;$("#waitNickname").textContent=nick;$("#studentMsg").textContent="";show("studentWait");
    studentLastQuestion=-1;studentAnsweredQuestion=-1;startStudentGamePolling();
  }catch(e){$("#studentMsg").textContent=e.message}finally{btn.disabled=false}
@@ -5923,7 +6102,7 @@ function renderPlayers(){
  const l=$("#playersList");l.innerHTML="";
  players.forEach(p=>{
    const d=document.createElement("div");
-   d.className="player online-player-card";
+   d.className="player online-player-card"+(p.title?" has-title":"");
    const ti=playerTrophyImg(p.trophy);
    const fi=playerFrameImg(p.frame);
    d.innerHTML=`
@@ -5934,8 +6113,8 @@ function renderPlayers(){
      <div class="online-player-info">
        <div class="online-player-nick">${p.nick}</div>
        <div class="online-player-name">${p.name}</div>
-       ${p.title?`<div class="online-player-title">${p.title}</div>`:""}
      </div>
+     ${p.title?`<div class="online-player-title-slot">${titleHtml(p.title)}</div>`:""}
      ${ti?`<div class="online-player-trophy-wrap"><img class="online-player-trophy" src="${ti}" alt="Trofeu exposat"></div>`:""}
    `;
    l.appendChild(d);
@@ -6062,7 +6241,7 @@ function startTimer(){clearInterval(timerId);timer=40;$("#timer").textContent=ti
 $("#addTime").onclick=()=>{timer+=10;$("#timer").textContent=timer};
 function renderRanking(target){
  const box=$(target);box.innerHTML="";
- players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy),fi=playerFrameImg(p.frame);r.innerHTML=`<div><b>${i+1}</b></div><div class="player ranking-player-identity"><div class="online-player-avatar ranking-avatar"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div>${ti?`<img class="ranking-player-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><b>${p.score} PTS</b>`;}box.appendChild(r)});
+ players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy),fi=playerFrameImg(p.frame);r.innerHTML=`<div><b>${i+1}</b></div><div class="player ranking-player-identity"><div class="online-player-avatar ranking-avatar"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div>${p.title?`<div class="ranking-title-slot">${titleHtml(p.title)}</div>`:""}${ti?`<img class="ranking-player-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><b>${p.score} PTS</b>`;}box.appendChild(r)});
 }
 
 function renderCorrectReview(q){
@@ -6126,7 +6305,7 @@ async function finishQuestion(){
     // Llegim respostes en ordre d'arribada i jugadors reals.
     const [answerRows, playerRows]=await Promise.all([
       api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${currentQuestion}&select=id,player_id,correct,points,created_at&order=created_at.asc`),
-      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
+      api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,title,score,coins&order=created_at.asc`)
     ]);
 
     const byPlayer=new Map((playerRows||[]).map(p=>[p.id,p]));
@@ -6218,7 +6397,7 @@ $("#startGame").onclick=async()=>{
   try{
     let rows;
     try{
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
     }catch(shopErr){
       /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
       rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role&limit=1`);
@@ -6806,7 +6985,7 @@ document.addEventListener("keydown",e=>{
       const real=payload.items[teacherIndex].price;
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${teacherIndex}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,title,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6834,7 +7013,7 @@ document.addEventListener("keydown",e=>{
       d.innerHTML=`<div class="pj-result-rank">${s.closest?"🏆":i+1}</div><div><b>${pl.nickname||"ALUMNE"}</b><div class="pj-inline-note">${s.label}</div></div><b>${euro(Number(s.answer_index||0))}</b><div class="pj-diff ${df.cls}"><b>${df.text}</b></div><div class="pj-points"><b>+${s.totalPoints??s.pts} PTS</b></div><div class="pj-coins"><b class="pj-coins-line">+${s.totalCoins??s.coins} <span class="coin-img" aria-label="moneda"></span></b></div>`;
       box.appendChild(d);
     });
-    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:'',score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
+    players=(pls||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,variant:p.avatar,img:imageForVariant(p.avatar),trophy:p.trophy||'',frame:p.frame||'',title:p.title||'',score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
     renderRankingPJ("#pjTeacherRanking",players);
     $("#pjNextRound").textContent=isFinal?"VEURE CLASSIFICACIÓ FINAL":(nextActive(payload,teacherIndex)===undefined?"RONDA FINAL 🧾":"SEGÜENT PRODUCTE");
     $("#pjNextRound").dataset.finalResult=isFinal?"1":"0";show("priceTeacherResults");
@@ -6875,7 +7054,7 @@ document.addEventListener("keydown",e=>{
       const qn=payload.items.length,real=totalPrice(payload);
       const [answers,pls]=await Promise.all([
         api(`answers?game_id=eq.${onlineGameId}&question_number=eq.${qn}&select=id,player_id,answer_index,points,created_at&order=created_at.asc`),
-        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`)
+        api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,title,score,coins&order=created_at.asc`)
       ]);
       const scored=(answers||[]).map(a=>({...a,...score(Number(a.answer_index||0),real,1)}));
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
@@ -6922,7 +7101,7 @@ document.addEventListener("keydown",e=>{
 
   async function showEnd(isStudent){
     try{
-      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,score,coins&order=created_at.asc`);
+      const rows=await api(`players?game_id=eq.${onlineGameId}&select=id,profile_id,name,nickname,avatar,trophy,frame,title,score,coins&order=created_at.asc`);
       const list=(rows||[]).map(p=>({id:p.id,profile_id:p.profile_id,name:p.name,nick:p.nickname,score:Number(p.score||0),coins:Number(p.coins||0)})).sort((a,b)=>b.score-a.score);
       renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
       if(isStudent&&onlinePlayerId){
@@ -7200,7 +7379,7 @@ document.addEventListener("keydown",e=>{
     try{
       let rows;
       try{
-        rows=await api('profiles?role=eq.student&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame&order=display_name.asc');
+        rows=await api('profiles?role=eq.student&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&order=display_name.asc');
       }catch(e){
         rows=await api('profiles?role=eq.student&select=id,name,display_name,coins,role&order=display_name.asc');
       }
