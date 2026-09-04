@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.17 · Animal Snake</title>
+<title>Fasia Verse · V0.14.18 · Animal Snake</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5137,9 +5137,10 @@ $("#openAnimalSnake").onclick=()=>{
     alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
     return;
   }
-  sessionStorage.setItem("fasiaVerseProfileId", String(currentProfile.id));
+  const pid=String(currentProfile.id);
+  sessionStorage.setItem("fasiaVerseProfileId", pid);
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
-  window.location.href="games/animal-snake.html";
+  window.location.href="games/animal-snake.html?profile="+encodeURIComponent(pid);
 };
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 
@@ -5723,17 +5724,26 @@ $("#startGame").onclick=async()=>{
  currentQuestion=0;await loadQuestion();
 };
 
-/* V0.14.17 · RETORN DES D'ANIMAL SNAKE AL PERFIL */
+/* V0.14.18 · RETORN ROBUST DES D'ANIMAL SNAKE AL PERFIL */
 (async function restoreProfileAfterAnimalSnake(){
   const params = new URLSearchParams(window.location.search);
-  if(params.get("return")!=="profile" || sessionStorage.getItem("fasiaVerseReturnToProfile")!=="1") return;
+  if(params.get("return")!=="profile") return;
 
-  const profileId = sessionStorage.getItem("fasiaVerseProfileId");
+  const profileId = params.get("profile") || sessionStorage.getItem("fasiaVerseProfileId");
   if(!profileId) return;
 
+  sessionStorage.setItem("fasiaVerseProfileId", String(profileId));
+
   try{
-    const rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
-    if(!rows || !rows[0] || rows[0].role!=="student") return;
+    let rows;
+    try{
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin&limit=1`);
+    }catch(shopErr){
+      /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role&limit=1`);
+    }
+
+    if(!rows || !rows[0] || rows[0].role!=="student") throw new Error("Perfil no trobat");
 
     currentProfile = normalizeShopProfile(rows[0]);
     $('#profileName').textContent=currentProfile.display_name;
@@ -5742,13 +5752,13 @@ $("#startGame").onclick=async()=>{
     if($('#profileTrophyBreakdown')) $('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
 
     show('profileHome');
-    requestAnimationFrame(()=>{updateProfileCharacterSummary();renderProfileHeroVisuals()});
+    requestAnimationFrame(()=>{
+      updateProfileCharacterSummary();
+      renderProfileHeroVisuals();
+    });
 
-    /* Netegem només la marca de retorn; mantenim l'id mentre l'alumne segueix identificat. */
     sessionStorage.removeItem("fasiaVerseReturnToProfile");
-
-    /* Traiem ?return=profile de la barra sense recarregar. */
-    history.replaceState({}, "", window.location.pathname + window.location.hash);
+    history.replaceState({}, "", window.location.pathname);
   }catch(e){
     console.error("Error restaurant el perfil després d'Animal Snake:", e);
   }

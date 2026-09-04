@@ -1151,14 +1151,17 @@
   const fasiaVerseBackBtn = document.getElementById('fasiaVerseBackBtn');
   fasiaVerseBackBtn?.addEventListener('click', () => {
     sessionStorage.setItem('fasiaVerseReturnToProfile', '1');
-    window.location.href = '../index.html?return=profile';
+    const pid = fvProfileId ? '&profile=' + encodeURIComponent(fvProfileId) : '';
+    window.location.href = '../index.html?return=profile' + pid;
   });
 
 
   /* FASIA VERSE · MONEDES GLOBALS */
   const FV_SUPABASE_URL = "https://gzbvcxputhkyunemxzjm.supabase.co";
   const FV_SUPABASE_KEY = "sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
-  const fvProfileId = sessionStorage.getItem("fasiaVerseProfileId");
+  const fvParams = new URLSearchParams(window.location.search);
+  const fvProfileId = fvParams.get("profile") || sessionStorage.getItem("fasiaVerseProfileId");
+  if(fvProfileId) sessionStorage.setItem("fasiaVerseProfileId", String(fvProfileId));
   let fvCoinSaveQueue = Promise.resolve();
 
   async function addCoinToFasiaVerseProfile(){
@@ -1184,12 +1187,17 @@
         `${FV_SUPABASE_URL}/rest/v1/profiles?id=eq.${encodeURIComponent(fvProfileId)}`,
         {
           method:"PATCH",
-          headers:{...headers, "Prefer":"return=minimal"},
+          headers:{...headers, "Prefer":"return=representation"},
           body:JSON.stringify({coins:total})
         }
       );
-      if(!patchRes.ok) throw new Error("No s'ha pogut guardar la moneda");
-      return true;
+      if(!patchRes.ok){
+        const errText = await patchRes.text();
+        throw new Error(errText || "No s'ha pogut guardar la moneda");
+      }
+      const saved = await patchRes.json();
+      if(!saved || !saved[0]) throw new Error("Supabase no ha retornat el perfil actualitzat");
+      return Number(saved[0].coins||0);
     };
 
     /* Cua per evitar que dues monedes seguides es trepitgin. */
