@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.32 · Desafiaments + Animal Snake</title>
+<title>Fasia Verse · V0.14.36 · Història + PJ + Marcs</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3998,8 +3998,18 @@ button.profile-collection-card{cursor:pointer}
   <div class="grid grid3" style="margin-top:18px">
     <div class="card topic" data-topic="CIÈNCIA I EXPERIMENTS">🧪<h3>CIÈNCIA I EXPERIMENTS</h3><p class="muted">SESSIONS DE FÍSICA</p></div>
     <div class="card topic" data-topic="PREU JUST">🛒<h3>EL PREU JUST</h3><p class="muted">RECEPTES · COMPRA · EUROS</p></div>
-    <div class="card topic" data-topic="ESPORT">🏀<h3>ESPORT</h3><p class="muted">PROPERAMENT</p></div>
+    <div class="card topic" data-topic="HISTÒRIA">📜<h3>HISTÒRIA</h3><p class="muted">PREHISTÒRIA · EGIPTE · GRÈCIA · ROMA</p></div>
     <div id="openGMMode" class="card topic gm-topic-card" role="button" tabindex="0">🛠️<h3>MODE GM</h3><p class="muted">ALUMNES · MONEDES · RECOMPENSES</p></div>
+  </div>
+</div></section>
+
+<section id="historyEras" class="screen"><div class="inner">
+  <div class="hero row"><div><span class="chip">📜 HISTÒRIA</span><h2 class="big" style="margin-top:10px">TRIA UNA ÈPOCA</h2><p class="muted">REPÀS I NOUS KAHOOTS D’HISTÒRIA</p></div><button id="backHistoryTopics" class="btn secondary">← TORNAR ALS TEMES</button></div>
+  <div class="grid grid2 history-era-grid" style="margin-top:18px">
+    <div class="card history-era-card" data-era="prehistoria"><div class="history-era-icon">🦴</div><h3>PREHISTÒRIA</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
+    <div class="card history-era-card" data-era="egipte"><div class="history-era-icon">𓂀</div><h3>EGIPTE</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
+    <div class="card history-era-card" data-era="grecia"><div class="history-era-icon">🏛️</div><h3>GRÈCIA</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
+    <div class="card history-era-card" data-era="roma"><div class="history-era-icon">🦅</div><h3>ROMA</h3><p class="muted">PROPERAMENT</p></div>
   </div>
 </div></section>
 
@@ -7853,6 +7863,54 @@ document.addEventListener("keydown",e=>{
 }
 </style>
 
+
+<style id="fv-v01436-polish">
+/* V0.14.36 · Preu Just: recuperació de contrast visual */
+#priceStudentQuestion .pj-student-mode{
+  display:inline-flex!important;align-items:center!important;gap:6px!important;
+  padding:7px 12px!important;border-radius:999px!important;
+  color:#35257f!important;-webkit-text-fill-color:#35257f!important;
+  background:#eeeaff!important;border:1px solid #d8d0ff!important;
+  font-weight:950!important;letter-spacing:.06em!important;
+}
+#priceStudentResult .hero,#priceStudentResult .card{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+}
+#priceStudentResult .card *,#priceStudentResult .hero *{
+  color:#fff;-webkit-text-fill-color:currentColor;
+}
+#priceStudentResult .muted{color:#cbd4ff!important;-webkit-text-fill-color:#cbd4ff!important}
+#priceStudentResult .pj-diff.up{color:#ff8d82!important;-webkit-text-fill-color:#ff8d82!important}
+#priceStudentResult .pj-diff.down{color:#45d47c!important;-webkit-text-fill-color:#45d47c!important}
+#priceStudentResult .pj-diff.exact{color:#ffd45f!important;-webkit-text-fill-color:#ffd45f!important}
+
+/* Sala d'espera professor: marc una mica més gran sense fer créixer l'avatar */
+#playersList .online-player-avatar{width:78px!important;height:78px!important;flex-basis:78px!important;overflow:visible!important}
+#playersList .online-player-avatar .teacher-player-avatar-img{width:58px!important;height:58px!important;min-width:58px!important;min-height:58px!important}
+#playersList .online-player-avatar .player-frame-overlay{width:90px!important;height:90px!important;inset:-6px!important}
+@media(max-width:650px){
+ #playersList .online-player-avatar{width:68px!important;height:68px!important;flex-basis:68px!important}
+ #playersList .online-player-avatar .teacher-player-avatar-img{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important}
+ #playersList .online-player-avatar .player-frame-overlay{width:80px!important;height:80px!important;inset:-6px!important}
+}
+
+/* Història · mateixa família visual que Ciències */
+#historyEras{background:radial-gradient(circle at 16% 10%,rgba(156,91,255,.20),transparent 30%),radial-gradient(circle at 85% 82%,rgba(230,155,50,.12),transparent 28%),linear-gradient(180deg,#070b25,#090d2b 55%,#06091f)!important;color:#fff}
+#historyEras .inner{width:min(1260px,96%)}
+#historyEras .hero,#historyEras .history-era-card{background:linear-gradient(145deg,rgba(20,24,64,.97),rgba(11,15,47,.97))!important;border:2px solid rgba(117,91,230,.52)!important;color:#fff!important;box-shadow:0 18px 48px rgba(0,0,0,.25)}
+#historyEras .hero{padding:28px 32px!important}
+#historyEras .chip{color:#fff!important;background:linear-gradient(135deg,#7a3fe0,#b36a31)!important;border:1px solid rgba(255,255,255,.15)}
+#historyEras .big,#historyEras h3{color:#fff!important}
+#historyEras .muted{color:#b8bdd6!important}
+#historyEras .btn.secondary{background:#0d1235!important;color:#fff!important;border-color:#5d55bd!important}
+.history-era-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.history-era-card{min-height:190px;cursor:pointer;position:relative;overflow:hidden;transition:.18s ease;padding:26px!important}
+.history-era-card:hover{transform:translateY(-3px);border-color:#c36bff!important;box-shadow:0 18px 38px rgba(0,0,0,.28),0 0 22px rgba(177,44,255,.16)!important}
+.history-era-icon{font-size:54px;line-height:1;margin-bottom:18px}
+.history-era-card h3{font-size:25px;margin:0 0 7px}
+@media(max-width:760px){.history-era-grid{grid-template-columns:1fr!important}}
+</style>
+
 <script id="gm-v1-script">
 (()=>{
   let gmProfiles=[];
@@ -7990,6 +8048,23 @@ document.addEventListener("keydown",e=>{
   document.querySelectorAll('.gm-tab[data-gm-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.gm-tab[data-gm-tab]').forEach(x=>x.classList.toggle('active',x===b));const tab=b.dataset.gmTab;q('#gmSkinsPanel')?.classList.toggle('hidden',tab!=='skins');q('#gmFramesPanel')?.classList.toggle('hidden',tab!=='frames');q('#gmTitlesPanel')?.classList.toggle('hidden',tab!=='titles');q('#gmTrophiesPanel')?.classList.toggle('hidden',tab!=='trophies')}));
   document.querySelectorAll('[data-gm-trophy-kind]').forEach(b=>b.addEventListener('click',()=>{gmTrophyKind=b.dataset.gmTrophyKind;document.querySelectorAll('[data-gm-trophy-kind]').forEach(x=>x.classList.toggle('active',x===b));gmRenderTrophies()}));
   console.info('Fasia Verse · Mode GM v2 · títols + trofeus carregat');
+})();
+</script>
+
+
+<script id="fv-v01436-history-script">
+(()=>{
+  const historyTopic=document.querySelector('.topic[data-topic="HISTÒRIA"]');
+  if(historyTopic) historyTopic.onclick=()=>show("historyEras");
+  const back=document.getElementById("backHistoryTopics");
+  if(back) back.onclick=()=>show("teacherTopics");
+  document.querySelectorAll(".history-era-card").forEach(card=>{
+    card.onclick=()=>{
+      const name=card.querySelector("h3")?.textContent||"AQUESTA ÈPOCA";
+      alert(`${name} · ELS JOCS DE REPÀS S’AFEGIRAN AQUÍ`);
+    };
+  });
+  console.info("Fasia Verse V0.14.36 · Història + polish PJ + marcs lobby");
 })();
 </script>
 
