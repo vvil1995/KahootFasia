@@ -3723,7 +3723,7 @@ button.profile-collection-card{cursor:pointer}
 .challenges-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.challenge-card{background:#fff;border:2px solid #e1dbd4;border-radius:22px;padding:17px;display:grid;grid-template-columns:58px minmax(0,1fr);gap:13px;align-items:start;box-shadow:0 8px 20px rgba(51,43,71,.06)}.challenge-card.done{border-color:#65c887;background:linear-gradient(135deg,#f4fff7,#fff)}
 .challenge-card-icon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;background:#eee9ff}.challenge-card.done .challenge-card-icon{background:#dcfce7}.challenge-card h3{margin:1px 0 5px;font-size:20px}.challenge-condition{font-size:13px;color:#6e6876;font-weight:800;min-height:31px}.challenge-progress-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px;font-weight:950}.challenge-progress-track{height:10px;background:#eee9e3;border-radius:999px;overflow:hidden;margin-top:6px}.challenge-progress-fill{height:100%;background:linear-gradient(90deg,#6647e8,#aa54ef);border-radius:999px}.challenge-card.done .challenge-progress-fill{background:linear-gradient(90deg,#24a35a,#5bd483)}.challenge-reward{margin-top:11px;padding-top:10px;border-top:1px solid #ebe6e1;font-size:13px;font-weight:950;color:#4a3e65}.challenge-done-label{color:#168447}
 .challenge-puzzle-panel{margin:0 0 16px;padding:18px;border-radius:23px;background:linear-gradient(135deg,#17132e,#30205d);color:#fff;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.challenge-puzzle-visual{height:112px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 38%,#9d8cff 0 12%,#483a7e 13% 32%,#17132e 33%);filter:blur(5px);opacity:.72}.challenge-puzzle-visual:after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:1000;filter:blur(0);color:#fff}.challenge-puzzle-panel h3{margin:0 0 6px;font-size:25px}.challenge-puzzle-count{font-size:34px;font-weight:1000;color:#ffd45d}.challenge-puzzle-panel p{margin:4px 0;color:#d9d1f6;font-weight:800}.challenge-puzzle-panel.complete{background:linear-gradient(135deg,#183b2a,#4a2b79)}
-.challenge-reward-overlay{position:fixed;inset:0;z-index:120000;background:rgba(7,5,20,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}.challenge-reward-modal{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f4efff);border:3px solid #8466ef;border-radius:30px;padding:28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.35)}.challenge-reward-icon{font-size:64px}.challenge-reward-kicker{font-size:13px;font-weight:1000;color:#7250de;letter-spacing:.08em;margin-top:4px}.challenge-reward-modal h2{font-size:34px;margin:8px 0}.challenge-reward-modal p{font-size:17px;font-weight:800;color:#5d5668}.challenge-reward-special{margin:18px auto;padding:20px;border-radius:22px;background:#1d1639;color:#fff;font-size:20px;font-weight:1000}.challenge-reward-modal .btn{width:100%;margin-top:12px}.challenge-reward-overlay.hidden{display:none!important}
+.challenge-reward-overlay{position:fixed;inset:0;z-index:120000;background:rgba(7,5,20,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}.challenge-reward-modal{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f4efff);border:3px solid #8466ef;border-radius:30px;padding:28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.35)}.challenge-reward-icon{font-size:64px}.challenge-reward-kicker{font-size:13px;font-weight:1000;color:#7250de;letter-spacing:.08em;margin-top:4px}.challenge-reward-modal h2{font-size:34px;margin:8px 0}.challenge-reward-modal p{font-size:17px;font-weight:800;color:#5d5668}.challenge-reward-special{margin:18px auto;padding:20px;border-radius:22px;background:#1d1639;color:#fff;font-size:20px;font-weight:1000}.challenge-reward-image{width:min(300px,76vw);max-height:320px;object-fit:contain;display:block;margin:16px auto 8px;border-radius:20px;filter:drop-shadow(0 14px 28px rgba(25,15,65,.28))}.challenge-reward-image.hidden{display:none!important}.challenge-reward-modal .btn{width:100%;margin-top:12px}.challenge-reward-overlay.hidden{display:none!important}
 @media(max-width:800px){.challenge-tabs{grid-template-columns:repeat(2,1fr)}.challenges-grid{grid-template-columns:1fr}.challenge-puzzle-panel{grid-template-columns:100px 1fr}.challenge-puzzle-visual{height:90px}}
 </style>
 </head>
@@ -3850,6 +3850,7 @@ button.profile-collection-card{cursor:pointer}
     <div id="challengeRewardKicker" class="challenge-reward-kicker">DESAFIAMENT COMPLETAT!</div>
     <h2 id="challengeRewardTitle">RECOMPENSA!</h2>
     <p id="challengeRewardText"></p>
+    <img id="challengeRewardImage" class="challenge-reward-image hidden" alt="Recompensa desbloquejada">
     <div id="challengeRewardSpecial" class="challenge-reward-special hidden"></div>
     <button id="challengeRewardContinue" class="btn" type="button">CONTINUAR</button>
   </div>
@@ -4433,6 +4434,18 @@ const PUZZLE_CONFIG={
   pj:{name:"PUZLE PREU JUST",reward:"TUCÀ CAIXER",exclusiveId:"tuca_caixer"},
   snake:{name:"PUZLE ANIMAL SNAKE",reward:"LLEÓ VIATGER DEL TEMPS",exclusiveId:"lleo_viatger_temps"}
 };
+
+const CHALLENGE_REWARD_ASSETS={
+  medusa_cientifica:"assets/avatars/exclusius/medusa_cientifica.webp",
+  tuca_caixer:"assets/avatars/exclusius/tuca_caixer.webp",
+  lleo_viatger_temps:"assets/avatars/exclusius/lleo_viatger_temps.webp",
+  colom_olimpic:"assets/avatars/exclusius/colom_olimpic.webp",
+  marc_ciencia:"assets/marcs/marc_ciencia.webp",
+  marc_preu_just:"assets/marcs/marc_preu_just.webp",
+  marc_regres_futur:"assets/marcs/marc_regres_futur.webp"
+};
+function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
+
 let activeChallengeArea="global";
 
 function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
@@ -4472,12 +4485,12 @@ async function grantChallengeReward(state,ch){
     const cfg=PUZZLE_CONFIG[r.puzzle];
     if(list.length>=3&&!state.puzzlesCompleted.includes(r.puzzle)){
       state.puzzlesCompleted.push(r.puzzle);if(cfg&&!state.unlockedExclusives.includes(cfg.exclusiveId))state.unlockedExclusives.push(cfg.exclusiveId);
-      challengeQueue(state,{kind:"puzzle",icon:"🧩",title:`${cfg.reward} DESBLOQUEJAT!`,text:`Has completat ${cfg.name}.`,special:`AVATAR EXCLUSIU · ${cfg.reward}`});
+      challengeQueue(state,{kind:"puzzle",icon:"🧩",title:`${cfg.reward} DESBLOQUEJAT!`,text:`Has completat ${cfg.name}.`,special:`AVATAR EXCLUSIU · ${cfg.reward}`,rewardId:cfg.exclusiveId,image:challengeRewardAsset(cfg.exclusiveId)});
     }
   }
   if(r.type==="exclusive"&&r.id&&!state.unlockedExclusives.includes(r.id))state.unlockedExclusives.push(r.id);
   if(r.type==="exclusive_frame"&&r.id&&!state.unlockedExclusiveFrames.includes(r.id))state.unlockedExclusiveFrames.push(r.id);
-  challengeQueue(state,{kind:"challenge",icon:ch.icon||"🎯",title:ch.name,text:`Recompensa: ${challengeRewardText(r)}`});
+  challengeQueue(state,{kind:"challenge",icon:ch.icon||"🎯",title:ch.name,text:`Recompensa: ${challengeRewardText(r)}`,rewardId:r.id||"",image:challengeRewardAsset(r.id)});
 }
 async function evaluateChallenges(state=challengeState()){
   const completed=new Set(state.completed||[]);let changed=false;
@@ -4579,7 +4592,7 @@ async function captureAnimalSnakeReturnStats(params){
 
 function challengePuzzleHtml(area,state){
   const cfg=PUZZLE_CONFIG[area];if(!cfg)return "";const n=(state.fragments?.[area]||[]).length,done=state.puzzlesCompleted.includes(area);
-  return `<div class="challenge-puzzle-visual"></div><div><div class="challenge-puzzle-count">${Math.min(n,3)}/3</div><h3>${cfg.name}</h3><p>${done?`✅ AVATAR EXCLUSIU DESBLOQUEJAT`:`AVATAR EXCLUSIU`}</p><p>${done?cfg.reward:"Completa els 3 fragments en qualsevol ordre."}</p></div>`;
+  const rewardImg=challengeRewardAsset(cfg.exclusiveId);return `<div class="challenge-puzzle-visual" style="${rewardImg?`background-image:url('${rewardImg}');background-size:cover;background-position:center`:``}"></div><div><div class="challenge-puzzle-count">${Math.min(n,3)}/3</div><h3>${cfg.name}</h3><p>${done?`✅ AVATAR EXCLUSIU DESBLOQUEJAT`:`AVATAR EXCLUSIU`}</p><p>${done?cfg.reward:"Completa els 3 fragments en qualsevol ordre."}</p></div>`;
 }
 function renderChallenges(){
   const state=challengeState();syncHistoricalPurchasedSkins(state);const done=new Set(state.completed||[]);$("#challengesDoneCount").textContent=done.size;$("#challengesTotalCount").textContent=`/ ${CHALLENGE_CATALOG.length}`;
@@ -4595,7 +4608,7 @@ async function enterProfileWithChallengeRewards(){
 }
 async function showNextChallengeReward(){
   if(!currentProfile?.id)return;const state=challengeState();if(!state.pending?.length)return;const item=state.pending[0],ov=$("#challengeRewardOverlay");if(!ov)return;
-  $("#challengeRewardIcon").textContent=item.icon||"🎉";$("#challengeRewardKicker").textContent=item.kind==="puzzle"?"🧩 PUZLE COMPLETAT!":"🎯 DESAFIAMENT COMPLETAT!";$("#challengeRewardTitle").textContent=item.title||"RECOMPENSA!";$("#challengeRewardText").textContent=item.text||"";const sp=$("#challengeRewardSpecial");if(item.special){sp.textContent=item.special;sp.classList.remove("hidden")}else{sp.classList.add("hidden");sp.textContent=""}ov.classList.remove("hidden");
+  $("#challengeRewardIcon").textContent=item.icon||"🎉";$("#challengeRewardKicker").textContent=item.kind==="puzzle"?"🧩 PUZLE COMPLETAT!":"🎯 DESAFIAMENT COMPLETAT!";$("#challengeRewardTitle").textContent=item.title||"RECOMPENSA!";$("#challengeRewardText").textContent=item.text||"";const ri=$("#challengeRewardImage");if(ri){const route=item.image||challengeRewardAsset(item.rewardId);if(route){ri.src=route;ri.classList.remove("hidden")}else{ri.removeAttribute("src");ri.classList.add("hidden")}}const sp=$("#challengeRewardSpecial");if(item.special){sp.textContent=item.special;sp.classList.remove("hidden")}else{sp.classList.add("hidden");sp.textContent=""}ov.classList.remove("hidden");
 }
 async function dismissChallengeReward(){
   const state=challengeState();if(state.pending?.length)state.pending.shift();await saveChallengeState(state);$("#challengeRewardOverlay").classList.add("hidden");if(state.pending?.length)setTimeout(showNextChallengeReward,100);else{try{await refreshCurrentProfile();renderProfileHeroVisuals();renderEquippedProfileTitle()}catch(e){}}
@@ -4656,7 +4669,7 @@ async function equipProfileTrophy(t){
 }
 
 function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=scienceSessions.find(x=>x.id===id);return s?`${s.number} · ${s.title}`:id}
-async function getProfileTrophies(profileId){
+async function getProfileTrophies(profileId,{includeManual=true}={}){
   if(!profileId)return [];
   /* El palmarès NOMÉS es consulta quan s'obre. Tres blocs de consultes, no 2 consultes per partida. */
   const mine=await api(`players?profile_id=eq.${profileId}&select=id,game_id,score,created_at&order=created_at.asc`);
@@ -4689,9 +4702,11 @@ async function getProfileTrophies(profileId){
     if(!prev || tierPower[trophy.tier]>tierPower[prev.tier] || (tierPower[trophy.tier]===tierPower[prev.tier] && String(trophy.date||'')>String(prev.date||''))) best.set(key,trophy);
   }
   /* Els trofeus manuals del Mode GM s'afegeixen al palmarès sense crear partides falses. */
-  let manual=[];
-  try{const pr=await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=manual_trophies&limit=1`);manual=Array.isArray(pr?.[0]?.manual_trophies)?pr[0].manual_trophies:[]}catch(e){console.warn('manual_trophies no disponible',e)}
-  for(const key of manual){const t=trophyFromEquipKey(key);if(!t)continue;const k=pjRecipeIdFromTopic(t.sessionId)?`PJ:${pjRecipeIdFromTopic(t.sessionId)}`:String(t.sessionId).toUpperCase();const mt={game_id:'GM',sessionId:t.sessionId,rank:{gold:1,silver:2,bronze:3,green:4}[t.tier]||4,tier:t.tier,date:'GM'};const prev=best.get(k);if(!prev||tierPower[mt.tier]>tierPower[prev.tier])best.set(k,mt)}
+  if(includeManual){
+    let manual=[];
+    try{const pr=await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=manual_trophies&limit=1`);manual=Array.isArray(pr?.[0]?.manual_trophies)?pr[0].manual_trophies:[]}catch(e){console.warn('manual_trophies no disponible',e)}
+    for(const key of manual){const t=trophyFromEquipKey(key);if(!t)continue;const k=pjRecipeIdFromTopic(t.sessionId)?`PJ:${pjRecipeIdFromTopic(t.sessionId)}`:String(t.sessionId).toUpperCase();const mt={game_id:'GM',sessionId:t.sessionId,rank:{gold:1,silver:2,bronze:3,green:4}[t.tier]||4,tier:t.tier,date:'GM'};const prev=best.get(k);if(!prev||tierPower[mt.tier]>tierPower[prev.tier])best.set(k,mt)}
+  }
   return [...best.values()].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
 }
 function setTrophySummaryFromList(ts){
@@ -4861,12 +4876,14 @@ const SHOP_CONFIG={
 {id:"lleo",name:"LLEÓ",emoji:"🦁",skins:[
       {id:"lleo_groc",name:"LLEÓ ESTILÓS",price:15,available:true,event:null,image:"assets/avatars/lleo_estilos.webp"},
       {id:"lleo_rapero",name:"LLEÓ RAPER",price:20,available:true,event:null,image:"assets/avatars/lleo_raper.webp"},
-      {id:"lleo_rei",name:"REI DE LA SELVA",price:40,available:true,event:null,image:"assets/avatars/rei_de_la_selva.webp"}
+      {id:"lleo_rei",name:"REI DE LA SELVA",price:40,available:true,event:null,image:"assets/avatars/rei_de_la_selva.webp"},
+      {id:"lleo_viatger_temps",name:"LLEÓ VIATGER DEL TEMPS",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/lleo_viatger_temps.webp"}
     ]},
 {id:"tuca",name:"TUCÀ",emoji:"🐦",exclusive:true,skins:[
       {id:"tuca_bronze",name:"TUCÀ BRONZE",price:20,available:true,event:null,image:"assets/avatars/tuca_bronze.webp"},
       {id:"tuca_plata",name:"TUCÀ PLATA",price:40,available:true,event:null,image:"assets/avatars/tuca_plata.webp"},
-      {id:"tuca_daurat",name:"TUCÀ DAURAT",price:60,available:true,event:null,image:"assets/avatars/tuca_daurat.webp"}
+      {id:"tuca_daurat",name:"TUCÀ DAURAT",price:60,available:true,event:null,image:"assets/avatars/tuca_daurat.webp"},
+      {id:"tuca_caixer",name:"TUCÀ CAIXER",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tuca_caixer.webp"}
     ]},
 {id:"cavall",name:"CAVALL",emoji:"🐴",skins:[
   {id:"cavall_vaquer",name:"CAVALL VAQUER",price:15,available:true,event:null,image:"assets/avatars/cavall_vaquer.webp",cropIndex:null},
@@ -4901,7 +4918,11 @@ const SHOP_CONFIG={
 {id:"colom",name:"COLOM",emoji:"🕊️",skins:[
   {id:"colom_rus",name:"COLOM RUS",price:15,available:true,event:null,image:"assets/avatars/colom_rus.webp",cropIndex:null},
   {id:"colom_rei",name:"COLOM REI",price:40,available:true,event:null,image:"assets/avatars/colom_rei.webp",cropIndex:null},
-  {id:"colom_pare_noel",name:"COLOM PARE NOEL",price:10,available:false,event:"christmas",image:"assets/avatars/colom_pare_noel.webp",cropIndex:null}
+  {id:"colom_pare_noel",name:"COLOM PARE NOEL",price:10,available:false,event:"christmas",image:"assets/avatars/colom_pare_noel.webp",cropIndex:null},
+  {id:"colom_olimpic",name:"COLOM OLÍMPIC",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/colom_olimpic.webp",cropIndex:null}
+]},
+{id:"medusa",name:"MEDUSA",emoji:"🪼",exclusive:true,skins:[
+  {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null}
 ]},
 {id:"rinoceront",name:"RINOCERONT",emoji:"🦏",skins:[
   {id:"rinoceront_boxejador",name:"RINOCERONT BOXEJADOR",price:15,available:true,event:null,image:"assets/avatars/rinoceront_boxejador.webp",cropIndex:null},
@@ -5116,13 +5137,18 @@ async function openTitlesScreen(){
 }
 
 const FRAME_CATALOG=[
-{id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"}];
+{id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"},
+{id:"marc_ciencia",name:"CIÈNCIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_ciencia.webp"},
+{id:"marc_preu_just",name:"PREU JUST",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_preu_just.webp"},
+{id:"marc_regres_futur",name:"REGRES AL FUTUR",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_regres_futur.webp"}];
 function frameById(id){return FRAME_CATALOG.find(f=>f.id===id)||null}
 async function saveFrameProfile(patch){const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(patch)});currentProfile=normalizeShopProfile({...currentProfile,...((rows&&rows[0])||patch)})}
 async function openFramesShop(){
- $("#framesCoins").textContent=Number(currentProfile.coins||0);const owned=new Set(currentProfile.owned_frames||[]);
- $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const has=owned.has(f.id),eq=currentProfile.equipped_frame===f.id;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button">${eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
- $("#framesGrid").querySelectorAll(".frame-action").forEach(btn=>btn.onclick=async()=>{const f=frameById(btn.dataset.frame),owned=new Set(currentProfile.owned_frames||[]);btn.disabled=true;try{if(!owned.has(f.id)){const coins=Number(currentProfile.coins||0);if(coins<f.price){alert("NO TENS PROU MONEDES");btn.disabled=false;return}owned.add(f.id);await saveFrameProfile({coins:coins-f.price,owned_frames:[...owned],equipped_frame:f.id})}else await saveFrameProfile({equipped_frame:f.id});$("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img"></span>`;renderProfileHeroVisuals();openFramesShop()}catch(e){console.error(e);alert("NO S'HA POGUT GUARDAR EL MARC");btn.disabled=false}});
+ $("#framesCoins").textContent=Number(currentProfile.coins||0);
+ const owned=new Set(currentProfile.owned_frames||[]);
+ const unlockedExclusive=new Set((challengeState().unlockedExclusiveFrames||[]));
+ $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const challengeHas=f.exclusiveChallenge&&unlockedExclusive.has(f.id),has=owned.has(f.id)||challengeHas,eq=currentProfile.equipped_frame===f.id,locked=f.exclusiveChallenge&&!challengeHas;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${locked?"🔒 EXCLUSIU · DESAFIAMENT":challengeHas?"DESBLOQUEJAT":has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button" ${locked?"disabled":""}>${locked?"🔒 DESAFIAMENT":eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
+ $("#framesGrid").querySelectorAll(".frame-action").forEach(btn=>btn.onclick=async()=>{const f=frameById(btn.dataset.frame),ownedNow=new Set(currentProfile.owned_frames||[]),unlockedNow=new Set(challengeState().unlockedExclusiveFrames||[]),challengeHas=f.exclusiveChallenge&&unlockedNow.has(f.id);if(f.exclusiveChallenge&&!challengeHas)return;btn.disabled=true;try{if(!ownedNow.has(f.id)&&!challengeHas){const coins=Number(currentProfile.coins||0);if(coins<f.price){alert("NO TENS PROU MONEDES");btn.disabled=false;return}ownedNow.add(f.id);await saveFrameProfile({coins:coins-f.price,owned_frames:[...ownedNow],equipped_frame:f.id})}else await saveFrameProfile({equipped_frame:f.id});$("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img"></span>`;renderProfileHeroVisuals();openFramesShop()}catch(e){console.error(e);alert("NO S'HA POGUT GUARDAR EL MARC");btn.disabled=false}});
  show("framesHome");
 }
 
@@ -5255,7 +5281,9 @@ function renderCharacterSkins(c){
         ? `<span class="skin-state equipped">EQUIPAT</span>`
         : owned
           ? `<span class="skin-state owned">A LA COL·LECCIÓ</span>`
-          : `<div class="skin-price">${s.price} <span class="coin-img" aria-label="moneda"></span></div>`;
+          : s.exclusiveChallenge
+            ? `<div class="event-coming"><strong>🔒 EXCLUSIU</strong><small>ACONSEGUEIX-LO AMB DESAFIAMENTS</small></div>`
+            : `<div class="skin-price">${s.price} <span class="coin-img" aria-label="moneda"></span></div>`;
     body.innerHTML=`<div class="skin-shop-name">${s.name}</div>${state}`;
     const actions=document.createElement("div");actions.className="skin-shop-actions";
 
@@ -5264,6 +5292,12 @@ function renderCharacterSkins(c){
       locked.className="btn secondary";
       locked.disabled=true;
       locked.textContent="PRÒXIMAMENT";
+      actions.appendChild(locked);
+    }else if(s.exclusiveChallenge&&!owned){
+      const locked=document.createElement("button");
+      locked.className="btn secondary";
+      locked.disabled=true;
+      locked.textContent="🔒 DESAFIAMENT";
       actions.appendChild(locked);
     }else if(owned){
       const equip=document.createElement("button");
@@ -7919,9 +7953,32 @@ document.addEventListener("keydown",e=>{
       card.querySelector('[data-act="equip"]')?.addEventListener('click',()=>gmPatch({equipped_title:t.id},`${t.name} EQUIPAT ✓`));grid.appendChild(card)});
   }
   function gmTrophyCatalog(){const out=[];if(gmTrophyKind==='science'){for(let n=1;n<=14;n++)for(const tier of ['gold','silver','bronze','green'])out.push({sessionId:`S${n}`,tier,name:`SESSIÓ ${n} · ${TROPHY_LABELS[tier]}`})}else{for(let n=1;n<=9;n++)for(const tier of ['gold','silver','bronze','green'])out.push({sessionId:`PJ|r${n}`,tier,name:`RECEPTA ${n} · ${TROPHY_LABELS[tier]}`})}return out}
-  function gmRenderTrophies(){const grid=q('#gmTrophiesGrid');if(!grid)return;grid.innerHTML='';const owned=gmManualTrophies(gmSelected);gmTrophyCatalog().forEach(t=>{const key=trophyEquipKey(t),has=owned.has(key),eq=gmSelected.equipped_trophy===key,img=trophyImage(t.sessionId,t.tier);const card=document.createElement('article');card.className='gm-reward-card '+(has?'owned ':'')+(eq?'equipped':'');card.innerHTML=`<div class="gm-reward-media">${img?`<img src="${img}" alt="${t.name}">`:'🏆'}</div><div class="gm-reward-body"><div class="gm-reward-name">${t.name}</div><div class="gm-reward-meta">GM · NO ALTERA RESULTATS</div><div class="gm-reward-actions"><button class="${has?'remove':'give'}" data-act="toggle">${has?'RETIRAR':'DONAR'}</button><button class="equip" data-act="equip" ${!has?'disabled':''}>${eq?'✓ EXPOSAT':'EXPOSAR'}</button></div></div>`;
-      card.querySelector('[data-act="toggle"]').onclick=async()=>{const set=gmManualTrophies(gmSelected);if(set.has(key)){set.delete(key);const patch={manual_trophies:[...set]};if(gmSelected.equipped_trophy===key)patch.equipped_trophy='';await gmPatch(patch,`${t.name} RETIRAT`)}else{set.add(key);await gmPatch({manual_trophies:[...set]},`${t.name} CONCEDIT ✓`)} };
-      card.querySelector('[data-act="equip"]').onclick=()=>gmPatch({equipped_trophy:key},`${t.name} EXPOSAT ✓`);grid.appendChild(card)});
+  async function gmRenderTrophies(){
+    const grid=q('#gmTrophiesGrid');if(!grid||!gmSelected)return;
+    const selectedId=gmSelected.id;
+    grid.innerHTML='<p class="muted" style="grid-column:1/-1">CARREGANT TROFEUS...</p>';
+    let earned=new Set();
+    try{
+      const real=await getProfileTrophies(selectedId,{includeManual:false});
+      earned=new Set((real||[]).map(t=>trophyEquipKey(t)));
+    }catch(e){console.warn('GM · no s’han pogut llegir els trofeus guanyats',e)}
+    if(!gmSelected||gmSelected.id!==selectedId)return;
+    grid.innerHTML='';
+    const manual=gmManualTrophies(gmSelected);
+    gmTrophyCatalog().forEach(t=>{
+      const key=trophyEquipKey(t),isEarned=earned.has(key),isManual=manual.has(key),has=isEarned||isManual,eq=gmSelected.equipped_trophy===key,img=trophyImage(t.sessionId,t.tier);
+      const source=isEarned?(isManual?'ACONSEGUIT JUGANT · TAMBÉ GM':'ACONSEGUIT JUGANT'):(isManual?'CONCEDIT PEL GM':'GM · NO ALTERA RESULTATS');
+      const card=document.createElement('article');card.className='gm-reward-card '+(has?'owned ':'')+(eq?'equipped':'');
+      card.innerHTML=`<div class="gm-reward-media">${img?`<img src="${img}" alt="${t.name}">`:'🏆'}</div><div class="gm-reward-body"><div class="gm-reward-name">${t.name}</div><div class="gm-reward-meta">${source}</div><div class="gm-reward-actions"><button class="${isManual?'remove':'give'}" data-act="toggle" ${isEarned&&!isManual?'disabled':''}>${isEarned&&!isManual?'GUANYAT':isManual?'RETIRAR GM':'DONAR'}</button><button class="equip" data-act="equip" ${!has?'disabled':''}>${eq?'✓ EXPOSAT':'EXPOSAR'}</button></div></div>`;
+      card.querySelector('[data-act="toggle"]').onclick=async()=>{
+        if(isEarned&&!isManual)return;
+        const set=gmManualTrophies(gmSelected);
+        if(set.has(key)){set.delete(key);const patch={manual_trophies:[...set]};if(gmSelected.equipped_trophy===key&&!isEarned)patch.equipped_trophy='';await gmPatch(patch,`${t.name} RETIRAT DEL GM`)}
+        else{set.add(key);await gmPatch({manual_trophies:[...set]},`${t.name} CONCEDIT ✓`)}
+      };
+      card.querySelector('[data-act="equip"]').onclick=()=>gmPatch({equipped_trophy:key},`${t.name} EXPOSAT ✓`);
+      grid.appendChild(card);
+    });
   }
   async function gmOpen(){gmSelected=null;q('#gmEmpty')?.classList.remove('hidden');q('#gmEditor')?.classList.add('hidden');show('gmHome');await gmFetchProfiles()}
   const open=q('#openGMMode'); if(open){open.onclick=gmOpen;open.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();gmOpen()}}}
