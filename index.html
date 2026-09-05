@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.29 · Sala identitat agrupada</title>
+<title>Fasia Verse · V0.14.30 · Sala identitat agrupada</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3511,6 +3511,107 @@ button.profile-collection-card{cursor:pointer}
   letter-spacing:.065em;text-shadow:0 0 12px rgba(46,193,255,.30);
 }
 
+/* ── Títols de desafiaments: personalitat visual ─────────────────────────── */
+.fv-title[data-title="cientific"]{
+  color:#6ff6e6;font-family:"Courier New",monospace;letter-spacing:.055em;
+  text-shadow:0 0 12px rgba(80,255,230,.26);
+}
+.fv-title[data-title="imparable"]{
+  color:#ff625f;font-family:Impact,"Arial Black",Arial,sans-serif;letter-spacing:.045em;
+  text-shadow:0 0 13px rgba(255,70,68,.34);
+}
+.fv-title[data-title="velocista"]{
+  color:#74d8ff;font-family:"Arial Black",Impact,Arial,sans-serif;font-style:italic;
+  letter-spacing:.075em;text-shadow:0 0 13px rgba(43,194,255,.32);
+}
+.fv-title[data-title="rei_reina_podi"]{
+  color:#ffd85b;font-family:Georgia,"Times New Roman",serif;font-weight:1000;
+  text-shadow:0 0 14px rgba(255,200,49,.38);
+}
+.fv-title[data-title="veterania"]{
+  color:#d9c7a0;font-family:Georgia,"Times New Roman",serif;letter-spacing:.055em;
+  text-shadow:0 0 10px rgba(214,190,141,.22);
+}
+.fv-title[data-title="preu_clavat"]{
+  color:#ffcf4d;font-family:"Arial Black",Impact,Arial,sans-serif;
+  text-shadow:0 0 13px rgba(255,192,40,.31);
+}
+.fv-title[data-title="cacador_ofertes"]{
+  color:#73f59a;font-family:Arial,Helvetica,sans-serif;font-weight:1000;letter-spacing:.045em;
+  text-shadow:0 0 12px rgba(67,239,121,.28);
+}
+.fv-title[data-title="sense_passarse"]{
+  color:#6ce6c8;font-family:Georgia,"Times New Roman",serif;font-style:italic;
+  text-shadow:0 0 11px rgba(65,231,191,.24);
+}
+.fv-title[data-title="client_vip"]{
+  color:#ff8bd8;font-family:"Arial Black",Impact,Arial,sans-serif;letter-spacing:.06em;
+  text-shadow:0 0 13px rgba(255,89,197,.30);
+}
+.fv-title[data-title="viatger_temporal"]{
+  color:#a58cff;font-family:"Arial Black",Impact,Arial,sans-serif;letter-spacing:.07em;
+  text-shadow:0 0 7px rgba(122,91,255,.62),0 0 15px rgba(81,207,255,.24);
+}
+.fv-title[data-title="recollector"]{
+  color:#ffc94a;font-family:"Courier New",monospace;font-weight:1000;letter-spacing:.045em;
+  text-shadow:0 0 12px rgba(255,188,44,.29);
+}
+.fv-title[data-title="colleccionista"]{
+  color:#d89cff;font-family:Georgia,"Times New Roman",serif;font-weight:1000;
+  text-shadow:0 0 12px rgba(195,109,255,.30);
+}
+
+/* ── Catàleg complet: desbloquejats + bloquejats ─────────────────────────── */
+.title-card{
+  position:relative;overflow:hidden;
+}
+.title-card-category{
+  display:inline-flex;align-items:center;gap:6px;width:max-content;max-width:100%;
+  margin-bottom:11px;padding:6px 10px;border-radius:999px;
+  background:rgba(125,77,255,.12);border:1px solid rgba(143,98,255,.26);
+  color:#c9b5ff;font-size:11px;font-weight:1000;letter-spacing:.055em;
+}
+.title-card.locked{
+  border-color:#353d72;
+  background:linear-gradient(180deg,#0d1233,#080c25);
+}
+.title-card.locked::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(145deg,rgba(5,8,29,.05),rgba(4,7,26,.23));
+  pointer-events:none;
+}
+.title-card.locked .title-card-preview{
+  position:relative;background:radial-gradient(circle at 50% 35%,#171d42,#0d112a 70%);
+  border-color:rgba(118,129,194,.13);
+}
+.title-card.locked .title-card-preview::after{
+  content:"🔒";position:absolute;right:12px;top:10px;font-size:22px;
+  filter:grayscale(.2);opacity:.92;
+}
+.title-card.locked .title-card-preview .fv-title{
+  opacity:.52;filter:saturate(.52);
+}
+.title-card.locked small{
+  color:#b0b6d3;
+}
+.title-lock-condition{
+  position:relative;z-index:1;margin-top:12px;padding:11px 12px;border-radius:13px;
+  background:rgba(108,85,207,.10);border:1px solid rgba(132,105,231,.18);
+  color:#d7d7ec;font-size:12px;line-height:1.35;font-weight:850;text-align:center;
+}
+.title-lock-btn{
+  position:relative;z-index:1;margin-top:16px;width:100%;min-height:44px;border-radius:13px;
+  border:1px solid #3b457d;background:#161b3d;color:#777f9f;font-weight:1000;
+  cursor:not-allowed;
+}
+.title-card.unlocked:not(.equipped){
+  border-color:#5c3ab3;
+}
+.titles-count-box .titles-total{
+  color:#8d97bd;font-size:14px;font-weight:1000;
+}
+
 #titlesHome.titles-fasia-screen{
   min-height:100vh;
   background:
@@ -3610,6 +3711,21 @@ button.profile-collection-card{cursor:pointer}
   #playersList .online-player-info{min-width:90px!important}
 }
 </style>
+
+<style id="fv-challenges-v1-style">
+.challenges-fv-screen{padding:24px 26px 110px!important;justify-content:flex-start!important;background:linear-gradient(180deg,#f8f6f2,#f3f0eb)}
+.challenges-fv-shell{width:min(1380px,100%);margin:0 auto}
+.challenges-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+.challenges-summary{display:flex;align-items:baseline;gap:7px;padding:10px 16px;border-radius:18px;background:#fff;border:2px solid #e4ded7;font-weight:950}.challenges-summary span{font-size:12px;color:#777}.challenges-summary b{font-size:25px;color:#6f46ea}
+.challenges-hero{padding:24px 28px;border-radius:28px;background:linear-gradient(135deg,#281b66,#5d2f9d 58%,#9b4d19);color:#fff;box-shadow:0 16px 36px rgba(47,28,91,.18)}
+.challenges-hero h2{margin:9px 0 5px;font-size:clamp(34px,5vw,62px);font-weight:1000;letter-spacing:.02em}.challenges-hero p{margin:0;font-weight:900;color:#eee8ff}
+.challenge-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.challenge-tab{border:2px solid #ddd6cf;background:#fff;border-radius:17px;padding:13px 10px;font-weight:1000;cursor:pointer;color:#342d42}.challenge-tab.active{background:#2f205f;color:#fff;border-color:#7357f4;box-shadow:0 8px 22px rgba(75,49,150,.18)}
+.challenges-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.challenge-card{background:#fff;border:2px solid #e1dbd4;border-radius:22px;padding:17px;display:grid;grid-template-columns:58px minmax(0,1fr);gap:13px;align-items:start;box-shadow:0 8px 20px rgba(51,43,71,.06)}.challenge-card.done{border-color:#65c887;background:linear-gradient(135deg,#f4fff7,#fff)}
+.challenge-card-icon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;background:#eee9ff}.challenge-card.done .challenge-card-icon{background:#dcfce7}.challenge-card h3{margin:1px 0 5px;font-size:20px}.challenge-condition{font-size:13px;color:#6e6876;font-weight:800;min-height:31px}.challenge-progress-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px;font-weight:950}.challenge-progress-track{height:10px;background:#eee9e3;border-radius:999px;overflow:hidden;margin-top:6px}.challenge-progress-fill{height:100%;background:linear-gradient(90deg,#6647e8,#aa54ef);border-radius:999px}.challenge-card.done .challenge-progress-fill{background:linear-gradient(90deg,#24a35a,#5bd483)}.challenge-reward{margin-top:11px;padding-top:10px;border-top:1px solid #ebe6e1;font-size:13px;font-weight:950;color:#4a3e65}.challenge-done-label{color:#168447}
+.challenge-puzzle-panel{margin:0 0 16px;padding:18px;border-radius:23px;background:linear-gradient(135deg,#17132e,#30205d);color:#fff;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.challenge-puzzle-visual{height:112px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 38%,#9d8cff 0 12%,#483a7e 13% 32%,#17132e 33%);filter:blur(5px);opacity:.72}.challenge-puzzle-visual:after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:1000;filter:blur(0);color:#fff}.challenge-puzzle-panel h3{margin:0 0 6px;font-size:25px}.challenge-puzzle-count{font-size:34px;font-weight:1000;color:#ffd45d}.challenge-puzzle-panel p{margin:4px 0;color:#d9d1f6;font-weight:800}.challenge-puzzle-panel.complete{background:linear-gradient(135deg,#183b2a,#4a2b79)}
+.challenge-reward-overlay{position:fixed;inset:0;z-index:120000;background:rgba(7,5,20,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}.challenge-reward-modal{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f4efff);border:3px solid #8466ef;border-radius:30px;padding:28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.35)}.challenge-reward-icon{font-size:64px}.challenge-reward-kicker{font-size:13px;font-weight:1000;color:#7250de;letter-spacing:.08em;margin-top:4px}.challenge-reward-modal h2{font-size:34px;margin:8px 0}.challenge-reward-modal p{font-size:17px;font-weight:800;color:#5d5668}.challenge-reward-special{margin:18px auto;padding:20px;border-radius:22px;background:#1d1639;color:#fff;font-size:20px;font-weight:1000}.challenge-reward-modal .btn{width:100%;margin-top:12px}.challenge-reward-overlay.hidden{display:none!important}
+@media(max-width:800px){.challenge-tabs{grid-template-columns:repeat(2,1fr)}.challenges-grid{grid-template-columns:1fr}.challenge-puzzle-panel{grid-template-columns:100px 1fr}.challenge-puzzle-visual{height:90px}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -3708,7 +3824,36 @@ button.profile-collection-card{cursor:pointer}
   </nav>
 </div></section>
 
+<section id="challengesHome" class="screen challenges-fv-screen"><div class="inner challenges-fv-shell">
+  <div class="challenges-topbar">
+    <button id="backChallengesProfile" class="btn secondary" type="button">← PERFIL</button>
+    <div class="challenges-summary"><span>COMPLETATS</span><b id="challengesDoneCount">0</b><span id="challengesTotalCount">/ 29</span></div>
+  </div>
+  <div class="challenges-hero">
+    <span class="chip">🎯 FASIA VERSE</span>
+    <h2>DESAFIAMENTS</h2>
+    <p>JUGA, AVANÇA I DESBLOQUEJA RECOMPENSES EXCLUSIVES</p>
+  </div>
+  <div class="challenge-tabs" role="tablist">
+    <button class="challenge-tab active" data-challenge-area="global" type="button">🌐 GENERALS</button>
+    <button class="challenge-tab" data-challenge-area="kahoot" type="button">🧪 KAHOOT</button>
+    <button class="challenge-tab" data-challenge-area="pj" type="button">💰 PREU JUST</button>
+    <button class="challenge-tab" data-challenge-area="snake" type="button">🐍 ANIMAL SNAKE</button>
+  </div>
+  <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
+  <div id="challengesGrid" class="challenges-grid"></div>
+</div></section>
 
+<div id="challengeRewardOverlay" class="challenge-reward-overlay hidden" role="dialog" aria-modal="true">
+  <div class="challenge-reward-modal">
+    <div id="challengeRewardIcon" class="challenge-reward-icon">🎉</div>
+    <div id="challengeRewardKicker" class="challenge-reward-kicker">DESAFIAMENT COMPLETAT!</div>
+    <h2 id="challengeRewardTitle">RECOMPENSA!</h2>
+    <p id="challengeRewardText"></p>
+    <div id="challengeRewardSpecial" class="challenge-reward-special hidden"></div>
+    <button id="challengeRewardContinue" class="btn" type="button">CONTINUAR</button>
+  </div>
+</div>
 
 <section id="gameSelector" class="screen"><div class="inner game-selector-shell">
   <div class="game-selector-hero">
@@ -3761,7 +3906,7 @@ button.profile-collection-card{cursor:pointer}
 <section id="titlesHome" class="screen titles-fasia-screen"><div class="inner titles-fasia-shell">
   <div class="titles-topbar">
     <button id="backTitlesProfile" class="titles-back-btn" type="button">← PERFIL</button>
-    <div class="titles-count-box"><span>DESBLOQUEJATS</span><b id="titlesUnlockedCount">0</b></div>
+    <div class="titles-count-box"><span>DESBLOQUEJATS</span><b id="titlesUnlockedCount">0</b><span class="titles-total">/ 15</span></div>
   </div>
   <div class="titles-shop-head">
     <span class="titles-kicker">♛ FASIA VERSE · TÍTOLS</span>
@@ -4238,6 +4383,193 @@ button.profile-collection-card{cursor:pointer}
   </div>
 </div>
 
+<script id="fv-challenges-v1-script">
+/* ===== FASIA VERSE · MOTOR GENÈRIC DE DESAFIAMENTS V1 ===== */
+const CHALLENGE_CATALOG=[
+  {id:"global_colleccionista",area:"global",icon:"🛍️",name:"COL·LECCIONISTA",condition:"Compra 5 skins a la botiga.",stat:"global.skinPurchases",target:5,reward:{type:"title",id:"colleccionista",label:"🏷️ Títol COL·LECCIONISTA"}},
+
+  {id:"kh_cientific",area:"kahoot",icon:"🧪",name:"CIENTÍFIC/A",condition:"Juga 5 Kahoots de ciències.",stat:"kahoot.played",target:5,reward:{type:"title",id:"cientific",label:"🏷️ Títol CIENTÍFIC/A"}},
+  {id:"kh_imparable",area:"kahoot",icon:"🔥",name:"IMPARABLE",condition:"Aconsegueix 5 respostes correctes seguides.",stat:"kahoot.bestCorrectStreak",target:5,reward:{type:"title",id:"imparable",label:"🏷️ Títol IMPARABLE"}},
+  {id:"kh_velocista",area:"kahoot",icon:"⚡",name:"VELOCISTA",condition:"Respon correctament en 5 segons o menys.",stat:"kahoot.fastCorrect",target:1,reward:{type:"title",id:"velocista",label:"🏷️ Títol VELOCISTA"}},
+  {id:"kh_podi",area:"kahoot",icon:"👑",name:"REI/REINA DEL PODI",condition:"Aconsegueix 3 podis.",stat:"kahoot.podiums",target:3,reward:{type:"title",id:"rei_reina_podi",label:"🏷️ Títol REI/REINA DEL PODI"}},
+  {id:"kh_veterania",area:"kahoot",icon:"🎓",name:"VETERÀ/NA",condition:"Juga 20 Kahoots.",stat:"kahoot.played",target:20,reward:{type:"title",id:"veterania",label:"🏷️ Títol VETERÀ/NA"}},
+  {id:"kh_olimpic",area:"kahoot",icon:"🕊️",name:"OLÍMPIC/A",condition:"Aconsegueix 10 podis.",stat:"kahoot.podiums",target:10,reward:{type:"exclusive",id:"colom_olimpic",label:"🕊️ Colom Olímpic · avatar exclusiu"}},
+  {id:"kh_sense_errors",area:"kahoot",icon:"💯",name:"SENSE ERRORS",condition:"Acaba un Kahoot complet amb el 100% de respostes correctes.",stat:"kahoot.perfectGames",target:1,reward:{type:"fragment",puzzle:"kahoot",id:"kh_perfecte",label:"🧩 Fragment de puzle"}},
+  {id:"kh_ment_privilegiada",area:"kahoot",icon:"🧠",name:"MENT PRIVILEGIADA",condition:"Aconsegueix 10 respostes correctes seguides.",stat:"kahoot.bestCorrectStreak",target:10,reward:{type:"fragment",puzzle:"kahoot",id:"kh_ratxa10",label:"🧩 Fragment de puzle"}},
+  {id:"kh_campio",area:"kahoot",icon:"🏆",name:"CAMPIÓ/NA DE LA CIÈNCIA",condition:"Guanya 1 Kahoot de ciències.",stat:"kahoot.wins",target:1,reward:{type:"fragment",puzzle:"kahoot",id:"kh_victoria",label:"🧩 Fragment de puzle"}},
+  {id:"kh_mestre",area:"kahoot",icon:"🔬",name:"MESTRE/A KAHOOT",condition:"Juga 30 Kahoots.",stat:"kahoot.played",target:30,reward:{type:"exclusive_frame",id:"marc_ciencia",label:"🖼️ Marc exclusiu de Ciència"}},
+
+  {id:"pj_bon_ull",area:"pj",icon:"👁️",name:"BON ULL",condition:"Queda dins del 15% del preu real 5 vegades.",stat:"pj.within15",target:5,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"pj_preu_clavat",area:"pj",icon:"🎯",name:"PREU CLAVAT",condition:"Encerta exactament un preu.",stat:"pj.exact",target:1,reward:{type:"title",id:"preu_clavat",label:"🏷️ Títol PREU CLAVAT"}},
+  {id:"pj_cacador",area:"pj",icon:"🏹",name:"CAÇADOR/A D'OFERTES",condition:"Sigues el jugador més proper al preu real 3 vegades.",stat:"pj.closest",target:3,reward:{type:"title",id:"cacador_ofertes",label:"🏷️ Títol CAÇADOR/A D'OFERTES"}},
+  {id:"pj_carro",area:"pj",icon:"🛒",name:"CARRETÓ PLE",condition:"Juga 5 receptes diferents.",stat:"pj.distinctRecipes",target:5,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"pj_xef",area:"pj",icon:"🧑‍🍳",name:"XEF CALCULADOR/A",condition:"Queda dins del 5% del preu real 7 vegades.",stat:"pj.within5",target:7,reward:{type:"fragment",puzzle:"pj",id:"pj_dins5",label:"🧩 Fragment de puzle"}},
+  {id:"pj_sense_passarse",area:"pj",icon:"📉",name:"SENSE PASSAR-SE",condition:"Fes 3 estimacions seguides sense superar el preu real.",stat:"pj.bestUnderStreak",target:3,reward:{type:"title",id:"sense_passarse",label:"🏷️ Títol SENSE PASSAR-SE"}},
+  {id:"pj_rei_super",area:"pj",icon:"👑",name:"REI/REINA DEL SÚPER",condition:"Aconsegueix 3 podis al Preu Just.",stat:"pj.podiums",target:3,reward:{type:"exclusive_frame",id:"marc_preu_just",label:"🖼️ Marc exclusiu Preu Just"}},
+  {id:"pj_calculadora",area:"pj",icon:"🧮",name:"CALCULADORA HUMANA",condition:"Encerta exactament 3 preus.",stat:"pj.exact",target:3,reward:{type:"fragment",puzzle:"pj",id:"pj_exactes3",label:"🧩 Fragment de puzle"}},
+  {id:"pj_mestre",area:"pj",icon:"🏆",name:"MESTRE/A DEL PREU JUST",condition:"Guanya 1 partida del Preu Just.",stat:"pj.wins",target:1,reward:{type:"fragment",puzzle:"pj",id:"pj_victoria",label:"🧩 Fragment de puzle"}},
+  {id:"pj_vip",area:"pj",icon:"💳",name:"CLIENT/A VIP",condition:"Juga 10 receptes diferents.",stat:"pj.distinctRecipes",target:10,reward:{type:"title",id:"client_vip",label:"🏷️ Títol CLIENT/A VIP"}},
+
+  {id:"sn_creixement",area:"snake",icon:"🐾",name:"PRIMER CREIXEMENT",condition:"Arriba a 15 animals en una partida.",stat:"snake.maxAnimals",target:15,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
+  {id:"sn_cadena",area:"snake",icon:"🐍",name:"CADENA ANIMAL",condition:"Arriba a 30 animals en una partida.",stat:"snake.maxAnimals",target:30,reward:{type:"fragment",puzzle:"snake",id:"sn_cadena30",label:"🧩 Fragment de puzle"}},
+  {id:"sn_viatger",area:"snake",icon:"⏳",name:"VIATGER TEMPORAL",condition:"Arriba a 45 animals en una partida.",stat:"snake.maxAnimals",target:45,reward:{type:"title",id:"viatger_temporal",label:"🏷️ Títol VIATGER TEMPORAL"}},
+  {id:"sn_regres",area:"snake",icon:"🚗",name:"REGRES AL FUTUR",condition:"Arriba a 60 animals en una partida.",stat:"snake.maxAnimals",target:60,reward:{type:"exclusive_frame",id:"marc_regres_futur",label:"🖼️ Marc REGRES AL FUTUR"}},
+  {id:"sn_recollector",area:"snake",icon:"🪙",name:"RECOL·LECTOR",condition:"Aconsegueix 20 monedes Tucà acumulades.",stat:"snake.tucanTotal",target:20,reward:{type:"title",id:"recollector",label:"🏷️ Títol RECOL·LECTOR"}},
+  {id:"sn_paradoxa",area:"snake",icon:"🌀",name:"PARADOXA TEMPORAL",condition:"Provoca una paradoxa en 3 partides diferents (61 animals: Moderna → Prehistòria).",stat:"snake.paradoxGames",target:3,reward:{type:"fragment",puzzle:"snake",id:"sn_paradoxa3",label:"🧩 Fragment de puzle"}},
+  {id:"sn_tucans",area:"snake",icon:"🐦",name:"CAÇADOR DE TUCANS",condition:"Aconsegueix 5 monedes Tucà en una sola partida.",stat:"snake.tucanGameMax",target:5,reward:{type:"fragment",puzzle:"snake",id:"sn_tucans5",label:"🧩 Fragment de puzle"}},
+  {id:"sn_supervivent",area:"snake",icon:"⏱️",name:"SUPERVIVENT",condition:"Sobreviu 3 minuts en una partida.",stat:"snake.survivalMaxSec",target:180,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}}
+];
+const PUZZLE_CONFIG={
+  kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
+  pj:{name:"PUZLE PREU JUST",reward:"TUCÀ CAIXER",exclusiveId:"tuca_caixer"},
+  snake:{name:"PUZLE ANIMAL SNAKE",reward:"LLEÓ VIATGER DEL TEMPS",exclusiveId:"lleo_viatger_temps"}
+};
+let activeChallengeArea="global";
+
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeMergeState(raw){
+  const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
+  const out={...base,...r};
+  out.stats={...base.stats,...(r.stats||{})};
+  for(const k of Object.keys(base.stats))out.stats[k]={...base.stats[k],...((r.stats||{})[k]||{})};
+  for(const k of ["completed","puzzlesCompleted","unlockedExclusives","unlockedExclusiveFrames","pending"])out[k]=Array.isArray(r[k])?r[k]:base[k];
+  out.fragments={...base.fragments,...(r.fragments||{})};for(const k of Object.keys(base.fragments))out.fragments[k]=Array.isArray(out.fragments[k])?out.fragments[k]:[];
+  out.processed={...base.processed,...(r.processed||{})};for(const k of Object.keys(base.processed))out.processed[k]=Array.isArray(out.processed[k])?out.processed[k]:[];
+  return out;
+}
+function challengeLocalKey(){return `fv_challenge_state_${currentProfile?.id||"guest"}`}
+function challengeState(){
+  let raw=currentProfile?.challenge_state;
+  if(!raw||!Object.keys(raw).length){try{raw=JSON.parse(localStorage.getItem(challengeLocalKey())||"{}")}catch(e){raw={}}}
+  return challengeMergeState(raw);
+}
+async function saveChallengeState(state){
+  if(!currentProfile?.id)return; currentProfile.challenge_state=state; localStorage.setItem(challengeLocalKey(),JSON.stringify(state));
+  try{await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",body:JSON.stringify({challenge_state:state})})}
+  catch(e){console.warn("Desafiaments funcionant en mode local: falta challenge_state a Supabase.",e)}
+}
+function challengeGetStat(state,path){
+  if(path==="pj.distinctRecipes")return new Set(state.stats.pj.recipes||[]).size;
+  const [a,b]=path.split(".");return Number(state.stats?.[a]?.[b]||0);
+}
+function challengeQueue(state,item){state.pending=Array.isArray(state.pending)?state.pending:[];state.pending.push({...item,at:Date.now()})}
+function challengeRewardText(reward){return reward?.label||"RECOMPENSA"}
+async function grantChallengeReward(state,ch){
+  const r=ch.reward||{};
+  if(r.type==="coins"&&r.amount){currentProfile.coins=await addCoinsToProfile(currentProfile.id,Number(r.amount))}
+  if(r.type==="title"&&r.id){await unlockProfileTitle(r.id)}
+  if(r.type==="fragment"&&r.puzzle){
+    const list=state.fragments[r.puzzle]||(state.fragments[r.puzzle]=[]);if(!list.includes(r.id))list.push(r.id);
+    const cfg=PUZZLE_CONFIG[r.puzzle];
+    if(list.length>=3&&!state.puzzlesCompleted.includes(r.puzzle)){
+      state.puzzlesCompleted.push(r.puzzle);if(cfg&&!state.unlockedExclusives.includes(cfg.exclusiveId))state.unlockedExclusives.push(cfg.exclusiveId);
+      challengeQueue(state,{kind:"puzzle",icon:"🧩",title:`${cfg.reward} DESBLOQUEJAT!`,text:`Has completat ${cfg.name}.`,special:`AVATAR EXCLUSIU · ${cfg.reward}`});
+    }
+  }
+  if(r.type==="exclusive"&&r.id&&!state.unlockedExclusives.includes(r.id))state.unlockedExclusives.push(r.id);
+  if(r.type==="exclusive_frame"&&r.id&&!state.unlockedExclusiveFrames.includes(r.id))state.unlockedExclusiveFrames.push(r.id);
+  challengeQueue(state,{kind:"challenge",icon:ch.icon||"🎯",title:ch.name,text:`Recompensa: ${challengeRewardText(r)}`});
+}
+async function evaluateChallenges(state=challengeState()){
+  const completed=new Set(state.completed||[]);let changed=false;
+  for(const ch of CHALLENGE_CATALOG){
+    if(completed.has(ch.id))continue;
+    if(challengeGetStat(state,ch.stat)>=ch.target){
+      state.completed.push(ch.id);completed.add(ch.id);await grantChallengeReward(state,ch);changed=true;
+    }
+  }
+  if(changed)await saveChallengeState(state);return state;
+}
+async function challengeRecordSkinPurchase(skinId){
+  if(!currentProfile?.id)return;const s=challengeState();
+  s.stats.global.skinPurchases=Number(s.stats.global.skinPurchases||0)+1;await saveChallengeState(s);await evaluateChallenges(s);
+}
+function syncHistoricalPurchasedSkins(state){
+  try{
+    const owned=new Set(currentProfile?.owned_skins||[]),free=new Set(typeof FREE_SKIN_IDS!=="undefined"?FREE_SKIN_IDS:[]);
+    const paid=(typeof allShopSkins==="function"?allShopSkins():[]).filter(s=>owned.has(s.id)&&!free.has(s.id)&&Number(s.price||0)>0).length;
+    state.stats.global.skinPurchases=Math.max(Number(state.stats.global.skinPurchases||0),paid);
+  }catch(e){}
+}
+
+async function captureKahootChallengeStats(){
+  if(!currentProfile?.id||!onlineGameId||!onlinePlayerId)return;const state=challengeState();const gid=String(onlineGameId);if(state.processed.kahoot.includes(gid))return;
+  try{
+    const [answers,pls]=await Promise.all([
+      api(`answers?game_id=eq.${encodeURIComponent(onlineGameId)}&player_id=eq.${encodeURIComponent(onlinePlayerId)}&select=question_number,correct,points,created_at&order=question_number.asc`),
+      api(`players?game_id=eq.${encodeURIComponent(onlineGameId)}&select=id,score&order=score.desc`)
+    ]);
+    const a=(answers||[]).slice().sort((x,y)=>Number(x.question_number)-Number(y.question_number));let streak=0,best=0;
+    for(const x of a){if(x.correct){streak++;best=Math.max(best,streak);if(Number(x.points||0)>=938)state.stats.kahoot.fastCorrect=1}else streak=0}
+    const meIndex=(pls||[]).findIndex(p=>String(p.id)===String(onlinePlayerId));const rank=meIndex>=0?meIndex+1:999;
+    state.stats.kahoot.played++;state.stats.kahoot.bestCorrectStreak=Math.max(state.stats.kahoot.bestCorrectStreak,best);if(rank===1)state.stats.kahoot.wins++;if(rank<=3)state.stats.kahoot.podiums++;
+    const total=Array.isArray(questions)?questions.length:0;if(total>0&&a.length>=total&&a.slice(0,total).every(x=>!!x.correct))state.stats.kahoot.perfectGames++;
+    state.processed.kahoot.push(gid);syncHistoricalPurchasedSkins(state);await saveChallengeState(state);await evaluateChallenges(state);
+  }catch(e){console.error("No s'han pogut registrar els desafiaments Kahoot",e)}
+}
+
+async function capturePJChallengeStats(){
+  if(!currentProfile?.id||!onlineGameId||!onlinePlayerId||!payload)return;const state=challengeState();const gid=String(onlineGameId);if(state.processed.pj.includes(gid))return;
+  try{
+    const [answers,allAnswers,pls]=await Promise.all([
+      api(`answers?game_id=eq.${encodeURIComponent(onlineGameId)}&player_id=eq.${encodeURIComponent(onlinePlayerId)}&select=question_number,answer_index,correct,points&order=question_number.asc`),
+      api(`answers?game_id=eq.${encodeURIComponent(onlineGameId)}&select=player_id,question_number,answer_index`),
+      api(`players?game_id=eq.${encodeURIComponent(onlineGameId)}&select=id,score&order=score.desc`)
+    ]);
+    const realFor=q=>Number(q)>=Number(payload.items?.length||0)?Number(totalPrice(payload)):Number(payload.items?.[Number(q)]?.price||0);
+    const closestByQ=new Map();for(const x of (allAnswers||[])){const q=Number(x.question_number),d=Math.abs(Number(x.answer_index||0)-realFor(q));if(!closestByQ.has(q)||d<closestByQ.get(q))closestByQ.set(q,d)}
+    let current=Number(state.stats.pj.currentUnderStreak||0),best=Number(state.stats.pj.bestUnderStreak||0);
+    for(const x of (answers||[]).slice().sort((a,b)=>Number(a.question_number)-Number(b.question_number))){
+      const real=realFor(x.question_number),guess=Number(x.answer_index||0),diff=Math.abs(guess-real),pct=real?diff/real*100:999;
+      if(diff===0)state.stats.pj.exact++;if(pct<=5)state.stats.pj.within5++;if(pct<=15)state.stats.pj.within15++;if(diff===closestByQ.get(Number(x.question_number))&&pct<=30)state.stats.pj.closest++;
+      if(guess<=real){current++;best=Math.max(best,current)}else current=0;
+    }
+    state.stats.pj.currentUnderStreak=current;state.stats.pj.bestUnderStreak=best;const rid=String(payload.recipe||"");if(rid&&!state.stats.pj.recipes.includes(rid))state.stats.pj.recipes.push(rid);
+    const meIndex=(pls||[]).findIndex(p=>String(p.id)===String(onlinePlayerId));const rank=meIndex>=0?meIndex+1:999;if(rank===1)state.stats.pj.wins++;if(rank<=3)state.stats.pj.podiums++;
+    state.processed.pj.push(gid);syncHistoricalPurchasedSkins(state);await saveChallengeState(state);await evaluateChallenges(state);
+  }catch(e){console.error("No s'han pogut registrar els desafiaments Preu Just",e)}
+}
+
+/* Animal Snake és un fitxer separat. Quan retorni amb aquests paràmetres, el motor ja els processa:
+   run=<id>&animals=<n>&tucans=<n>&seconds=<n>&paradox=1 */
+async function captureAnimalSnakeReturnStats(params){
+  if(!currentProfile?.id||!params)return;const has=["run","animals","tucans","seconds","paradox"].some(k=>params.has(k));if(!has)return;
+  const state=challengeState(),run=String(params.get("run")||Date.now());if(state.processed.snake.includes(run))return;
+  const animals=Math.max(0,Number(params.get("animals")||0)),tucans=Math.max(0,Number(params.get("tucans")||0)),seconds=Math.max(0,Number(params.get("seconds")||0)),paradox=params.get("paradox")==="1"||animals>=61;
+  state.stats.snake.maxAnimals=Math.max(state.stats.snake.maxAnimals,animals);state.stats.snake.tucanTotal+=tucans;state.stats.snake.tucanGameMax=Math.max(state.stats.snake.tucanGameMax,tucans);state.stats.snake.survivalMaxSec=Math.max(state.stats.snake.survivalMaxSec,seconds);if(paradox)state.stats.snake.paradoxGames++;state.processed.snake.push(run);
+  await saveChallengeState(state);await evaluateChallenges(state);
+}
+
+function challengePuzzleHtml(area,state){
+  const cfg=PUZZLE_CONFIG[area];if(!cfg)return "";const n=(state.fragments?.[area]||[]).length,done=state.puzzlesCompleted.includes(area);
+  return `<div class="challenge-puzzle-visual"></div><div><div class="challenge-puzzle-count">${Math.min(n,3)}/3</div><h3>${cfg.name}</h3><p>${done?`✅ AVATAR EXCLUSIU DESBLOQUEJAT`:`AVATAR EXCLUSIU`}</p><p>${done?cfg.reward:"Completa els 3 fragments en qualsevol ordre."}</p></div>`;
+}
+function renderChallenges(){
+  const state=challengeState();syncHistoricalPurchasedSkins(state);const done=new Set(state.completed||[]);$("#challengesDoneCount").textContent=done.size;$("#challengesTotalCount").textContent=`/ ${CHALLENGE_CATALOG.length}`;
+  const puzzle=$("#challengePuzzlePanel");if(activeChallengeArea!=="global"){puzzle.innerHTML=challengePuzzleHtml(activeChallengeArea,state);puzzle.classList.remove("hidden");puzzle.classList.toggle("complete",state.puzzlesCompleted.includes(activeChallengeArea))}else{puzzle.classList.add("hidden");puzzle.innerHTML=""}
+  const items=CHALLENGE_CATALOG.filter(c=>c.area===activeChallengeArea).sort((a,b)=>Number(done.has(a.id))-Number(done.has(b.id)));
+  $("#challengesGrid").innerHTML=items.map(ch=>{const value=challengeGetStat(state,ch.stat),shown=Math.min(value,ch.target),pct=Math.max(0,Math.min(100,shown/ch.target*100)),isDone=done.has(ch.id);return `<article class="challenge-card ${isDone?"done":""}"><div class="challenge-card-icon">${isDone?"✅":ch.icon}</div><div><h3>${ch.name}</h3><div class="challenge-condition">${ch.condition}</div><div class="challenge-progress-line"><span>${isDone?"COMPLETAT":"PROGRÉS"}</span><b>${shown}/${ch.target}</b></div><div class="challenge-progress-track"><div class="challenge-progress-fill" style="width:${pct}%"></div></div><div class="challenge-reward ${isDone?"challenge-done-label":""}">${isDone?"✓ ":"RECOMPENSA · "}${challengeRewardText(ch.reward)}</div></div></article>`}).join("");
+}
+async function openChallengesScreen(){
+  if(!currentProfile?.id)return;try{await refreshCurrentProfile()}catch(e){}const s=challengeState();syncHistoricalPurchasedSkins(s);await saveChallengeState(s);await evaluateChallenges(s);renderChallenges();show("challengesHome");
+}
+async function enterProfileWithChallengeRewards(){
+  show("profileHome");try{updateProfileCharacterSummary();renderProfileHeroVisuals();renderEquippedProfileTitle()}catch(e){}setTimeout(showNextChallengeReward,120);
+}
+async function showNextChallengeReward(){
+  if(!currentProfile?.id)return;const state=challengeState();if(!state.pending?.length)return;const item=state.pending[0],ov=$("#challengeRewardOverlay");if(!ov)return;
+  $("#challengeRewardIcon").textContent=item.icon||"🎉";$("#challengeRewardKicker").textContent=item.kind==="puzzle"?"🧩 PUZLE COMPLETAT!":"🎯 DESAFIAMENT COMPLETAT!";$("#challengeRewardTitle").textContent=item.title||"RECOMPENSA!";$("#challengeRewardText").textContent=item.text||"";const sp=$("#challengeRewardSpecial");if(item.special){sp.textContent=item.special;sp.classList.remove("hidden")}else{sp.classList.add("hidden");sp.textContent=""}ov.classList.remove("hidden");
+}
+async function dismissChallengeReward(){
+  const state=challengeState();if(state.pending?.length)state.pending.shift();await saveChallengeState(state);$("#challengeRewardOverlay").classList.add("hidden");if(state.pending?.length)setTimeout(showNextChallengeReward,100);else{try{await refreshCurrentProfile();renderProfileHeroVisuals();renderEquippedProfileTitle()}catch(e){}}
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  $("#backChallengesProfile")?.addEventListener("click",()=>enterProfileWithChallengeRewards());
+  $$(".challenge-tab").forEach(b=>b.addEventListener("click",()=>{$$(".challenge-tab").forEach(x=>x.classList.toggle("active",x===b));activeChallengeArea=b.dataset.challengeArea;renderChallenges()}));
+  $("#challengeRewardContinue")?.addEventListener("click",dismissChallengeReward);
+});
+</script>
+
 <script>
 // V0.11.0 · TROFEUS I PALMARÈS · sobre V0.10.0
 const SUPABASE_URL="https://gzbvcxputhkyunemxzjm.supabase.co";
@@ -4399,31 +4731,32 @@ function normalizeShopProfile(p){
   p.equipped_frame=p.equipped_frame||"";
   p.owned_titles=Array.isArray(p.owned_titles)?p.owned_titles:[];
   p.equipped_title=p.equipped_title||"";
+  p.challenge_state=(p.challenge_state&&typeof p.challenge_state==="object"&&!Array.isArray(p.challenge_state))?p.challenge_state:{};
   return p;
 }
 async function loadProfileByName(name){
   const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
   try{
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }catch(e){
-    console.warn("Botiga: camps de persistència encara no disponibles.",e);
-    shopPersistenceReady=false;
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role&limit=1`);
+    console.warn("Desafiaments: challenge_state encara no disponible; carrego el perfil existent.",e);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+    shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }
 }
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
   try{
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }catch(e){
-    shopPersistenceReady=false;
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
+    shopPersistenceReady=true;
   }
   $('#profileName').textContent=currentProfile.display_name;
   $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
@@ -4640,11 +4973,32 @@ function renderProfileRecentSkins(){
 }
 
 const TITLE_CATALOG=[
-  {id:"ment_brillant",name:"MENT BRILLANT",desc:"UN TÍTOL CLÀSSIC PER COMENÇAR"},
-  {id:"esperit_fasia",name:"ESPERIT FÀSIA",desc:"PER QUI JA FORMA PART DEL VERSE"},
-  {id:"explorador_verse",name:"EXPLORADOR DEL VERSE",desc:"PER QUI SEMPRE VOL DESCOBRIR MÉS"}
+  /* 3 títols inicials: es mantenen exactament com fins ara */
+  {id:"ment_brillant",name:"MENT BRILLANT",desc:"UN TÍTOL CLÀSSIC PER COMENÇAR",category:"INICIAL",starter:true},
+  {id:"esperit_fasia",name:"ESPERIT FÀSIA",desc:"PER QUI JA FORMA PART DEL VERSE",category:"INICIAL",starter:true},
+  {id:"explorador_verse",name:"EXPLORADOR DEL VERSE",desc:"PER QUI SEMPRE VOL DESCOBRIR MÉS",category:"INICIAL",starter:true},
+
+  /* KAHOOT */
+  {id:"cientific",name:"CIENTÍFIC/A",desc:"DEMOSTRA QUE LA CIÈNCIA ÉS EL TEU TERRENY",category:"🧪 KAHOOT",challenge:"Juga 5 Kahoots de ciències."},
+  {id:"imparable",name:"IMPARABLE",desc:"UNA RATXA QUE NO ES POT ATURAR",category:"🧪 KAHOOT",challenge:"Aconsegueix 5 respostes correctes seguides."},
+  {id:"velocista",name:"VELOCISTA",desc:"PRECISIÓ A LA VELOCITAT DE LA LLUM",category:"🧪 KAHOOT",challenge:"Respon correctament en 5 segons o menys."},
+  {id:"rei_reina_podi",name:"REI/REINA DEL PODI",desc:"UN LLOC ENTRE ELS GRANS",category:"🧪 KAHOOT",challenge:"Aconsegueix 3 podis."},
+  {id:"veterania",name:"VETERÀ/NA",desc:"L'EXPERIÈNCIA TAMBÉ COMPTA",category:"🧪 KAHOOT",challenge:"Juga 20 Kahoots."},
+
+  /* PREU JUST */
+  {id:"preu_clavat",name:"PREU CLAVAT",desc:"NI UN CÈNTIM AMUNT NI AVALL",category:"💰 PREU JUST",challenge:"Encerta exactament el preu d’un producte."},
+  {id:"cacador_ofertes",name:"CAÇADOR/A D'OFERTES",desc:"ULL CLÍNIC PER ALS PREUS",category:"💰 PREU JUST",challenge:"Sigues el jugador més proper al preu real 3 vegades."},
+  {id:"sense_passarse",name:"SENSE PASSAR-SE",desc:"CALCULA, ARRISCA I NO ET PASSIS",category:"💰 PREU JUST",challenge:"Fes 3 estimacions seguides sense superar el preu real."},
+  {id:"client_vip",name:"CLIENT/A VIP",desc:"JA ET CONEIXEN A CAIXA",category:"💰 PREU JUST",challenge:"Juga 10 receptes diferents del Preu Just."},
+
+  /* ANIMAL SNAKE */
+  {id:"viatger_temporal",name:"VIATGER TEMPORAL",desc:"HAS DOBLEGAT LES REGLES DEL TEMPS",category:"🐍 ANIMAL SNAKE",challenge:"Arriba a 45 animals en una sola partida."},
+  {id:"recollector",name:"RECOL·LECTOR",desc:"CAP MONEDA TUCÀ S'ESCAPA",category:"🐍 ANIMAL SNAKE",challenge:"Aconsegueix 20 monedes Tucà acumulades entre totes les partides."},
+
+  /* GENERAL */
+  {id:"colleccionista",name:"COL·LECCIONISTA",desc:"UNA COL·LECCIÓ QUE COMENÇA A IMPRESSIONAR",category:"🌐 GENERAL",challenge:"Compra 5 skins a la botiga."}
 ];
-const STARTER_TITLE_IDS=TITLE_CATALOG.map(t=>t.id);
+const STARTER_TITLE_IDS=["ment_brillant","esperit_fasia","explorador_verse"];
 function titleById(id){return TITLE_CATALOG.find(t=>t.id===id)||null}
 function titleHtml(id){
   const t=titleById(id); if(!t)return "";
@@ -4663,28 +5017,60 @@ function renderEquippedProfileTitle(){
   box.innerHTML=titleHtml(id);
   box.classList.toggle("hidden",!box.innerHTML);
 }
+async function unlockProfileTitle(titleId){
+  /* Punt d'entrada preparat per al futur motor de desafiaments.
+     No comprova cap desafiament: només concedeix el títol si existeix. */
+  const t=titleById(titleId);
+  if(!t||!currentProfile)return false;
+  const owned=[...(currentProfile.owned_titles||[])];
+  if(!owned.includes(titleId))owned.push(titleId);
+  await saveTitleProfile({owned_titles:owned});
+  return true;
+}
 async function openTitlesScreen(){
-  const owned=(currentProfile?.owned_titles||[]).filter(id=>titleById(id));
-  $("#titlesUnlockedCount").textContent=owned.length;
+  const owned=new Set((currentProfile?.owned_titles||[]).filter(id=>titleById(id)));
+  $("#titlesUnlockedCount").textContent=owned.size;
   const equipped=currentProfile?.equipped_title||"";
-  $("#titlesGrid").innerHTML=owned.map(id=>{
-    const t=titleById(id),eq=id===equipped;
-    return `<article class="title-card ${eq?"equipped":""}">
+
+  $("#titlesGrid").innerHTML=TITLE_CATALOG.map(t=>{
+    const unlocked=owned.has(t.id);
+    const eq=unlocked&&t.id===equipped;
+
+    if(unlocked){
+      return `<article class="title-card unlocked ${eq?"equipped":""}">
+        <div>
+          <div class="title-card-category">${t.category||"TÍTOL"}</div>
+          <div class="title-card-preview">${titleHtml(t.id)}</div>
+          <small>${t.desc}</small>
+        </div>
+        <button class="title-equip-btn ${eq?"equipped":""}" data-title="${t.id}" type="button">${eq?"✓ EQUIPAT":"EQUIPAR"}</button>
+      </article>`;
+    }
+
+    return `<article class="title-card locked">
       <div>
-        <div class="title-card-preview">${titleHtml(id)}</div>
+        <div class="title-card-category">${t.category||"DESAFIAMENT"}</div>
+        <div class="title-card-preview">${titleHtml(t.id)}</div>
         <small>${t.desc}</small>
+        <div class="title-lock-condition">🔒 ${t.challenge} Completa aquest desafiament per desbloquejar-lo.</div>
       </div>
-      <button class="title-equip-btn ${eq?"equipped":""}" data-title="${id}" type="button">${eq?"✓ EQUIPAT":"EQUIPAR"}</button>
+      <button class="title-lock-btn" type="button" disabled>🔒 BLOQUEJAT</button>
     </article>`;
   }).join("");
+
   $("#titlesGrid").querySelectorAll(".title-equip-btn").forEach(btn=>btn.onclick=async()=>{
-    const id=btn.dataset.title;if(!titleById(id))return;
+    const id=btn.dataset.title;
+    if(!titleById(id)||!owned.has(id))return;
     btn.disabled=true;
     try{
       await saveTitleProfile({equipped_title:id});
       renderEquippedProfileTitle();
       openTitlesScreen();
-    }catch(e){console.error(e);alert("NO S'HA POGUT EQUIPAR EL TÍTOL");btn.disabled=false}
+    }catch(e){
+      console.error(e);
+      alert("NO S'HA POGUT EQUIPAR EL TÍTOL");
+      btn.disabled=false;
+    }
   });
   show("titlesHome");
 }
@@ -4917,6 +5303,7 @@ async function processSkinPurchase(){
     });
     currentProfile.coins=newBalance;
     currentProfile.owned_skins=owned;
+    await challengeRecordSkinPurchase(skin.id);
     lastPurchasedSkinId=skin.id;
     closePurchaseConfirm();
 
@@ -5753,7 +6140,7 @@ $("#openCharacters").onclick=()=>openCharactersScreen();
 $("#openTrophies").onclick=()=>openTrophiesScreen();
 $("#profileNavCharacters").onclick=()=>openCharactersScreen();
 $("#profileNavTrophies").onclick=()=>openTrophiesScreen();
-$("#profileChallenges").onclick=()=>alert("DESAFIAMENTS · PROPERAMENT");
+$("#profileChallenges").onclick=()=>openChallengesScreen();
 $("#backTrophiesProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 $("#backCharactersProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 $("#backCharactersList").onclick=()=>{renderCharactersGrid();setShopCoins();show("charactersHome")};
@@ -5805,12 +6192,15 @@ $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profil
 
 async function returnStudentToProfile(){
   stopOnlinePolls();
-  try{await refreshCurrentProfile();}catch(e){console.error("Error actualitzant perfil:",e)}
+  try{
+    await captureKahootChallengeStats();
+    await refreshCurrentProfile();
+  }catch(e){console.error("Error actualitzant perfil/desafiaments:",e)}
   onlineGameId=null;
   onlinePlayerId=null;
   studentLastQuestion=-1;
   studentAnsweredQuestion=-1;
-  show("profileHome");
+  await enterProfileWithChallengeRewards();
 }
 
 async function showStudentEndCoins(){
@@ -6424,10 +6814,10 @@ $("#startGame").onclick=async()=>{
   try{
     let rows;
     try{
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
     }catch(shopErr){
       /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
     }
 
     if(!rows || !rows[0] || rows[0].role!=="student") throw new Error("Perfil no trobat");
@@ -6438,7 +6828,8 @@ $("#startGame").onclick=async()=>{
     if($('#profileTrophyCount')) $('#profileTrophyCount').textContent='PALMARÈS';
     if($('#profileTrophyBreakdown')) $('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
 
-    show('profileHome');
+    await captureAnimalSnakeReturnStats(params);
+    await enterProfileWithChallengeRewards();
     requestAnimationFrame(()=>{
       updateProfileCharacterSummary();
       renderProfileHeroVisuals();
@@ -7256,7 +7647,7 @@ document.addEventListener("keydown",e=>{
 
   $("#pjEndReturn").onclick=async()=>{
     stopOnlinePolls();
-    if(currentProfile?.role==="student"){onlineGameId=null;onlinePlayerId=null;mode=false;await refreshCurrentProfile();show("profileHome")}
+    if(currentProfile?.role==="student"){await capturePJChallengeStats();onlineGameId=null;onlinePlayerId=null;mode=false;await refreshCurrentProfile();await enterProfileWithChallengeRewards()}
     else{onlineGameId=null;mode=false;show("teacherTopics")}
   };
 
@@ -7489,6 +7880,7 @@ document.addEventListener("keydown",e=>{
   console.info('Fasia Verse · Mode GM v1 carregat');
 })();
 </script>
+
 </body>
 </html>
 <style>
