@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.30 · Sala identitat agrupada</title>
+<title>Fasia Verse · V0.14.32 · Desafiaments + Animal Snake</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4530,14 +4530,42 @@ async function capturePJChallengeStats(){
   }catch(e){console.error("No s'han pogut registrar els desafiaments Preu Just",e)}
 }
 
-/* Animal Snake és un fitxer separat. Quan retorni amb aquests paràmetres, el motor ja els processa:
-   run=<id>&animals=<n>&tucans=<n>&seconds=<n>&paradox=1 */
+/* Animal Snake és un fitxer separat. Pot retornar una partida per URL o una cua de partides
+   guardada a sessionStorage (útil si l'alumne juga diverses vegades abans de tornar al perfil). */
+async function applyAnimalSnakeRunResult(data){
+  if(!currentProfile?.id||!data)return;
+  const state=challengeState(),run=String(data.run||Date.now());
+  if(state.processed.snake.includes(run))return;
+  const animals=Math.max(0,Number(data.animals||0));
+  const tucans=Math.max(0,Number(data.tucans||0));
+  const seconds=Math.max(0,Number(data.seconds||0));
+  const paradox=data.paradox===true||data.paradox===1||data.paradox==="1"||animals>=61;
+  state.stats.snake.maxAnimals=Math.max(state.stats.snake.maxAnimals,animals);
+  state.stats.snake.tucanTotal+=tucans;
+  state.stats.snake.tucanGameMax=Math.max(state.stats.snake.tucanGameMax,tucans);
+  state.stats.snake.survivalMaxSec=Math.max(state.stats.snake.survivalMaxSec,seconds);
+  if(paradox)state.stats.snake.paradoxGames++;
+  state.processed.snake.push(run);
+  await saveChallengeState(state);
+  await evaluateChallenges(state);
+}
 async function captureAnimalSnakeReturnStats(params){
-  if(!currentProfile?.id||!params)return;const has=["run","animals","tucans","seconds","paradox"].some(k=>params.has(k));if(!has)return;
-  const state=challengeState(),run=String(params.get("run")||Date.now());if(state.processed.snake.includes(run))return;
-  const animals=Math.max(0,Number(params.get("animals")||0)),tucans=Math.max(0,Number(params.get("tucans")||0)),seconds=Math.max(0,Number(params.get("seconds")||0)),paradox=params.get("paradox")==="1"||animals>=61;
-  state.stats.snake.maxAnimals=Math.max(state.stats.snake.maxAnimals,animals);state.stats.snake.tucanTotal+=tucans;state.stats.snake.tucanGameMax=Math.max(state.stats.snake.tucanGameMax,tucans);state.stats.snake.survivalMaxSec=Math.max(state.stats.snake.survivalMaxSec,seconds);if(paradox)state.stats.snake.paradoxGames++;state.processed.snake.push(run);
-  await saveChallengeState(state);await evaluateChallenges(state);
+  if(!currentProfile?.id)return;
+
+  /* Compatibilitat amb retorn per paràmetres d'URL. */
+  if(params&&["run","animals","tucans","seconds","paradox"].some(k=>params.has(k))){
+    await applyAnimalSnakeRunResult({
+      run:params.get("run"),animals:params.get("animals"),tucans:params.get("tucans"),
+      seconds:params.get("seconds"),paradox:params.get("paradox")
+    });
+  }
+
+  /* Cua de partides completades dins Animal Snake. Cada run és independent. */
+  let queued=[];
+  try{queued=JSON.parse(sessionStorage.getItem("fasiaVerseSnakeRuns")||"[]")}catch(_){queued=[]}
+  if(!Array.isArray(queued)||!queued.length)return;
+  for(const runData of queued)await applyAnimalSnakeRunResult(runData);
+  sessionStorage.removeItem("fasiaVerseSnakeRuns");
 }
 
 function challengePuzzleHtml(area,state){

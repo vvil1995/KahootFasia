@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Fasia Verse · Animal Snake</title>
+<title>Fasia Verse · Animal Snake · Desafiaments</title>
 <style>
   :root{
     --bg1:#07111f;
@@ -1260,6 +1260,7 @@
 
   let snake, dir, nextDir, food, score, eatenCount = 0, tucanCoins = 0;
   let currentEra = 'prehistoria', timeLoop = 0, transitionLock = false;
+  let currentRunId = '', runActiveMs = 0, runHadParadox = false, runSaved = false;
   let bonusCoin = null;
   let bonusCoinTimeout = null;
   let best = Number(localStorage.getItem('fasiaSnakeBest') || 0);
@@ -1302,6 +1303,7 @@
     const newLoop = loopForLength(newLen);
 
     if(newLoop > oldLoop){
+      runHadParadox = true;
       timeLoop = newLoop;
       timeLoopEl.textContent = timeLoop;
       applyEra('prehistoria');
@@ -1351,6 +1353,10 @@
     score = 0;
     eatenCount = 0;
     tucanCoins = 0;
+    currentRunId = `${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+    runActiveMs = 0;
+    runHadParadox = false;
+    runSaved = false;
     bonusCoin = null;
     clearTimeout(bonusCoinTimeout);
     speed = speedForLength(snake.length);
@@ -1392,6 +1398,7 @@
       return;
     }
 
+    runActiveMs += speed;
     const oldLength = snake.length;
     snake.unshift(newHead);
 
@@ -1478,6 +1485,26 @@
     }, 3000);
   }
 
+  function queueAnimalSnakeRunResult(){
+    if(runSaved || !currentRunId || !snake) return;
+    runSaved = true;
+    const result = {
+      run: currentRunId,
+      animals: Number(snake.length||0),
+      tucans: Number(tucanCoins||0),
+      seconds: Math.floor(Math.max(0,runActiveMs)/1000),
+      paradox: !!runHadParadox
+    };
+    try{
+      let queue = JSON.parse(sessionStorage.getItem('fasiaVerseSnakeRuns')||'[]');
+      if(!Array.isArray(queue)) queue=[];
+      if(!queue.some(x=>String(x?.run)===String(result.run))) queue.push(result);
+      sessionStorage.setItem('fasiaVerseSnakeRuns',JSON.stringify(queue.slice(-20)));
+    }catch(e){
+      console.warn("Animal Snake · no s'ha pogut guardar el resultat per als desafiaments",e);
+    }
+  }
+
   function endGame(){
     running = false;
     clearTimeout(timer);
@@ -1486,6 +1513,7 @@
       localStorage.setItem('fasiaSnakeBest', String(best));
       bestEl.textContent = best;
     }
+    queueAnimalSnakeRunResult();
     gameOverText.textContent = `Has aconseguit ${score} punts i una colla de ${snake.length} animals.`;
 
     const goPoints = document.getElementById('goPoints');
