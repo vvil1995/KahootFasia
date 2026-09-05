@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.28 · Títol recol·locat</title>
+<title>Fasia Verse · V0.14.29 · Sala identitat agrupada</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3583,6 +3583,33 @@ button.profile-collection-card{cursor:pointer}
 }
 </style>
 
+
+<style id="online-player-layout-v01429">
+/* Sala professor: identitat agrupada a l'esquerra. No modifica mides d'avatar ni marc. */
+#playersList .online-player-card,
+#playersList .online-player-card.has-title{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:14px!important;
+}
+#playersList .online-player-avatar{flex:0 0 70px!important}
+#playersList .online-player-info{flex:0 0 auto!important;min-width:110px!important}
+#playersList .online-player-title-slot{
+  flex:0 0 auto!important;
+  min-width:0!important;
+  padding:0!important;
+  justify-content:flex-start!important;
+}
+#playersList .online-player-title-slot .fv-title{text-align:left!important}
+#playersList .online-player-trophy-wrap{flex:0 0 54px!important;margin-left:0!important}
+@media(max-width:650px){
+  #playersList .online-player-card,
+  #playersList .online-player-card.has-title{gap:10px!important;flex-wrap:wrap!important}
+  #playersList .online-player-avatar{flex-basis:62px!important}
+  #playersList .online-player-info{min-width:90px!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
