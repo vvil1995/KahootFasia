@@ -1856,6 +1856,27 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   display: none !important;
 }
 
+
+/* v0.14.38 · Exclusius de desafiaments: silueta borrosa fins desbloquejar */
+.skin-shop-card.challenge-exclusive-locked .skin-shop-media img,
+.skin-shop-card.challenge-exclusive-locked .skin-shop-media .shop-crop,
+.frame-shop-card.challenge-exclusive-locked .frame-preview img{
+  filter:blur(16px) brightness(.30) saturate(.10) !important;
+  transform:scale(1.08);
+  opacity:.72;
+}
+.skin-shop-card.challenge-exclusive-locked .skin-shop-media,
+.frame-shop-card.challenge-exclusive-locked .frame-preview{
+  overflow:hidden;
+  position:relative;
+}
+.skin-shop-card.challenge-exclusive-locked .skin-shop-media::after,
+.frame-shop-card.challenge-exclusive-locked .frame-preview::after{
+  content:"🔒";
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:42px;text-shadow:0 4px 14px rgba(0,0,0,.8);pointer-events:none;
+}
+
 </style>
 
 <style>
@@ -5157,7 +5178,7 @@ async function openFramesShop(){
  $("#framesCoins").textContent=Number(currentProfile.coins||0);
  const owned=new Set(currentProfile.owned_frames||[]);
  const unlockedExclusive=new Set((challengeState().unlockedExclusiveFrames||[]));
- $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const challengeHas=f.exclusiveChallenge&&unlockedExclusive.has(f.id),has=owned.has(f.id)||challengeHas,eq=currentProfile.equipped_frame===f.id,locked=f.exclusiveChallenge&&!challengeHas;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${locked?"🔒 EXCLUSIU · DESAFIAMENT":challengeHas?"DESBLOQUEJAT":has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button" ${locked?"disabled":""}>${locked?"🔒 DESAFIAMENT":eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
+ $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const challengeHas=f.exclusiveChallenge&&unlockedExclusive.has(f.id),has=owned.has(f.id)||challengeHas,eq=currentProfile.equipped_frame===f.id,locked=f.exclusiveChallenge&&!challengeHas;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""} ${locked?"challenge-exclusive-locked":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${locked?"🔒 EXCLUSIU · DESAFIAMENT":challengeHas?"DESBLOQUEJAT":has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button" ${locked?"disabled":""}>${locked?"🔒 DESAFIAMENT":eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
  $("#framesGrid").querySelectorAll(".frame-action").forEach(btn=>btn.onclick=async()=>{const f=frameById(btn.dataset.frame),ownedNow=new Set(currentProfile.owned_frames||[]),unlockedNow=new Set(challengeState().unlockedExclusiveFrames||[]),challengeHas=f.exclusiveChallenge&&unlockedNow.has(f.id);if(f.exclusiveChallenge&&!challengeHas)return;btn.disabled=true;try{if(!ownedNow.has(f.id)&&!challengeHas){const coins=Number(currentProfile.coins||0);if(coins<f.price){alert("NO TENS PROU MONEDES");btn.disabled=false;return}ownedNow.add(f.id);await saveFrameProfile({coins:coins-f.price,owned_frames:[...ownedNow],equipped_frame:f.id})}else await saveFrameProfile({equipped_frame:f.id});$("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img"></span>`;renderProfileHeroVisuals();openFramesShop()}catch(e){console.error(e);alert("NO S'HA POGUT GUARDAR EL MARC");btn.disabled=false}});
  show("framesHome");
 }
@@ -5277,7 +5298,7 @@ function renderCharacterSkins(c){
     const owned=isSkinOwned(s.id);
     const equipped=currentProfile?.equipped_skin===s.id;
     const card=document.createElement("div");
-    card.className=`skin-shop-card${owned?" owned":""}${equipped?" equipped":""}${!isSkinAvailable(s)?" event-locked":""}`;
+    card.className=`skin-shop-card${owned?" owned":""}${equipped?" equipped":""}${!isSkinAvailable(s)?" event-locked":""}${s.exclusiveChallenge&&!owned?" challenge-exclusive-locked":""}`;
 
     const media=document.createElement("div");media.className="skin-shop-media";
     const visual=makeImageOrFallback(s.image,s.name,c.emoji,s.cropIndex);
@@ -6154,7 +6175,11 @@ $('#enterBtn').onclick=async()=>{
     if($('#profileTrophyCount'))$('#profileTrophyCount').textContent='PALMARÈS';
     if($('#profileTrophyBreakdown'))$('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
     show('profileHome');
-    requestAnimationFrame(()=>{updateProfileCharacterSummary();renderProfileHeroVisuals()});
+    requestAnimationFrame(()=>{
+      renderEquippedProfileTitle();
+      updateProfileCharacterSummary();
+      renderProfileHeroVisuals();
+    });
   }catch(e){
     console.error(e);
     $('#homeMsg').textContent="NO S'HA POGUT CARREGAR EL PERFIL";
@@ -6238,8 +6263,8 @@ $("#shopSuccessEquip").onclick=async()=>{
 
 $("#openFramesShop")?.addEventListener("click",()=>openFramesShop());
 $("#openTitles")?.addEventListener("click",()=>openTitlesScreen());
-$("#backTitlesProfile")?.addEventListener("click",()=>show("profileHome"));
-$("#backFramesProfile")?.addEventListener("click",()=>show("profileHome"));
+$("#backTitlesProfile")?.addEventListener("click",()=>{renderEquippedProfileTitle();show("profileHome")});
+$("#backFramesProfile")?.addEventListener("click",()=>{renderEquippedProfileTitle();show("profileHome")});
 $("#profileLogout").onclick=()=>{
   currentProfile=null;onlineGameId=null;onlinePlayerId=null;
   sessionStorage.removeItem("fasiaVerseProfileId");
@@ -6253,7 +6278,7 @@ $("#playFromProfile").onclick=()=>{
   show("gameSelector");
 };
 
-$("#backGameSelector").onclick=()=>show("profileHome");
+$("#backGameSelector").onclick=()=>{renderEquippedProfileTitle();show("profileHome")};
 
 $("#openGameCode").onclick=()=>{
   resetStudentGameChoices();
