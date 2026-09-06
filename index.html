@@ -8634,3 +8634,33 @@ document.addEventListener("keydown",e=>{
 }
 </style>
 
+<style>
+/* v0.14.40 · Les skins PRÒXIMAMENT també queden ocultes */
+.skin-shop-card.event-locked .skin-shop-media img,
+.skin-shop-card.event-locked:hover .skin-shop-media img,
+.skin-shop-card.event-locked:active .skin-shop-media img,
+.skin-shop-card.event-locked .skin-shop-media > div > img,
+.skin-shop-card.event-locked:hover .skin-shop-media > div > img{
+  filter:blur(18px) brightness(.28) saturate(.08) !important;
+  -webkit-filter:blur(18px) brightness(.28) saturate(.08) !important;
+  transform:scale(1.10) !important;
+  opacity:.68 !important;
+}
+.skin-shop-card.event-locked .skin-shop-media{
+  position:relative !important;
+  overflow:hidden !important;
+}
+.skin-shop-card.event-locked .skin-shop-media::after{
+  content:"🔒";
+  position:absolute;
+  inset:0;
+  z-index:20;
+  display:grid;
+  place-items:center;
+  font-size:44px;
+  background:rgba(7,10,38,.12);
+  text-shadow:0 4px 14px rgba(0,0,0,.9);
+  pointer-events:none;
+}
+</style>
+
