@@ -6437,15 +6437,16 @@ function syncQuestionsFromTopic(topic){
   const norm=v=>String(v||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().trim();
   const n=norm(raw);
 
-  // Format nou: a Supabase només desem l'ID estable S1...S14.
+  // Format nou: a Supabase desem l'ID estable de la sessió.
+  // Ciències: S1...S14 · Història/Grècia: G1...
   let id="";
-  const exact=n.match(/^S\s*(\d{1,2})$/);
-  if(exact) id=`S${Number(exact[1])}`;
+  const exact=n.match(/^([SG])\s*(\d{1,2})$/);
+  if(exact) id=`${exact[1]}${Number(exact[2])}`;
 
   // Compatibilitat amb codis creats per versions anteriors.
   if(!id){
-    const any=n.match(/(?:^|[^A-Z])S\s*(\d{1,2})(?:[^0-9]|$)/);
-    if(any) id=`S${Number(any[1])}`;
+    const any=n.match(/(?:^|[^A-Z])([SG])\s*(\d{1,2})(?:[^0-9]|$)/);
+    if(any) id=`${any[1]}${Number(any[2])}`;
   }
   if(!id){
     const legacyMap=[
@@ -6458,7 +6459,7 @@ function syncQuestionsFromTopic(topic){
     if(hit) id=hit[1];
   }
   if(!id){
-    const session=scienceSessions.find(x=>norm(x.title)===n || n.includes(norm(x.title)));
+    const session=[...scienceSessions,...historySessions].find(x=>norm(x.title)===n || n.includes(norm(x.title)));
     if(session) id=session.id;
   }
 
