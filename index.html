@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.45 · FIX CLASSIFICAR + PODI</title>
+<title>Fasia Verse · V0.14.46 · FIX G1 CLASSIFICAR + COMPACTE</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -6072,7 +6072,11 @@ function renderTeacherClassify(q,reveal=false){
     shuffledIndices(q.labels.length).forEach(i=>{
       const c=document.createElement("div");
       c.className="teacher-visual-card";
-      c.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${q.labels[i]}"><strong>${q.labels[i]}</strong>`;
+      const img=q.images?.[i];
+      c.innerHTML=img
+        ? `<img class="teacher-player-avatar-img" src="${img}" alt="${q.labels[i]}"><strong>${q.labels[i]}</strong>`
+        : `<strong class="text-only-order">${q.labels[i]}</strong>`;
+      if(!img)c.classList.add("text-only");
       pool.appendChild(c);
     });
     wrap.appendChild(pool);
@@ -6087,6 +6091,8 @@ function loadStudentQuestion(questionIndex){
   const q=questions[questionIndex];
   $("#studentQuestionCounter").textContent=`PREGUNTA ${questionIndex+1}/${questions.length}`;
   $("#studentQuestionText").innerHTML=`${typeLabel(q)}<br>${q.text}`;
+  const studentSubjectLabel=document.querySelector("#studentQuestion .hero .muted b");
+  if(studentSubjectLabel) studentSubjectLabel.textContent=String(activeSessionId||"").startsWith("G")?"HISTÒRIA · ANTIGA GRÈCIA":"CIÈNCIA I EXPERIMENTS";
   $("#studentAnswerStatus").classList.add("hidden");
 
   const oldSend=$("#visualSendBtn"); if(oldSend)oldSend.remove();
@@ -8246,6 +8252,63 @@ document.addEventListener("keydown",e=>{
 })();
 </script>
 
+
+<style>
+/* ===== V0.14.46 · G1: relacionar compacte + classify text-only professor ===== */
+/* Manté les preguntes de relacionar dins una pantalla 1080p sense scroll. */
+#studentQuestion .match-board, #question .teacher-match-board{
+  width:min(1000px,100%)!important;
+  margin:8px auto 0!important;
+  gap:10px!important;
+}
+#studentQuestion .match-column{gap:7px!important;}
+#studentQuestion .match-column-title{margin:0!important;line-height:1!important;}
+#studentQuestion .match-board .rich-drag,
+#studentQuestion .match-board .drag-item{
+  min-height:105px!important;
+  height:105px!important;
+  padding:6px 8px!important;
+  border-radius:15px!important;
+}
+#studentQuestion .match-board .rich-drag img,
+#studentQuestion .match-board .drag-item img{
+  width:125px!important;
+  max-width:42%!important;
+  height:82px!important;
+  object-fit:contain!important;
+}
+#studentQuestion .match-board .drop-zone{
+  min-height:105px!important;
+  height:105px!important;
+  padding:6px 8px!important;
+  border-radius:15px!important;
+}
+#studentQuestion .match-board .drop-zone .match-option-img{
+  width:125px!important;max-width:42%!important;height:82px!important;object-fit:contain!important;
+}
+#studentQuestion .match-board .match-submit{
+  margin-top:2px!important;padding:11px 16px!important;
+}
+#question .teacher-match-item,#question .teacher-match-target{
+  min-height:96px!important;padding:6px 8px!important;border-radius:15px!important;
+}
+#question .teacher-match-item img,#question .teacher-match-target img{
+  max-height:76px!important;object-fit:contain!important;
+}
+/* Classificacions textuals G1: targetes compactes i sense espais reservats per imatge. */
+#question .teacher-classify .teacher-visual-card.text-only,
+#studentQuestion .classify-board .rich-drag.text-only{
+  min-height:64px!important;height:auto!important;justify-content:center!important;
+}
+#question .teacher-classify .teacher-class-zone{min-height:150px!important;}
+#question .teacher-classify .teacher-class-pool{gap:8px!important;margin-top:8px!important;}
+@media(max-height:900px){
+  #studentQuestion.screen.active,#question.screen.active{padding-top:8px!important;padding-bottom:8px!important;}
+  #studentQuestion .hero,#question .hero{padding:10px 16px!important;margin-top:7px!important;}
+  #studentQuestionText,#questionText{font-size:clamp(22px,2.5vw,34px)!important;}
+  #studentAnswers,#answers{margin-top:8px!important;}
+}
+</style>
 </body>
 </html>
 <style>
