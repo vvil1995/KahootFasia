@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.46 · FIX G1 CLASSIFICAR + COMPACTE</title>
+<title>Fasia Verse · V0.14.48 · TROFEUS GRÈCIA WEBP</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4096,7 +4096,7 @@ button.profile-collection-card{cursor:pointer}
   <div class="hero row"><div><span class="chip">🏛️ GRÈCIA</span><h2 class="big" style="margin-top:10px">REPÀS DE L’ANTIGA GRÈCIA</h2><p class="muted">3 SESSIONS · VIDA · JOCS · DÉUS</p></div><button id="backGreeceEras" class="btn secondary">← TORNAR A HISTÒRIA</button></div>
   <div class="grid grid3" style="margin-top:18px">
     <div class="card session-card active-session greece-session-card" data-session="G1"><div class="session-number">SESSIÓ 1</div><h3>VIDA A L’ANTIGA GRÈCIA</h3><p class="muted">15 PREGUNTES</p></div>
-    <div class="card session-card soon"><div class="session-number">SESSIÓ 2</div><h3>GRÈCIA I ELS JOCS OLÍMPICS</h3><p class="muted">PROPERAMENT</p></div>
+    <div class="card session-card active-session greece-session-card" data-session="G2"><div class="session-number">SESSIÓ 2</div><h3>GRÈCIA I ELS JOCS OLÍMPICS</h3><p class="muted">15 PREGUNTES</p></div>
     <div class="card session-card soon"><div class="session-number">SESSIÓ 3</div><h3>ELS DÉUS GRECS</h3><p class="muted">PROPERAMENT</p></div>
   </div>
 </div></section>
@@ -4444,7 +4444,7 @@ button.profile-collection-card{cursor:pointer}
 
 <section id="priceEnd" class="screen"><div class="inner">
   <div class="hero center pj-hero"><div style="font-size:64px">🛒🏆</div><h2 class="big">EL PREU JUST ACABAT!</h2><p id="pjEndRecipe" class="muted"></p></div>
-  <div id="pjEndStudentCoins" class="card center hidden" style="margin-top:16px"><p class="muted"><b>MONEDES ACONSEGUIDES</b></p><div id="pjEndCoins" class="pj-money-earned">+0 🪙</div><p id="pjEndBalance" style="font-weight:900"></p></div>
+  <div id="pjEndStudentCoins" class="card center hidden" style="margin-top:16px"><p class="muted"><b>MONEDES ACONSEGUIDES</b></p><div id="pjEndCoins" class="pj-money-earned">+0 🪙</div><p id="pjEndBalance" style="font-weight:900"></p></div><div id="pjEndTrophy" class="card center hidden" style="margin-top:16px"></div>
   <div class="card" style="margin-top:16px"><h3>🏆 CLASSIFICACIÓ FINAL</h3><div id="pjFinalRanking" class="pj-mini-ranking"></div></div>
   <button id="pjEndReturn" class="btn" style="width:100%;margin-top:16px">TORNAR</button>
 </div></section>
@@ -5589,7 +5589,7 @@ function eduSvg(kind){
  return 'data:image/svg+xml,'+encodeURIComponent(svg);
 }
 
-const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"}];
+const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"},{id:"G2",number:"SESSIÓ 2",title:"GRÈCIA I ELS JOCS OLÍMPICS",status:"active"}];
 
 const scienceSessions=[
   {id:"S1",number:"SESSIÓ 1",title:"LA INÈRCIA I EL TRUC DE LES ESTOVALLES",status:"active"},
@@ -5609,6 +5609,24 @@ const scienceSessions=[
 ];
 
 const sessionQuestionBanks={
+
+"G2":[
+{type:"choice",text:"COM ERA PRINCIPALMENT EL TERRITORI DE L’ANTIGA GRÈCIA?",answers:["MUNTANYÓS I COSTANER","PLANER I DESÈRTIC","GELAT I SENSE COSTA"],correct:0},
+{type:"vf",text:"EL MAR EGEU ERA MOLT IMPORTANT PER ALS GRECS.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",text:"QUINA D’AQUESTES ACTIVITATS ERA HABITUAL A LES ZONES COSTANERES?",answers:["PESCA","AGRICULTURA","CERÀMICA","RAMADERIA"],images:["assets/history/grecia/s2/q03_01.webp","assets/history/grecia/s2/q03_02.webp","assets/history/grecia/s2/q03_03.webp","assets/history/grecia/s2/q03_04.webp"],correct:0},
+{type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA CARACTERÍSTICA.",left:["ATENES","ESPARTA","CRETA"],right:["CULTURA I ART","CIUTAT MILITAR","ILLA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"choice",text:"QUIN D’AQUESTS NO ERA UN CULTIU TÍPIC DE L’ANTIGA GRÈCIA?",answers:["OLIVERES","RAÏM","ARRÒS","CEREALS"],correct:2},
+{type:"vf",text:"EL CLIMA DE GRÈCIA ERA PRINCIPALMENT FRED I POLAR.",answers:["CERT","FALS"],correct:1},
+{type:"choice",text:"QUIN RECURS NATURAL ERA MOLT VALORAT PELS GRECS?",answers:["MARBRE","CARBÓ","PETROLI"],correct:0},
+{type:"visual4",text:"QUIN D’AQUESTS ESPORTS PRACTICAVEN ELS ANTICS GRECS?",answers:["LLUITA","CURSA","LLANÇAMENT DE DISC","TIR AMB ARC"],images:["assets/history/grecia/s2/q08_01.webp","assets/history/grecia/s2/q08_02.webp","assets/history/grecia/s2/q08_03.webp","assets/history/grecia/s2/q08_04.webp"],correct:0},
+{type:"choice",text:"ON SE CELEBRAVEN ELS JOCS OLÍMPICS?",answers:["OLÍMPIA","ATENES","ESPARTA"],correct:0},
+{type:"match",text:"RELACIONA CADA ESPORT AMB EL QUE NECESSITA.",left:["CURSA","LLUITA","JOCS DE PILOTA"],right:["VELOCITAT","FORÇA I HABILITAT","JOC I COORDINACIÓ"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ELS JOCS OLÍMPICS SE CELEBRAVEN A ATENES.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",text:"QUIN D’AQUESTS ESPORTS NO TROBARIES ALS JOCS DE L’ANTIGA GRÈCIA?",answers:["CURSA","LLUITA","LLANÇAMENT DE JAVELINA","BÀSQUET"],images:["assets/history/grecia/s2/q12_01.webp","assets/history/grecia/s2/q12_02.webp","assets/history/grecia/s2/q12_03.webp","assets/history/grecia/s2/q12_04.webp"],correct:3},
+{type:"visual4",text:"QUINA IMATGE REPRESENTA MILLOR ESPARTA, LA CIUTAT DESTACADA PER LA VIDA MILITAR?",answers:["A","B","C","D"],images:["assets/history/grecia/s2/q13_01.webp","assets/history/grecia/s2/q13_02.webp","assets/history/grecia/s2/q13_03.webp","assets/history/grecia/s2/q13_04.webp"],correct:1},
+{type:"vf",text:"ATENES DESTACAVA PER LA CULTURA I L’ART.",answers:["CERT","FALS"],correct:0},
+{type:"classify",text:"REPTE FINAL: CLASSIFICA QUINS ELEMENTS RELACIONEM AMB L’ANTIGA GRÈCIA.",zones:["GRÈCIA","NO CORRESPON"],labels:["MAR EGEU","OLIVERES","OLÍMPIA","PIRÀMIDE"],images:["assets/history/grecia/s2/q15_01.webp","assets/history/grecia/s2/q15_02.webp","assets/history/grecia/s2/q15_03.webp","assets/history/grecia/s2/q15_04.webp"],correctZones:[0,0,0,1],correct:encodeClassify([0,0,0,1])}
+],
 "G1":[
 {type:"choice",text:"QUANTS ÀPATS FEIEN NORMALMENT ELS GRECS AL DIA?",answers:["1","3","5"],correct:1},
 {type:"vf",text:"ELS GRECS BEVIEN HABITUALMENT VI BARREJAT AMB AIGUA.",answers:["CERT","FALS"],correct:0},
@@ -6486,12 +6504,16 @@ $("#profileJoinGameBtn").onclick=async()=>{
     onlineGameId=game.id;
     const topicKey=String(game.topic||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toUpperCase();
     let loaded=syncQuestionsFromTopic(game.topic);
-    // Fallback explícit per a Grècia S1: evita que una versió antiga del resolver bloquegi G1.
-    if(!loaded && /^G\s*0*1$/.test(topicKey) && Array.isArray(sessionQuestionBanks["G1"]) && sessionQuestionBanks["G1"].length){
-      activeSessionId="G1";
-      questions=sessionQuestionBanks["G1"];
-      loaded=true;
-      console.info("Fasia Verse · fallback G1 aplicat", questions.length);
+    // Fallback explícit per a les sessions de Grècia.
+    const gMatch=topicKey.match(/^G\s*0*([12])$/);
+    if(!loaded && gMatch){
+      const gid=`G${Number(gMatch[1])}`;
+      if(Array.isArray(sessionQuestionBanks[gid]) && sessionQuestionBanks[gid].length){
+        activeSessionId=gid;
+        questions=sessionQuestionBanks[gid];
+        loaded=true;
+        console.info("Fasia Verse · fallback Grècia aplicat", gid, questions.length);
+      }
     }
     if(!loaded){
       onlineGameId=null;
@@ -6517,7 +6539,7 @@ function syncQuestionsFromTopic(topic){
   // Format nou: a Supabase desem l'ID estable de la sessió.
   // Ciències: S1...S14 · Història/Grècia: G1...
   let id="";
-  if(/^G\s*0*1$/.test(n)) id="G1";
+  if(/^G\s*0*[12]$/.test(n)) id=`G${Number(n.match(/\d+/)?.[0]||1)}`;
   const exact=n.match(/^([SG])\s*(\d{1,2})$/);
   if(exact) id=`${exact[1]}${Number(exact[2])}`;
 
@@ -7733,12 +7755,12 @@ document.addEventListener("keydown",e=>{
       const min=scored.length?Math.min(...scored.map(x=>x.diff)):Infinity,closest=new Set(scored.filter(x=>x.diff===min).map(x=>x.player_id)),by=new Map((pls||[]).map(p=>[p.id,p]));
       for(const s of scored){
         const p=by.get(s.player_id);if(!p)continue;
-        const eligible=s.pct<=30,cb=(closest.has(s.player_id)&&eligible)?1:0,newScore=Number(p.score||0)+s.pts,newCoins=Number(p.coins||0)+s.coins+cb;
+        const eligible=s.pct<=30,cb=(closest.has(s.player_id)&&eligible)?1:0,finalBonusCoins=2,newScore=Number(p.score||0)+s.pts,newCoins=Number(p.coins||0)+s.coins+cb+finalBonusCoins;
         await Promise.all([
           api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({score:newScore,coins:newCoins})}),
           api(`answers?id=eq.${s.id}`,{method:"PATCH",body:JSON.stringify({correct:s.diff===0,points:s.pts})})
         ]);
-        p.score=newScore;p.coins=newCoins;s.totalPoints=s.pts;s.totalCoins=s.coins+cb;s.closest=closest.has(s.player_id);
+        p.score=newScore;p.coins=newCoins;s.totalPoints=s.pts;s.totalCoins=s.coins+cb+2;s.closest=closest.has(s.player_id);
       }
       await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"final_results",current_question:qn})});
       renderTeacherResult(scored,pls,real,true);
@@ -7779,9 +7801,18 @@ document.addEventListener("keydown",e=>{
       renderRankingPJ("#pjFinalRanking",list);$("#pjEndRecipe").textContent=recipeById(payload?.recipe)?.name||"EL PREU JUST";
       if(isStudent&&onlinePlayerId){
         const me=list.find(p=>p.id===onlinePlayerId);$("#pjEndStudentCoins").classList.remove("hidden");$("#pjEndCoins").innerHTML=`+${Number(me?.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
+        const trophyBox=$("#pjEndTrophy");
+        if(trophyBox&&me){
+          const distinct=[...new Set(list.map(x=>Number(x.score||0)))];
+          const rank=distinct.indexOf(Number(me.score||0))+1;
+          const tier=trophyTierForRank(rank);
+          const sid=`PJ|${payload?.recipe||""}`;
+          trophyBox.innerHTML=`<p class="muted"><b>🏆 HAS ACONSEGUIT UNA COPA!</b></p><img src="${trophyImage(sid,tier)}" alt="Trofeu ${TROPHY_LABELS[tier]}" style="width:110px;height:110px;object-fit:contain"><div class="big" style="font-size:30px">${TROPHY_LABELS[tier]}</div><p><b>${sessionNameById(sid)}</b></p><p class="muted">POSICIÓ ${ordinalCat(rank)}</p>`;
+          trophyBox.classList.remove("hidden");
+        }
         if(currentProfile){await refreshCurrentProfile();$("#pjEndBalance").innerHTML=`SALDO TOTAL: ${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`}
         $("#pjEndReturn").textContent="← TORNAR AL PERFIL";
-      }else{$("#pjEndStudentCoins").classList.add("hidden");$("#pjEndReturn").textContent="← TORNAR A PROFESSOR"}
+      }else{$("#pjEndStudentCoins").classList.add("hidden");$("#pjEndTrophy")?.classList.add("hidden");$("#pjEndReturn").textContent="← TORNAR A PROFESSOR"}
       show("priceEnd");
     }catch(e){console.error(e);show("priceEnd")}
   }
@@ -8896,3 +8927,98 @@ document.addEventListener("keydown",e=>{
 }
 </style>
 
+
+
+<style id="fv-v01447-fixes">
+/* V0.14.47 · RELACIONAR: imatge a l'esquerra + text al costat, com al professor */
+#studentQuestion .match-board .match-source .rich-drag{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:14px!important;
+  min-height:92px!important;
+  height:92px!important;
+  padding:7px 12px!important;
+}
+#studentQuestion .match-board .match-source .rich-drag img{
+  width:100px!important;
+  min-width:100px!important;
+  max-width:100px!important;
+  height:76px!important;
+  margin:0!important;
+  object-fit:contain!important;
+  flex:0 0 100px!important;
+}
+#studentQuestion .match-board .match-source .rich-drag strong{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  flex:1 1 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:10px 14px!important;
+  font-size:16px!important;
+  line-height:1.1!important;
+  text-align:left!important;
+  border-radius:11px!important;
+}
+
+/* La columna de resposta també més compacta */
+#studentQuestion .match-board .drop-zone{
+  min-height:92px!important;
+  height:92px!important;
+}
+
+/* PREU JUST: missatge després d'enviar, contrast assegurat */
+#priceStudentQuestion #pjStudentSent,
+#priceStudentFinal #pjFinalSent{
+  background:#fff7d6!important;
+  border:2px solid #f1ca4f!important;
+  color:#4a3810!important;
+  -webkit-text-fill-color:#4a3810!important;
+}
+#priceStudentQuestion #pjStudentSent *,
+#priceStudentFinal #pjFinalSent *{
+  color:#4a3810!important;
+  -webkit-text-fill-color:#4a3810!important;
+}
+
+/* Copa final del Preu Just */
+#pjEndTrophy{
+  color:#fff!important;
+  background:linear-gradient(145deg,rgba(22,25,67,.97),rgba(12,15,48,.97))!important;
+  border:2px solid rgba(132,99,255,.55)!important;
+}
+#pjEndTrophy .muted{color:#cbd4ff!important}
+#pjEndTrophy img{filter:drop-shadow(0 8px 18px rgba(0,0,0,.28))}
+
+/* A la pantalla baixa mantenim les relacions dins del viewport */
+@media(max-height:900px){
+  #studentQuestion .match-board .match-source .rich-drag,
+  #studentQuestion .match-board .drop-zone{min-height:84px!important;height:84px!important}
+  #studentQuestion .match-board .match-source .rich-drag img{
+    width:88px!important;min-width:88px!important;max-width:88px!important;height:68px!important;flex-basis:88px!important
+  }
+  #studentQuestion .match-board .match-source .rich-drag strong{font-size:15px!important;padding:8px 11px!important}
+}
+</style>
+
+<script>console.info("Fasia Verse · V0.14.47 · G2 + relacionar horitzontal + Preu Just revisat");</script>
+
+
+<script id="fv-greece-trophies-v01448">
+(() => {
+  const _oldTrophyImage = trophyImage;
+  trophyImage = function(sessionId, tier){
+    const id = String(sessionId || "").toUpperCase();
+    const t = String(tier || "wood").toLowerCase();
+    if (["G1","G2","G3"].includes(id) && ["gold","silver","bronze","wood"].includes(t)) {
+      return `assets/history/grecia/trophies/${id.toLowerCase()}_${t}.webp`;
+    }
+    return _oldTrophyImage(sessionId, tier);
+  };
+  console.info("Fasia Verse · V0.14.48 · trofeus Grècia WebP actius");
+})();
+</script>
