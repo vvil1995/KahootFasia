@@ -4029,8 +4029,17 @@ button.profile-collection-card{cursor:pointer}
   <div class="grid grid2 history-era-grid" style="margin-top:18px">
     <div class="card history-era-card" data-era="prehistoria"><div class="history-era-icon">🦴</div><h3>PREHISTÒRIA</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
     <div class="card history-era-card" data-era="egipte"><div class="history-era-icon">𓂀</div><h3>EGIPTE</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
-    <div class="card history-era-card" data-era="grecia"><div class="history-era-icon">🏛️</div><h3>GRÈCIA</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
+    <div class="card history-era-card" data-era="grecia"><div class="history-era-icon">🏛️</div><h3>GRÈCIA</h3><p class="muted">REPÀS · 1 SESSIÓ ACTIVA</p></div>
     <div class="card history-era-card" data-era="roma"><div class="history-era-icon">🦅</div><h3>ROMA</h3><p class="muted">PROPERAMENT</p></div>
+  </div>
+</div></section>
+
+<section id="greeceSessions" class="screen"><div class="inner">
+  <div class="hero row"><div><span class="chip">🏛️ GRÈCIA</span><h2 class="big" style="margin-top:10px">REPÀS DE L’ANTIGA GRÈCIA</h2><p class="muted">3 SESSIONS · VIDA · JOCS · DÉUS</p></div><button id="backGreeceEras" class="btn secondary">← TORNAR A HISTÒRIA</button></div>
+  <div class="grid grid3" style="margin-top:18px">
+    <div class="card session-card active-session greece-session-card" data-session="G1"><div class="session-number">SESSIÓ 1</div><h3>VIDA A L’ANTIGA GRÈCIA</h3><p class="muted">15 PREGUNTES</p></div>
+    <div class="card session-card soon"><div class="session-number">SESSIÓ 2</div><h3>GRÈCIA I ELS JOCS OLÍMPICS</h3><p class="muted">PROPERAMENT</p></div>
+    <div class="card session-card soon"><div class="session-number">SESSIÓ 3</div><h3>ELS DÉUS GRECS</h3><p class="muted">PROPERAMENT</p></div>
   </div>
 </div></section>
 
@@ -4699,7 +4708,8 @@ async function equipProfileTrophy(t){
   renderProfileHeroVisuals();
 }
 
-function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=scienceSessions.find(x=>x.id===id);return s?`${s.number} · ${s.title}`:id}
+function sessionMetaById(id){return scienceSessions.find(x=>x.id===id)||historySessions.find(x=>x.id===id)}
+function sessionNameById(id){const raw=String(id||""),rid=pjRecipeIdFromTopic(raw),names={r1:"ARRÒS TRES DELÍCIES",r2:"BOMBONS SORPRESA",r3:"CORN DOGS",r4:"CREMA DE CARBASSÓ",r5:"FORMATGE FETA AMB VERDURES",r6:"HAMBURGUESES DE CIGRONS",r7:"MAKI CALIFÒRNIA",r8:"PALMERES AL PESTO",r9:"TRUITA DE PATATES"};if(rid)return `EL PREU JUST · ${names[rid]||rid}`;const s=sessionMetaById(id);return s?`${s.number} · ${s.title}`:id}
 async function getProfileTrophies(profileId,{includeManual=true}={}){
   if(!profileId)return [];
   /* El palmarès NOMÉS es consulta quan s'obre. Tres blocs de consultes, no 2 consultes per partida. */
@@ -5521,6 +5531,8 @@ function eduSvg(kind){
  return 'data:image/svg+xml,'+encodeURIComponent(svg);
 }
 
+const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"}];
+
 const scienceSessions=[
   {id:"S1",number:"SESSIÓ 1",title:"LA INÈRCIA I EL TRUC DE LES ESTOVALLES",status:"active"},
   {id:"S2",number:"SESSIÓ 2",title:"VELOCITAT, ACCELERACIÓ I FRICCIÓ",status:"active"},
@@ -5539,6 +5551,23 @@ const scienceSessions=[
 ];
 
 const sessionQuestionBanks={
+"G1":[
+{type:"choice",text:"QUANTS ÀPATS FEIEN NORMALMENT ELS GRECS AL DIA?",answers:["1","3","5"],correct:1},
+{type:"vf",text:"ELS GRECS BEVIEN HABITUALMENT VI BARREJAT AMB AIGUA.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",text:"QUIN D’AQUESTS ALIMENTS ERA BÀSIC A L’ALIMENTACIÓ GREGA?",answers:["PA I CEREALS","CARN","PEIX","FORMATGE"],images:["assets/history/grecia/s1/q03_01.webp","assets/history/grecia/s1/q03_02.webp","assets/history/grecia/s1/q03_03.webp","assets/history/grecia/s1/q03_04.webp"],correct:0},
+{type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU GRUP O ÚS.",left:["OLI D’OLIVA","RAÏM","BLAT"],leftImages:["assets/history/grecia/s1/q04_01.webp","assets/history/grecia/s1/q04_02.webp","assets/history/grecia/s1/q04_03.webp"],right:["CUINAR","FRUITA","CEREAL"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"choice",text:"QUIN D’AQUESTS ALIMENTS NO ERA PROPI DE LA DIETA GREGA?",answers:["PA","RAÏM","MANGO","OLI D’OLIVA"],correct:2},
+{type:"vf",text:"LES OVELLES EREN POC HABITUALS EN LA RAMADERIA GREGA.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",text:"QUINA D’AQUESTES VESTIMENTES ÉS GREGA?",answers:["GREGA","ROMANA","EGÍPCIA","MEDIEVAL"],images:["assets/history/grecia/s1/q07_01.webp","assets/history/grecia/s1/q07_02.webp","assets/history/grecia/s1/q07_03.webp","assets/history/grecia/s1/q07_04.webp"],correct:0},
+{type:"vf",text:"LA LIRA ERA UN INSTRUMENT HABITUAL A L’ANTIGA GRÈCIA.",answers:["CERT","FALS"],correct:0},
+{type:"match",text:"RELACIONA CADA OBJECTE AMB EL SEU ÚS O ÀMBIT.",left:["LIRA","ARGILA","MÀSCARA"],leftImages:["assets/history/grecia/s1/q09_01.webp","assets/history/grecia/s1/q09_02.webp","assets/history/grecia/s1/q09_03.webp"],right:["MÚSICA","CERÀMICA","TEATRE"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"choice",questionImage:"assets/history/grecia/s1/q10_01.webp",text:"DE QUIN MATERIAL ESTAVA FETA AQUESTA CERÀMICA?",answers:["ARGILA","FERRO","FUSTA"],correct:0},
+{type:"choice",text:"QUÈ REPRESENTAVEN SOVINT LES CERÀMIQUES GREGUES?",answers:["ESCENES DE LA VIDA I MITES","MAPES MODERNS","NOMÉS NÚMEROS"],correct:0},
+{type:"choice",text:"QUÈ NO TROBARIES EN UN TEATRE DE L’ANTIGA GRÈCIA?",answers:["ACTORS","MÀSCARES","PANTALLA DE CINEMA","PÚBLIC"],correct:2},
+{type:"classify",text:"CLASSIFICA CADA DESCRIPCIÓ: COMÈDIA O TRAGÈDIA.",zones:["COMÈDIA","TRAGÈDIA"],labels:["OBRA DIVERTIDA","OBRA SERIOSA AMB FINAL TRÀGIC"],correctZones:[0,1],correct:encodeClassify([0,1])},
+{type:"vf",text:"ELS ACTORS GRECS ACTUAVEN SENSE MÀSCARES.",answers:["CERT","FALS"],correct:1},
+{type:"classify",text:"REPTE FINAL: CLASSIFICA QUÈ RELACIONEM AMB LA VIDA CULTURAL GREGA.",zones:["GRÈCIA","NO CORRESPON"],labels:["CERÀMICA","LIRA","TEATRE","MANGO"],correctZones:[0,0,0,1],correct:encodeClassify([0,0,0,1])}
+],
 "S1":[
 {type:"choice",text:"QUÈ ÉS LA INÈRCIA?",answers:["LA TENDÈNCIA DELS OBJECTES A CONTINUAR COM ESTAN","LA FORÇA QUE FA MOURE ELS OBJECTES","LA VELOCITAT D'UN OBJECTE"],correct:0},
 {type:"vf",visual:"zebraBrake",text:"QUAN UN COTXE FRENA, EL NOSTRE COS TENDEIX A CONTINUAR CAP ENDAVANT.",answers:["CERT","FALS"],correct:0},
@@ -5786,7 +5815,7 @@ const sessionQuestionBanks={
 const COIN_HTML=`<span class="coin-img" aria-label="moneda"></span>`;
 function typeLabel(q){
  if(q.type==="vf")return '<span class="type-badge type-vf">CERT / FALS</span>';
- if(q.type==="image"||q.type==="visual2"||q.type==="visual3")return '<span class="type-badge type-image">IMATGE</span>';
+ if(q.type==="image"||q.type==="visual2"||q.type==="visual3"||q.type==="visual4")return '<span class="type-badge type-image">IMATGE</span>';
  if(q.type==="match")return '<span class="type-badge type-match">RELACIONAR</span>';
  if(q.type==="order")return '<span class="type-badge type-match">ORDENAR</span>';
  if(q.type==="classify")return '<span class="type-badge type-match">CLASSIFICAR</span>';
@@ -6053,6 +6082,8 @@ function loadStudentQuestion(questionIndex){
     renderVisualChoices(q,box,questionIndex,2);
   }else if(q.type==="visual3"){
     renderVisualChoices(q,box,questionIndex,3);
+  }else if(q.type==="visual4"){
+    renderVisualChoices(q,box,questionIndex,4);
   }else if(q.type==="order"){
     renderStudentOrder(q,box,questionIndex);
   }else if(q.type==="classify"){
@@ -6742,8 +6773,8 @@ async function loadQuestion(){
     box.className="";
     box.appendChild(renderTeacherMatch(q,false));
 
-  }else if(q.type==="visual2" || q.type==="visual3"){
-    box.classList.add(q.type==="visual3"?"visual-three-grid":"visual-two-grid");
+  }else if(q.type==="visual2" || q.type==="visual3" || q.type==="visual4"){
+    box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid"));
     q.answers.forEach((a,i)=>{
       const b=document.createElement("button");b.className="answer visual-choice";b.disabled=true;
       b.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${a}"><div class="visual-choice-label">${a}</div>`;box.appendChild(b);
@@ -6809,7 +6840,7 @@ function renderCorrectReview(q){
     box.appendChild(renderTeacherClassify(q,true));
     return;
   }
-  if(q.type==="visual2" || q.type==="visual3"){
+  if(q.type==="visual2" || q.type==="visual3" || q.type==="visual4"){
     const d=document.createElement("div");
     d.className="correct-choice-card";
     d.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[q.correct]}" alt="${q.answers[q.correct]}"><div>${q.answers[q.correct]}</div>`;
@@ -7082,7 +7113,7 @@ function simRenderLocal(){
     return;
   }
 
-  const session=scienceSessions.find(s=>s.id===activeSessionId);
+  const session=sessionMetaById(activeSessionId);
   $("#simSessionTitle").textContent=session?.title||"SESSIÓ";
   $("#simIndex").textContent=`${simLocalIndex+1}/${questions.length}`;
   $("#simPrev").disabled=simLocalIndex<=0;
@@ -7141,8 +7172,8 @@ function simRenderLocal(){
     return;
   }
 
-  if(q.type==="visual2" || q.type==="visual3"){
-    box.classList.add(q.type==="visual3"?"visual-three-grid":"visual-two-grid");
+  if(q.type==="visual2" || q.type==="visual3" || q.type==="visual4"){
+    box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid"));
     (q.answers||[]).forEach((a,i)=>{
       const b=document.createElement("button");
       b.type="button";
@@ -8107,10 +8138,23 @@ document.addEventListener("keydown",e=>{
   if(back) back.onclick=()=>show("teacherTopics");
   document.querySelectorAll(".history-era-card").forEach(card=>{
     card.onclick=()=>{
+      if(card.dataset.era==="grecia"){show("greeceSessions");return;}
       const name=card.querySelector("h3")?.textContent||"AQUESTA ÈPOCA";
       alert(`${name} · ELS JOCS DE REPÀS S’AFEGIRAN AQUÍ`);
     };
   });
+  document.getElementById("backGreeceEras")?.addEventListener("click",()=>show("historyEras"));
+  document.querySelectorAll(".greece-session-card[data-session]").forEach(card=>card.addEventListener("click",()=>{
+    const id=card.dataset.session; activeSessionId=id; questions=sessionQuestionBanks[id]||[];
+    const sess=sessionMetaById(id);
+    document.getElementById("sessionTitle").textContent=`${sess.number}: ${sess.title}`;
+    document.getElementById("sessionSubtitle").textContent="POTS REVISAR LES PREGUNTES ABANS DE GENERAR LA PARTIDA";
+    document.getElementById("sessionQuestionCount").textContent=`${questions.length} PREGUNTES`;
+    const l=document.getElementById("previewList"); l.innerHTML="";
+    questions.forEach((q,i)=>{const d=document.createElement("div");d.className="question-preview";d.innerHTML=`<b>${i+1}. ${q.text}</b><span class="muted">${q.type.toUpperCase()}</span>`;l.appendChild(d)});
+    show("scienceSessionDetail");
+  }));
+  document.getElementById("backScienceSessions")?.addEventListener("click",()=>{if(String(activeSessionId||"").startsWith("G"))show("greeceSessions")});
   console.info("Fasia Verse V0.14.36 · Història + polish PJ + marcs lobby");
 })();
 </script>
