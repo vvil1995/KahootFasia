@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.36 · Història + PJ + Marcs</title>
+<title>Fasia Verse · V0.14.41 · Borrosos botiga</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5302,7 +5302,21 @@ function renderCharacterSkins(c){
 
     const media=document.createElement("div");media.className="skin-shop-media";
     const visual=makeImageOrFallback(s.image,s.name,c.emoji,s.cropIndex);
+    const lockedVisual = !isSkinAvailable(s) || (s.exclusiveChallenge && !owned);
+    if(lockedVisual && visual.img){
+      visual.img.style.setProperty("filter","blur(18px) brightness(.28) saturate(.08)","important");
+      visual.img.style.setProperty("-webkit-filter","blur(18px) brightness(.28) saturate(.08)","important");
+      visual.img.style.setProperty("transform","scale(1.10)","important");
+      visual.img.style.setProperty("opacity",".68","important");
+    }
     media.appendChild(visual.wrap);
+    if(lockedVisual){
+      const veil=document.createElement("div");
+      veil.className="skin-lock-veil";
+      veil.textContent="🔒";
+      veil.setAttribute("aria-hidden","true");
+      media.appendChild(veil);
+    }
 
     const body=document.createElement("div");body.className="skin-shop-body";
     const available=isSkinAvailable(s);
@@ -8661,6 +8675,22 @@ document.addEventListener("keydown",e=>{
   background:rgba(7,10,38,.12);
   text-shadow:0 4px 14px rgba(0,0,0,.9);
   pointer-events:none;
+}
+</style>
+
+<style>
+/* v0.14.41 · bloqueig visual robust per PRÒXIMAMENT + EXCLUSIUS */
+.skin-shop-media{position:relative!important;overflow:hidden!important;}
+.skin-lock-veil{
+  position:absolute!important;
+  inset:0!important;
+  z-index:50!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:46px!important;
+  background:rgba(5,8,34,.10)!important;
+  text-shadow:0 4px 16px rgba(0,0,0,.9)!important;
+  pointer-events:none!important;
 }
 </style>
 
