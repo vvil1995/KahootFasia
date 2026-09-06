@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.43 · FIX G1 GRÈCIA</title>
+<title>Fasia Verse · V0.14.45 · FIX CLASSIFICAR + PODI</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -1877,6 +1877,22 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   font-size:42px;text-shadow:0 4px 14px rgba(0,0,0,.8);pointer-events:none;
 }
 
+
+/* V0.14.45 · Grècia: classificacions sense imatge + podi final estable */
+.teacher-visual-card.text-only{min-height:86px!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:16px!important}
+.teacher-visual-card.text-only .text-only-order{font-size:20px!important;text-align:center!important;line-height:1.2!important}
+.classify-pool .drag-item:not(:has(img)){min-height:74px!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+#finalRanking .rank-row{grid-template-columns:86px minmax(0,1fr) auto!important;align-items:center!important;min-height:92px!important;padding:10px 12px!important}
+#finalRanking .final-rank-medal-cell{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;font-size:20px!important}
+#finalRanking .rank-trophy{width:42px!important;height:42px!important;object-fit:contain!important;flex:none!important}
+#finalRanking .ranking-player-identity{min-width:0!important}
+#finalRanking .ranking-avatar{width:58px!important;height:58px!important;flex:none!important}
+#finalRanking .ranking-player-trophy{width:34px!important;height:34px!important;object-fit:contain!important}
+#end .hero{padding:18px 24px!important}
+#end .hero>div[style*="font-size:60px"]{font-size:46px!important}
+#end .hero .big{font-size:34px!important;margin:4px 0!important}
+#end .card{padding:16px 20px!important}
+@media(max-width:900px){#finalRanking .rank-row{grid-template-columns:72px minmax(0,1fr) auto!important}#finalRanking .rank-trophy{width:36px!important;height:36px!important}}
 </style>
 
 <style>
@@ -3747,6 +3763,48 @@ button.profile-collection-card{cursor:pointer}
 .challenge-reward-overlay{position:fixed;inset:0;z-index:120000;background:rgba(7,5,20,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}.challenge-reward-modal{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f4efff);border:3px solid #8466ef;border-radius:30px;padding:28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.35)}.challenge-reward-icon{font-size:64px}.challenge-reward-kicker{font-size:13px;font-weight:1000;color:#7250de;letter-spacing:.08em;margin-top:4px}.challenge-reward-modal h2{font-size:34px;margin:8px 0}.challenge-reward-modal p{font-size:17px;font-weight:800;color:#5d5668}.challenge-reward-special{margin:18px auto;padding:20px;border-radius:22px;background:#1d1639;color:#fff;font-size:20px;font-weight:1000}.challenge-reward-image{width:min(300px,76vw);max-height:320px;object-fit:contain;display:block;margin:16px auto 8px;border-radius:20px;filter:drop-shadow(0 14px 28px rgba(25,15,65,.28))}.challenge-reward-image.hidden{display:none!important}.challenge-reward-modal .btn{width:100%;margin-top:12px}.challenge-reward-overlay.hidden{display:none!important}
 @media(max-width:800px){.challenge-tabs{grid-template-columns:repeat(2,1fr)}.challenges-grid{grid-template-columns:1fr}.challenge-puzzle-panel{grid-template-columns:100px 1fr}.challenge-puzzle-visual{height:90px}}
 </style>
+
+<style>
+/* V0.14.44 · preguntes visuals 4 opcions compactes i visibles sense scroll */
+#studentAnswers.four-choice-grid .visual-choice,
+#answers.four-choice-grid .visual-choice,
+#simAnswers.four-choice-grid .visual-choice{
+  min-height:185px!important;
+  padding:6px!important;
+  border-radius:18px!important;
+}
+#studentAnswers.four-choice-grid .visual-choice img,
+#answers.four-choice-grid .visual-choice img,
+#simAnswers.four-choice-grid .visual-choice img{
+  height:135px!important;
+  min-height:0!important;
+  max-height:135px!important;
+  object-fit:contain!important;
+  margin:0 auto 4px!important;
+}
+#studentAnswers.four-choice-grid .visual-choice-label,
+#answers.four-choice-grid .visual-choice-label,
+#simAnswers.four-choice-grid .visual-choice-label{
+  font-size:15px!important;
+  margin-top:3px!important;
+}
+#studentQuestionText,#questionText{font-size:clamp(22px,2.4vw,34px)!important;}
+#studentAnswers.four-choice-grid,#answers.four-choice-grid,#simAnswers.four-choice-grid{
+  gap:10px!important;
+  max-width:860px!important;
+  margin-top:8px!important;
+}
+#visualSendBtn{margin-top:8px!important;padding:11px 16px!important;}
+@media(max-height:850px) and (min-width:701px){
+  #studentAnswers.four-choice-grid .visual-choice,
+  #answers.four-choice-grid .visual-choice,
+  #simAnswers.four-choice-grid .visual-choice{min-height:165px!important;}
+  #studentAnswers.four-choice-grid .visual-choice img,
+  #answers.four-choice-grid .visual-choice img,
+  #simAnswers.four-choice-grid .visual-choice img{height:118px!important;max-height:118px!important;}
+  #studentQuestionText,#questionText{font-size:clamp(20px,2.2vw,30px)!important;}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -5558,7 +5616,7 @@ const sessionQuestionBanks={
 {type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU GRUP O ÚS.",left:["OLI D’OLIVA","RAÏM","BLAT"],leftImages:["assets/history/grecia/s1/q04_01.webp","assets/history/grecia/s1/q04_02.webp","assets/history/grecia/s1/q04_03.webp"],right:["CUINAR","FRUITA","CEREAL"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"choice",text:"QUIN D’AQUESTS ALIMENTS NO ERA PROPI DE LA DIETA GREGA?",answers:["PA","RAÏM","MANGO","OLI D’OLIVA"],correct:2},
 {type:"vf",text:"LES OVELLES EREN POC HABITUALS EN LA RAMADERIA GREGA.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",text:"QUINA D’AQUESTES VESTIMENTES ÉS GREGA?",answers:["GREGA","ROMANA","EGÍPCIA","MEDIEVAL"],images:["assets/history/grecia/s1/q07_01.webp","assets/history/grecia/s1/q07_02.webp","assets/history/grecia/s1/q07_03.webp","assets/history/grecia/s1/q07_04.webp"],correct:0},
+{type:"visual4",text:"QUINA D’AQUESTES VESTIMENTES ÉS GREGA?",answers:["A","B","C","D"],images:["assets/history/grecia/s1/q07_01.webp","assets/history/grecia/s1/q07_02.webp","assets/history/grecia/s1/q07_03.webp","assets/history/grecia/s1/q07_04.webp"],correct:0},
 {type:"vf",text:"LA LIRA ERA UN INSTRUMENT HABITUAL A L’ANTIGA GRÈCIA.",answers:["CERT","FALS"],correct:0},
 {type:"match",text:"RELACIONA CADA OBJECTE AMB EL SEU ÚS O ÀMBIT.",left:["LIRA","ARGILA","MÀSCARA"],leftImages:["assets/history/grecia/s1/q09_01.webp","assets/history/grecia/s1/q09_02.webp","assets/history/grecia/s1/q09_03.webp"],right:["MÚSICA","CERÀMICA","TEATRE"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"choice",questionImage:"assets/history/grecia/s1/q10_01.webp",text:"DE QUIN MATERIAL ESTAVA FETA AQUESTA CERÀMICA?",answers:["ARGILA","FERRO","FUSTA"],correct:0},
@@ -5901,7 +5959,7 @@ function makeRichDrag(label,img,index){
  installPointerDrag(el);return el;
 }
 function renderVisualChoices(q,box,questionIndex,count){
- box.classList.add(count===3?"visual-three-grid":"visual-two-grid");
+ box.classList.add(count===4?"four-choice-grid":(count===3?"visual-three-grid":"visual-two-grid"));
  let selected=-1;
  q.answers.forEach((answer,index)=>{
   const btn=document.createElement("button");
@@ -5944,7 +6002,7 @@ function renderStudentClassify(q,box,questionIndex){
   const t=document.createElement("div");t.className="classify-zone-title";t.textContent=name;z.appendChild(t);zones.appendChild(z);
  });
  const pool=document.createElement("div");pool.className="drag-pool classify-pool match-source";
- shuffledIndices(q.labels.length).forEach(i=>pool.appendChild(makeRichDrag(q.labels[i],q.images[i],i)));
+ shuffledIndices(q.labels.length).forEach(i=>pool.appendChild(makeRichDrag(q.labels[i],q.images?.[i]||null,i)));
  const send=document.createElement("button");send.className="btn match-submit";send.textContent="ENVIAR CLASSIFICACIÓ";
  send.onclick=()=>{
   const map=Array(q.labels.length).fill(-1);
@@ -5989,7 +6047,11 @@ function renderTeacherClassify(q,reveal=false){
         if(q.correctZones[i]===zi){
           const c=document.createElement("div");
           c.className="teacher-visual-card";
-          c.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${lab}"><strong>${lab}</strong>`;
+          const img=q.images?.[i];
+          c.innerHTML=img
+            ? `<img class="teacher-player-avatar-img" src="${img}" alt="${lab}"><strong>${lab}</strong>`
+            : `<strong class="text-only-order">${lab}</strong>`;
+          if(!img)c.classList.add("text-only");
           items.appendChild(c);
         }
       });
@@ -6759,6 +6821,8 @@ async function loadQuestion(){
   const q=questions[currentQuestion];
   $("#questionCounter").textContent=`PREGUNTA ${currentQuestion+1}/${questions.length}`;
   $("#questionText").innerHTML=`${typeLabel(q)}<br>${q.text}`;
+  const teacherSubjectLabel=document.querySelector("#question .hero .muted b");
+  if(teacherSubjectLabel) teacherSubjectLabel.textContent=String(activeSessionId||"").startsWith("G")?"HISTÒRIA · ANTIGA GRÈCIA":"CIÈNCIA I EXPERIMENTS";
   $("#answeredCount").textContent="0";
 
   try{ await refreshOnlinePlayers(); }catch(e){ console.error(e); }
@@ -6956,8 +7020,20 @@ $("#nextQuestion").onclick=async()=>{
       }
       if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
       renderRanking("#finalRanking");
-      // Mostra el trofeu corresponent al costat de cada jugador al rànquing final.
-      const fr=$("#finalRanking"); if(fr){[...fr.querySelectorAll(".rank-row")].forEach((row,i)=>{const tier=trophyTierForRank(i+1),img=trophyImage(activeSessionId,tier);if(img){const el=document.createElement("img");el.src=img;el.className="rank-trophy";el.alt=TROPHY_LABELS[tier];row.prepend(el)}})}
+      // Mostra el trofeu de la sessió dins la cel·la del lloc del podi, sense trencar la graella del rànquing.
+      const fr=$("#finalRanking");
+      if(fr){
+        [...fr.querySelectorAll(".rank-row")].forEach((row,i)=>{
+          const tier=trophyTierForRank(i+1),img=trophyImage(activeSessionId,tier);
+          const rankCell=row.children[0];
+          if(img && rankCell){
+            rankCell.classList.add("final-rank-medal-cell");
+            const el=document.createElement("img");
+            el.src=img;el.className="rank-trophy";el.alt=TROPHY_LABELS[tier];
+            rankCell.prepend(el);
+          }
+        });
+      }
       configureEndScreen();
       show("end");
     }catch(e){alert("NO S'HA POGUT ACABAR LA PARTIDA: "+e.message)}
@@ -8166,7 +8242,7 @@ document.addEventListener("keydown",e=>{
     show("scienceSessionDetail");
   }));
   document.getElementById("backScienceSessions")?.addEventListener("click",()=>{if(String(activeSessionId||"").startsWith("G"))show("greeceSessions")});
-  console.info("Fasia Verse V0.14.43 · FIX G1 GRÈCIA carregat");
+  console.info("Fasia Verse V0.14.45 · FIX CLASSIFICAR + PODI carregat");
 })();
 </script>
 
