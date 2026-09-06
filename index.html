@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.41 · Borrosos botiga</title>
+<title>Fasia Verse · V0.14.42 · Medusa borrosa</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5266,7 +5266,15 @@ function renderCharactersGrid(){
     card.dataset.characterId=c.id;
 
     const media=document.createElement("div");media.className="character-card-media";
-    const visual=makeImageOrFallback(preview?.image,c.name,c.emoji,preview?.cropIndex);media.appendChild(visual.wrap);
+    const visual=makeImageOrFallback(preview?.image,c.name,c.emoji,preview?.cropIndex);
+    const lockedChallengePreview=!!(preview?.exclusiveChallenge && !challengeState().unlockedExclusives?.includes(preview.id));
+    if(lockedChallengePreview && visual.img){
+      visual.img.style.setProperty("filter","blur(18px) brightness(.28) saturate(.08)","important");
+      visual.img.style.setProperty("-webkit-filter","blur(18px) brightness(.28) saturate(.08)","important");
+      visual.img.style.setProperty("transform","scale(1.10)","important");
+      visual.img.style.setProperty("opacity",".68","important");
+    }
+    media.appendChild(visual.wrap);
     if(!unlocked){
       const lock=document.createElement("div");lock.className="character-lock";lock.textContent="🔒";media.appendChild(lock);
     }
