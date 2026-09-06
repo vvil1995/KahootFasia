@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.42 · Medusa borrosa</title>
+<title>Fasia Verse · V0.14.43 · FIX G1 GRÈCIA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -6416,7 +6416,16 @@ $("#profileJoinGameBtn").onclick=async()=>{
       $("#profileGameCodeMsg").textContent="AQUESTA PARTIDA JA NO ESTÀ EN ESPERA";return;
     }
     onlineGameId=game.id;
-    if(!syncQuestionsFromTopic(game.topic)){
+    const topicKey=String(game.topic||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toUpperCase();
+    let loaded=syncQuestionsFromTopic(game.topic);
+    // Fallback explícit per a Grècia S1: evita que una versió antiga del resolver bloquegi G1.
+    if(!loaded && /^G\s*0*1$/.test(topicKey) && Array.isArray(sessionQuestionBanks["G1"]) && sessionQuestionBanks["G1"].length){
+      activeSessionId="G1";
+      questions=sessionQuestionBanks["G1"];
+      loaded=true;
+      console.info("Fasia Verse · fallback G1 aplicat", questions.length);
+    }
+    if(!loaded){
       onlineGameId=null;
       $("#profileGameCodeMsg").textContent=`CODI TROBAT, PERÒ NO PUC CARREGAR LA SESSIÓ (${game.topic||"SENSE TOPIC"})`;
       return;
@@ -6440,6 +6449,7 @@ function syncQuestionsFromTopic(topic){
   // Format nou: a Supabase desem l'ID estable de la sessió.
   // Ciències: S1...S14 · Història/Grècia: G1...
   let id="";
+  if(/^G\s*0*1$/.test(n)) id="G1";
   const exact=n.match(/^([SG])\s*(\d{1,2})$/);
   if(exact) id=`${exact[1]}${Number(exact[2])}`;
 
@@ -8156,7 +8166,7 @@ document.addEventListener("keydown",e=>{
     show("scienceSessionDetail");
   }));
   document.getElementById("backScienceSessions")?.addEventListener("click",()=>{if(String(activeSessionId||"").startsWith("G"))show("greeceSessions")});
-  console.info("Fasia Verse V0.14.36 · Història + polish PJ + marcs lobby");
+  console.info("Fasia Verse V0.14.43 · FIX G1 GRÈCIA carregat");
 })();
 </script>
 
