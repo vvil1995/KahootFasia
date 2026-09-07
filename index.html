@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.50 · G2 IMATGES GRANS + PALMARÈS GRÈCIA</title>
+<title>Fasia Verse · V0.14.51 · G3 + IMATGES G2 XXL + PALMARÈS GRÈCIA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4097,6 +4097,7 @@ button.profile-collection-card{cursor:pointer}
   <div class="grid grid3" style="margin-top:18px">
     <div class="card session-card active-session greece-session-card" data-session="G1"><div class="session-number">SESSIÓ 1</div><h3>VIDA A L’ANTIGA GRÈCIA</h3><p class="muted">15 PREGUNTES</p></div>
     <div class="card session-card active-session greece-session-card" data-session="G2"><div class="session-number">SESSIÓ 2</div><h3>GRÈCIA I ELS JOCS OLÍMPICS</h3><p class="muted">15 PREGUNTES</p></div>
+<div class="card session-card active-session greece-session-card" data-session="G3"><div class="session-number">SESSIÓ 3</div><h3>ELS DÉUS GRECS</h3><p class="muted">15 PREGUNTES</p></div>
     <div class="card session-card soon"><div class="session-number">SESSIÓ 3</div><h3>ELS DÉUS GRECS</h3><p class="muted">PROPERAMENT</p></div>
   </div>
 </div></section>
@@ -4735,6 +4736,29 @@ function pjRecipeIdFromTopic(topic){const m=String(topic||"").match(/^PJ\|([^|]+
 function pjTier(score,all){const ds=[...new Set((all||[]).map(p=>Number(p.score||0)))].sort((a,b)=>b-a),rank=ds.indexOf(Number(score||0))+1;return{rank,tier:rank===1?"gold":rank===2?"silver":rank===3?"bronze":"green"}}
 
 function trophyTierForRank(rank){return rank===1?"gold":rank===2?"silver":rank===3?"bronze":"green"}
+
+async function persistEarnedGreeceTrophy(profileId,sessionId,tier){
+  if(!profileId || !/^G[1-3]$/.test(String(sessionId||"").toUpperCase())) return;
+  try{
+    const sid=String(sessionId).toUpperCase();
+    const key=`${sid}|${tier}`;
+    const rows=await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=manual_trophies&limit=1`);
+    const current=Array.isArray(rows?.[0]?.manual_trophies)?rows[0].manual_trophies.slice():[];
+    const power={green:1,bronze:2,silver:3,gold:4};
+    const same=current.filter(x=>String(x).toUpperCase().startsWith(`${sid}|`));
+    let bestTier=tier;
+    for(const x of same){
+      const t=String(x).split("|").pop().toLowerCase();
+      if((power[t]||0)>(power[bestTier]||0)) bestTier=t;
+    }
+    const cleaned=current.filter(x=>!String(x).toUpperCase().startsWith(`${sid}|`));
+    cleaned.push(`${sid}|${bestTier}`);
+    await api(`profiles?id=eq.${profileId}`,{method:"PATCH",body:JSON.stringify({manual_trophies:cleaned})});
+  }catch(e){
+    console.warn("No s'ha pogut persistir el trofeu de Grècia al perfil",e);
+  }
+}
+
 function ordinalCat(rank){
   const n=Number(rank);
   if(n===1)return "1r";
@@ -4859,6 +4883,7 @@ async function showEarnedTrophy(){
   try{const [g,all]=await Promise.all([api(`games?id=eq.${onlineGameId}&select=topic,status&limit=1`),api(`players?game_id=eq.${onlineGameId}&select=id,score,created_at&order=created_at.asc`)]);if(!g?.[0])return;
     const ranked=(all||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)||String(a.created_at||"").localeCompare(String(b.created_at||"")));const rank=ranked.findIndex(p=>p.id===onlinePlayerId)+1;if(rank<1)return;
     const tier=trophyTierForRank(rank), sid=String(g[0].topic||"").toUpperCase();
+    if(/^G[1-3]$/.test(sid)) await persistEarnedGreeceTrophy(currentProfile.id,sid,tier);
     box.innerHTML=`<p class="muted"><b>HAS ACONSEGUIT UN TROFEU!</b></p><img src="${trophyImage(sid,tier)}" alt="Trofeu"><div class="big" style="font-size:32px">${TROPHY_LABELS[tier]}</div><p><b>${sessionNameById(sid)}</b></p><p class="muted">POSICIÓ ${rank}</p>`;box.classList.remove("hidden");
   }catch(e){console.error("Error mostrant trofeu final",e)}
 }
@@ -5589,7 +5614,7 @@ function eduSvg(kind){
  return 'data:image/svg+xml,'+encodeURIComponent(svg);
 }
 
-const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"},{id:"G2",number:"SESSIÓ 2",title:"GRÈCIA I ELS JOCS OLÍMPICS",status:"active"}];
+const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"},{id:"G2",number:"SESSIÓ 2",title:"GRÈCIA I ELS JOCS OLÍMPICS",status:"active"},{id:"G3",number:"SESSIÓ 3",title:"ELS DÉUS GRECS",status:"active"}];
 
 const scienceSessions=[
   {id:"S1",number:"SESSIÓ 1",title:"LA INÈRCIA I EL TRUC DE LES ESTOVALLES",status:"active"},
@@ -5610,6 +5635,24 @@ const scienceSessions=[
 
 const sessionQuestionBanks={
 
+
+"G3":[
+{type:"choice",text:"QUI ERA EL DÉU DEL CEL I DELS LLAMPS?",answers:["ZEUS","POSIDÓ","ARES"],correct:0},
+{type:"visual4",text:"QUIN D’AQUESTS SÍMBOLS RELACIONEM AMB ZEUS?",answers:["LLAMP","TRIDENT","ROSA","LIRA"],images:["assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/lira.webp"],correct:0},
+{type:"match",text:"RELACIONA CADA DÉU AMB EL SEU ÀMBIT.",left:["ZEUS","POSIDÓ","HADES"],right:["CEL I LLAMPS","MAR","MÓN DELS MORTS"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ATENA ERA LA DEESSA DE LA SAVIESA.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",text:"QUIN D’AQUESTS OBJECTES RELACIONEM AMB POSIDÓ?",answers:["TRIDENT","LLAMP","LIRA","ROSA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/rosa.webp"],correct:0},
+{type:"choice",text:"QUIN D’AQUESTS CONCEPTES NO CORRESPON A AFRODITA?",answers:["AMOR","BELLESA","GUERRA","ATRACCIÓ"],correct:2},
+{type:"match",text:"RELACIONA CADA DÉU O DEESSA AMB EL SEU ÀMBIT.",left:["AFRODITA","ARES","DEMÈTER"],right:["AMOR","GUERRA","AGRICULTURA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ARES ERA EL DÉU DE LA MÚSICA.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",text:"QUIN INSTRUMENT RELACIONEM AMB APOL·LO?",answers:["LIRA","TRIDENT","ARC","ENCLUSA"],images:["assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/enclusa.webp"],correct:0},
+{type:"match",text:"RELACIONA CADA DÉU AMB EL SEU ÀMBIT.",left:["APOL·LO","ÀRTEMIS","HEFEST"],right:["MÚSICA","CAÇA","FOC I METAL·LÚRGIA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
+{type:"vf",text:"DIONÍS ESTAVA RELACIONAT AMB EL VI I LES FESTES.",answers:["CERT","FALS"],correct:0},
+{type:"visual2",text:"QUIN D’AQUESTS DOS PERSONATGES REPRESENTA HERMES?",answers:["HERMES","ARES"],images:["assets/history/grecia/s3/hermes.webp","assets/history/grecia/s3/ares.webp"],correct:0},
+{type:"match",text:"RELACIONA CADA SÍMBOL AMB EL DÉU CORRESPONENT.",left:["LLAMP","TRIDENT","LIRA","RAÏM"],right:["ZEUS","POSIDÓ","APOL·LO","DIONÍS"],correctMap:[0,1,2,3],correct:encodeMatch([0,1,2,3])},
+{type:"vf",text:"HERA ERA LA DEESSA DE LA CAÇA I LA NATURA.",answers:["CERT","FALS"],correct:1},
+{type:"match",text:"REPTE FINAL: RELACIONA CADA DÉU O DEESSA AMB EL SEU ÀMBIT.",left:["ATENA","HERMES","DEMÈTER","HEFEST"],right:["SAVIESA","MISSATGER I COMERÇ","AGRICULTURA","FOC I METAL·LÚRGIA"],correctMap:[0,1,2,3],correct:encodeMatch([0,1,2,3])}
+],
 "G2":[
 {type:"choice",text:"COM ERA PRINCIPALMENT EL TERRITORI DE L’ANTIGA GRÈCIA?",answers:["MUNTANYÓS I COSTANER","PLANER I DESÈRTIC","GELAT I SENSE COSTA"],correct:0},
 {type:"vf",text:"EL MAR EGEU ERA MOLT IMPORTANT PER ALS GRECS.",answers:["CERT","FALS"],correct:0},
@@ -5625,7 +5668,7 @@ const sessionQuestionBanks={
 {type:"visual4",text:"QUIN D’AQUESTS ESPORTS NO TROBARIES ALS JOCS DE L’ANTIGA GRÈCIA?",answers:["CURSA","LLUITA","LLANÇAMENT DE JAVELINA","BÀSQUET"],images:["assets/history/grecia/s2/q12_01.webp","assets/history/grecia/s2/q12_02.webp","assets/history/grecia/s2/q12_03.webp","assets/history/grecia/s2/q12_04.webp"],correct:3},
 {type:"visual4",text:"QUINA IMATGE REPRESENTA MILLOR ESPARTA, LA CIUTAT DESTACADA PER LA VIDA MILITAR?",answers:["A","B","C","D"],images:["assets/history/grecia/s2/q13_01.webp","assets/history/grecia/s2/q13_02.webp","assets/history/grecia/s2/q13_03.webp","assets/history/grecia/s2/q13_04.webp"],correct:1},
 {type:"vf",text:"ATENES DESTACAVA PER LA CULTURA I L’ART.",answers:["CERT","FALS"],correct:0},
-{type:"classify",text:"REPTE FINAL: CLASSIFICA QUINS ELEMENTS RELACIONEM AMB L’ANTIGA GRÈCIA.",zones:["GRÈCIA","NO CORRESPON"],labels:["MAR EGEU","OLIVERES","OLÍMPIA","PIRÀMIDE"],images:["assets/history/grecia/s2/q15_01.webp","assets/history/grecia/s2/q15_02.webp","assets/history/grecia/s2/q15_03.webp","assets/history/grecia/s2/q15_04.webp"],correctZones:[0,0,0,1],correct:encodeClassify([0,0,0,1])}
+{type:"visual4",text:"REPTE FINAL: QUINA D’AQUESTES IMATGES NO RELACIONEM AMB L’ANTIGA GRÈCIA?",answers:["MAR EGEU","OLIVERES","OLÍMPIA","PIRÀMIDE"],images:["assets/history/grecia/s2/q15_01.webp","assets/history/grecia/s2/q15_02.webp","assets/history/grecia/s2/q15_03.webp","assets/history/grecia/s2/q15_04.webp"],correct:3}
 ],
 "G1":[
 {type:"choice",text:"QUANTS ÀPATS FEIEN NORMALMENT ELS GRECS AL DIA?",answers:["1","3","5"],correct:1},
@@ -5642,7 +5685,7 @@ const sessionQuestionBanks={
 {type:"choice",text:"QUÈ NO TROBARIES EN UN TEATRE DE L’ANTIGA GRÈCIA?",answers:["ACTORS","MÀSCARES","PANTALLA DE CINEMA","PÚBLIC"],correct:2},
 {type:"classify",text:"CLASSIFICA CADA DESCRIPCIÓ: COMÈDIA O TRAGÈDIA.",zones:["COMÈDIA","TRAGÈDIA"],labels:["OBRA DIVERTIDA","OBRA SERIOSA AMB FINAL TRÀGIC"],correctZones:[0,1],correct:encodeClassify([0,1])},
 {type:"vf",text:"ELS ACTORS GRECS ACTUAVEN SENSE MÀSCARES.",answers:["CERT","FALS"],correct:1},
-{type:"classify",text:"REPTE FINAL: CLASSIFICA QUÈ RELACIONEM AMB LA VIDA CULTURAL GREGA.",zones:["GRÈCIA","NO CORRESPON"],labels:["CERÀMICA","LIRA","TEATRE","MANGO"],correctZones:[0,0,0,1],correct:encodeClassify([0,0,0,1])}
+{type:"choice",text:"REPTE FINAL: QUIN D’AQUESTS ELEMENTS NO RELACIONEM AMB LA VIDA CULTURAL GREGA?",answers:["CERÀMICA","LIRA","TEATRE","MANGO"],correct:3}
 ],
 "S1":[
 {type:"choice",text:"QUÈ ÉS LA INÈRCIA?",answers:["LA TENDÈNCIA DELS OBJECTES A CONTINUAR COM ESTAN","LA FORÇA QUE FA MOURE ELS OBJECTES","LA VELOCITAT D'UN OBJECTE"],correct:0},
@@ -6505,7 +6548,7 @@ $("#profileJoinGameBtn").onclick=async()=>{
     const topicKey=String(game.topic||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toUpperCase();
     let loaded=syncQuestionsFromTopic(game.topic);
     // Fallback explícit per a les sessions de Grècia.
-    const gMatch=topicKey.match(/^G\s*0*([12])$/);
+    const gMatch=topicKey.match(/^G\s*0*([123])$/);
     if(!loaded && gMatch){
       const gid=`G${Number(gMatch[1])}`;
       if(Array.isArray(sessionQuestionBanks[gid]) && sessionQuestionBanks[gid].length){
@@ -6539,7 +6582,7 @@ function syncQuestionsFromTopic(topic){
   // Format nou: a Supabase desem l'ID estable de la sessió.
   // Ciències: S1...S14 · Història/Grècia: G1...
   let id="";
-  if(/^G\s*0*[12]$/.test(n)) id=`G${Number(n.match(/\d+/)?.[0]||1)}`;
+  if(/^G\s*0*[123]$/.test(n)) id=`G${Number(n.match(/\d+/)?.[0]||1)}`;
   const exact=n.match(/^([SG])\s*(\d{1,2})$/);
   if(exact) id=`${exact[1]}${Number(exact[2])}`;
 
@@ -7045,6 +7088,12 @@ $("#nextQuestion").onclick=async()=>{
         if(p.profile_id)await addCoinsToProfile(p.profile_id,bonus);
         p.coins=Number(p.coins||0)+bonus;
         await api(`players?id=eq.${p.id}`,{method:"PATCH",body:JSON.stringify({coins:p.coins})});
+      }
+      if(/^G[1-3]$/.test(String(activeSessionId||"").toUpperCase())){
+        for(let i=0;i<players.length;i++){
+          const pp=players[i];
+          if(pp.profile_id) await persistEarnedGreeceTrophy(pp.profile_id,String(activeSessionId).toUpperCase(),trophyTierForRank(i+1));
+        }
       }
       if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
       renderRanking("#finalRanking");
@@ -9013,7 +9062,8 @@ document.addEventListener("keydown",e=>{
   const _oldTrophyImage = trophyImage;
   trophyImage = function(sessionId, tier){
     const id = String(sessionId || "").toUpperCase();
-    const t = String(tier || "wood").toLowerCase();
+    let t = String(tier || "green").toLowerCase();
+    if(t==="green") t="wood";
     if (["G1","G2","G3"].includes(id) && ["gold","silver","bronze","wood"].includes(t)) {
       return `assets/history/grecia/trophies/${id.toLowerCase()}_${t}.webp`;
     }
@@ -9037,3 +9087,32 @@ body:has(#teacherQuestionCounter) .image-option img{
 }
 </style>
 <script>console.info("Fasia Verse · V0.14.50 · G2 imatges grans + palmarès Grècia");</script>
+
+<style id="fv-v01451-greece-images">
+/* Imatges visuals G2/G3 molt més grans sense trencar el 2x2 */
+#teacherQuestion .image-option,
+#studentQuestion .image-option{
+  overflow:hidden!important;
+}
+#teacherQuestion .image-option img,
+#studentQuestion .image-option img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  padding:2px!important;
+}
+
+/* P13 necessita aprofitar al màxim el requadre */
+body:has(#teacherQuestionCounter) #teacherQuestion .four-choice-grid .image-option img,
+body:has(#studentQuestionCounter) #studentQuestion .four-choice-grid .image-option img{
+  transform:scale(1.06);
+}
+
+/* 2 opcions (Hermes) grans i clares */
+.visual-two-grid .image-option img{
+  transform:scale(1.08);
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.51 · G3 + G2 XXL + palmarès Grècia persistent");</script>
