@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.74 · ROMA S3-S8 ESTRUCTURA</title>
+<title>Fasia Verse · V0.14.78 · ROMA S3-S8 REVISIÓ + ASSETS S7-S8</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5802,7 +5802,7 @@ const historySessions=[
 {id:"R4",number:"SESSIÓ 4",title:"L’ECONOMIA ROMANA",status:"active"},
 {id:"R5",number:"SESSIÓ 5",title:"LES CASES ROMANES",status:"active"},
 {id:"R6",number:"SESSIÓ 6",title:"L’ALIMENTACIÓ ROMANA",status:"active"},
-{id:"R7",number:"SESSIÓ 7",title:"L’OCI A ROMA",status:"preparing"},
+{id:"R7",number:"SESSIÓ 7",title:"L’OCI A ROMA",status:"active"},
 {id:"R8",number:"SESSIÓ 8",title:"LA RELIGIÓ ROMANA",status:"active"}
 ];
 
@@ -5838,99 +5838,99 @@ const sessionQuestionBanks={
 {type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA ROMA DESPRÉS DEL SEU CREIXEMENT?",answers:["GRAN CIUTAT ROMANA","PETIT POBLAT"],images:["assets/history/roma/s1/q10_roma_ciutat.webp","assets/history/roma/s1/q10_poblat.webp"],correct:0}
 ],
 "R2":[
-{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS PERSONATGES PODRIA SER UN PATRICI ROMÀ?",answers:["PERSONATGE MEDIEVAL","PATRICI ROMÀ"],images:["assets/history/roma/s2/q01_fals_medieval.webp","assets/history/roma/s2/q01_patrici.webp"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS PERSONATGES PODRIA SER UN PATRICI ROMÀ?",answers:["PERSONATGE MEDIEVAL","PATRICI ROMÀ"],images:["assets/history/roma/s2/cavaller_medieval.webp","assets/history/roma/s2/patrici.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA GRUP AMB QUI ERA.",left:["PATRICIS","PLEBEUS","ESCLAUS"],right:["FAMÍLIES RIQUES I PODEROSES","POBLE LLIURE","PERSONES SENSE LLIBERTAT"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ELS PATRICIS EREN LES FAMÍLIES MÉS RIQUES I PODEROSES.",answers:["CERT","FALS"],correct:0},
 {type:"choice",text:"QUIN NO ÉS UN GRUP DE LA SOCIETAT ROMANA QUE HEM TREBALLAT?",answers:["PLEBEUS","CAVALLERS MEDIEVALS","PATRICIS","ESCLAUS"],correct:1},
-{type:"choice",questionImage:"assets/history/roma/s2/q05_plebeu_camp.webp",text:"AQUEST PERSONATGE ÉS LLIURE, TREBALLA AL CAMP I NO PERTANY A UNA FAMÍLIA RICA. QUI PODRIA SER?",answers:["ESCLAU","PLEBEU","PATRICI"],correct:1},
+{type:"choice",questionImage:"assets/history/roma/s2/plebeu.webp",text:"AQUEST PERSONATGE ÉS LLIURE, TREBALLA AL CAMP I NO PERTANY A UNA FAMÍLIA RICA. QUI PODRIA SER?",answers:["ESCLAU","PLEBEU","PATRICI"],correct:1},
 {type:"vf",text:"ELS ESCLAUS TENIEN ELS MATEIXOS DRETS QUE ELS CIUTADANS ROMANS.",answers:["CERT","FALS"],correct:1},
 {type:"classify",text:"CLASSIFICA QUI ERA LLIURE I QUI NO.",zones:["LLIURE","NO LLIURE"],labels:["PATRICI","PLEBEU","ESCLAU"],textOnly:true,correctZones:[0,0,1],correct:encodeClassify([0,0,1])},
-{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA MILLOR UN ESCLAU ROMÀ?",answers:["PATRICI","ESCLAU"],images:["assets/history/roma/s2/q08_patrici.webp","assets/history/roma/s2/q08_esclau.webp"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA MILLOR UN ESCLAU ROMÀ?",answers:["PATRICI","ESCLAU"],images:["assets/history/roma/s2/patrici.webp","assets/history/roma/s2/esclau.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA GRUP AMB LA SEVA SITUACIÓ.",left:["PATRICI","PLEBEU","ESCLAU"],right:["PODER I RIQUESA","TREBALL I VIDA LLIURE","DEPÈN D’UN AMO"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
-{type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/q10_plebeu.webp","assets/history/roma/s2/q10_esclau.webp","assets/history/roma/s2/q10_patrici.webp","assets/history/roma/s2/q10_intrus.webp"],correct:2}
+{type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/plebeu.webp","assets/history/roma/s2/esclau.webp","assets/history/roma/s2/patrici.webp","assets/history/roma/s2/cavaller_medieval.webp"],correct:2}
 ],
 
 "R3":[
 {type:"order",text:"ORDENA LES TRES ETAPES DE ROMA.",axis:["PRIMER","ÚLTIM"],labels:["MONARQUIA","REPÚBLICA","IMPERI"],textOnly:true,correctOrder:[0,1,2],correct:encodeOrder([0,1,2])},
-{type:"visual3",text:"QUI GOVERNAVA ROMA DURANT LA MONARQUIA?",answers:["EMPERADOR","REI","CÒNSOLS"],images:["","",""],correct:1},
+{type:"choice",text:"QUI GOVERNAVA ROMA DURANT LA MONARQUIA?",answers:["CÒNSOLS","EMPERADOR","REI"],correct:2},
 {type:"vf",text:"LA REPÚBLICA VA COMENÇAR DESPRÉS DE LA MONARQUIA.",answers:["CERT","FALS"],correct:0},
-{type:"choice",text:"QUIN NO ÉS UN DELS TRES TIPUS DE GOVERN QUE VA TENIR ROMA?",answers:["IMPERI","MONARQUIA","DEMOCRÀCIA MODERNA","REPÚBLICA"],correct:2},
-{type:"match",text:"RELACIONA CADA ETAPA AMB QUI TENIA EL PODER.",left:["MONARQUIA","REPÚBLICA","IMPERI"],right:["REI","CÒNSOLS","EMPERADOR"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
-{type:"visual4",row4:true,text:"QUI VA SER L’ÚLTIM REI DE ROMA?",answers:["TRÀJA","TARQUINI EL SUPERB","JULI CÈSAR","AUGUST"],images:["","","",""],correct:1},
+{type:"choice",text:"QUIN NO ÉS UN DELS TRES TIPUS DE GOVERN QUE VA TENIR ROMA?",answers:["REPÚBLICA","DEMOCRÀCIA MODERNA","IMPERI","MONARQUIA"],correct:1},
+{type:"match",text:"RELACIONA CADA ETAPA AMB QUI TENIA EL PODER.",left:["MONARQUIA","REPÚBLICA","IMPERI"],right:["EMPERADOR","REI","CÒNSOLS"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
+{type:"choice",text:"QUI VA SER L’ÚLTIM REI DE ROMA?",answers:["JULI CÈSAR","AUGUST","TRÀJA","TARQUINI EL SUPERB"],correct:3},
 {type:"vf",text:"DURANT LA REPÚBLICA ROMA ERA GOVERNADA PER UN EMPERADOR.",answers:["CERT","FALS"],correct:1},
-{type:"choice",text:"ROMA TÉ DOS CÒNSOLS. EN QUINA ETAPA ESTEM?",answers:["IMPERI","MONARQUIA","REPÚBLICA"],correct:2},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES VA SER EMPERADOR DE ROMA?",answers:["HANNÍBAL","TRÀJA","PERICLES","RAMSÈS II"],images:["","","",""],correct:1},
-{type:"choice",text:"QUI GOVERNAVA DURANT L’IMPERI?",answers:["EL REI","ELS CÒNSOLS","L’EMPERADOR"],correct:2}
+{type:"choice",text:"ROMA TÉ DOS CÒNSOLS. EN QUINA ETAPA ESTEM?",answers:["MONARQUIA","REPÚBLICA","IMPERI"],correct:1},
+{type:"choice",text:"QUIN D’AQUESTS PERSONATGES VA SER EMPERADOR DE ROMA?",answers:["PERICLES","RAMSÈS II","TRÀJA","HANNÍBAL"],correct:2},
+{type:"choice",text:"QUI GOVERNAVA DURANT L’IMPERI?",answers:["ELS CÒNSOLS","L’EMPERADOR","EL REI"],correct:1}
 ],
 "R4":[
-{type:"visual4",row4:true,text:"QUINA ERA UNA ACTIVITAT ECONÒMICA MOLT IMPORTANT A ROMA?",answers:["AGRICULTURA","PROGRAMACIÓ","AVIACIÓ","FOTOGRAFIA"],images:["","","",""],correct:0},
-{type:"match",text:"RELACIONA EL PRODUCTE AMB EL SEU ORIGEN.",left:["BLAT","OLI","VI"],right:["CAMP DE CEREALS","OLIVERA","RAÏM"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"choice",text:"QUINA ERA UNA ACTIVITAT ECONÒMICA MOLT IMPORTANT A ROMA?",answers:["AVIACIÓ","AGRICULTURA","FOTOGRAFIA","PROGRAMACIÓ"],correct:1},
+{type:"match",text:"RELACIONA EL PRODUCTE AMB EL SEU ORIGEN.",left:["BLAT","OLI","VI"],right:["RAÏM","CAMP DE CEREALS","OLIVERA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"L’AGRICULTURA ERA IMPORTANT PER A L’ECONOMIA ROMANA.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS ANIMALS NO ERA HABITUAL EN LA RAMADERIA ROMANA?",answers:["OVELLA","VACA","PORC","LLEÓ"],images:["","","",""],correct:3},
-{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["COMERCIANT","DORMINT","NEDANT"],correct:0},
-{type:"match",text:"RELACIONA CADA ACTIVITAT AMB QUÈ PRODUEIX O FA.",left:["AGRICULTURA","RAMADERIA","COMERÇ"],right:["ALIMENTS DEL CAMP","PRODUCTES ANIMALS","INTERCANVI DE PRODUCTES"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"choice",text:"QUIN D’AQUESTS ANIMALS NO ERA HABITUAL EN LA RAMADERIA ROMANA?",answers:["PORC","LLEÓ","OVELLA","VACA"],correct:1},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["NEDANT","COMERCIANT","DORMINT"],correct:1},
+{type:"match",text:"RELACIONA CADA ACTIVITAT AMB QUÈ PRODUEIX O FA.",left:["AGRICULTURA","RAMADERIA","COMERÇ"],right:["INTERCANVI DE PRODUCTES","ALIMENTS DEL CAMP","PRODUCTES ANIMALS"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"ELS ROMANS NOMÉS PRODUÏEN PER A ELLS MATEIXOS I NO COMERCIAVEN.",answers:["CERT","FALS"],correct:1},
-{type:"choice",text:"QUI FEIA UNA PART IMPORTANT DELS TREBALLS MÉS DURS?",answers:["ELS ESCLAUS","ELS EMPERADORS","ELS DÉUS"],correct:0},
-{type:"choice",questionImagePlaceholder:true,text:"PER A QUÈ SERVIEN ELS VAIXELLS COM AQUEST?",answers:["PER TRANSPORTAR I COMERCIAR AMB PRODUCTES","PER VOLAR","PER CULTIVAR BLAT"],correct:0},
-{type:"choice",text:"QUIN NO FORMA PART DE L’ECONOMIA ROMANA QUE HEM TREBALLAT?",answers:["COMERÇ","RAMADERIA","AGRICULTURA","INFORMÀTICA"],correct:3}
+{type:"choice",text:"QUI FEIA UNA PART IMPORTANT DELS TREBALLS MÉS DURS?",answers:["ELS DÉUS","ELS EMPERADORS","ELS ESCLAUS"],correct:2},
+{type:"choice",questionImage:"assets/history/roma/s4/vaixell_comerc.webp",text:"PER A QUÈ SERVIEN ELS VAIXELLS COM AQUEST?",answers:["PER CULTIVAR BLAT","PER TRANSPORTAR I COMERCIAR AMB PRODUCTES","PER VOLAR"],correct:1},
+{type:"choice",text:"QUIN NO FORMA PART DE L’ECONOMIA ROMANA QUE HEM TREBALLAT?",answers:["RAMADERIA","INFORMÀTICA","COMERÇ","AGRICULTURA"],correct:1}
 ],
 "R5":[
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES ÉS UNA DOMUS ROMANA?",answers:["DOMUS","CASTELL MEDIEVAL","PIRÀMIDE","IGLÚ"],images:["","","",""],correct:0},
-{type:"match",text:"RELACIONA CADA CASA AMB QUI HI VIVIA.",left:["DOMUS","INSULA","VILLA"],right:["FAMÍLIES RIQUES","FAMÍLIES MÉS POBRES","AL CAMP"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES ÉS UNA DOMUS ROMANA?",answers:["CASTELL MEDIEVAL","PIRÀMIDE","DOMUS","IGLÚ"],images:["assets/history/roma/s5/castell_medieval.webp","assets/history/roma/s5/fortalesa.webp","assets/history/roma/s5/domus.webp","assets/history/roma/s5/menjar.webp"],correct:2},
+{type:"match",text:"RELACIONA CADA CASA AMB QUI HI VIVIA.",left:["DOMUS","INSULA","VILLA"],right:["AL CAMP","FAMÍLIES RIQUES","FAMÍLIES MÉS POBRES"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"LES INSULAE EREN EDIFICIS AMB DIVERSOS PISOS.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES NO ÉS UNA CONSTRUCCIÓ ROMANA QUE HEM TREBALLAT?",answers:["DOMUS","VILLA","INSULA","CASTELL MEDIEVAL"],images:["","","",""],correct:3},
-{type:"visual2",hideLabels:true,text:"QUINA ÉS UNA VILLA ROMANA?",answers:["VILLA ROMANA","CASA DE CIUTAT"],images:["",""],correct:0},
-{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA UNA TABERNA?",answers:["UN LOCAL O BOTIGA","UN PALAU IMPERIAL","UN PORT"],correct:0},
-{type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA FUNCIÓ.",left:["TABERNA","FONT","LATRINA"],right:["COMPRAR I VENDRE","ACONSEGUIR AIGUA","ANAR AL LAVABO"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES NO ÉS UNA CONSTRUCCIÓ ROMANA QUE HEM TREBALLAT?",answers:["VILLA","CASTELL MEDIEVAL","DOMUS","INSULA"],images:["assets/history/roma/s5/villa.webp","assets/history/roma/s5/castell_medieval.webp","assets/history/roma/s5/domus.webp","assets/history/roma/s5/insula.webp"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUINA ÉS UNA VILLA ROMANA?",answers:["CASA DE CIUTAT","VILLA ROMANA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/villa.webp"],correct:1},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA UNA TABERNA?",answers:["UN PORT","UN LOCAL O BOTIGA","UN PALAU IMPERIAL"],correct:1},
+{type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA FUNCIÓ.",left:["TABERNA","FONT","LATRINA"],right:["ANAR AL LAVABO","COMPRAR I VENDRE","ACONSEGUIR AIGUA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"TOTES LES CASES ROMANES TENIEN AIGUA CORRENT I LAVABO PRIVAT.",answers:["CERT","FALS"],correct:1},
-{type:"choice",text:"SI VIVIES EN UNA INSULA I NECESSITAVES AIGUA, ON PODIES ANAR?",answers:["A UNA FONT PÚBLICA","A UN AEROPORT","A UN CIRC"],correct:0},
-{type:"visual4",row4:true,text:"QUINA CASA TROBARÍEM FORA DE LA CIUTAT, AL CAMP?",answers:["INSULA","VILLA","DOMUS","AMFITEATRE"],images:["","","",""],correct:1}
+{type:"choice",text:"SI VIVIES EN UNA INSULA I NECESSITAVES AIGUA, ON PODIES ANAR?",answers:["A UN CIRC","A UNA FONT PÚBLICA","A UN AEROPORT"],correct:1},
+{type:"visual4",row4:true,text:"QUINA CASA TROBARÍEM FORA DE LA CIUTAT, AL CAMP?",answers:["DOMUS","AMFITEATRE","INSULA","VILLA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/amfiteatre.webp","assets/history/roma/s5/insula.webp","assets/history/roma/s5/villa.webp"],correct:3}
 ],
 "R6":[
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS ALIMENTS NO FORMAVA PART DE L’ALIMENTACIÓ ROMANA?",answers:["PA","OLIVES","RAÏM","HAMBURGUESA MODERNA"],images:["","","",""],correct:3},
-{type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU ORIGEN.",left:["PA","VI","OLI"],right:["CEREALS","RAÏM","OLIVES"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ALIMENTS NO FORMAVA PART DE L’ALIMENTACIÓ ROMANA?",answers:["OLIVES","HAMBURGUESA MODERNA","PA","RAÏM"],images:["assets/history/roma/s6/olives.webp","assets/history/roma/s6/hamburguesa.webp","assets/history/roma/s6/pa.webp","assets/history/roma/s6/raim.webp"],correct:1},
+{type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU ORIGEN.",left:["PA","VI","OLI"],right:["OLIVES","CEREALS","RAÏM"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"EL PA ERA UN ALIMENT HABITUAL ENTRE ELS ROMANS.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES BEGUDES ERA MOLT HABITUAL A ROMA?",answers:["VI","REFRESC","BATUT","BEGUDA ENERGÈTICA"],images:["","","",""],correct:0},
-{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA EL GARUM?",answers:["UNA SALSA FETA PRINCIPALMENT AMB PEIX","UN TIPUS DE PA","UNA BEGUDA"],correct:0},
-{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["UN BANQUET","UNA CURSA","UNA BATALLA"],correct:0},
-{type:"match",text:"RELACIONA CADA ALIMENT AMB LA SEVA IMATGE.",left:["PA","FRUITA","CARN","PEIX"],right:["IMATGE 1","IMATGE 2","IMATGE 3","IMATGE 4"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES BEGUDES ERA MOLT HABITUAL A ROMA?",answers:["BATUT","REFRESC","VI","BEGUDA ENERGÈTICA"],images:["assets/history/roma/s6/batut.webp","assets/history/roma/s6/refresc.webp","assets/history/roma/s6/vi.webp","assets/history/roma/s6/beguda_energetica.webp"],correct:2},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA EL GARUM?",answers:["UNA BEGUDA","UNA SALSA FETA PRINCIPALMENT AMB PEIX","UN TIPUS DE PA"],correct:1},
+{type:"choice",questionImage:"assets/history/roma/s6/banquet_romans.webp",text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["UNA BATALLA","UN BANQUET","UNA CURSA"],correct:1},
+{type:"choice",text:"QUIN ALIMENT S’OBTENIA DEL RAÏM?",answers:["OLI","PA","VI"],correct:2},
 {type:"vf",text:"TOTS ELS ROMANS MENJAVEN GRANS BANQUETS CADA DIA.",answers:["CERT","FALS"],correct:1},
-{type:"visual2",hideLabels:true,text:"QUIN ÀPAT SEMBLA D’UNA FAMÍLIA ROMANA RICA?",answers:["BANQUET RIC","ÀPAT SENZILL"],images:["",""],correct:0},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS PRODUCTES UTILITZAVEN ELS ROMANS PER DONAR SABOR AL MENJAR?",answers:["GARUM","KÈTXUP","MAIONESA","XOCOLATA"],images:["","","",""],correct:0}
+{type:"visual2",hideLabels:true,text:"QUIN ÀPAT SEMBLA D’UNA FAMÍLIA ROMANA RICA?",answers:["ÀPAT SENZILL","BANQUET RIC"],images:["assets/history/roma/s6/menjar_pobres.webp","assets/history/roma/s6/menjar_rics.webp"],correct:1},
+{type:"choice",text:"QUIN D’AQUESTS PRODUCTES UTILITZAVEN ELS ROMANS PER DONAR SABOR AL MENJAR?",answers:["MAIONESA","XOCOLATA","GARUM","KÈTXUP"],correct:2}
 ],
 "R7":[
-{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UN CIRC ROMÀ?",answers:["CIRC ROMÀ","TEATRE","AMFITEATRE","TEMPLE"],images:["","","",""],correct:0},
-{type:"match",text:"RELACIONA CADA ESPECTACLE AMB EL LLOC ON ES FEIA.",left:["TEATRE","QUADRIGUES","GLADIADORS"],right:["TEATRE","CIRC","AMFITEATRE"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UN CIRC ROMÀ?",answers:["TEMPLE","AMFITEATRE","CIRC ROMÀ","TEATRE"],images:["assets/history/roma/s7/temple.webp","assets/history/roma/s7/amfiteatre.webp","assets/history/roma/s7/circ.webp","assets/history/roma/s7/teatre.webp"],correct:2},
+{type:"match",text:"RELACIONA CADA ESPECTACLE AMB EL LLOC ON ES FEIA.",left:["OBRES DE TEATRE","QUADRIGUES","GLADIADORS"],right:["CIRC","AMFITEATRE","TEATRE"],correctMap:[2,0,1],textOnly:true,correct:encodeMatch([2,0,1])},
 {type:"vf",text:"ELS ROMANS ANAVEN AL TEATRE PER VEURE REPRESENTACIONS I COMÈDIES.",answers:["CERT","FALS"],correct:0},
-{type:"choice",questionImagePlaceholder:true,text:"COM S’ANOMENAVA AQUEST VEHICLE DE CURSES?",answers:["QUADRIGA","CARRO DE COMPRA","TRINEU"],correct:0},
-{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS UN AURIGA?",answers:["AURIGA","GLADIADOR"],images:["",""],correct:0},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS NO ÉS UN ESPECTACLE ROMÀ QUE HEM TREBALLAT?",answers:["CURSA DE QUADRIGUES","TEATRE","LLUITA DE GLADIADORS","PARTIT DE BÀSQUET"],images:["","","",""],correct:3},
-{type:"match",text:"RELACIONA CADA PERSONATGE AMB QUÈ FEIA.",left:["AURIGA","GLADIADOR","ACTOR"],right:["CONDUÏA CARROS","COMBATIA","ACTUAVA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"choice",questionImage:"assets/history/roma/s7/quadriga_rect.webp",text:"COM S’ANOMENAVA AQUEST VEHICLE DE CURSES?",answers:["TRINEU","QUADRIGA","CARRO DE COMPRA"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS UN AURIGA?",answers:["GLADIADOR","AURIGA"],images:["assets/history/roma/s7/lluitador.webp","assets/history/roma/s7/auriga.webp"],correct:1},
+{type:"choice",text:"QUIN D’AQUESTS NO ÉS UN ESPECTACLE ROMÀ QUE HEM TREBALLAT?",answers:["TEATRE","PARTIT DE BÀSQUET","CURSA DE QUADRIGUES","LLUITA DE GLADIADORS"],correct:1},
+{type:"match",text:"RELACIONA CADA PERSONATGE AMB QUÈ FEIA.",left:["AURIGA","GLADIADOR","ACTOR"],right:["ACTUAVA","CONDUÏA CARROS","COMBATIA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"ELS GLADIADORS PARTICIPAVEN EN CURSES DE QUADRIGUES.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UNA LLUITA DE GLADIADORS?",answers:["TEATRE","GLADIADORS","QUADRIGA","BANQUET"],images:["","","",""],correct:1},
-{type:"choice",text:"VOLS VEURE UNA CURSA DE QUADRIGUES. ON HAS D’ANAR?",answers:["AL CIRC","A LA DOMUS","A LA VILLA"],correct:0}
+{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA UNA LLUITA DE GLADIADORS?",answers:["CURSA DE QUADRIGUES","LLUITA DE GLADIADORS"],images:["assets/history/roma/s7/cursa_quadrigues.webp","assets/history/roma/s7/gladiadors.webp"],correct:1},
+{type:"choice",text:"VOLS VEURE UNA CURSA DE QUADRIGUES. ON HAS D’ANAR?",answers:["A LA VILLA","AL CIRC","A LA DOMUS"],correct:1}
 ],
 "R8":[
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS ÉS JÚPITER?",answers:["JÚPITER","NEPTÚ","MART","MERCURI"],images:["","","",""],correct:0},
-{type:"match",text:"RELACIONA JÚPITER, JUNO I NEPTÚ AMB EL QUE REPRESENTAVEN.",left:["JÚPITER","JUNO","NEPTÚ"],right:["CEL","DONES CASADES","MAR"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
-{type:"vf",text:"JÚPITER ERA EL DÉU MÉS IMPORTANT DELS ROMANS.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",row4:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB NEPTÚ?",answers:["LLAMP","TRIDENT","ARC","CADUCI"],images:["","","",""],correct:1},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES ÉS MART?",answers:["MART","VENUS","MINERVA","DIANA"],images:["","","",""],correct:0},
-{type:"match",text:"RELACIONA MART, VENUS I MINERVA.",left:["MART","VENUS","MINERVA"],right:["GUERRA","AMOR","SAVIESA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,hideLabels:true,text:"QUIN D’AQUESTS ÉS JÚPITER?",answers:["NEPTÚ","MERCURI","JÚPITER","MART"],images:["assets/history/roma/s8/neptu.webp","assets/history/roma/s8/mercuri.webp","assets/history/roma/s8/jupiter.webp","assets/history/roma/s8/mart.webp"],correct:2},
+{type:"match",text:"RELACIONA JÚPITER, JUNO I NEPTÚ AMB EL QUE REPRESENTAVEN.",left:["JÚPITER","JUNO","NEPTÚ"],right:["MAR","CEL","DONES CASADES"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
+{type:"visual4",row4:true,text:"QUIN SÍMBOL RELACIONEM AMB JÚPITER?",answers:["TRIDENT","LIRA","LLAMP","ARC"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/arc.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB NEPTÚ?",answers:["ARC","LLAMP","LIRA","TRIDENT"],images:["assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/trident.webp"],correct:3},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES ÉS MART?",answers:["VENUS","DIANA","MART","MINERVA"],images:["assets/history/roma/s8/venus.webp","assets/history/roma/s8/diana.webp","assets/history/roma/s8/mart.webp","assets/history/roma/s8/minerva.webp"],correct:2},
+{type:"match",text:"RELACIONA MART, VENUS I MINERVA.",left:["MART","VENUS","MINERVA"],right:["SAVIESA","GUERRA","AMOR"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"MART ERA EL DÉU DEL MAR.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES ÉS VENUS?",answers:["DIANA","VENUS","JUNO","MINERVA"],images:["","","",""],correct:1},
-{type:"choice",text:"QUIN D’AQUESTS NO ESTÀ RELACIONAT AMB VENUS?",answers:["AMOR","BELLESA","GUERRA"],correct:2},
-{type:"visual4",row4:true,text:"QUIN OBJECTE O ANIMAL ESTÀ RELACIONAT AMB MINERVA?",answers:["MUSSOL","TRIDENT","LLAMP","CAVALL"],images:["","","",""],correct:0},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS ÉS MERCURI?",answers:["NEPTÚ","MERCURI","MART","APOL·LO"],images:["","","",""],correct:1},
-{type:"match",text:"RELACIONA MERCURI, DIANA I APOL·LO.",left:["MERCURI","DIANA","APOL·LO"],right:["COMERÇ I MISSATGER","CAÇA","SOL I MÚSICA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES ÉS VENUS?",answers:["JUNO","MINERVA","DIANA","VENUS"],images:["assets/history/roma/s8/juno.webp","assets/history/roma/s8/minerva.webp","assets/history/roma/s8/diana.webp","assets/history/roma/s8/venus.webp"],correct:3},
+{type:"choice",text:"QUIN D’AQUESTS NO ESTÀ RELACIONAT AMB VENUS?",answers:["BELLESA","GUERRA","AMOR"],correct:1},
+{type:"visual4",row4:true,text:"QUIN OBJECTE O ANIMAL ESTÀ RELACIONAT AMB MINERVA?",answers:["TRIDENT","CAVALL","MUSSOL","LLAMP"],images:["assets/history/grecia/s3/trident.webp","assets/history/roma/s8/cavall.webp","assets/history/roma/s8/mussol.webp","assets/history/grecia/s3/llamp.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUIN D’AQUESTS ÉS MERCURI?",answers:["APOL·LO","MART","MERCURI","NEPTÚ"],images:["assets/history/roma/s8/apollo.webp","assets/history/roma/s8/mart.webp","assets/history/roma/s8/mercuri.webp","assets/history/roma/s8/neptu.webp"],correct:2},
+{type:"match",text:"RELACIONA MERCURI, DIANA I APOL·LO.",left:["MERCURI","DIANA","APOL·LO"],right:["SOL I MÚSICA","COMERÇ I MISSATGER","CAÇA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"MERCURI ERA EL MISSATGER DELS DÉUS.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",row4:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB DIANA?",answers:["TRIDENT","ARC","LLAMP","MARTELL"],images:["","","",""],correct:1},
-{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS APOL·LO?",answers:["APOL·LO","MART"],images:["",""],correct:0},
-{type:"match",text:"RELACIONA CADA DÉU AMB EL SEU SÍMBOL.",left:["JÚPITER","NEPTÚ","DIANA","MERCURI"],right:["LLAMP","TRIDENT","ARC","CADUCI"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
+{type:"visual4",row4:true,hideLabels:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB DIANA?",answers:["LLAMP","LIRA","TRIDENT","ARC"],images:["assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp"],correct:3},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS APOL·LO?",answers:["NEPTÚ","APOL·LO"],images:["assets/history/roma/s8/neptu.webp","assets/history/roma/s8/apollo.webp"],correct:1},
+{type:"match",text:"RELACIONA CADA DÉU AMB EL SEU SÍMBOL.",left:["JÚPITER","NEPTÚ","DIANA","MERCURI"],right:["ARC","LIRA","TRIDENT","LLAMP"],correctMap:[3,2,0,1],textOnly:true,correct:encodeMatch([3,2,0,1])},
 {type:"vf",text:"ELS ROMANS CREIEN EN UN ÚNIC DÉU.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS NO ÉS UN DÉU O DEESSA ROMANA DEL TEMA?",answers:["VENUS","MINERVA","MERCURI","ANUBIS"],images:["","","",""],correct:3},
-{type:"match",text:"QUI ÉS QUI?",left:["JUNO","VENUS","MINERVA","DIANA"],right:["DONES CASADES","AMOR","SAVIESA","CAÇA"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
-{type:"choice",text:"QUIN DÉU ERA EL MÉS IMPORTANT DELS ROMANS?",answers:["MERCURI","JÚPITER","MART"],correct:1}
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS NO ÉS UN DÉU O DEESSA ROMANA DEL TEMA?",answers:["MINERVA","ANUBIS","VENUS","MERCURI"],images:["assets/history/roma/s8/minerva.webp","assets/history/roma/s8/anubis.webp","assets/history/roma/s8/venus.webp","assets/history/roma/s8/mercuri.webp"],correct:1},
+{type:"match",text:"QUI ÉS QUI?",left:["JUNO","VENUS","MINERVA","DIANA"],right:["CAÇA","SAVIESA","DONES CASADES","AMOR"],correctMap:[2,3,1,0],textOnly:true,correct:encodeMatch([2,3,1,0])},
+{type:"choice",text:"QUIN DÉU ERA EL MÉS IMPORTANT DELS ROMANS?",answers:["MART","MERCURI","JÚPITER"],correct:2}
 ],
 "G3":[
 {type:"choice",text:"QUI ERA EL DÉU DEL CEL I DELS LLAMPS?",answers:["POSIDÓ","ARES","ZEUS"],correct:2},
@@ -5941,7 +5941,7 @@ const sessionQuestionBanks={
 {type:"choice",text:"QUIN D’AQUESTS CONCEPTES NO CORRESPON A AFRODITA?",answers:["GUERRA","AMOR","BELLESA","ATRACCIÓ"],correct:0},
 {type:"match",text:"RELACIONA CADA DÉU O DEESSA AMB EL SEU ÀMBIT.",left:["AFRODITA","ARES","DEMÈTER"],right:["AMOR","GUERRA","AGRICULTURA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ARES ERA EL DÉU DE LA MÚSICA.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",row4:true,text:"QUIN INSTRUMENT RELACIONEM AMB APOL·LO?",answers:["TRIDENT","ARC","LIRA","ENCLUSA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/enclusa.webp"],correct:2},
+{type:"visual4",row4:true,text:"QUIN OBJECTE RELACIONEM AMB APOL·LO?",answers:["TRIDENT","ARC","LIRA","ENCLUSA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/enclusa.webp"],correct:2},
 {type:"match",text:"RELACIONA CADA DÉU AMB EL SEU ÀMBIT.",left:["APOL·LO","ÀRTEMIS","HEFEST"],right:["MÚSICA","CAÇA","FOC I METAL·LÚRGIA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"DIONÍS ESTAVA RELACIONAT AMB EL VI I LES FESTES.",answers:["CERT","FALS"],correct:0},
 {type:"visual2",text:"QUIN D’AQUESTS DOS PERSONATGES REPRESENTA HERMES?",answers:["",""],images:["assets/history/grecia/s3/ares.webp","assets/history/grecia/s3/hermes.webp"],correct:1},
@@ -5957,7 +5957,7 @@ const sessionQuestionBanks={
 {type:"choice",text:"QUIN D’AQUESTS NO ERA UN CULTIU TÍPIC DE L’ANTIGA GRÈCIA?",answers:["OLIVERES","RAÏM","ARRÒS","CEREALS"],correct:2},
 {type:"vf",text:"EL CLIMA DE GRÈCIA ERA PRINCIPALMENT FRED I POLAR.",answers:["CERT","FALS"],correct:1},
 {type:"choice",text:"QUIN RECURS NATURAL ERA MOLT VALORAT PELS GRECS?",answers:["MARBRE","CARBÓ","PETROLI"],correct:0},
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES IMATGES REPRESENTA LA LLUITA?",answers:["CURSA","LLANÇAMENT DE DISC","LLUITA","TIR AMB ARC"],images:["assets/history/grecia/s2/q08_02.webp","assets/history/grecia/s2/q08_03.webp","assets/history/grecia/s2/q08_01.webp","assets/history/grecia/s2/q08_04.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES IMATGES REPRESENTA LA LLUITA?",answers:["CURSA","LLANÇAMENT DE DISC","LLUITA","TIR AMB ARC"],images:["assets/history/grecia/s2/q08_02.webp","assets/history/grecia/s2/q08_03.webp","assets/history/grecia/s2/q08_01.webp","assets/history/grecia/s2/q08_04.webp"],correct:2},
 {type:"choice",text:"ON SE CELEBRAVEN ELS JOCS OLÍMPICS?",answers:["ATENES","OLÍMPIA","ESPARTA"],correct:1},
 {type:"match",text:"RELACIONA CADA ESPORT AMB EL QUE NECESSITA.",left:["CURSA","LLUITA","JOCS DE PILOTA"],right:["VELOCITAT","FORÇA I HABILITAT","JOC I COORDINACIÓ"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ELS JOCS OLÍMPICS SE CELEBRAVEN A ATENES.",answers:["CERT","FALS"],correct:1},
@@ -9041,6 +9041,12 @@ ${expected} PREGUNTES · LES ESTEM PREPARANT`);
 </style>
 <script>console.info("Fasia Verse · V0.14.74 · Roma S3-S8 carregades amb espais d'imatge pendents");</script>
 
+
+<script>
+console.info("Fasia Verse · V0.14.75 · G2 P8 sense text + G3 P9 objecte");
+</script>
+
+<script>console.info("Fasia Verse · V0.14.78 · Roma S3-S8 revisada + assets S7-S8");</script>
 </body>
 </html>
 <style>
