@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.58 · S1 RESPOSTES EQUILIBRADES</title>
+<title>Fasia Verse · V0.14.59 · PORTALS DE LES LLETRES</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3178,6 +3178,13 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
     url("assets/animal-snake/caratula.webp") center/cover no-repeat;
   color:#fff;
 }
+.game-choice-words{
+  background:
+    linear-gradient(90deg,rgba(7,18,31,.12),rgba(7,18,31,.70)),
+    url("assets/sopa-lletres/cover/portada.webp") center/cover no-repeat;
+}
+.game-choice-words .game-choice-content{max-width:72%}
+
 .game-choice-soon{
   cursor:default;
   background:
@@ -3960,6 +3967,15 @@ button.profile-collection-card{cursor:pointer}
         <span class="game-choice-tag">JOC INDIVIDUAL</span>
         <h3>ANIMAL SNAKE</h3>
         <p>Viatja per les èpoques, fes créixer la colla i supera el teu rècord.</p>
+      </div>
+    </button>
+
+    <button id="openWordSearch" class="game-choice game-choice-words" type="button">
+      <div class="game-choice-arrow">›</div>
+      <div class="game-choice-content">
+        <span class="game-choice-tag">JOC INDIVIDUAL</span>
+        <h3>PORTALS DE LES LLETRES</h3>
+        <p>Travessa portals, troba paraules i avança per CAT, ESP i ANG.</p>
       </div>
     </button>
 
@@ -6478,6 +6494,17 @@ $("#openAnimalSnake").onclick=()=>{
   sessionStorage.setItem("fasiaVerseProfileId", pid);
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/animal-snake.html?profile="+encodeURIComponent(pid);
+};
+
+$("#openWordSearch").onclick=()=>{
+  if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
+    alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+    return;
+  }
+  const pid=String(currentProfile.id);
+  sessionStorage.setItem("fasiaVerseProfileId", pid);
+  sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
+  window.location.href="games/portals-lletres.html?profile="+encodeURIComponent(pid);
 };
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 
