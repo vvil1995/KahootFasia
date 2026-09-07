@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.64 · DESAFIAMENTS PORTALS</title>
+<title>Fasia Verse · V0.14.67 · GRÈCIA VISUALS 1 FILA XXL</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5828,14 +5828,14 @@ const sessionQuestionBanks={
 
 "G3":[
 {type:"choice",text:"QUI ERA EL DÉU DEL CEL I DELS LLAMPS?",answers:["POSIDÓ","ARES","ZEUS"],correct:2},
-{type:"visual4",text:"QUIN D’AQUESTS SÍMBOLS RELACIONEM AMB ZEUS?",answers:["TRIDENT","LLAMP","ROSA","LIRA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/lira.webp"],correct:1},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS SÍMBOLS RELACIONEM AMB ZEUS?",answers:["TRIDENT","LLAMP","ROSA","LIRA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/lira.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA DÉU AMB EL SEU ÀMBIT.",left:["ZEUS","POSIDÓ","HADES"],right:["CEL I LLAMPS","MAR","MÓN DELS MORTS"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ATENA ERA LA DEESSA DE LA SAVIESA.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",text:"QUIN D’AQUESTS OBJECTES RELACIONEM AMB POSIDÓ?",answers:["LLAMP","LIRA","ROSA","TRIDENT"],images:["assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/trident.webp"],correct:3},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS OBJECTES RELACIONEM AMB POSIDÓ?",answers:["LLAMP","LIRA","ROSA","TRIDENT"],images:["assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/trident.webp"],correct:3},
 {type:"choice",text:"QUIN D’AQUESTS CONCEPTES NO CORRESPON A AFRODITA?",answers:["GUERRA","AMOR","BELLESA","ATRACCIÓ"],correct:0},
 {type:"match",text:"RELACIONA CADA DÉU O DEESSA AMB EL SEU ÀMBIT.",left:["AFRODITA","ARES","DEMÈTER"],right:["AMOR","GUERRA","AGRICULTURA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ARES ERA EL DÉU DE LA MÚSICA.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",text:"QUIN INSTRUMENT RELACIONEM AMB APOL·LO?",answers:["TRIDENT","ARC","LIRA","ENCLUSA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/enclusa.webp"],correct:2},
+{type:"visual4",row4:true,text:"QUIN INSTRUMENT RELACIONEM AMB APOL·LO?",answers:["TRIDENT","ARC","LIRA","ENCLUSA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/enclusa.webp"],correct:2},
 {type:"match",text:"RELACIONA CADA DÉU AMB EL SEU ÀMBIT.",left:["APOL·LO","ÀRTEMIS","HEFEST"],right:["MÚSICA","CAÇA","FOC I METAL·LÚRGIA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"DIONÍS ESTAVA RELACIONAT AMB EL VI I LES FESTES.",answers:["CERT","FALS"],correct:0},
 {type:"visual2",text:"QUIN D’AQUESTS DOS PERSONATGES REPRESENTA HERMES?",answers:["",""],images:["assets/history/grecia/s3/ares.webp","assets/history/grecia/s3/hermes.webp"],correct:1},
@@ -8602,6 +8602,47 @@ document.addEventListener("keydown",e=>{
 </style>
 <script>console.info("Fasia Verse · V0.14.62 · Grècia fila 4 + PJ 50/100 + badge");</script>
 <script>console.info("Fasia Verse · V0.14.63 · Roma desbloquejada + 8 sessions + 32 trofeus WebP");</script>
+
+<style id="fv-v01467-greece-row-xxl">
+/* V0.14.67 · Grècia S2/S3: preguntes visuals en una sola fila i més grans */
+#studentAnswers.visual-row4,
+#answers.visual-row4,
+#simAnswers.visual-row4{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  width:min(1380px,100%)!important;
+  max-width:1380px!important;
+  gap:14px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+#studentAnswers.visual-row4 .visual-choice,
+#answers.visual-row4 .visual-choice,
+#simAnswers.visual-row4 .visual-choice{
+  min-width:0!important;
+  min-height:340px!important;
+  padding:6px!important;
+}
+#studentAnswers.visual-row4 .visual-choice img,
+#answers.visual-row4 .visual-choice img,
+#simAnswers.visual-row4 .visual-choice img{
+  width:100%!important;
+  max-width:none!important;
+  height:278px!important;
+  max-height:278px!important;
+  object-fit:contain!important;
+  transform:none!important;
+  padding:0!important;
+  margin:0!important;
+}
+@media(max-width:900px){
+  #studentAnswers.visual-row4,#answers.visual-row4,#simAnswers.visual-row4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #studentAnswers.visual-row4 .visual-choice img,#answers.visual-row4 .visual-choice img,#simAnswers.visual-row4 .visual-choice img{height:210px!important;max-height:210px!important}
+  #studentAnswers.visual-row4 .visual-choice,#answers.visual-row4 .visual-choice,#simAnswers.visual-row4 .visual-choice{min-height:265px!important}
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.67 · Grècia S2/S3 visuals 1 fila XXL");</script>
+
 </body>
 </html>
 <style>
