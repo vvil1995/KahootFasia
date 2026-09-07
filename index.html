@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.73 · REVISIÓ GRÈCIA + ROMA</title>
+<title>Fasia Verse · V0.14.74 · ROMA S3-S8 ESTRUCTURA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4217,12 +4217,12 @@ button.profile-collection-card{cursor:pointer}
   <div class="grid grid3" style="margin-top:18px">
     <div class="card session-card active-session roman-session-card" data-session="R1"><div class="session-number">SESSIÓ 1</div><h3>INICIS DE ROMA</h3><p class="muted">10 PREGUNTES</p></div>
     <div class="card session-card active-session roman-session-card" data-session="R2"><div class="session-number">SESSIÓ 2</div><h3>LA SOCIETAT ROMANA</h3><p class="muted">10 PREGUNTES</p></div>
-    <div class="card session-card roman-session-card" data-session="R3"><div class="session-number">SESSIÓ 3</div><h3>ELS GOVERNS DE ROMA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
-    <div class="card session-card roman-session-card" data-session="R4"><div class="session-number">SESSIÓ 4</div><h3>L’ECONOMIA ROMANA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
-    <div class="card session-card roman-session-card" data-session="R5"><div class="session-number">SESSIÓ 5</div><h3>LES CASES ROMANES</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
-    <div class="card session-card roman-session-card" data-session="R6"><div class="session-number">SESSIÓ 6</div><h3>L’ALIMENTACIÓ ROMANA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
-    <div class="card session-card roman-session-card" data-session="R7"><div class="session-number">SESSIÓ 7</div><h3>L’OCI A ROMA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
-    <div class="card session-card roman-session-card" data-session="R8"><div class="session-number">SESSIÓ 8</div><h3>LA RELIGIÓ ROMANA</h3><p class="muted">20 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R3"><div class="session-number">SESSIÓ 3</div><h3>ELS GOVERNS DE ROMA</h3><p class="muted">10 PREGUNTES</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R4"><div class="session-number">SESSIÓ 4</div><h3>L’ECONOMIA ROMANA</h3><p class="muted">10 PREGUNTES</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R5"><div class="session-number">SESSIÓ 5</div><h3>LES CASES ROMANES</h3><p class="muted">10 PREGUNTES</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R6"><div class="session-number">SESSIÓ 6</div><h3>L’ALIMENTACIÓ ROMANA</h3><p class="muted">10 PREGUNTES</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R7"><div class="session-number">SESSIÓ 7</div><h3>COM ES DIVERTIEN ELS ROMANS</h3><p class="muted">10 PREGUNTES</p></div>
+    <div class="card session-card active-session roman-session-card" data-session="R8"><div class="session-number">SESSIÓ 8</div><h3>LA RELIGIÓ ROMANA</h3><p class="muted">20 PREGUNTES</p></div>
   </div>
 </div></section>
 
@@ -5798,12 +5798,12 @@ const historySessions=[
 {id:"G3",number:"SESSIÓ 3",title:"ELS DÉUS GRECS",status:"active"},
 {id:"R1",number:"SESSIÓ 1",title:"INICIS DE ROMA",status:"active"},
 {id:"R2",number:"SESSIÓ 2",title:"LA SOCIETAT ROMANA",status:"active"},
-{id:"R3",number:"SESSIÓ 3",title:"ELS GOVERNS DE ROMA",status:"preparing"},
-{id:"R4",number:"SESSIÓ 4",title:"L’ECONOMIA ROMANA",status:"preparing"},
-{id:"R5",number:"SESSIÓ 5",title:"LES CASES ROMANES",status:"preparing"},
-{id:"R6",number:"SESSIÓ 6",title:"L’ALIMENTACIÓ ROMANA",status:"preparing"},
+{id:"R3",number:"SESSIÓ 3",title:"ELS GOVERNS DE ROMA",status:"active"},
+{id:"R4",number:"SESSIÓ 4",title:"L’ECONOMIA ROMANA",status:"active"},
+{id:"R5",number:"SESSIÓ 5",title:"LES CASES ROMANES",status:"active"},
+{id:"R6",number:"SESSIÓ 6",title:"L’ALIMENTACIÓ ROMANA",status:"active"},
 {id:"R7",number:"SESSIÓ 7",title:"L’OCI A ROMA",status:"preparing"},
-{id:"R8",number:"SESSIÓ 8",title:"LA RELIGIÓ ROMANA",status:"preparing"}
+{id:"R8",number:"SESSIÓ 8",title:"LA RELIGIÓ ROMANA",status:"active"}
 ];
 
 const scienceSessions=[
@@ -5850,6 +5850,88 @@ const sessionQuestionBanks={
 {type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/q10_plebeu.webp","assets/history/roma/s2/q10_esclau.webp","assets/history/roma/s2/q10_patrici.webp","assets/history/roma/s2/q10_intrus.webp"],correct:2}
 ],
 
+"R3":[
+{type:"order",text:"ORDENA LES TRES ETAPES DE ROMA.",axis:["PRIMER","ÚLTIM"],labels:["MONARQUIA","REPÚBLICA","IMPERI"],textOnly:true,correctOrder:[0,1,2],correct:encodeOrder([0,1,2])},
+{type:"visual3",text:"QUI GOVERNAVA ROMA DURANT LA MONARQUIA?",answers:["EMPERADOR","REI","CÒNSOLS"],images:["","",""],correct:1},
+{type:"vf",text:"LA REPÚBLICA VA COMENÇAR DESPRÉS DE LA MONARQUIA.",answers:["CERT","FALS"],correct:0},
+{type:"choice",text:"QUIN NO ÉS UN DELS TRES TIPUS DE GOVERN QUE VA TENIR ROMA?",answers:["IMPERI","MONARQUIA","DEMOCRÀCIA MODERNA","REPÚBLICA"],correct:2},
+{type:"match",text:"RELACIONA CADA ETAPA AMB QUI TENIA EL PODER.",left:["MONARQUIA","REPÚBLICA","IMPERI"],right:["REI","CÒNSOLS","EMPERADOR"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual4",row4:true,text:"QUI VA SER L’ÚLTIM REI DE ROMA?",answers:["TRÀJA","TARQUINI EL SUPERB","JULI CÈSAR","AUGUST"],images:["","","",""],correct:1},
+{type:"vf",text:"DURANT LA REPÚBLICA ROMA ERA GOVERNADA PER UN EMPERADOR.",answers:["CERT","FALS"],correct:1},
+{type:"choice",text:"ROMA TÉ DOS CÒNSOLS. EN QUINA ETAPA ESTEM?",answers:["IMPERI","MONARQUIA","REPÚBLICA"],correct:2},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES VA SER EMPERADOR DE ROMA?",answers:["HANNÍBAL","TRÀJA","PERICLES","RAMSÈS II"],images:["","","",""],correct:1},
+{type:"choice",text:"QUI GOVERNAVA DURANT L’IMPERI?",answers:["EL REI","ELS CÒNSOLS","L’EMPERADOR"],correct:2}
+],
+"R4":[
+{type:"visual4",row4:true,text:"QUINA ERA UNA ACTIVITAT ECONÒMICA MOLT IMPORTANT A ROMA?",answers:["AGRICULTURA","PROGRAMACIÓ","AVIACIÓ","FOTOGRAFIA"],images:["","","",""],correct:0},
+{type:"match",text:"RELACIONA EL PRODUCTE AMB EL SEU ORIGEN.",left:["BLAT","OLI","VI"],right:["CAMP DE CEREALS","OLIVERA","RAÏM"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"L’AGRICULTURA ERA IMPORTANT PER A L’ECONOMIA ROMANA.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ANIMALS NO ERA HABITUAL EN LA RAMADERIA ROMANA?",answers:["OVELLA","VACA","PORC","LLEÓ"],images:["","","",""],correct:3},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["COMERCIANT","DORMINT","NEDANT"],correct:0},
+{type:"match",text:"RELACIONA CADA ACTIVITAT AMB QUÈ PRODUEIX O FA.",left:["AGRICULTURA","RAMADERIA","COMERÇ"],right:["ALIMENTS DEL CAMP","PRODUCTES ANIMALS","INTERCANVI DE PRODUCTES"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ELS ROMANS NOMÉS PRODUÏEN PER A ELLS MATEIXOS I NO COMERCIAVEN.",answers:["CERT","FALS"],correct:1},
+{type:"choice",text:"QUI FEIA UNA PART IMPORTANT DELS TREBALLS MÉS DURS?",answers:["ELS ESCLAUS","ELS EMPERADORS","ELS DÉUS"],correct:0},
+{type:"choice",questionImagePlaceholder:true,text:"PER A QUÈ SERVIEN ELS VAIXELLS COM AQUEST?",answers:["PER TRANSPORTAR I COMERCIAR AMB PRODUCTES","PER VOLAR","PER CULTIVAR BLAT"],correct:0},
+{type:"choice",text:"QUIN NO FORMA PART DE L’ECONOMIA ROMANA QUE HEM TREBALLAT?",answers:["COMERÇ","RAMADERIA","AGRICULTURA","INFORMÀTICA"],correct:3}
+],
+"R5":[
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES ÉS UNA DOMUS ROMANA?",answers:["DOMUS","CASTELL MEDIEVAL","PIRÀMIDE","IGLÚ"],images:["","","",""],correct:0},
+{type:"match",text:"RELACIONA CADA CASA AMB QUI HI VIVIA.",left:["DOMUS","INSULA","VILLA"],right:["FAMÍLIES RIQUES","FAMÍLIES MÉS POBRES","AL CAMP"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"LES INSULAE EREN EDIFICIS AMB DIVERSOS PISOS.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES NO ÉS UNA CONSTRUCCIÓ ROMANA QUE HEM TREBALLAT?",answers:["DOMUS","VILLA","INSULA","CASTELL MEDIEVAL"],images:["","","",""],correct:3},
+{type:"visual2",hideLabels:true,text:"QUINA ÉS UNA VILLA ROMANA?",answers:["VILLA ROMANA","CASA DE CIUTAT"],images:["",""],correct:0},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA UNA TABERNA?",answers:["UN LOCAL O BOTIGA","UN PALAU IMPERIAL","UN PORT"],correct:0},
+{type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA FUNCIÓ.",left:["TABERNA","FONT","LATRINA"],right:["COMPRAR I VENDRE","ACONSEGUIR AIGUA","ANAR AL LAVABO"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"TOTES LES CASES ROMANES TENIEN AIGUA CORRENT I LAVABO PRIVAT.",answers:["CERT","FALS"],correct:1},
+{type:"choice",text:"SI VIVIES EN UNA INSULA I NECESSITAVES AIGUA, ON PODIES ANAR?",answers:["A UNA FONT PÚBLICA","A UN AEROPORT","A UN CIRC"],correct:0},
+{type:"visual4",row4:true,text:"QUINA CASA TROBARÍEM FORA DE LA CIUTAT, AL CAMP?",answers:["INSULA","VILLA","DOMUS","AMFITEATRE"],images:["","","",""],correct:1}
+],
+"R6":[
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ALIMENTS NO FORMAVA PART DE L’ALIMENTACIÓ ROMANA?",answers:["PA","OLIVES","RAÏM","HAMBURGUESA MODERNA"],images:["","","",""],correct:3},
+{type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU ORIGEN.",left:["PA","VI","OLI"],right:["CEREALS","RAÏM","OLIVES"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"EL PA ERA UN ALIMENT HABITUAL ENTRE ELS ROMANS.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES BEGUDES ERA MOLT HABITUAL A ROMA?",answers:["VI","REFRESC","BATUT","BEGUDA ENERGÈTICA"],images:["","","",""],correct:0},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA EL GARUM?",answers:["UNA SALSA FETA PRINCIPALMENT AMB PEIX","UN TIPUS DE PA","UNA BEGUDA"],correct:0},
+{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["UN BANQUET","UNA CURSA","UNA BATALLA"],correct:0},
+{type:"match",text:"RELACIONA CADA ALIMENT AMB LA SEVA IMATGE.",left:["PA","FRUITA","CARN","PEIX"],right:["IMATGE 1","IMATGE 2","IMATGE 3","IMATGE 4"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
+{type:"vf",text:"TOTS ELS ROMANS MENJAVEN GRANS BANQUETS CADA DIA.",answers:["CERT","FALS"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUIN ÀPAT SEMBLA D’UNA FAMÍLIA ROMANA RICA?",answers:["BANQUET RIC","ÀPAT SENZILL"],images:["",""],correct:0},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS PRODUCTES UTILITZAVEN ELS ROMANS PER DONAR SABOR AL MENJAR?",answers:["GARUM","KÈTXUP","MAIONESA","XOCOLATA"],images:["","","",""],correct:0}
+],
+"R7":[
+{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UN CIRC ROMÀ?",answers:["CIRC ROMÀ","TEATRE","AMFITEATRE","TEMPLE"],images:["","","",""],correct:0},
+{type:"match",text:"RELACIONA CADA ESPECTACLE AMB EL LLOC ON ES FEIA.",left:["TEATRE","QUADRIGUES","GLADIADORS"],right:["TEATRE","CIRC","AMFITEATRE"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ELS ROMANS ANAVEN AL TEATRE PER VEURE REPRESENTACIONS I COMÈDIES.",answers:["CERT","FALS"],correct:0},
+{type:"choice",questionImagePlaceholder:true,text:"COM S’ANOMENAVA AQUEST VEHICLE DE CURSES?",answers:["QUADRIGA","CARRO DE COMPRA","TRINEU"],correct:0},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS UN AURIGA?",answers:["AURIGA","GLADIADOR"],images:["",""],correct:0},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS NO ÉS UN ESPECTACLE ROMÀ QUE HEM TREBALLAT?",answers:["CURSA DE QUADRIGUES","TEATRE","LLUITA DE GLADIADORS","PARTIT DE BÀSQUET"],images:["","","",""],correct:3},
+{type:"match",text:"RELACIONA CADA PERSONATGE AMB QUÈ FEIA.",left:["AURIGA","GLADIADOR","ACTOR"],right:["CONDUÏA CARROS","COMBATIA","ACTUAVA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"ELS GLADIADORS PARTICIPAVEN EN CURSES DE QUADRIGUES.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UNA LLUITA DE GLADIADORS?",answers:["TEATRE","GLADIADORS","QUADRIGA","BANQUET"],images:["","","",""],correct:1},
+{type:"choice",text:"VOLS VEURE UNA CURSA DE QUADRIGUES. ON HAS D’ANAR?",answers:["AL CIRC","A LA DOMUS","A LA VILLA"],correct:0}
+],
+"R8":[
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ÉS JÚPITER?",answers:["JÚPITER","NEPTÚ","MART","MERCURI"],images:["","","",""],correct:0},
+{type:"match",text:"RELACIONA JÚPITER, JUNO I NEPTÚ AMB EL QUE REPRESENTAVEN.",left:["JÚPITER","JUNO","NEPTÚ"],right:["CEL","DONES CASADES","MAR"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"JÚPITER ERA EL DÉU MÉS IMPORTANT DELS ROMANS.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",row4:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB NEPTÚ?",answers:["LLAMP","TRIDENT","ARC","CADUCI"],images:["","","",""],correct:1},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES ÉS MART?",answers:["MART","VENUS","MINERVA","DIANA"],images:["","","",""],correct:0},
+{type:"match",text:"RELACIONA MART, VENUS I MINERVA.",left:["MART","VENUS","MINERVA"],right:["GUERRA","AMOR","SAVIESA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"MART ERA EL DÉU DEL MAR.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES ÉS VENUS?",answers:["DIANA","VENUS","JUNO","MINERVA"],images:["","","",""],correct:1},
+{type:"choice",text:"QUIN D’AQUESTS NO ESTÀ RELACIONAT AMB VENUS?",answers:["AMOR","BELLESA","GUERRA"],correct:2},
+{type:"visual4",row4:true,text:"QUIN OBJECTE O ANIMAL ESTÀ RELACIONAT AMB MINERVA?",answers:["MUSSOL","TRIDENT","LLAMP","CAVALL"],images:["","","",""],correct:0},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ÉS MERCURI?",answers:["NEPTÚ","MERCURI","MART","APOL·LO"],images:["","","",""],correct:1},
+{type:"match",text:"RELACIONA MERCURI, DIANA I APOL·LO.",left:["MERCURI","DIANA","APOL·LO"],right:["COMERÇ I MISSATGER","CAÇA","SOL I MÚSICA"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"vf",text:"MERCURI ERA EL MISSATGER DELS DÉUS.",answers:["CERT","FALS"],correct:0},
+{type:"visual4",row4:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB DIANA?",answers:["TRIDENT","ARC","LLAMP","MARTELL"],images:["","","",""],correct:1},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS DOS PERSONATGES ÉS APOL·LO?",answers:["APOL·LO","MART"],images:["",""],correct:0},
+{type:"match",text:"RELACIONA CADA DÉU AMB EL SEU SÍMBOL.",left:["JÚPITER","NEPTÚ","DIANA","MERCURI"],right:["LLAMP","TRIDENT","ARC","CADUCI"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
+{type:"vf",text:"ELS ROMANS CREIEN EN UN ÚNIC DÉU.",answers:["CERT","FALS"],correct:1},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS NO ÉS UN DÉU O DEESSA ROMANA DEL TEMA?",answers:["VENUS","MINERVA","MERCURI","ANUBIS"],images:["","","",""],correct:3},
+{type:"match",text:"QUI ÉS QUI?",left:["JUNO","VENUS","MINERVA","DIANA"],right:["DONES CASADES","AMOR","SAVIESA","CAÇA"],correctMap:[0,1,2,3],textOnly:true,correct:encodeMatch([0,1,2,3])},
+{type:"choice",text:"QUIN DÉU ERA EL MÉS IMPORTANT DELS ROMANS?",answers:["MERCURI","JÚPITER","MART"],correct:1}
+],
 "G3":[
 {type:"choice",text:"QUI ERA EL DÉU DEL CEL I DELS LLAMPS?",answers:["POSIDÓ","ARES","ZEUS"],correct:2},
 {type:"visual4",row4:true,text:"QUIN D’AQUESTS SÍMBOLS RELACIONEM AMB ZEUS?",answers:["TRIDENT","LLAMP","ROSA","LIRA"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/rosa.webp","assets/history/grecia/s3/lira.webp"],correct:1},
@@ -6239,7 +6321,11 @@ function renderVisualChoices(q,box,questionIndex,count){
  q.answers.forEach((answer,index)=>{
   const btn=document.createElement("button");
   btn.className="answer visual-choice";
-  btn.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[index]}" alt="${q.hideLabels?"":answer}">${q.hideLabels?"":`<div class="visual-choice-label">${answer}</div>`}`;
+  const imgSrc=(q.images||[])[index];
+  const media=imgSrc
+    ? `<img class="teacher-player-avatar-img" src="${imgSrc}" alt="${q.hideLabels?"":answer}">`
+    : `<div class="visual-image-placeholder" aria-label="Imatge pendent"></div>`;
+  btn.innerHTML=`${media}${q.hideLabels?"":`<div class="visual-choice-label">${answer}</div>`}`;
   if(q.hideLabels) btn.classList.add("no-visual-label");
   btn.onclick=()=>{
    if(studentAnsweredQuestion===questionIndex)return;
@@ -7150,7 +7236,11 @@ async function loadQuestion(){
     box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid")); if(q.type==="visual4"&&q.row4)box.classList.add("visual-row4");
     q.answers.forEach((a,i)=>{
       const b=document.createElement("button");b.className="answer visual-choice";b.disabled=true;
-      b.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${q.hideLabels?"":a}">${q.hideLabels?"":`<div class="visual-choice-label">${a}</div>`}`;
+      const imgSrc=(q.images||[])[i];
+      const media=imgSrc
+        ? `<img class="teacher-player-avatar-img" src="${imgSrc}" alt="${q.hideLabels?"":a}">`
+        : `<div class="visual-image-placeholder" aria-label="Imatge pendent"></div>`;
+      b.innerHTML=`${media}${q.hideLabels?"":`<div class="visual-choice-label">${a}</div>`}`;
       if(q.hideLabels)b.classList.add("no-visual-label");
       box.appendChild(b);
     });
@@ -8575,7 +8665,7 @@ document.addEventListener("keydown",e=>{
   document.querySelectorAll(".greece-session-card[data-session], .roman-session-card[data-session]").forEach(card=>{
     card.onclick=()=>{
       const id=card.dataset.session;
-      if(["G1","G2","G3","R1","R2"].includes(id)){openHistorySession(id);return;}
+      if(["G1","G2","G3","R1","R2","R3","R4","R5","R6","R7","R8"].includes(id)){openHistorySession(id);return;}
       const sess=sessionMetaById(id);
       const expected=id==="R8"?20:10;
       alert(`${sess?.number||"SESSIÓ"}: ${sess?.title||""}
@@ -8923,6 +9013,33 @@ ${expected} PREGUNTES · LES ESTEM PREPARANT`);
 }
 </style>
 <script>console.info("Fasia Verse · V0.14.73 · revisió Grècia/Roma + 4 visuals");</script>
+
+
+<style id="fv-v01474-roma-placeholders">
+.visual-image-placeholder{
+  width:100%;
+  height:198px;
+  border-radius:14px;
+  background:#fff;
+  border:2px dashed rgba(117,88,255,.35);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.55);
+}
+.visual-row2 .visual-image-placeholder,
+.visual-row3 .visual-image-placeholder{
+  height:240px;
+}
+.blank-question-image{
+  display:block!important;
+  width:min(520px,80vw)!important;
+  height:260px!important;
+  margin:12px auto!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  border:2px dashed rgba(117,88,255,.35)!important;
+  object-fit:contain!important;
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.74 · Roma S3-S8 carregades amb espais d'imatge pendents");</script>
 
 </body>
 </html>
