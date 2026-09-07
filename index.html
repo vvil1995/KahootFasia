@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.72 · MARCS MOLT REDUÏTS</title>
+<title>Fasia Verse · V0.14.73 · REVISIÓ GRÈCIA + ROMA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5826,31 +5826,29 @@ const scienceSessions=[
 const sessionQuestionBanks={
 
 "R1":[
-{type:"visual2",text:"QUINA IMATGE REPRESENTA LA LLEGENDA DE RÒMUL I REM?",answers:["UNA ALTRA LLEGENDA","RÒMUL I REM"],images:["assets/history/roma/s1/q01_falsa.webp","assets/history/roma/s1/q01_romul_rem.webp"],correct:1},
-{type:"visual3",text:"ON ES VAN ESTABLIR ELS PRIMERS POBLADORS QUE DONARIEN ORIGEN A ROMA?",answers:["AL LACI, A PROP DEL TÍBER","AL COLOSSEU","A GRÈCIA"],images:["assets/history/roma/s1/q02_laci.webp","assets/history/roma/s1/q02_coliseu.webp","assets/history/roma/s1/q02_temple_grec.webp"],correct:0},
-{type:"choice",text:"A QUÈ ES DEDICAVEN PRINCIPALMENT ELS PRIMERS POBLADORS?",answers:["AGRICULTURA I CURA D’ANIMALS","FABRICACIÓ DE COTXES","TREBALL EN FÀBRIQUES"],correct:0},
-{type:"visual4",row4:true,text:"QUINA D’AQUESTES ACTIVITATS ESTÀ RELACIONADA AMB LA VIDA DELS PRIMERS POBLADORS?",answers:["AGRICULTURA","COMERÇ","CONSTRUCCIÓ","GUERRA"],images:["assets/history/roma/s1/q04_agricultura.webp","assets/history/roma/s1/q04_comerc.webp","assets/history/roma/s1/q04_construccio.webp","assets/history/roma/s1/q04_guerra.webp"],correct:0},
-{type:"match",text:"RELACIONA ELS TRES POBLES QUE VAN PARTICIPAR EN ELS INICIS DE ROMA.",left:["LLATINS","SABINS","ETRUSCS"],right:["POBLE 1","POBLE 2","POBLE 3"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
+{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA LA LLEGENDA DE RÒMUL I REM?",answers:["RÒMUL I REM","UNA ALTRA LLEGENDA"],images:["assets/history/roma/s1/q01_romul_rem.webp","assets/history/roma/s1/q01_falsa.webp"],correct:0},
+{type:"visual3",text:"ON ES VAN ESTABLIR ELS PRIMERS POBLADORS QUE DONARIEN ORIGEN A ROMA?",answers:["AL COLOSSEU","AL LACI, A PROP DEL TÍBER","A GRÈCIA"],images:["assets/history/roma/s1/q02_coliseu.webp","assets/history/roma/s1/q02_laci.webp","assets/history/roma/s1/q02_temple_grec.webp"],correct:1},
+{type:"choice",text:"A QUÈ ES DEDICAVEN PRINCIPALMENT ELS PRIMERS POBLADORS?",answers:["TREBALL EN FÀBRIQUES","FABRICACIÓ DE COTXES","AGRICULTURA I RAMADERIA"],correct:2},
+{type:"visual4",row4:true,text:"QUINA ACTIVITAT FEIEN ELS PRIMERS POBLADORS PER OBTENIR ALIMENTS DEL CAMP?",answers:["COMERÇ","AGRICULTURA","GUERRA","CONSTRUCCIÓ"],images:["assets/history/roma/s1/q04_comerc.webp","assets/history/roma/s1/q04_agricultura.webp","assets/history/roma/s1/q04_guerra.webp","assets/history/roma/s1/q04_construccio.webp"],correct:1},
+{type:"choice",text:"QUINS TRES POBLES VAN PARTICIPAR EN ELS INICIS DE ROMA?",answers:["GRECS, EGIPCIS I FENICIS","CELTES, GERMÀNICS I VÍKINGS","LLATINS, SABINS I ETRUSCS"],correct:2},
 {type:"vf",text:"ELS DIFERENTS POBLATS S’APROPAVEN I INTERCANVIAVEN ALIMENTS.",answers:["CERT","FALS"],correct:0},
-{type:"choice",text:"PER QUÈ AQUELL LLOC ERA ADEQUAT PER VIURE?",answers:["TENIA AIGUA, TERRES FÈRTILS I TURONS","ERA UN DESERT SENSE AIGUA","ESTAVA COBERT DE GEL"],correct:0},
-{type:"choice",text:"PER A QUÈ SERVIEN ELS TURONS?",answers:["PER VIGILAR I DEFENSAR-SE","PER AMAGAR VAIXELLS","PER FER NEU"],correct:0},
+{type:"choice",text:"PER QUÈ AQUELL LLOC ERA ADEQUAT PER VIURE?",answers:["ERA UN DESERT SENSE AIGUA","TENIA AIGUA, TERRES FÈRTILS I TURONS","ESTAVA COBERT DE GEL"],correct:1},
+{type:"choice",inlineOptions:true,text:"PER A QUÈ SERVIEN ELS TURONS?",answers:["PER AMAGAR VAIXELLS","PER FER NEU","PER VIGILAR I DEFENSAR-SE"],correct:2},
 {type:"order",text:"ORDENA COM VA NÉIXER ROMA.",axis:["PRIMER","ÚLTIM"],labels:["GRUPS S’INSTAL·LEN A LA ZONA","ELS POBLATS S’APROPEN","ELS POBLATS S’UNEIXEN","NEIX UNA CIUTAT"],textOnly:true,correctOrder:[0,1,2,3],correct:encodeOrder([0,1,2,3])},
-{type:"visual2",text:"QUINA IMATGE REPRESENTA ROMA DESPRÉS DEL SEU CREIXEMENT?",answers:["PETIT POBLAT","GRAN CIUTAT ROMANA"],images:["assets/history/roma/s1/q10_poblat.webp","assets/history/roma/s1/q10_roma_ciutat.webp"],correct:1}
+{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA ROMA DESPRÉS DEL SEU CREIXEMENT?",answers:["GRAN CIUTAT ROMANA","PETIT POBLAT"],images:["assets/history/roma/s1/q10_roma_ciutat.webp","assets/history/roma/s1/q10_poblat.webp"],correct:0}
 ],
 "R2":[
-{type:"visual2",text:"QUIN D’AQUESTS PERSONATGES PODRIA SER UN PATRICI ROMÀ?",answers:["PATRICI ROMÀ","PERSONATGE MEDIEVAL"],images:["assets/history/roma/s2/q01_patrici.webp","assets/history/roma/s2/q01_fals_medieval.webp"],correct:0},
+{type:"visual2",hideLabels:true,text:"QUIN D’AQUESTS PERSONATGES PODRIA SER UN PATRICI ROMÀ?",answers:["PERSONATGE MEDIEVAL","PATRICI ROMÀ"],images:["assets/history/roma/s2/q01_fals_medieval.webp","assets/history/roma/s2/q01_patrici.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA GRUP AMB QUI ERA.",left:["PATRICIS","PLEBEUS","ESCLAUS"],right:["FAMÍLIES RIQUES I PODEROSES","POBLE LLIURE","PERSONES SENSE LLIBERTAT"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ELS PATRICIS EREN LES FAMÍLIES MÉS RIQUES I PODEROSES.",answers:["CERT","FALS"],correct:0},
-{type:"choice",text:"QUIN NO ÉS UN GRUP DE LA SOCIETAT ROMANA QUE HEM TREBALLAT?",answers:["PATRICIS","PLEBEUS","ESCLAUS","CAVALLERS MEDIEVALS"],correct:3},
-{type:"choice",questionImage:"assets/history/roma/s2/q05_plebeu_camp.webp",text:"AQUEST PERSONATGE ÉS LLIURE, TREBALLA AL CAMP I NO PERTANY A UNA FAMÍLIA RICA. QUI PODRIA SER?",answers:["PATRICI","PLEBEU","ESCLAU"],correct:1},
+{type:"choice",text:"QUIN NO ÉS UN GRUP DE LA SOCIETAT ROMANA QUE HEM TREBALLAT?",answers:["PLEBEUS","CAVALLERS MEDIEVALS","PATRICIS","ESCLAUS"],correct:1},
+{type:"choice",questionImage:"assets/history/roma/s2/q05_plebeu_camp.webp",text:"AQUEST PERSONATGE ÉS LLIURE, TREBALLA AL CAMP I NO PERTANY A UNA FAMÍLIA RICA. QUI PODRIA SER?",answers:["ESCLAU","PLEBEU","PATRICI"],correct:1},
 {type:"vf",text:"ELS ESCLAUS TENIEN ELS MATEIXOS DRETS QUE ELS CIUTADANS ROMANS.",answers:["CERT","FALS"],correct:1},
 {type:"classify",text:"CLASSIFICA QUI ERA LLIURE I QUI NO.",zones:["LLIURE","NO LLIURE"],labels:["PATRICI","PLEBEU","ESCLAU"],textOnly:true,correctZones:[0,0,1],correct:encodeClassify([0,0,1])},
-{type:"visual2",text:"QUINA IMATGE REPRESENTA MILLOR UN ESCLAU ROMÀ?",answers:["ESCLAU","PATRICI"],images:["assets/history/roma/s2/q08_esclau.webp","assets/history/roma/s2/q08_patrici.webp"],correct:0},
+{type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA MILLOR UN ESCLAU ROMÀ?",answers:["PATRICI","ESCLAU"],images:["assets/history/roma/s2/q08_patrici.webp","assets/history/roma/s2/q08_esclau.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA GRUP AMB LA SEVA SITUACIÓ.",left:["PATRICI","PLEBEU","ESCLAU"],right:["PODER I RIQUESA","TREBALL I VIDA LLIURE","DEPÈN D’UN AMO"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
-{type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PATRICI","PLEBEU","ESCLAU","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/q10_patrici.webp","assets/history/roma/s2/q10_plebeu.webp","assets/history/roma/s2/q10_esclau.webp","assets/history/roma/s2/q10_intrus.webp"],correct:0}
+{type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/q10_plebeu.webp","assets/history/roma/s2/q10_esclau.webp","assets/history/roma/s2/q10_patrici.webp","assets/history/roma/s2/q10_intrus.webp"],correct:2}
 ],
-
-
 
 "G3":[
 {type:"choice",text:"QUI ERA EL DÉU DEL CEL I DELS LLAMPS?",answers:["POSIDÓ","ARES","ZEUS"],correct:2},
@@ -6241,7 +6239,8 @@ function renderVisualChoices(q,box,questionIndex,count){
  q.answers.forEach((answer,index)=>{
   const btn=document.createElement("button");
   btn.className="answer visual-choice";
-  btn.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[index]}" alt="${answer}"><div class="visual-choice-label">${answer}</div>`;
+  btn.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[index]}" alt="${q.hideLabels?"":answer}">${q.hideLabels?"":`<div class="visual-choice-label">${answer}</div>`}`;
+  if(q.hideLabels) btn.classList.add("no-visual-label");
   btn.onclick=()=>{
    if(studentAnsweredQuestion===questionIndex)return;
    selected=index;box.querySelectorAll(".visual-choice").forEach(x=>x.classList.remove("selected"));
@@ -6369,7 +6368,7 @@ function loadStudentQuestion(questionIndex){
   $("#studentQuestionCounter").textContent=`PREGUNTA ${questionIndex+1}/${questions.length}`;
   $("#studentQuestionText").innerHTML=`${typeLabel(q)}<br>${q.text}`;
   const studentSubjectLabel=document.querySelector("#studentQuestion .hero .muted b");
-  if(studentSubjectLabel) studentSubjectLabel.textContent=String(activeSessionId||"").startsWith("G")?"HISTÒRIA · ANTIGA GRÈCIA":"CIÈNCIA I EXPERIMENTS";
+  if(studentSubjectLabel) studentSubjectLabel.textContent=String(activeSessionId||"").startsWith("G")?"HISTÒRIA · ANTIGA GRÈCIA":String(activeSessionId||"").startsWith("R")?"HISTÒRIA · ANTIGA ROMA":"CIÈNCIA I EXPERIMENTS";
   $("#studentAnswerStatus").classList.add("hidden");
 
   const oldSend=$("#visualSendBtn"); if(oldSend)oldSend.remove();
@@ -6435,6 +6434,7 @@ function loadStudentQuestion(questionIndex){
     renderStudentClassify(q,box,questionIndex);
   }else{
     if(q.type==="vf")box.classList.add("vf-grid");
+    else if(q.inlineOptions)box.classList.add("inline-choice-grid");
     else if(q.answers && q.answers.length===2)box.classList.add("two-choice-grid");
     else if(q.answers && q.answers.length===4)box.classList.add("four-choice-grid");
     q.answers.forEach((answer,index)=>{
@@ -7150,7 +7150,9 @@ async function loadQuestion(){
     box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid")); if(q.type==="visual4"&&q.row4)box.classList.add("visual-row4");
     q.answers.forEach((a,i)=>{
       const b=document.createElement("button");b.className="answer visual-choice";b.disabled=true;
-      b.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${a}"><div class="visual-choice-label">${a}</div>`;box.appendChild(b);
+      b.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${q.hideLabels?"":a}">${q.hideLabels?"":`<div class="visual-choice-label">${a}</div>`}`;
+      if(q.hideLabels)b.classList.add("no-visual-label");
+      box.appendChild(b);
     });
   }else if(q.type==="order"){
     box.className="";box.appendChild(renderTeacherOrder(q,false));
@@ -7158,6 +7160,7 @@ async function loadQuestion(){
     box.className="";box.appendChild(renderTeacherClassify(q,false));
   }else{
     if(q.type==="vf")box.classList.add("vf-grid");
+    else if(q.inlineOptions)box.classList.add("inline-choice-grid");
     else if(q.answers && q.answers.length===2)box.classList.add("two-choice-grid");
     else if(q.answers && q.answers.length===4)box.classList.add("four-choice-grid");
     q.answers.forEach((a,i)=>{
@@ -8830,6 +8833,96 @@ ${expected} PREGUNTES · LES ESTEM PREPARANT`);
 }
 </style>
 <script>console.info("Fasia Verse · V0.14.72 · MARCS MOLT REDUÏTS");</script>
+
+
+<style id="fv-v01473-four-visuals-final">
+/* 4 IMATGES: 1 FILA, DINS LA PANTALLA, MÉS QUADRADES I AMB LA IMATGE MÉS GRAN */
+#studentAnswers.visual-row4,
+#answers.visual-row4,
+#simAnswers.visual-row4{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  width:100%!important;
+  max-width:1260px!important;
+  margin:8px auto 0!important;
+  gap:10px!important;
+  overflow:visible!important;
+}
+#studentAnswers.visual-row4 .visual-choice,
+#answers.visual-row4 .visual-choice,
+#simAnswers.visual-row4 .visual-choice{
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:0!important;
+  height:255px!important;
+  padding:6px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+}
+#studentAnswers.visual-row4 .visual-choice img,
+#answers.visual-row4 .visual-choice img,
+#simAnswers.visual-row4 .visual-choice img{
+  display:block!important;
+  width:100%!important;
+  height:198px!important;
+  max-width:100%!important;
+  max-height:198px!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:14px!important;
+}
+#studentAnswers.visual-row4 .visual-choice-label,
+#answers.visual-row4 .visual-choice-label,
+#simAnswers.visual-row4 .visual-choice-label{
+  width:100%!important;
+  height:43px!important;
+  min-height:43px!important;
+  margin:5px 0 0!important;
+  padding:5px 4px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  line-height:1!important;
+  font-size:16px!important;
+}
+#studentAnswers .visual-choice.no-visual-label,
+#answers .visual-choice.no-visual-label,
+#simAnswers .visual-choice.no-visual-label{
+  height:auto!important;
+  min-height:0!important;
+  padding:7px!important;
+}
+#studentAnswers .visual-choice.no-visual-label img,
+#answers .visual-choice.no-visual-label img,
+#simAnswers .visual-choice.no-visual-label img{
+  margin:0!important;
+}
+#studentAnswers.inline-choice-grid,
+#answers.inline-choice-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  max-width:1260px!important;
+  width:100%!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+#studentAnswers.inline-choice-grid .answer,
+#answers.inline-choice-grid .answer{min-width:0!important}
+@media(max-width:900px){
+  #studentAnswers.visual-row4,#answers.visual-row4,#simAnswers.visual-row4{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #studentAnswers.inline-choice-grid,#answers.inline-choice-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.73 · revisió Grècia/Roma + 4 visuals");</script>
 
 </body>
 </html>
