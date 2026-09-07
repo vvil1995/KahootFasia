@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.60 · PORTALS SUPABASE</title>
+<title>Fasia Verse · V0.14.61 · PJ TARGETA ADAPTADA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3096,6 +3096,19 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 .pj-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
 .pj-generic-product{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:42px;background:radial-gradient(circle,#f7f2ff,#ece8ff);color:#5e47c8}
 @media(max-width:980px){#priceTeacherQuestion .pj-stage{grid-template-columns:1fr!important}#priceTeacherQuestion .pj-product-card{min-height:auto!important}#priceTeacherQuestion .pj-product-image{height:46vh!important}#pricePrep .pj-product-row{grid-template-columns:auto 58px 1fr 1fr!important}#pricePrep .pj-total-wrap,#pricePrep .pj-remove-product{grid-column:auto!important}.pj-catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){
+  #priceTeacherQuestion{padding-left:10px!important;padding-right:10px!important}
+  #priceTeacherQuestion .inner,
+  #priceTeacherQuestion .pj-stage,
+  #priceTeacherQuestion .pj-question-card{width:100%!important;max-width:100%!important;min-width:0!important}
+  #priceTeacherQuestion .pj-question-card{padding:20px 12px!important;overflow:hidden!important}
+  #priceTeacherQuestion .pj-question-card h2{
+    width:100%!important;max-width:100%!important;
+    font-size:clamp(22px,8vw,28px)!important;
+    line-height:1.12!important;
+    overflow-wrap:break-word!important;word-break:normal!important;
+  }
+}
 @media(max-width:620px){.pj-catalog-grid{grid-template-columns:1fr}.pj-modal-fields{grid-template-columns:1fr}#pricePrep .pj-product-row{grid-template-columns:auto 52px 1fr!important}#pricePrep .pj-product-row>*:nth-child(n+4){grid-column:3!important}}
 </style>
 
@@ -3182,6 +3195,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   background:
     linear-gradient(90deg,rgba(7,18,31,.12),rgba(7,18,31,.70)),
     url("assets/sopa-lletres/cover/portada.webp") center/cover no-repeat;
+  color:#fff;
 }
 .game-choice-words .game-choice-content{max-width:72%}
 
