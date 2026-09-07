@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.71 · MARCS VISUALS COMPACTES</title>
+<title>Fasia Verse · V0.14.72 · MARCS MOLT REDUÏTS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -8772,6 +8772,64 @@ ${expected} PREGUNTES · LES ESTEM PREPARANT`);
 }
 </style>
 <script>console.info("Fasia Verse · V0.14.71 · marc compacte, imatge mantinguda");</script>
+
+
+<style id="fv-v01472-tiny-visual-cards">
+/* Marc MOLT més petit. La imatge manté la seva mida real; eliminem el llenç blanc gegant. */
+#studentAnswers.visual-row4,
+#answers.visual-row4,
+#simAnswers.visual-row4{
+  align-items:start!important;
+}
+
+#studentAnswers.visual-row4 .visual-choice,
+#answers.visual-row4 .visual-choice,
+#simAnswers.visual-row4 .visual-choice{
+  min-height:0!important;
+  height:250px!important;
+  padding:4px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  overflow:hidden!important;
+}
+
+#studentAnswers.visual-row4 .visual-choice img,
+#answers.visual-row4 .visual-choice img,
+#simAnswers.visual-row4 .visual-choice img{
+  width:auto!important;
+  height:185px!important;
+  max-width:96%!important;
+  max-height:185px!important;
+  object-fit:contain!important;
+  margin:auto auto 2px!important;
+  flex:0 0 auto!important;
+}
+
+#studentAnswers.visual-row4 .visual-choice .visual-label,
+#answers.visual-row4 .visual-choice .visual-label,
+#simAnswers.visual-row4 .visual-choice .visual-label{
+  min-height:46px!important;
+  height:46px!important;
+  margin:0 -4px -4px!important;
+  padding:7px 4px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* 2 i 3 opcions: també compactes, sense targetes gegants */
+#studentAnswers.visual-row2 .visual-choice,
+#answers.visual-row2 .visual-choice,
+#simAnswers.visual-row2 .visual-choice,
+#studentAnswers.visual-row3 .visual-choice,
+#answers.visual-row3 .visual-choice,
+#simAnswers.visual-row3 .visual-choice{
+  min-height:0!important;
+  height:310px!important;
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.72 · MARCS MOLT REDUÏTS");</script>
 
 </body>
 </html>
