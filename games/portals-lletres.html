@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Fasia Verse · Portals de les Lletres · v23 Integrat | Fasia Verse · Portals de les Lletres · v23</title>
+<style>
+:root{
+  --bg:#061525; --bg2:#0a2741; --panel:#0b2138; --panel2:#102d49;
+  --text:#f7fbff; --muted:#9bb5c9; --cyan:#31e8ff; --pink:#9f7cff;
+  --gold:#ffd052; --green:#63e69c; --danger:#ff7e8f; --shadow:0 18px 50px rgba(0,0,0,.32);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:Inter,ui-rounded,"Arial Rounded MT Bold",system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:var(--bg)}
+body{min-height:100vh;overflow-x:hidden;background:
+ radial-gradient(circle at 15% 15%,rgba(97,233,219,.18),transparent 28%),
+ radial-gradient(circle at 85% 20%,rgba(255,114,200,.16),transparent 30%),
+ radial-gradient(circle at 50% 100%,rgba(111,92,255,.22),transparent 35%),
+ linear-gradient(145deg,var(--bg),var(--bg2));}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:radial-gradient(rgba(255,255,255,.65) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+button{font:inherit}
+.app{width:min(1180px,100%);margin:auto;padding:22px clamp(14px,3vw,34px) 40px;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding:10px 18px;border-radius:28px;background:linear-gradient(90deg,rgba(19,48,77,.96),rgba(8,31,53,.92));border:1px solid rgba(133,185,225,.22);box-shadow:0 12px 32px rgba(0,0,0,.22)}
+.logo-orb{width:58px;height:58px;border-radius:18px;overflow:hidden;background:#173653;border:1px solid rgba(129,190,237,.28);display:grid;place-items:center;box-shadow:inset 0 0 18px rgba(66,175,255,.10)}
+.logo-orb img{width:100%;height:100%;object-fit:cover;display:block}
+.brand-copy{display:flex;flex-direction:column;line-height:1}.brand-title{font-weight:1000;letter-spacing:.025em;font-size:clamp(24px,3vw,36px)}.brand-sub{margin-top:6px;color:var(--cyan);font-weight:1000;letter-spacing:.19em;font-size:clamp(11px,1.3vw,16px)}
+.screen{display:none;animation:fade .22s ease}.screen.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{text-align:center;margin:22px auto 26px;max-width:820px}.hero h1{font-size:clamp(34px,7vw,66px);line-height:.95;margin:0 0 12px;font-weight:1000;letter-spacing:-.04em}.hero h1 span{background:linear-gradient(90deg,var(--cyan),#b9a9ff,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{margin:0;color:var(--muted);font-size:clamp(15px,2vw,19px);font-weight:700}
+.stepbar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 auto 24px}.step{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.06);color:#9690bb;font-weight:900;font-size:12px}.step.on{background:rgba(97,233,219,.14);color:var(--cyan);border:1px solid rgba(97,233,219,.24)}
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px;max-width:900px;margin:0 auto}.choice{border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));border-radius:24px;padding:22px;min-height:150px;color:var(--text);cursor:pointer;box-shadow:var(--shadow);transition:.18s ease;text-align:left;position:relative;overflow:hidden}.choice:hover,.choice:focus-visible{transform:translateY(-3px);border-color:rgba(97,233,219,.48);outline:none}.choice::after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;right:-38px;bottom:-48px;background:var(--accent,rgba(97,233,219,.15));filter:blur(2px)}.choice .icon{font-size:42px;display:block;margin-bottom:12px}.choice h3{margin:0 0 5px;font-size:22px;font-weight:1000}.choice p{margin:0;color:var(--muted);font-weight:700;font-size:14px;line-height:1.35}.choice .tag{position:absolute;right:14px;top:14px;font-size:12px;font-weight:900;color:var(--cyan);background:rgba(97,233,219,.1);padding:6px 8px;border-radius:999px}
+.back{border:0;background:rgba(255,255,255,.08);color:var(--text);border-radius:14px;padding:10px 14px;font-weight:900;cursor:pointer}.back:hover{background:rgba(255,255,255,.13)}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 18px}.topline h2{margin:0;font-size:clamp(25px,4vw,38px)}
+
+
+.selection-shell{max-width:1020px;margin:0 auto;padding:22px;border-radius:26px;background:linear-gradient(180deg,rgba(10,39,65,.88),rgba(7,27,47,.88));border:1px solid rgba(86,177,235,.34);box-shadow:var(--shadow)}
+.selection-title{display:flex;align-items:center;gap:12px;margin-bottom:18px}.selection-num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#1a8fe8,#1462ad);font-weight:1000;font-size:22px;box-shadow:0 0 20px rgba(49,232,255,.20)}.selection-title h2{margin:0;font-size:25px}.selection-title p{margin:3px 0 0;color:var(--cyan);font-size:13px;font-weight:800}
+.choice-grid.visual{max-width:none;grid-template-columns:repeat(3,1fr)}.choice-grid.visual .choice{min-height:118px;text-align:center;border-radius:16px;background:linear-gradient(180deg,#102d49,#091c31);border:2px solid #2d6591;box-shadow:none}.choice-grid.visual .choice:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(49,232,255,.22)}.choice-grid.visual .choice .icon{font-size:36px;margin-bottom:8px}.choice-grid.visual .choice h3{font-size:18px}.choice-grid.visual .choice p,.choice-grid.visual .choice .tag{display:none}
+.portal-section{padding:20px 18px 10px;border-radius:28px;background:linear-gradient(180deg,rgba(7,31,53,.74),rgba(5,22,39,.56));border:1px solid rgba(69,164,226,.28)}
+.portal-heading{display:flex;align-items:center;gap:12px;margin-bottom:4px}.portal-heading .selection-num{background:linear-gradient(145deg,#20dfff,#128bc8)}.portal-heading h2{margin:0;font-size:28px}.portal-sub{margin:0 0 8px 54px;color:var(--cyan);font-weight:800;font-size:14px}
+
+.portal-intro{max-width:900px;margin:0 auto 18px;padding:12px 16px;border:1px solid rgba(255,213,106,.24);background:rgba(255,213,106,.08);border-radius:18px;text-align:center;color:#f4e9c3;font-weight:850;font-size:14px}
+.portal-map{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px 8px;max-width:1160px;margin:0 auto;padding:16px 0 20px}
+.portal-node{position:relative;display:flex;flex-direction:column;align-items:center;border:0;background:transparent;color:var(--text);cursor:pointer;padding:4px 0 0;isolation:isolate;transition:transform .18s ease,filter .18s ease}
+.portal-node:hover:not(.locked){transform:translateY(-4px)}
+.portal-number{position:absolute;z-index:5;left:50%;top:2px;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#17132f;border:3px solid #b6b2cf;font-weight:1000;font-size:15px;box-shadow:0 4px 10px rgba(0,0,0,.28)}
+.portal-sprite-wrap{position:relative;width:162px;height:162px;display:grid;place-items:center;margin-top:18px}
+.portal-sprite-wrap::before{content:'';position:absolute;inset:auto 18px 6px 18px;height:26px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.42) 0%,rgba(0,0,0,.08) 58%,rgba(0,0,0,0) 74%);filter:blur(2px);z-index:0}
+.portal-sprite{position:relative;z-index:1;max-width:100%;max-height:100%;object-fit:contain;display:block;filter:drop-shadow(0 10px 16px rgba(0,0,0,.34));transition:transform .18s ease,filter .18s ease}
+.portal-node:hover:not(.locked) .portal-sprite{transform:scale(1.035);filter:drop-shadow(0 12px 18px rgba(49,232,255,.22))}
+.portal-lock{display:none;position:absolute;z-index:6;right:4px;top:84px;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(180deg,#959aa7,#656b78);border:2px solid #c3c9d3;box-shadow:0 8px 14px rgba(0,0,0,.28);font-size:24px;opacity:0}
+.portal-name{position:relative;z-index:3;display:inline-block;min-width:132px;max-width:154px;margin-top:-2px;padding:9px 14px;border-radius:14px;background:linear-gradient(180deg,#f5dfad,#d6b46d);color:#241a29;border:2px solid #7c6337;font-size:13px;font-weight:1000;text-transform:uppercase;text-align:center;box-shadow:0 5px 12px rgba(0,0,0,.28)}
+.portal-stars{position:relative;z-index:3;margin-top:8px;white-space:nowrap;font-size:24px;letter-spacing:2px;text-shadow:0 2px 6px rgba(0,0,0,.45)}
+.portal-stars .earned{color:#ffd34e}.portal-stars .empty{color:#69657b}
+.portal-node.locked{cursor:not-allowed;filter:grayscale(1);opacity:.7}
+.portal-node.locked .portal-lock{display:grid;opacity:1}
+.portal-node.locked .portal-name{background:linear-gradient(#b7b5bd,#777681);border-color:#55535d;color:#24232a}
+.portal-node.completed .portal-sprite{filter:drop-shadow(0 0 20px rgba(255,212,95,.42)) drop-shadow(0 10px 16px rgba(0,0,0,.34))}
+.progress-note{text-align:center;color:#aaa4ca;font-size:12px;font-weight:800;margin-top:4px}
+
+.game-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start;position:relative;padding:18px;border-radius:34px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(180deg,rgba(10,24,44,.92),rgba(6,14,29,.96));box-shadow:var(--shadow);overflow:hidden}.game-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(49,232,255,.06),rgba(0,0,0,0) 50%),linear-gradient(180deg,rgba(8,18,38,.10),rgba(8,18,38,.34));pointer-events:none}.game-card,.side-card{position:relative;z-index:1;background:rgba(19,14,53,.54);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);border-radius:28px}.game-card{padding:12px}.side-card{padding:14px;position:sticky;top:10px}
+.game-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}.game-title{display:flex;gap:12px;align-items:center}.game-icon-thumb{width:54px;height:54px;object-fit:contain;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.28))}.game-title h2{font-size:20px;margin:0}.game-title p{margin:2px 0 0;color:var(--muted);font-size:12px;font-weight:800}.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.07);font-weight:900;font-size:12px}.stat b{color:var(--cyan)}
+.portal-board{position:relative;min-height:760px;display:flex;align-items:center;justify-content:center;padding:22px 10px 14px;overflow:hidden;isolation:isolate}.portal-board::after{content:'';position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:min(78%,560px);height:42px;background:radial-gradient(ellipse at center,rgba(0,0,0,.42),rgba(0,0,0,.10) 58%,rgba(0,0,0,0) 76%);filter:blur(6px);z-index:0}.portal-frame{position:relative;width:min(100%,860px);max-width:860px;height:auto;z-index:1;filter:drop-shadow(0 18px 26px rgba(0,0,0,.34))}.portal-core{position:absolute;left:50%;top:45.8%;transform:translate(-50%,-50%);z-index:2;display:flex;align-items:center;justify-content:center;width:100%;pointer-events:auto}.grid-shell{position:relative;width:min(40.5vw,338px);display:flex;justify-content:center;overflow:visible;touch-action:none;user-select:none}.grid-shell::before{content:'';position:absolute;inset:-8px;border-radius:14px;background:linear-gradient(180deg,rgba(8,20,36,.48),rgba(12,30,55,.30));box-shadow:0 0 0 2px rgba(109,239,255,.18),0 0 24px rgba(49,232,255,.12),inset 0 0 14px rgba(49,232,255,.08);z-index:0}.word-grid{position:relative;z-index:1;--n:10;width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(var(--n),1fr);grid-template-rows:repeat(var(--n),1fr);gap:2px;background:rgba(255,255,255,.055);padding:7px;border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+.cell{display:grid;place-items:center;border-radius:7px;background:rgba(255,255,255,.055);font-weight:1000;font-size:clamp(9px,1.75vw,20px);line-height:1;cursor:crosshair;transition:background .08s,transform .08s}.word-grid.n12 .cell{font-size:clamp(8px,1.55vw,18px)}.word-grid.n14 .cell{font-size:clamp(8px,1.35vw,16px);border-radius:5px}.cell.preview{background:rgba(255,213,106,.28);transform:scale(.96)}.cell.found{background:linear-gradient(145deg,rgba(97,233,219,.42),rgba(123,240,167,.32));color:#fff;box-shadow:inset 0 0 0 1px rgba(123,240,167,.28)}
+.side-card h3{margin:0 0 4px;font-size:18px}.side-card .hint{margin:0 0 10px;color:var(--muted);font-size:11px;font-weight:700}.word-list{display:flex;flex-direction:column;gap:6px}.word-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;border-radius:11px;background:rgba(255,255,255,.055);font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:.025em}.word-item.done{opacity:.58;text-decoration:line-through;background:rgba(123,240,167,.1)}.word-item .dot{width:8px;height:8px;border-radius:50%;background:var(--pink);flex:0 0 auto}.word-item.done .dot{background:var(--green)}
+.side-actions{display:grid;grid-template-columns:1fr;gap:7px;margin-top:10px}.btn{border:0;border-radius:15px;padding:12px 14px;font-weight:1000;cursor:pointer;color:#17122f;background:linear-gradient(90deg,var(--cyan),#9cf2c5)}.btn.secondary{color:var(--text);background:rgba(255,255,255,.08)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);opacity:0;pointer-events:none;background:#18123d;border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);padding:11px 16px;border-radius:999px;font-weight:900;transition:.18s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+.overlay{position:fixed;inset:0;background:rgba(10,7,31,.72);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:50}.overlay.show{display:grid}.win{width:min(520px,100%);text-align:center;background:linear-gradient(180deg,#2b2166,#1d174b);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:32px;box-shadow:0 30px 80px rgba(0,0,0,.48)}.win .trophy{font-size:74px}.win h2{font-size:36px;margin:6px 0}.win p{color:var(--muted);font-weight:700;margin:0 0 20px}.win-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.smallnote{text-align:center;color:#8f89b4;font-size:12px;font-weight:700;margin-top:20px}
+.fullscreen-btn{border:1px solid rgba(109,239,255,.30);background:linear-gradient(180deg,rgba(25,75,111,.92),rgba(15,46,75,.92));color:#fff;border-radius:12px;padding:0 12px;width:44px;min-width:44px;justify-content:center;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;min-height:38px;font-size:19px;line-height:1}.fullscreen-btn:hover{border-color:var(--cyan);box-shadow:0 0 18px rgba(49,232,255,.18)}
+#screen-game:fullscreen{background:linear-gradient(180deg,#071626,#04111e);padding:0;overflow-y:auto;overflow-x:hidden}#screen-game:fullscreen ~ .screen{display:none!important}#screen-game:fullscreen .brand{display:none!important}#screen-game:fullscreen .app{max-width:none;padding:0}#screen-game:fullscreen .game-wrap{width:100%;min-height:100vh;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:8px 12px;background:linear-gradient(180deg,rgba(10,24,44,.99),rgba(6,14,29,1));border-radius:0;border:0;box-shadow:none}#screen-game:fullscreen .game-card{display:grid;grid-template-rows:auto 1fr;min-height:calc(100vh - 16px);padding:8px 10px;background:rgba(19,14,53,.42);border-radius:18px}#screen-game:fullscreen .portal-board{min-height:0;padding:0;overflow:visible}#screen-game:fullscreen .portal-frame{width:min(calc(100vw - 405px),1080px);max-width:1080px;height:auto}#screen-game:fullscreen .portal-core{top:45.6%}#screen-game:fullscreen .grid-shell{width:clamp(410px,32vw,470px)}#screen-game:fullscreen .grid-shell::before{inset:-10px}#screen-game:fullscreen .word-grid{padding:8px}#screen-game:fullscreen .cell{font-size:clamp(19px,1.65vw,31px)}#screen-game:fullscreen .word-grid.n12 .cell{font-size:clamp(17px,1.45vw,27px)}#screen-game:fullscreen .word-grid.n14 .cell{font-size:clamp(15px,1.22vw,23px)}#screen-game:fullscreen .side-card{position:static;align-self:stretch;display:flex;flex-direction:column;justify-content:center;max-height:none;padding:20px 16px;background:rgba(19,14,53,.52);border-radius:18px}#screen-game:fullscreen .side-card h3{font-size:20px}#screen-game:fullscreen .word-list{gap:10px}#screen-game:fullscreen .word-item{font-size:15px;padding:11px 14px}#screen-game:fullscreen .side-actions{margin-top:18px;gap:10px}#screen-game:fullscreen .btn{padding:14px 16px;font-size:15px}#screen-game:fullscreen .game-head{padding:0 0 8px;margin-bottom:2px}#screen-game:fullscreen .game-icon-thumb{width:64px;height:64px}#screen-game:fullscreen .game-title h2{font-size:24px}#screen-game:fullscreen .game-title p{font-size:13px}#screen-game:fullscreen .stat{font-size:13px;padding:9px 12px}#screen-game:fullscreen .fullscreen-btn{width:46px;min-width:46px;font-size:20px}
+@media(max-width:900px){#screen-game:fullscreen{overflow:auto}#screen-game:fullscreen .game-wrap{grid-template-columns:1fr;width:100%;min-height:100vh;padding:8px}#screen-game:fullscreen .side-card{display:block}#screen-game:fullscreen .portal-frame{width:min(92vw,760px)}#screen-game:fullscreen .grid-shell{width:min(48vw,340px)}}
+
+@media (max-width:850px){.portal-map{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 6px}.portal-sprite-wrap{width:154px;height:154px}.game-wrap{grid-template-columns:1fr;padding:14px}.side-card{position:static}.word-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.side-actions{grid-template-columns:1fr 1fr}.game-card{padding:10px}.portal-board{min-height:620px;padding:12px 0 6px}.portal-frame{width:min(100%,700px)}.portal-core{top:45.6%}.grid-shell{width:min(40vw,276px)}}
+@media (max-width:520px){.app{padding:14px 9px 28px}.brand{margin-bottom:8px}.hero{margin-top:12px}.choice-grid{grid-template-columns:1fr}.choice{min-height:120px;padding:18px}.portal-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 2px}.portal-sprite-wrap{width:140px;height:140px}.portal-name{min-width:118px;max-width:136px;font-size:11px;padding:8px 10px}.portal-stars{font-size:20px}.portal-lock{right:8px;top:72px;width:36px;height:36px;font-size:20px}.game-wrap{padding:10px;border-radius:26px}.portal-board{min-height:auto;padding:4px 0 0}.portal-frame{position:relative;left:auto;top:auto;transform:none;width:100%;max-width:none}.portal-core{position:absolute;left:50%;top:45.2%;transform:translate(-50%,-50%);inset:auto;width:100%}.grid-shell{width:min(45vw,232px)}.grid-shell::before{inset:-6px;border-radius:12px}.word-grid{gap:1px;padding:5px;border-radius:12px}.cell{border-radius:4px}.side-card{padding:14px}.word-item{font-size:12px;padding:8px}.win-actions{grid-template-columns:1fr}.game-icon-thumb{width:46px;height:46px}.topline h2{font-size:24px}}
+
+.cover-screen{
+  min-height:calc(100vh - 24px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+}
+.cover-card{
+  position:relative;
+  width:min(100%,1180px);
+  aspect-ratio:16/10;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(115,196,255,.26);
+  box-shadow:0 24px 70px rgba(0,0,0,.40);
+  background-image:url("../assets/sopa-lletres/cover/portada.webp");
+  background-size:cover;
+  background-position:center;
+}
+.cover-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(3,14,25,.02) 0%,rgba(3,14,25,.02) 68%,rgba(3,14,25,.32) 100%);
+  pointer-events:none;
+}
+.cover-play{
+  position:absolute;
+  z-index:3;
+  left:50%;
+  bottom:6%;
+  transform:translateX(-50%);
+  min-width:260px;
+  padding:18px 38px;
+  border-radius:18px;
+  border:2px solid #6defff;
+  background:linear-gradient(180deg,#24bff2,#147fd1);
+  color:white;
+  font-size:clamp(24px,3vw,34px);
+  font-weight:1000;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  box-shadow:0 0 0 5px rgba(37,202,255,.10),0 0 34px rgba(37,202,255,.42),0 12px 30px rgba(0,0,0,.28);
+  cursor:pointer;
+}
+.cover-play:hover{transform:translateX(-50%) translateY(-2px);filter:brightness(1.08)}
+@media (max-width:700px){
+  .cover-card{aspect-ratio:4/5;background-position:center top}
+  .cover-play{min-width:210px;bottom:4%;font-size:24px}
+}
+
+
+.language-portals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:end}
+.language-portal{border:0;background:transparent;color:var(--text);cursor:pointer;padding:8px;border-radius:22px;transition:.18s}
+.language-portal:hover{transform:translateY(-5px);background:rgba(49,232,255,.05)}
+.language-portal img{width:100%;max-height:330px;object-fit:contain;display:block;filter:drop-shadow(0 18px 18px rgba(0,0,0,.35));transition:.18s}
+.language-portal:hover img{filter:drop-shadow(0 18px 22px rgba(49,232,255,.28));transform:scale(1.025)}
+.language-label{display:inline-block;margin-top:-4px;padding:9px 20px;border-radius:13px;background:linear-gradient(180deg,#173d5f,#0b233b);border:1px solid rgba(104,192,244,.42);font-weight:1000;font-size:18px;letter-spacing:.03em;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+@media(max-width:700px){.language-portals{grid-template-columns:1fr;gap:4px}.language-portal img{max-height:220px}.language-label{font-size:15px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="brand">
+    <div class="logo-orb"><img src="../assets/sopa-lletres/ui/logo-fasia.webp" alt="Fasia Verse"></div>
+    <div class="brand-copy"><div class="brand-title">FASIA VERSE</div><div class="brand-sub">SOPA DE LLETRES</div></div>
+  </header>
+
+  <section id="screen-cover" class="screen active">
+    <div class="cover-screen">
+      <div class="cover-card">
+        <button id="return-fasia" class="back" style="position:absolute;z-index:4;left:18px;top:18px;background:rgba(5,25,43,.88);border:1px solid rgba(109,239,255,.45)">← FASIA VERSE</button>
+        <button id="cover-play" class="cover-play">JUGAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-language" class="screen">
+    <div class="selection-shell">
+      <div class="selection-title"><span class="selection-num">1</span><div><h2>ESCULL L’IDIOMA</h2><p>Travessa el portal de la llengua amb què vols jugar</p></div></div>
+      <div class="language-portals">
+        <button class="language-portal" data-lang="ca"><img src="../assets/sopa-lletres/languages/ca.webp" alt="Portal català"><span class="language-label">CATALÀ</span></button>
+        <button class="language-portal" data-lang="es"><img src="../assets/sopa-lletres/languages/es.webp" alt="Portal castellà"><span class="language-label">CASTELLÀ</span></button>
+        <button class="language-portal" data-lang="en"><img src="../assets/sopa-lletres/languages/en.webp" alt="Portal anglès"><span class="language-label">ENGLISH</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-difficulty" class="screen">
+    <div class="selection-shell">
+      <div class="selection-title"><span class="selection-num">2</span><div><h2>ESCULL LA DIFICULTAT</h2><p>Com més difícil, més repte!</p></div></div>
+      <div class="choice-grid visual">
+        <button class="choice" data-diff="easy"><span class="icon">⭐</span><h3>FÀCIL</h3><p>10 × 10 · 6 paraules</p></button>
+        <button id="diff-normal" class="choice" data-diff="normal"><span class="icon">⭐⭐</span><h3>NORMAL</h3><p>12 × 12 · 8 paraules</p></button>
+        <button class="choice" data-diff="hard" hidden aria-hidden="true"><span class="icon">⭐⭐⭐</span><h3>DIFÍCIL</h3><p>14 × 14 · 10 paraules</p></button>
+      </div>
+      <div style="margin-top:16px"><button class="back" data-go="language">← Enrere</button></div>
+    </div>
+  </section>
+
+  <section id="screen-portal" class="screen">
+    <div class="portal-section">
+      <div class="portal-heading"><span class="selection-num">3</span><h2>MAPA DE PORTALS</h2></div>
+      <p class="portal-sub">Completa 3 sopes del mateix tema per desbloquejar el següent portal.</p>
+      <div id="portal-grid" class="portal-map"></div>
+      <div class="progress-note">Els portals tancats apareixen en gris · ⭐⭐⭐ = portal completat</div>
+      <div style="margin-top:10px"><button class="back" data-go="difficulty">← Tornar</button></div>
+    </div>
+  </section>
+
+  <section id="screen-game" class="screen">
+    <div class="game-wrap">
+      <div class="game-card">
+        <div class="game-head">
+          <div class="game-title"><span id="game-icon"></span><div><h2 id="game-portal">Animals</h2><p id="game-meta">Català · Fàcil · 10×10</p></div></div>
+          <div class="stats"><div class="stat"><b id="found-count">0</b>/<span id="total-count">6</span> trobades</div><div class="stat">⏱ <span id="timer">00:00</span></div><button id="fullscreen-game" class="fullscreen-btn" type="button" aria-label="Pantalla completa" title="Pantalla completa">⛶</button></div>
+        </div>
+        <div class="portal-board">
+          <img class="portal-frame" src="../assets/sopa-lletres/ui/portal-central.webp" alt="Portal màgic">
+          <div class="portal-core">
+            <div class="grid-shell"><div id="word-grid" class="word-grid"></div></div>
+          </div>
+        </div>
+      </div>
+      <aside class="side-card">
+        <h3>Paraules</h3><p class="hint">Arrossega en línia recta sobre les lletres.</p>
+        <div id="word-list" class="word-list"></div>
+        <div class="side-actions"><button id="new-game" class="btn">Nova sopa</button><button class="btn secondary" data-go="portal">Canviar portal</button></div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<div id="toast" class="toast">Paraula trobada!</div>
+<div id="win-overlay" class="overlay"><div class="win"><div class="trophy">🏆</div><h2>Completada!</h2><p id="win-text">Has trobat totes les paraules.</p><div class="win-actions"><button id="again" class="btn">Jugar una altra</button><button id="choose-portal" class="btn secondary">Canviar portal</button></div></div></div>
+
+<script>
+const BANK = [{"id":1,"ca":"gos","es":"perro","en":"dog","tags":["animals","mascotes"],"level":1,"source":"CA/ES"},{"id":2,"ca":"gat","es":"gato","en":"cat","tags":["animals","mascotes"],"level":1,"source":"CA/ES"},{"id":3,"ca":"conill","es":"conejo","en":"rabbit","tags":["animals","granja"],"level":1,"source":"CA/ES"},{"id":4,"ca":"vaca","es":"vaca","en":"cow","tags":["animals","granja"],"level":1,"source":"CA/ES"},{"id":5,"ca":"ovella","es":"oveja","en":"sheep","tags":["animals","granja"],"level":1,"source":"CA/ES"},{"id":6,"ca":"gallina","es":"gallina","en":"chicken","tags":["animals","granja","ocells"],"level":1,"source":"CA/ES"},{"id":7,"ca":"oca","es":"oca","en":"goose","tags":["animals","granja","ocells"],"level":2,"source":"CA/ES"},{"id":8,"ca":"cavall","es":"caballo","en":"horse","tags":["animals","granja","esport"],"level":1,"source":"CA/ES"},{"id":9,"ca":"peix","es":"pez","en":"fish","tags":["animals","mar"],"level":1,"source":"CA/ES"},{"id":10,"ca":"balena","es":"ballena","en":"whale","tags":["animals","mar"],"level":2,"source":"CA/ES"},{"id":11,"ca":"tauró","es":"tiburón","en":"shark","tags":["animals","mar"],"level":1,"source":"CA/ES"},{"id":12,"ca":"ratolí","es":"ratón","en":"mouse","tags":["animals","mascotes"],"level":1,"source":"CA/ES"},{"id":13,"ca":"caragol","es":"caracol","en":"snail","tags":["animals","natura"],"level":1,"source":"CA/ES"},{"id":14,"ca":"esquirol","es":"ardilla","en":"squirrel","tags":["animals","natura","bosc"],"level":2,"source":"CA/ES"},{"id":15,"ca":"papallona","es":"mariposa","en":"butterfly","tags":["animals","natura","insectes"],"level":1,"source":"CA/ES"},{"id":16,"ca":"sargantana","es":"lagartija","en":"lizard","tags":["animals","natura"],"level":2,"source":"CA/ES"},{"id":17,"ca":"ocell","es":"pájaro","en":"bird","tags":["animals","natura","ocells"],"level":1,"source":"CA/ES"},{"id":18,"ca":"colom","es":"paloma","en":"pigeon","tags":["animals","ciutat","ocells"],"level":1,"source":"CA/ES"},{"id":19,"ca":"àguila","es":"águila","en":"eagle","tags":["animals","natura","ocells"],"level":2,"source":"CA/ES"},{"id":20,"ca":"ós","es":"oso","en":"bear","tags":["animals","natura","bosc"],"level":1,"source":"CA/ES"},{"id":21,"ca":"llop","es":"lobo","en":"wolf","tags":["animals","natura","bosc"],"level":1,"source":"CA/ES"},{"id":22,"ca":"sol","es":"sol","en":"sun","tags":["natura","cel","temps"],"level":1,"source":"CA/ES"},{"id":23,"ca":"lluna","es":"luna","en":"moon","tags":["natura","cel"],"level":1,"source":"CA/ES"},{"id":24,"ca":"arbre","es":"árbol","en":"tree","tags":["natura","plantes","bosc"],"level":1,"source":"CA/ES"},{"id":25,"ca":"flor","es":"flor","en":"flower","tags":["natura","plantes"],"level":1,"source":"CA/ES"},{"id":26,"ca":"planta","es":"planta","en":"plant","tags":["natura","plantes","casa"],"level":1,"source":"CA/ES"},{"id":27,"ca":"bosc","es":"bosque","en":"forest","tags":["natura","llocs"],"level":1,"source":"CA/ES"},{"id":28,"ca":"camp","es":"campo","en":"countryside","tags":["natura","llocs"],"level":1,"source":"CA/ES"},{"id":29,"ca":"platja","es":"playa","en":"beach","tags":["natura","llocs","estiu"],"level":1,"source":"CA/ES"},{"id":30,"ca":"sorra","es":"arena","en":"sand","tags":["natura","platja"],"level":1,"source":"CA/ES"},{"id":31,"ca":"mar","es":"mar","en":"sea","tags":["natura","llocs"],"level":1,"source":"CA/ES"},{"id":32,"ca":"muntanya","es":"montaña","en":"mountain","tags":["natura","llocs"],"level":1,"source":"CA/ES"},{"id":33,"ca":"núvol","es":"nube","en":"cloud","tags":["natura","cel","temps"],"level":1,"source":"CA/ES"},{"id":34,"ca":"pluja","es":"lluvia","en":"rain","tags":["natura","temps"],"level":1,"source":"CA/ES"},{"id":35,"ca":"vent","es":"viento","en":"wind","tags":["natura","temps"],"level":1,"source":"CA/ES"},{"id":36,"ca":"pedra","es":"piedra","en":"stone","tags":["natura","materials"],"level":1,"source":"CA/ES"},{"id":37,"ca":"fulla","es":"hoja","en":"leaf","tags":["natura","plantes"],"level":1,"source":"CA/ES"},{"id":38,"ca":"bolet","es":"seta","en":"mushroom","tags":["natura","aliments","bosc"],"level":2,"source":"CA/ES"},{"id":39,"ca":"ull","es":"ojo","en":"eye","tags":["cos","cara"],"level":1,"source":"CA"},{"id":40,"ca":"orella","es":"oreja","en":"ear","tags":["cos","cara"],"level":1,"source":"CA"},{"id":41,"ca":"galta","es":"mejilla","en":"cheek","tags":["cos","cara"],"level":2,"source":"CA"},{"id":42,"ca":"dent","es":"diente","en":"tooth","tags":["cos","boca"],"level":1,"source":"CA"},{"id":43,"ca":"barbeta","es":"barbilla","en":"chin","tags":["cos","cara"],"level":2,"source":"CA"},{"id":44,"ca":"cabell","es":"pelo","en":"hair","tags":["cos","cara"],"level":1,"source":"CA"},{"id":45,"ca":"front","es":"frente","en":"forehead","tags":["cos","cara"],"level":2,"source":"CA"},{"id":46,"ca":"cella","es":"ceja","en":"eyebrow","tags":["cos","cara"],"level":2,"source":"CA"},{"id":47,"ca":"pestanya","es":"pestaña","en":"eyelash","tags":["cos","cara"],"level":2,"source":"CA"},{"id":48,"ca":"nas","es":"nariz","en":"nose","tags":["cos","cara"],"level":1,"source":"CA"},{"id":49,"ca":"llavi","es":"labio","en":"lip","tags":["cos","cara","boca"],"level":1,"source":"CA"},{"id":50,"ca":"boca","es":"boca","en":"mouth","tags":["cos","cara","boca"],"level":1,"source":"CA"},{"id":51,"ca":"paladar","es":"paladar","en":"palate","tags":["cos","boca"],"level":3,"source":"CA"},{"id":52,"ca":"úvula","es":"úvula","en":"uvula","tags":["cos","boca"],"level":3,"source":"CA"},{"id":53,"ca":"geniva","es":"encía","en":"gum","tags":["cos","boca"],"level":3,"source":"CA"},{"id":54,"ca":"llengua","es":"lengua","en":"tongue","tags":["cos","boca"],"level":1,"source":"CA"},{"id":55,"ca":"amígdala","es":"amígdala","en":"tonsil","tags":["cos","boca"],"level":3,"source":"CA"},{"id":56,"ca":"cap","es":"cabeza","en":"head","tags":["cos"],"level":1,"source":"CA"},{"id":57,"ca":"coll","es":"cuello","en":"neck","tags":["cos"],"level":1,"source":"CA"},{"id":58,"ca":"pit","es":"pecho","en":"chest","tags":["cos"],"level":1,"source":"CA"},{"id":59,"ca":"braç","es":"brazo","en":"arm","tags":["cos"],"level":1,"source":"CA"},{"id":60,"ca":"melic","es":"ombligo","en":"belly button","tags":["cos"],"level":2,"source":"CA"},{"id":61,"ca":"ventre","es":"vientre","en":"belly","tags":["cos"],"level":2,"source":"CA"},{"id":62,"ca":"genoll","es":"rodilla","en":"knee","tags":["cos"],"level":1,"source":"CA"},{"id":63,"ca":"peu","es":"pie","en":"foot","tags":["cos"],"level":1,"source":"CA"},{"id":64,"ca":"mà","es":"mano","en":"hand","tags":["cos"],"level":1,"source":"CA"},{"id":65,"ca":"dit","es":"dedo","en":"finger","tags":["cos"],"level":1,"source":"CA"},{"id":66,"ca":"cama","es":"pierna","en":"leg","tags":["cos"],"level":1,"source":"CA"},{"id":67,"ca":"turmell","es":"tobillo","en":"ankle","tags":["cos"],"level":2,"source":"CA"},{"id":68,"ca":"espatlla","es":"hombro","en":"shoulder","tags":["cos"],"level":2,"source":"CA"},{"id":69,"ca":"esquena","es":"espalda","en":"back","tags":["cos"],"level":1,"source":"CA"},{"id":70,"ca":"colze","es":"codo","en":"elbow","tags":["cos"],"level":2,"source":"CA"},{"id":71,"ca":"avantbraç","es":"antebrazo","en":"forearm","tags":["cos"],"level":3,"source":"CA"},{"id":72,"ca":"canell","es":"muñeca","en":"wrist","tags":["cos"],"level":2,"source":"CA"},{"id":73,"ca":"natja","es":"nalga","en":"buttock","tags":["cos"],"level":3,"source":"CA"},{"id":74,"ca":"panxell","es":"pantorrilla","en":"calf","tags":["cos"],"level":3,"source":"CA"},{"id":75,"ca":"taló","es":"talón","en":"heel","tags":["cos"],"level":2,"source":"CA"},{"id":76,"ca":"penis","es":"pene","en":"penis","tags":["cos","genitals"],"level":2,"source":"CA"},{"id":77,"ca":"testicle","es":"testículo","en":"testicle","tags":["cos","genitals"],"level":2,"source":"CA"},{"id":78,"ca":"vulva","es":"vulva","en":"vulva","tags":["cos","genitals"],"level":2,"source":"CA"},{"id":79,"ca":"pubis","es":"pubis","en":"pubis","tags":["cos","genitals"],"level":3,"source":"CA"},{"id":80,"ca":"samarreta","es":"camiseta","en":"T-shirt","tags":["roba"],"level":1,"source":"CA"},{"id":81,"ca":"pantalons","es":"pantalones","en":"trousers","tags":["roba"],"level":1,"source":"CA"},{"id":82,"ca":"faldilla","es":"falda","en":"skirt","tags":["roba"],"level":1,"source":"CA"},{"id":83,"ca":"vestit","es":"vestido","en":"dress","tags":["roba"],"level":1,"source":"CA"},{"id":84,"ca":"camisa","es":"camisa","en":"shirt","tags":["roba"],"level":1,"source":"CA"},{"id":85,"ca":"jaqueta","es":"chaqueta","en":"jacket","tags":["roba"],"level":1,"source":"CA"},{"id":86,"ca":"abric","es":"abrigo","en":"coat","tags":["roba","hivern"],"level":1,"source":"CA"},{"id":87,"ca":"dessuadora","es":"sudadera","en":"sweatshirt","tags":["roba","esport"],"level":1,"source":"CA"},{"id":88,"ca":"xandall","es":"chándal","en":"tracksuit","tags":["roba","esport"],"level":1,"source":"CA"},{"id":89,"ca":"banyador","es":"bañador","en":"swimsuit","tags":["roba","estiu","esport"],"level":1,"source":"CA"},{"id":90,"ca":"biquini","es":"bikini","en":"bikini","tags":["roba","estiu"],"level":1,"source":"CA"},{"id":91,"ca":"pijama","es":"pijama","en":"pyjamas","tags":["roba","dormir"],"level":1,"source":"CA"},{"id":92,"ca":"sabates","es":"zapatos","en":"shoes","tags":["roba","calçat"],"level":1,"source":"CA"},{"id":93,"ca":"vambes","es":"zapatillas","en":"trainers","tags":["roba","calçat","esport"],"level":1,"source":"CA"},{"id":94,"ca":"botes","es":"botas","en":"boots","tags":["roba","calçat"],"level":1,"source":"CA"},{"id":95,"ca":"xancletes","es":"chanclas","en":"flip-flops","tags":["roba","calçat","estiu"],"level":1,"source":"CA"},{"id":96,"ca":"mitjons","es":"calcetines","en":"socks","tags":["roba","roba interior"],"level":1,"source":"CA"},{"id":97,"ca":"calçotets","es":"calzoncillos","en":"underpants","tags":["roba","roba interior"],"level":2,"source":"CA"},{"id":98,"ca":"sostenidors","es":"sujetador","en":"bra","tags":["roba","roba interior"],"level":2,"source":"CA"},{"id":99,"ca":"calces","es":"bragas","en":"knickers","tags":["roba","roba interior"],"level":2,"source":"CA"},{"id":100,"ca":"cinturó","es":"cinturón","en":"belt","tags":["roba","complements"],"level":1,"source":"CA"},{"id":101,"ca":"bufanda","es":"bufanda","en":"scarf","tags":["roba","complements","hivern"],"level":1,"source":"CA"},{"id":102,"ca":"gorra","es":"gorra","en":"cap","tags":["roba","complements"],"level":1,"source":"CA"},{"id":103,"ca":"mocador","es":"pañuelo","en":"handkerchief","tags":["roba","complements"],"level":2,"source":"CA"},{"id":104,"ca":"bossa","es":"bolso","en":"bag","tags":["roba","complements","objectes"],"level":1,"source":"CA"},{"id":105,"ca":"paraigua","es":"paraguas","en":"umbrella","tags":["roba","complements","temps"],"level":1,"source":"CA"},{"id":106,"ca":"corbata","es":"corbata","en":"tie","tags":["roba","complements"],"level":2,"source":"CA"},{"id":107,"ca":"americana","es":"americana","en":"blazer","tags":["roba"],"level":2,"source":"CA"},{"id":108,"ca":"armilla","es":"chaleco","en":"waistcoat","tags":["roba"],"level":2,"source":"CA"},{"id":109,"ca":"maillot","es":"maillot","en":"cycling jersey","tags":["roba","esport"],"level":3,"source":"CA"},{"id":110,"ca":"butxaca","es":"bolsillo","en":"pocket","tags":["roba","parts de roba"],"level":1,"source":"CA"},{"id":111,"ca":"botó","es":"botón","en":"button","tags":["roba","parts de roba"],"level":1,"source":"CA"},{"id":112,"ca":"cremallera","es":"cremallera","en":"zipper","tags":["roba","parts de roba"],"level":2,"source":"CA"},{"id":113,"ca":"caputxa","es":"capucha","en":"hood","tags":["roba","parts de roba"],"level":1,"source":"CA"},{"id":114,"ca":"velcro","es":"velcro","en":"velcro","tags":["roba","parts de roba"],"level":2,"source":"CA"},{"id":115,"ca":"forat","es":"agujero","en":"hole","tags":["roba","objectes"],"level":1,"source":"CA"},{"id":116,"ca":"taca","es":"mancha","en":"stain","tags":["roba","objectes"],"level":1,"source":"CA"},{"id":117,"ca":"casa","es":"casa","en":"home","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":118,"ca":"cuina","es":"cocina","en":"kitchen","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":119,"ca":"menjador","es":"comedor","en":"dining room","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":120,"ca":"dormitori","es":"dormitorio","en":"bedroom","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":121,"ca":"bany","es":"baño","en":"bathroom","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":122,"ca":"garatge","es":"garaje","en":"garage","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":123,"ca":"terrassa","es":"terraza","en":"terrace","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":124,"ca":"balcó","es":"balcón","en":"balcony","tags":["casa","llocs"],"level":1,"source":"CA/ES"},{"id":125,"ca":"rebedor","es":"recibidor","en":"hall","tags":["casa","llocs"],"level":2,"source":"CA/ES"},{"id":126,"ca":"estudi","es":"estudio","en":"study","tags":["casa","llocs"],"level":2,"source":"CA/ES"},{"id":127,"ca":"pati","es":"patio","en":"patio","tags":["casa","escola","llocs"],"level":1,"source":"CA/ES"},{"id":128,"ca":"golfes","es":"desván","en":"attic","tags":["casa","llocs"],"level":2,"source":"CA/ES"},{"id":129,"ca":"porta","es":"puerta","en":"door","tags":["casa","edificis"],"level":1,"source":"CA/ES"},{"id":130,"ca":"finestra","es":"ventana","en":"window","tags":["casa","edificis"],"level":1,"source":"CA/ES"},{"id":131,"ca":"escala","es":"escalera","en":"stairs","tags":["casa","edificis"],"level":1,"source":"CA/ES"},{"id":132,"ca":"paret","es":"pared","en":"wall","tags":["casa","edificis"],"level":1,"source":"CA/ES"},{"id":133,"ca":"teulada","es":"tejado","en":"roof","tags":["casa","edificis"],"level":2,"source":"CA/ES"},{"id":134,"ca":"persiana","es":"persiana","en":"blind","tags":["casa","edificis"],"level":2,"source":"CA/ES"},{"id":135,"ca":"columna","es":"columna","en":"column","tags":["casa","edificis"],"level":2,"source":"CA/ES"},{"id":136,"ca":"ascensor","es":"ascensor","en":"lift","tags":["casa","edificis"],"level":1,"source":"CA/ES"},{"id":137,"ca":"sofà","es":"sofá","en":"sofa","tags":["casa","mobles"],"level":1,"source":"CA/ES"},{"id":138,"ca":"cadira","es":"silla","en":"chair","tags":["casa","escola","mobles"],"level":1,"source":"CA/ES"},{"id":139,"ca":"taula","es":"mesa","en":"table","tags":["casa","escola","mobles"],"level":1,"source":"CA/ES"},{"id":140,"ca":"llit","es":"cama","en":"bed","tags":["casa","mobles"],"level":1,"source":"CA/ES"},{"id":141,"ca":"armari","es":"armario","en":"wardrobe","tags":["casa","mobles"],"level":1,"source":"CA/ES"},{"id":142,"ca":"banyera","es":"bañera","en":"bathtub","tags":["casa","bany"],"level":2,"source":"CA/ES"},{"id":143,"ca":"forn","es":"horno","en":"oven","tags":["casa","cuina","objectes"],"level":1,"source":"CA/ES"},{"id":144,"ca":"televisió","es":"televisión","en":"television","tags":["casa","tecnologia"],"level":1,"source":"CA/ES"},{"id":145,"ca":"coixí","es":"cojín","en":"cushion","tags":["casa","objectes"],"level":1,"source":"CA/ES"},{"id":146,"ca":"manta","es":"manta","en":"blanket","tags":["casa","objectes"],"level":1,"source":"CA/ES"},{"id":147,"ca":"comandament","es":"mando","en":"remote control","tags":["casa","tecnologia","objectes"],"level":1,"source":"CA/ES"},{"id":148,"ca":"clau","es":"llave","en":"key","tags":["casa","objectes"],"level":1,"source":"CA/ES"},{"id":149,"ca":"sabó","es":"jabón","en":"soap","tags":["casa","higiene"],"level":1,"source":"CA/ES"},{"id":150,"ca":"mànega","es":"manguera","en":"hose","tags":["casa","jardí","objectes"],"level":2,"source":"CA/ES"},{"id":151,"ca":"llapis","es":"lápiz","en":"pencil","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":152,"ca":"goma","es":"goma","en":"eraser","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":153,"ca":"llibreta","es":"libreta","en":"notebook","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":154,"ca":"motxilla","es":"mochila","en":"backpack","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":155,"ca":"estoig","es":"estuche","en":"pencil case","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":156,"ca":"calculadora","es":"calculadora","en":"calculator","tags":["escola","tecnologia"],"level":1,"source":"CA"},{"id":157,"ca":"maquineta","es":"sacapuntas","en":"sharpener","tags":["escola","objectes"],"level":2,"source":"CA"},{"id":158,"ca":"pegament","es":"pegamento","en":"glue","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":159,"ca":"grapes","es":"grapas","en":"staples","tags":["escola","objectes"],"level":2,"source":"CA"},{"id":160,"ca":"tisores","es":"tijeras","en":"scissors","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":161,"ca":"paper","es":"papel","en":"paper","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":162,"ca":"llibre","es":"libro","en":"book","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":163,"ca":"conte","es":"cuento","en":"story","tags":["escola","lectura"],"level":1,"source":"CA"},{"id":164,"ca":"pissarra","es":"pizarra","en":"board","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":165,"ca":"ordinador","es":"ordenador","en":"computer","tags":["escola","tecnologia"],"level":1,"source":"CA"},{"id":166,"ca":"impressora","es":"impresora","en":"printer","tags":["escola","tecnologia"],"level":2,"source":"CA"},{"id":167,"ca":"agenda","es":"agenda","en":"planner","tags":["escola","objectes"],"level":1,"source":"CA"},{"id":168,"ca":"carregador","es":"cargador","en":"charger","tags":["tecnologia","objectes"],"level":1,"source":"CA"},{"id":169,"ca":"pinzell","es":"pincel","en":"paintbrush","tags":["escola","art","objectes"],"level":1,"source":"CA"},{"id":170,"ca":"dibuix","es":"dibujo","en":"drawing","tags":["escola","art"],"level":1,"source":"CA"},{"id":171,"ca":"foto","es":"foto","en":"photo","tags":["objectes","tecnologia"],"level":1,"source":"CA"},{"id":172,"ca":"fotografia","es":"fotografía","en":"photograph","tags":["objectes","tecnologia"],"level":2,"source":"CA"},{"id":173,"ca":"termòmetre","es":"termómetro","en":"thermometer","tags":["objectes","salut"],"level":2,"source":"CA"},{"id":174,"ca":"extintor","es":"extintor","en":"fire extinguisher","tags":["objectes","seguretat"],"level":2,"source":"CA"},{"id":175,"ca":"detergent","es":"detergente","en":"detergent","tags":["casa","neteja","objectes"],"level":2,"source":"CA"},{"id":176,"ca":"tupper","es":"táper","en":"food container","tags":["casa","cuina","objectes"],"level":2,"source":"CA"},{"id":177,"ca":"moneder","es":"monedero","en":"purse","tags":["objectes","diners"],"level":2,"source":"CA"},{"id":178,"ca":"got","es":"vaso","en":"glass","tags":["casa","cuina","objectes"],"level":1,"source":"CA"},{"id":179,"ca":"plat","es":"plato","en":"plate","tags":["casa","cuina","objectes"],"level":1,"source":"CA"},{"id":180,"ca":"tireta","es":"tirita","en":"plaster","tags":["objectes","salut"],"level":1,"source":"CA"},{"id":181,"ca":"ganivet","es":"cuchillo","en":"knife","tags":["casa","cuina","objectes"],"level":1,"source":"CA"},{"id":182,"ca":"martell","es":"martillo","en":"hammer","tags":["eines","objectes"],"level":1,"source":"CA"},{"id":183,"ca":"calendari","es":"calendario","en":"calendar","tags":["escola","temps","objectes"],"level":1,"source":"CA"},{"id":184,"ca":"xarop","es":"jarabe","en":"syrup","tags":["salut","objectes"],"level":2,"source":"CA"},{"id":185,"ca":"raspall de dents","es":"cepillo de dientes","en":"toothbrush","tags":["higiene","objectes"],"level":1,"source":"CA"},{"id":186,"ca":"crema solar","es":"crema solar","en":"sunscreen","tags":["higiene","estiu","objectes"],"level":1,"source":"CA"},{"id":187,"ca":"poma","es":"manzana","en":"apple","tags":["aliments","fruita"],"level":1,"source":"CA/ES"},{"id":188,"ca":"pera","es":"pera","en":"pear","tags":["aliments","fruita"],"level":1,"source":"CA/ES"},{"id":189,"ca":"taronja","es":"naranja","en":"orange","tags":["aliments","fruita"],"level":1,"source":"CA/ES"},{"id":190,"ca":"llimona","es":"limón","en":"lemon","tags":["aliments","fruita"],"level":1,"source":"CA/ES"},{"id":191,"ca":"síndria","es":"sandía","en":"watermelon","tags":["aliments","fruita"],"level":1,"source":"CA/ES"},{"id":192,"ca":"tomàquet","es":"tomate","en":"tomato","tags":["aliments","verdura"],"level":1,"source":"CA/ES"},{"id":193,"ca":"ceba","es":"cebolla","en":"onion","tags":["aliments","verdura"],"level":1,"source":"CA/ES"},{"id":194,"ca":"cogombre","es":"pepino","en":"cucumber","tags":["aliments","verdura"],"level":2,"source":"CA/ES"},{"id":195,"ca":"pepinillo","es":"pepinillo","en":"gherkin","tags":["aliments","verdura"],"level":2,"source":"CA/ES"},{"id":196,"ca":"pa","es":"pan","en":"bread","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":197,"ca":"formatge","es":"queso","en":"cheese","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":198,"ca":"pizza","es":"pizza","en":"pizza","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":199,"ca":"hamburguesa","es":"hamburguesa","en":"burger","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":200,"ca":"entrepà","es":"bocadillo","en":"sandwich","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":201,"ca":"galeta","es":"galleta","en":"biscuit","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":202,"ca":"pastís","es":"pastel","en":"cake","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":203,"ca":"gelat","es":"helado","en":"ice cream","tags":["aliments","estiu"],"level":1,"source":"CA/ES"},{"id":204,"ca":"suc","es":"zumo","en":"juice","tags":["aliments","begudes"],"level":1,"source":"CA/ES"},{"id":205,"ca":"aigua","es":"agua","en":"water","tags":["aliments","begudes"],"level":1,"source":"CA/ES"},{"id":206,"ca":"verdura","es":"verdura","en":"vegetable","tags":["aliments"],"level":1,"source":"CA/ES"},{"id":207,"ca":"bicicleta","es":"bicicleta","en":"bicycle","tags":["transport","esport","oci"],"level":1,"source":"CA/ES"},{"id":208,"ca":"patinet","es":"patinete","en":"scooter","tags":["transport","oci"],"level":1,"source":"CA/ES"},{"id":209,"ca":"cotxe","es":"coche","en":"car","tags":["transport"],"level":1,"source":"CA/ES"},{"id":210,"ca":"taxi","es":"taxi","en":"taxi","tags":["transport","ciutat"],"level":1,"source":"CA/ES"},{"id":211,"ca":"autobús","es":"autobús","en":"bus","tags":["transport","ciutat"],"level":1,"source":"CA/ES"},{"id":212,"ca":"moto","es":"moto","en":"motorbike","tags":["transport"],"level":1,"source":"CA/ES"},{"id":213,"ca":"tren","es":"tren","en":"train","tags":["transport"],"level":1,"source":"CA/ES"},{"id":214,"ca":"avió","es":"avión","en":"plane","tags":["transport"],"level":1,"source":"CA/ES"},{"id":215,"ca":"vaixell","es":"barco","en":"boat","tags":["transport","mar"],"level":1,"source":"CA/ES"},{"id":216,"ca":"semàfor","es":"semáforo","en":"traffic light","tags":["ciutat","transport"],"level":1,"source":"CA/ES"},{"id":217,"ca":"carrer","es":"calle","en":"street","tags":["ciutat","llocs"],"level":1,"source":"CA/ES"},{"id":218,"ca":"parc","es":"parque","en":"park","tags":["ciutat","natura","llocs"],"level":1,"source":"CA/ES"},{"id":219,"ca":"botiga","es":"tienda","en":"shop","tags":["ciutat","llocs"],"level":1,"source":"CA/ES"},{"id":220,"ca":"biblioteca","es":"biblioteca","en":"library","tags":["ciutat","escola","llocs"],"level":1,"source":"CA/ES"},{"id":221,"ca":"cinema","es":"cine","en":"cinema","tags":["ciutat","oci","llocs"],"level":1,"source":"CA/ES"},{"id":222,"ca":"gimnàs","es":"gimnasio","en":"gym","tags":["esport","llocs"],"level":1,"source":"CA/ES"},{"id":223,"ca":"pista","es":"pista","en":"court","tags":["esport","llocs"],"level":1,"source":"CA/ES"},{"id":224,"ca":"aquari","es":"acuario","en":"aquarium","tags":["oci","llocs","animals"],"level":2,"source":"CA/ES"},{"id":225,"ca":"panaderia","es":"panadería","en":"bakery","tags":["ciutat","aliments","llocs"],"level":1,"source":"CA/ES"},{"id":226,"ca":"mare","es":"madre","en":"mother","tags":["família"],"level":1,"source":"CA"},{"id":227,"ca":"pare","es":"padre","en":"father","tags":["família"],"level":1,"source":"CA"},{"id":228,"ca":"germà","es":"hermano","en":"brother","tags":["família"],"level":1,"source":"CA"},{"id":229,"ca":"germana","es":"hermana","en":"sister","tags":["família"],"level":1,"source":"CA"},{"id":230,"ca":"fill","es":"hijo","en":"son","tags":["família"],"level":1,"source":"CA"},{"id":231,"ca":"filla","es":"hija","en":"daughter","tags":["família"],"level":1,"source":"CA"},{"id":232,"ca":"avi","es":"abuelo","en":"grandfather","tags":["família"],"level":1,"source":"CA"},{"id":233,"ca":"àvia","es":"abuela","en":"grandmother","tags":["família"],"level":1,"source":"CA"},{"id":234,"ca":"net","es":"nieto","en":"grandson","tags":["família"],"level":2,"source":"CA"},{"id":235,"ca":"néta","es":"nieta","en":"granddaughter","tags":["família"],"level":2,"source":"CA"},{"id":236,"ca":"tiet","es":"tío","en":"uncle","tags":["família"],"level":1,"source":"CA"},{"id":237,"ca":"tieta","es":"tía","en":"aunt","tags":["família"],"level":1,"source":"CA"},{"id":238,"ca":"oncle","es":"tío","en":"uncle","tags":["família"],"level":2,"source":"CA"},{"id":239,"ca":"cosí","es":"primo","en":"cousin","tags":["família"],"level":1,"source":"CA"},{"id":240,"ca":"cosina","es":"prima","en":"cousin","tags":["família"],"level":1,"source":"CA"},{"id":241,"ca":"nebot","es":"sobrino","en":"nephew","tags":["família"],"level":2,"source":"CA"},{"id":242,"ca":"neboda","es":"sobrina","en":"niece","tags":["família"],"level":2,"source":"CA"},{"id":243,"ca":"marit","es":"marido","en":"husband","tags":["família"],"level":2,"source":"CA"},{"id":244,"ca":"muller","es":"mujer","en":"wife","tags":["família"],"level":2,"source":"CA"},{"id":245,"ca":"parella","es":"pareja","en":"couple","tags":["família"],"level":1,"source":"CA"},{"id":246,"ca":"nadó","es":"bebé","en":"baby","tags":["família"],"level":1,"source":"CA"},{"id":247,"ca":"bessons","es":"gemelos","en":"twins","tags":["família"],"level":2,"source":"CA"},{"id":248,"ca":"sogre","es":"suegro","en":"father-in-law","tags":["família"],"level":3,"source":"CA"},{"id":249,"ca":"sogra","es":"suegra","en":"mother-in-law","tags":["família"],"level":3,"source":"CA"},{"id":250,"ca":"gendre","es":"yerno","en":"son-in-law","tags":["família"],"level":3,"source":"CA"},{"id":251,"ca":"nora","es":"nuera","en":"daughter-in-law","tags":["família"],"level":3,"source":"CA"},{"id":252,"ca":"cunyat","es":"cuñado","en":"brother-in-law","tags":["família"],"level":3,"source":"CA"},{"id":253,"ca":"cunyada","es":"cuñada","en":"sister-in-law","tags":["família"],"level":3,"source":"CA"},{"id":254,"ca":"besàvia","es":"bisabuela","en":"great-grandmother","tags":["família"],"level":3,"source":"CA"},{"id":255,"ca":"casament","es":"boda","en":"wedding","tags":["família","celebracions"],"level":2,"source":"CA"},{"id":256,"ca":"jugar","es":"jugar","en":"play","tags":["accions","oci"],"level":1,"source":"CA/ES"},{"id":257,"ca":"menjar","es":"comer","en":"eat","tags":["accions","aliments"],"level":1,"source":"CA/ES"},{"id":258,"ca":"beure","es":"beber","en":"drink","tags":["accions","aliments"],"level":1,"source":"CA/ES"},{"id":259,"ca":"dormir","es":"dormir","en":"sleep","tags":["accions","casa"],"level":1,"source":"CA/ES"},{"id":260,"ca":"caminar","es":"caminar","en":"walk","tags":["accions"],"level":1,"source":"CA/ES"},{"id":261,"ca":"córrer","es":"correr","en":"run","tags":["accions","esport"],"level":1,"source":"CA/ES"},{"id":262,"ca":"saltar","es":"saltar","en":"jump","tags":["accions","esport"],"level":1,"source":"CA/ES"},{"id":263,"ca":"nedar","es":"nadar","en":"swim","tags":["accions","esport"],"level":1,"source":"CA/ES"},{"id":264,"ca":"llegir","es":"leer","en":"read","tags":["accions","escola"],"level":1,"source":"CA/ES"},{"id":265,"ca":"escriure","es":"escribir","en":"write","tags":["accions","escola"],"level":1,"source":"CA/ES"},{"id":266,"ca":"pintar","es":"pintar","en":"paint","tags":["accions","art"],"level":1,"source":"CA/ES"},{"id":267,"ca":"dibuixar","es":"dibujar","en":"draw","tags":["accions","art"],"level":1,"source":"CA/ES"},{"id":268,"ca":"cuinar","es":"cocinar","en":"cook","tags":["accions","casa","aliments"],"level":1,"source":"CA/ES"},{"id":269,"ca":"comprar","es":"comprar","en":"buy","tags":["accions","ciutat"],"level":1,"source":"CA/ES"},{"id":270,"ca":"escoltar","es":"escuchar","en":"listen","tags":["accions"],"level":1,"source":"CA/ES"},{"id":271,"ca":"mirar","es":"mirar","en":"look","tags":["accions"],"level":1,"source":"CA/ES"},{"id":272,"ca":"parlar","es":"hablar","en":"speak","tags":["accions"],"level":1,"source":"CA/ES"},{"id":273,"ca":"rentar","es":"lavar","en":"wash","tags":["accions","higiene"],"level":1,"source":"CA/ES"},{"id":274,"ca":"ordenar","es":"ordenar","en":"tidy","tags":["accions","casa","escola"],"level":1,"source":"CA/ES"},{"id":275,"ca":"retallar","es":"recortar","en":"cut","tags":["accions","escola"],"level":1,"source":"CA/ES"},{"id":276,"ca":"copiar","es":"copiar","en":"copy","tags":["accions","escola"],"level":1,"source":"CA/ES"},{"id":277,"ca":"pensar","es":"pensar","en":"think","tags":["accions"],"level":1,"source":"CA/ES"},{"id":278,"ca":"mesurar","es":"medir","en":"measure","tags":["accions","escola"],"level":2,"source":"CA/ES"},{"id":279,"ca":"construir","es":"construir","en":"build","tags":["accions"],"level":1,"source":"CA/ES"},{"id":280,"ca":"pujar","es":"subir","en":"go up","tags":["accions"],"level":1,"source":"CA/ES"},{"id":281,"ca":"baixar","es":"bajar","en":"go down","tags":["accions"],"level":1,"source":"CA/ES"},{"id":282,"ca":"regar","es":"regar","en":"water","tags":["accions","natura"],"level":2,"source":"CA/ES"},{"id":283,"ca":"pedalar","es":"pedalear","en":"pedal","tags":["accions","transport","esport"],"level":2,"source":"CA/ES"},{"id":284,"ca":"pescar","es":"pescar","en":"fish","tags":["accions","oci"],"level":2,"source":"CA/ES"},{"id":285,"ca":"xutar","es":"chutar","en":"kick","tags":["accions","esport"],"level":1,"source":"CA/ES"},{"id":286,"ca":"volar","es":"volar","en":"fly","tags":["accions"],"level":1,"source":"CA/ES"},{"id":287,"ca":"tremolar","es":"temblar","en":"tremble","tags":["accions"],"level":2,"source":"CA/ES"},{"id":288,"ca":"abandonar","es":"abandonar","en":"leave","tags":["accions"],"level":3,"source":"CA/ES"},{"id":289,"ca":"detectiu","es":"detective","en":"detective","tags":["persones","oficis","misteri"],"level":2,"source":"ES"},{"id":290,"ca":"carta","es":"carta","en":"letter","tags":["objectes","comunicació"],"level":1,"source":"ES"},{"id":291,"ca":"llanterna","es":"linterna","en":"torch","tags":["objectes","tecnologia","misteri"],"level":1,"source":"ES"},{"id":292,"ca":"misteri","es":"misterio","en":"mystery","tags":["misteri","conceptes"],"level":2,"source":"ES"},{"id":293,"ca":"lògica","es":"lógica","en":"logic","tags":["misteri","conceptes"],"level":2,"source":"ES"},{"id":294,"ca":"molí","es":"molino","en":"mill","tags":["edificis","camp"],"level":2,"source":"ES"},{"id":295,"ca":"pols","es":"polvo","en":"dust","tags":["casa","materials"],"level":2,"source":"ES"},{"id":296,"ca":"altaveu","es":"altavoz","en":"speaker","tags":["tecnologia","objectes"],"level":2,"source":"ES"},{"id":297,"ca":"metall","es":"metal","en":"metal","tags":["materials","objectes"],"level":1,"source":"ES"},{"id":298,"ca":"disfressa","es":"disfraz","en":"costume","tags":["roba","celebracions"],"level":1,"source":"ES"},{"id":299,"ca":"petjada","es":"huella","en":"footprint","tags":["animals","misteri"],"level":2,"source":"ES"},{"id":300,"ca":"marca","es":"marca","en":"mark","tags":["objectes","misteri"],"level":2,"source":"ES"},{"id":301,"ca":"urpa","es":"garra","en":"claw","tags":["animals","cos"],"level":2,"source":"ES"},{"id":302,"ca":"tristesa","es":"tristeza","en":"sadness","tags":["emocions"],"level":2,"source":"ES"},{"id":303,"ca":"roure","es":"roble","en":"oak","tags":["natura","plantes","bosc"],"level":2,"source":"ES"},{"id":304,"ca":"mansió","es":"mansión","en":"mansion","tags":["casa","edificis","misteri"],"level":2,"source":"ES"},{"id":305,"ca":"xemeneia","es":"chimenea","en":"chimney","tags":["casa","edificis"],"level":2,"source":"ES"},{"id":306,"ca":"castell","es":"castillo","en":"castle","tags":["història","edat mitjana","edificis"],"level":2,"source":"CA"},{"id":307,"ca":"muralla","es":"muralla","en":"wall","tags":["història","edat mitjana","edificis"],"level":2,"source":"CA"},{"id":308,"ca":"torre","es":"torre","en":"tower","tags":["història","edat mitjana","edificis"],"level":1,"source":"CA"},{"id":309,"ca":"pont llevadís","es":"puente levadizo","en":"drawbridge","tags":["història","edat mitjana"],"level":3,"source":"CA"},{"id":310,"ca":"cavaller","es":"caballero","en":"knight","tags":["història","edat mitjana","persones"],"level":2,"source":"CA"},{"id":311,"ca":"soldat","es":"soldado","en":"soldier","tags":["història","persones"],"level":2,"source":"CA"},{"id":312,"ca":"servent","es":"sirviente","en":"servant","tags":["història","persones"],"level":3,"source":"CA"},{"id":313,"ca":"senyor feudal","es":"señor feudal","en":"feudal lord","tags":["història","edat mitjana"],"level":3,"source":"CA"},{"id":314,"ca":"magatzem","es":"almacén","en":"storeroom","tags":["història","edificis"],"level":2,"source":"CA"},{"id":315,"ca":"estable","es":"establo","en":"stable","tags":["història","granja","edificis"],"level":2,"source":"CA"},{"id":316,"ca":"pagès","es":"campesino","en":"peasant","tags":["història","camp","persones"],"level":2,"source":"CA"},{"id":317,"ca":"terra","es":"tierra","en":"land","tags":["història","natura","camp"],"level":1,"source":"CA"},{"id":318,"ca":"eina","es":"herramienta","en":"tool","tags":["història","objectes","eines"],"level":1,"source":"CA"},{"id":319,"ca":"romà","es":"romano","en":"Roman","tags":["història","roma","persones"],"level":2,"source":"CA"},{"id":320,"ca":"esponja","es":"esponja","en":"sponge","tags":["història","roma","objectes"],"level":1,"source":"CA"},{"id":321,"ca":"vinagre","es":"vinagre","en":"vinegar","tags":["història","roma","aliments"],"level":2,"source":"CA"},{"id":322,"ca":"amulet","es":"amuleto","en":"amulet","tags":["història","roma","objectes"],"level":2,"source":"CA"},{"id":323,"ca":"collaret","es":"collar","en":"necklace","tags":["història","roba","complements"],"level":1,"source":"CA"},{"id":324,"ca":"cuir","es":"cuero","en":"leather","tags":["història","materials"],"level":2,"source":"CA"},{"id":325,"ca":"talismà","es":"talismán","en":"talisman","tags":["història","roma","objectes"],"level":3,"source":"CA"}];
+const PORTALS = [
+ {id:'animals',label:{ca:'Animals',es:'Animales',en:'Animals'},icon:'🐾',tags:['animals']},
+ {id:'body',label:{ca:'Cos',es:'Cuerpo',en:'Body'},icon:'🧍',tags:['cos']},
+ {id:'clothes',label:{ca:'Roba',es:'Ropa',en:'Clothes'},icon:'👕',tags:['roba']},
+ {id:'home',label:{ca:'Casa',es:'Casa',en:'Home'},icon:'🏠',tags:['casa']},
+ {id:'food',label:{ca:'Aliments',es:'Alimentos',en:'Food'},icon:'🍎',tags:['aliments']},
+ {id:'school',label:{ca:'Escola',es:'Escuela',en:'School'},icon:'🎒',tags:['escola']},
+ {id:'family',label:{ca:'Família',es:'Familia',en:'Family'},icon:'👨‍👩‍👧',tags:['família']},
+ {id:'transport',label:{ca:'Transports',es:'Transportes',en:'Transport'},icon:'🚲',tags:['transport']},
+ {id:'nature',label:{ca:'Natura',es:'Naturaleza',en:'Nature'},icon:'🌳',tags:['natura']},
+ {id:'objects',label:{ca:'Objectes',es:'Objetos',en:'Objects'},icon:'🧰',tags:['objectes']},
+ {id:'sport',label:{ca:'Esports',es:'Deportes',en:'Sports'},icon:'⚽',tags:['esport']},
+ {id:'actions',label:{ca:'Accions',es:'Acciones',en:'Actions'},icon:'🏃',tags:['accions']}
+];
+const PORTAL_ASSETS = {
+  animals:'../assets/sopa-lletres/portals/animals.webp',
+  body:'../assets/sopa-lletres/portals/body.webp',
+  clothes:'../assets/sopa-lletres/portals/clothes.webp',
+  home:'../assets/sopa-lletres/portals/home.webp',
+  food:'../assets/sopa-lletres/portals/food.webp',
+  school:'../assets/sopa-lletres/portals/school.webp',
+  family:'../assets/sopa-lletres/portals/family.webp',
+  transport:'../assets/sopa-lletres/portals/transport.webp',
+  nature:'../assets/sopa-lletres/portals/nature.webp',
+  objects:'../assets/sopa-lletres/portals/objects.webp',
+  sport:'../assets/sopa-lletres/portals/sport.webp',
+  actions:'../assets/sopa-lletres/portals/actions.webp',
+};
+const DIFF = {
+ easy:{label:'Fàcil',size:10,count:6,maxLevel:1,dirs:[[0,1],[1,0]]},
+ normal:{label:'Normal',size:12,count:8,maxLevel:2,dirs:[[0,1],[1,0],[1,1],[-1,1]]},
+ hard:{label:'Difícil',size:14,count:10,maxLevel:3,dirs:[[0,1],[0,-1],[1,0],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]]}
+};
+const LANG_NAME={ca:'Català',es:'Castellano',en:'English'};
+const state={lang:'ca',diff:'easy',portal:null,puzzle:null,found:new Set(),startedAt:0,timerId:null,drag:null};
+const SUPABASE_URL='https://gzbvcxputhkyunemxzjm.supabase.co';
+const SUPABASE_KEY='sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu';
+const PROFILE_ID=new URLSearchParams(location.search).get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';
+let profileData=null;
+let wordProgress={};
+async function sb(path,options={}){const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:options.prefer||'return=representation',...(options.headers||{})}});if(!r.ok)throw new Error(await r.text());const t=await r.text();return t?JSON.parse(t):null;}
+function comboProgress(){return wordProgress?.[state.lang]?.[state.diff]||{portal:1,stars:0};}
+function starsFor(id){const i=PORTALS.findIndex(p=>p.id===id)+1,pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1))),stars=Math.max(0,Math.min(3,Number(pr.stars||0)));if(i<cur)return 3;if(i===cur)return stars;return 0;}
+function isUnlocked(index){const pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1)));return index+1<=cur;}
+async function loadProfileProgress(){if(!PROFILE_ID)return;try{const rows=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=id,coins,wordsearch_progress&limit=1`);if(rows?.[0]){profileData=rows[0];wordProgress=profileData.wordsearch_progress&&typeof profileData.wordsearch_progress==='object'?profileData.wordsearch_progress:{};}}catch(e){console.error('No s’ha pogut carregar el progrés',e);showToast('No s’ha pogut carregar el progrés.');}}
+async function savePortalStar(id){
+  if(!PROFILE_ID||!profileData)throw new Error('Perfil no identificat');
+  const idx=PORTALS.findIndex(p=>p.id===id)+1, pr=comboProgress();
+  let cur=Math.max(1,Math.min(12,Number(pr.portal||1))), before=starsFor(id);
+  if(idx!==cur||before>=3)return {stars:before,reward:0};
+  const now=Math.min(3,before+1), reward=1+(now===3?2:0);
+  wordProgress=JSON.parse(JSON.stringify(wordProgress||{}));
+  wordProgress[state.lang]=wordProgress[state.lang]||{};
+  wordProgress[state.lang][state.diff]=now===3&&cur<12?{portal:cur+1,stars:0}:{portal:cur,stars:now};
+  const fresh=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=coins&limit=1`);
+  const coins=Number(fresh?.[0]?.coins??profileData.coins??0)+reward;
+  await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}`,{method:'PATCH',body:JSON.stringify({wordsearch_progress:wordProgress,coins})});
+  profileData.coins=coins;profileData.wordsearch_progress=wordProgress;
+  return {stars:now,reward};
+}
+
+
+function norm(s){return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function screen(name){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('screen-'+name).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(name!=='game') stopTimer();}
+function currentPortal(){return PORTALS.find(p=>p.id===state.portal)}
+function eligible(portal){const d=DIFF[state.diff];return BANK.filter(w=>w.level<=d.maxLevel && portal.tags.some(t=>w.tags.includes(t)) && norm(w[state.lang]).length>1 && norm(w[state.lang]).length<=d.size);}
+
+function renderPortals(){
+ const el=document.getElementById('portal-grid');el.innerHTML='';
+ PORTALS.forEach((p,i)=>{
+   const stars=starsFor(p.id), unlocked=isUnlocked(i);
+   const b=document.createElement('button');
+   b.className='portal-node'+(unlocked?'':' locked')+(stars===3?' completed':'');
+   b.dataset.portal=p.id;
+   b.setAttribute('aria-label',`${p.label[state.lang]} · ${stars}/3`);
+   const starHtml=[0,1,2].map(n=>`<span class="${n<stars?'earned':'empty'}">★</span>`).join('');
+   b.innerHTML=`<span class="portal-number">${i+1}</span><div class="portal-sprite-wrap"><img class="portal-sprite" src="${PORTAL_ASSETS[p.id]}" alt="${p.label[state.lang]}"><span class="portal-lock">🔒</span></div><span class="portal-name">${p.label[state.lang]}</span><span class="portal-stars">${starHtml}</span>`;
+   if(unlocked)b.addEventListener('click',()=>{state.portal=p.id;startGame();});
+   el.appendChild(b);
+ });
+}function syncDifficultyVisibility(){const normal=document.getElementById('diff-normal');if(normal){normal.hidden=state.lang==='en';normal.setAttribute('aria-hidden',state.lang==='en'?'true':'false');}}document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>{state.lang=b.dataset.lang;syncDifficultyVisibility();screen('difficulty');}));
+document.querySelectorAll('[data-diff]').forEach(b=>b.addEventListener('click',()=>{state.diff=b.dataset.diff;renderPortals();screen('portal');}));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{const where=b.dataset.go;if(where==='portal') renderPortals();screen(where);}));
+
+function canPlace(grid,word,r,c,dr,dc){const n=grid.length;const er=r+dr*(word.length-1), ec=c+dc*(word.length-1);if(er<0||er>=n||ec<0||ec>=n)return false;for(let i=0;i<word.length;i++){const rr=r+dr*i,cc=c+dc*i;if(grid[rr][cc] && grid[rr][cc]!==word[i]) return false;}return true;}
+function buildPuzzle(words,d){for(let restart=0;restart<50;restart++){
+  const grid=Array.from({length:d.size},()=>Array(d.size).fill(''));const placed=[];let ok=true;
+  const sorted=[...words].sort((a,b)=>norm(b[state.lang]).length-norm(a[state.lang]).length);
+  for(const item of sorted){const w=norm(item[state.lang]);let done=false;for(let attempt=0;attempt<500&&!done;attempt++){
+    const [dr,dc]=d.dirs[Math.floor(Math.random()*d.dirs.length)],r=Math.floor(Math.random()*d.size),c=Math.floor(Math.random()*d.size);
+    if(canPlace(grid,w,r,c,dr,dc)){const cells=[];for(let i=0;i<w.length;i++){const rr=r+dr*i,cc=c+dc*i;grid[rr][cc]=w[i];cells.push([rr,cc]);}placed.push({id:item.id,display:item[state.lang],norm:w,cells});done=true;}
+  } if(!done){ok=false;break;}}
+  if(ok){const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let r=0;r<d.size;r++)for(let c=0;c<d.size;c++)if(!grid[r][c])grid[r][c]=letters[Math.floor(Math.random()*letters.length)];return{grid,placed};}
+ } throw new Error('No s’ha pogut generar la sopa.');}
+
+function startGame(){const p=currentPortal(),d=DIFF[state.diff],pool=eligible(p);if(pool.length<d.count){alert('No hi ha prou paraules per aquest portal i dificultat.');return;}const selected=shuffle(pool).slice(0,d.count);state.puzzle=buildPuzzle(selected,d);state.found=new Set();renderGame();screen('game');startTimer();}
+function renderGame(){const p=currentPortal(),d=DIFF[state.diff];document.getElementById('game-icon').innerHTML=`<img class="game-icon-thumb" src="${PORTAL_ASSETS[p.id]}" alt="${p.label[state.lang]}">`;document.getElementById('game-portal').textContent=p.label[state.lang];document.getElementById('game-meta').textContent=`${LANG_NAME[state.lang]} · ${d.label} · ${d.size}×${d.size}`;document.getElementById('found-count').textContent='0';document.getElementById('total-count').textContent=d.count;
+ const g=document.getElementById('word-grid');g.innerHTML='';g.style.setProperty('--n',d.size);g.className='word-grid n'+d.size;
+ state.puzzle.grid.forEach((row,r)=>row.forEach((letter,c)=>{const cell=document.createElement('div');cell.className='cell';cell.textContent=letter;cell.dataset.r=r;cell.dataset.c=c;g.appendChild(cell);}));
+ const list=document.getElementById('word-list');list.innerHTML='';state.puzzle.placed.slice().sort((a,b)=>a.display.localeCompare(b.display,state.lang)).forEach(w=>{const it=document.createElement('div');it.className='word-item';it.dataset.wordId=w.id;it.innerHTML=`<span><span class="dot"></span>&nbsp; ${String(w.display).toUpperCase()}</span><span>·</span>`;list.appendChild(it);});
+ bindGrid();}
+function cellAt(r,c){return document.querySelector(`.cell[data-r="${r}"][data-c="${c}"]`)}
+function lineCells(a,b){const dr=b.r-a.r,dc=b.c-a.c;if(dr===0&&dc===0)return[a];const straight=dr===0||dc===0||Math.abs(dr)===Math.abs(dc);if(!straight)return[];const sr=Math.sign(dr),sc=Math.sign(dc),len=Math.max(Math.abs(dr),Math.abs(dc));const cells=[];for(let i=0;i<=len;i++)cells.push({r:a.r+sr*i,c:a.c+sc*i});return cells;}
+function clearPreview(){document.querySelectorAll('.cell.preview').forEach(x=>x.classList.remove('preview'));}
+function preview(cells){clearPreview();cells.forEach(x=>cellAt(x.r,x.c)?.classList.add('preview'));}
+function bindGrid(){const g=document.getElementById('word-grid');g.onpointerdown=e=>{const c=e.target.closest('.cell');if(!c)return;e.preventDefault();g.setPointerCapture?.(e.pointerId);state.drag={start:{r:+c.dataset.r,c:+c.dataset.c},end:{r:+c.dataset.r,c:+c.dataset.c},pointerId:e.pointerId};preview([state.drag.start]);};
+ g.onpointermove=e=>{if(!state.drag)return;e.preventDefault();const el=document.elementFromPoint(e.clientX,e.clientY)?.closest?.('.cell');if(!el)return;state.drag.end={r:+el.dataset.r,c:+el.dataset.c};preview(lineCells(state.drag.start,state.drag.end));};
+ const finish=e=>{if(!state.drag)return;const cells=lineCells(state.drag.start,state.drag.end);clearPreview();state.drag=null;if(cells.length>1)checkSelection(cells);};g.onpointerup=finish;g.onpointercancel=()=>{clearPreview();state.drag=null;};}
+function checkSelection(cells){const letters=cells.map(x=>state.puzzle.grid[x.r][x.c]).join('');const rev=[...letters].reverse().join('');const match=state.puzzle.placed.find(w=>!state.found.has(w.id)&&(w.norm===letters||w.norm===rev));if(!match)return;state.found.add(match.id);match.cells.forEach(([r,c])=>cellAt(r,c)?.classList.add('found'));const li=document.querySelector(`[data-word-id="${match.id}"]`);if(li)li.classList.add('done');document.getElementById('found-count').textContent=state.found.size;showToast(`✓ ${match.display}`);if(state.found.size===state.puzzle.placed.length)setTimeout(win,350);}
+function showToast(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('show');clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),1000);}
+function startTimer(){stopTimer();state.startedAt=Date.now();document.getElementById('timer').textContent='00:00';state.timerId=setInterval(updateTimer,1000)}
+function stopTimer(){if(state.timerId){clearInterval(state.timerId);state.timerId=null;}}
+function elapsed(){return Math.floor((Date.now()-state.startedAt)/1000)}
+function fmt(sec){return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')}
+function updateTimer(){document.getElementById('timer').textContent=fmt(elapsed())}
+async function win(){
+ const sec=elapsed();stopTimer();
+ const p=currentPortal(), idx=PORTALS.findIndex(x=>x.id===p.id), before=starsFor(p.id);
+ let now=before,reward=0;
+ if(before<3){try{const saved=await savePortalStar(p.id);now=saved.stars;reward=saved.reward;}catch(e){console.error(e);showToast('Error guardant el progrés');}}
+ let msg=`Has trobat les ${state.puzzle.placed.length} paraules en ${fmt(sec)}.`;
+ if(before<3&&now>before){
+   msg+=` Has aconseguit ${'⭐'.repeat(now)}${'☆'.repeat(3-now)} en aquest portal. +${reward} ${reward===1?'moneda':'monedes'}.`;
+   if(now===3 && idx<PORTALS.length-1) msg+=` 🔓 Has desbloquejat ${PORTALS[idx+1].label[state.lang]}!`;
+   if(now===3 && idx===PORTALS.length-1) msg+=` 🏆 Has completat tots els portals!`;
+ }else if(before>=3){msg+=` Aquest portal ja té ⭐⭐⭐.`;}
+ else{msg+=` No s’ha pogut guardar la nova estrella. Torna-ho a provar.`;}
+ document.getElementById('win-text').textContent=msg;
+ document.getElementById('win-overlay').classList.add('show');
+}
+document.getElementById('new-game').addEventListener('click',startGame);document.getElementById('again').addEventListener('click',()=>{document.getElementById('win-overlay').classList.remove('show');startGame();});document.getElementById('choose-portal').addEventListener('click',()=>{document.getElementById('win-overlay').classList.remove('show');renderPortals();screen('portal');});
+
+
+const fullscreenBtn=document.getElementById('fullscreen-game');
+const gameScreen=document.getElementById('screen-game');
+function syncFullscreenButton(){
+  if(!fullscreenBtn)return;
+  const active=document.fullscreenElement===gameScreen;
+  fullscreenBtn.textContent=active?'✕':'⛶';
+  fullscreenBtn.setAttribute('aria-label',active?'Sortir de pantalla completa':'Pantalla completa');
+  fullscreenBtn.setAttribute('title',active?'Sortir de pantalla completa':'Pantalla completa');
+}
+if(fullscreenBtn){
+  fullscreenBtn.addEventListener('click',async()=>{
+    try{
+      if(document.fullscreenElement===gameScreen){
+        await document.exitFullscreen?.();
+      }else if(gameScreen.requestFullscreen){
+        await gameScreen.requestFullscreen();
+      }else{
+        showToast('El navegador no permet pantalla completa.');
+      }
+    }catch(e){showToast('No s’ha pogut activar la pantalla completa.');}
+  });
+  document.addEventListener('fullscreenchange',syncFullscreenButton);
+}
+
+document.getElementById('return-fasia').addEventListener('click',()=>{
+  const params=new URLSearchParams(window.location.search);
+  const pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';
+  const target='../index.html?return=profile'+(pid?'&profile='+encodeURIComponent(pid):'');
+  window.location.href=target;
+});
+
+document.getElementById('cover-play').addEventListener('click',async()=>{
+  await loadProfileProgress();
+  document.getElementById('screen-cover').classList.remove('active');
+  document.getElementById('screen-language').classList.add('active');
+});
+
+</script>
+</body>
+</html>

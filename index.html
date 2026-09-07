@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.59 · PORTALS DE LES LLETRES</title>
+<title>Fasia Verse · V0.14.60 · PORTALS SUPABASE</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3186,6 +3186,8 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 .game-choice-words .game-choice-content{max-width:72%}
 
 .game-choice-soon{
+  grid-column:1/-1;
+  min-height:170px;
   cursor:default;
   background:
     linear-gradient(145deg,#ebe9f2,#d8d4e4);
@@ -4932,12 +4934,12 @@ function normalizeShopProfile(p){
 async function loadProfileByName(name){
   const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
   try{
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }catch(e){
     console.warn("Desafiaments: challenge_state encara no disponible; carrego el perfil existent.",e);
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }
@@ -4945,11 +4947,11 @@ async function loadProfileByName(name){
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
   try{
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }catch(e){
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }
@@ -7167,10 +7169,10 @@ $("#startGame").onclick=async()=>{
   try{
     let rows;
     try{
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     }catch(shopErr){
       /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     }
 
     if(!rows || !rows[0] || rows[0].role!=="student") throw new Error("Perfil no trobat");
