@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Portals de les Lletres · V0.14.65 · PROGRÉS SEPARAT</title>
+<title>Portals de les Lletres · V0.14.66 · BANDERES NETES</title>
 <style>
 :root{
   --bg:#061525; --bg2:#0a2741; --panel:#0b2138; --panel2:#102d49;
@@ -128,10 +128,15 @@ button{font:inherit}
 .language-portals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:end}
 .language-portal{border:0;background:transparent;color:var(--text);cursor:pointer;padding:8px;border-radius:22px;transition:.18s}
 .language-portal:hover{transform:translateY(-5px);background:rgba(49,232,255,.05)}
-.language-portal img{width:100%;max-height:330px;object-fit:contain;display:block;filter:drop-shadow(0 18px 18px rgba(0,0,0,.35));transition:.18s}
-.language-portal:hover img{filter:drop-shadow(0 18px 22px rgba(49,232,255,.28));transform:scale(1.025)}
+.language-flag{width:min(100%,310px);aspect-ratio:3/2;margin:18px auto 24px;border-radius:16px;display:block;overflow:hidden;box-shadow:0 18px 24px rgba(0,0,0,.38);border:3px solid rgba(255,255,255,.78);transition:.18s;background:#fff}
+.language-portal:hover .language-flag{box-shadow:0 18px 28px rgba(49,232,255,.30);transform:scale(1.025)}
+.flag-ca{background:repeating-linear-gradient(to bottom,#f6c800 0 11.111%,#d71920 11.111% 22.222%)}
+.flag-es{background:linear-gradient(to bottom,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75% 100%)}
+.flag-en{position:relative;background:#012169}
+.flag-en:before{content:"";position:absolute;inset:0;background:linear-gradient(33.69deg,transparent 43%,#fff 43% 47%,#c8102e 47% 50%,#fff 50% 54%,transparent 54%),linear-gradient(-33.69deg,transparent 43%,#fff 43% 47%,#c8102e 47% 50%,#fff 50% 54%,transparent 54%)}
+.flag-en:after{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent 38%,#fff 38% 44%,#c8102e 44% 56%,#fff 56% 62%,transparent 62%),linear-gradient(to bottom,transparent 32%,#fff 32% 41%,#c8102e 41% 59%,#fff 59% 68%,transparent 68%)}
 .language-label{display:inline-block;margin-top:-4px;padding:9px 20px;border-radius:13px;background:linear-gradient(180deg,#173d5f,#0b233b);border:1px solid rgba(104,192,244,.42);font-weight:1000;font-size:18px;letter-spacing:.03em;box-shadow:0 8px 18px rgba(0,0,0,.25)}
-@media(max-width:700px){.language-portals{grid-template-columns:1fr;gap:4px}.language-portal img{max-height:220px}.language-label{font-size:15px}}
+@media(max-width:700px){.language-portals{grid-template-columns:1fr;gap:4px}.language-flag{width:min(82vw,300px)}.language-label{font-size:15px}}
 
 </style>
 </head>
@@ -155,9 +160,9 @@ button{font:inherit}
     <div class="selection-shell">
       <div class="selection-title"><span class="selection-num">1</span><div><h2>ESCULL L’IDIOMA</h2><p>Travessa el portal de la llengua amb què vols jugar</p></div></div>
       <div class="language-portals">
-        <button class="language-portal" data-lang="ca"><img src="../assets/sopa-lletres/languages/ca.webp" alt="Portal català"><span class="language-label">CATALÀ</span></button>
-        <button class="language-portal" data-lang="es"><img src="../assets/sopa-lletres/languages/es.webp" alt="Portal castellà"><span class="language-label">CASTELLÀ</span></button>
-        <button class="language-portal" data-lang="en"><img src="../assets/sopa-lletres/languages/en.webp" alt="Portal anglès"><span class="language-label">ENGLISH</span></button>
+        <button class="language-portal" data-lang="ca"><span class="language-flag flag-ca" role="img" aria-label="Bandera catalana"></span><span class="language-label">CATALÀ</span></button>
+        <button class="language-portal" data-lang="es"><span class="language-flag flag-es" role="img" aria-label="Bandera d’Espanya"></span><span class="language-label">CASTELLÀ</span></button>
+        <button class="language-portal" data-lang="en"><span class="language-flag flag-en" role="img" aria-label="Bandera del Regne Unit"></span><span class="language-label">ENGLISH</span></button>
       </div>
     </div>
   </section>
