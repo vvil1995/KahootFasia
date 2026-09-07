@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.61 · PJ TARGETA ADAPTADA</title>
+<title>Fasia Verse · V0.14.64 · DESAFIAMENTS PORTALS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3779,7 +3779,7 @@ button.profile-collection-card{cursor:pointer}
 .challenges-summary{display:flex;align-items:baseline;gap:7px;padding:10px 16px;border-radius:18px;background:#fff;border:2px solid #e4ded7;font-weight:950}.challenges-summary span{font-size:12px;color:#777}.challenges-summary b{font-size:25px;color:#6f46ea}
 .challenges-hero{padding:24px 28px;border-radius:28px;background:linear-gradient(135deg,#281b66,#5d2f9d 58%,#9b4d19);color:#fff;box-shadow:0 16px 36px rgba(47,28,91,.18)}
 .challenges-hero h2{margin:9px 0 5px;font-size:clamp(34px,5vw,62px);font-weight:1000;letter-spacing:.02em}.challenges-hero p{margin:0;font-weight:900;color:#eee8ff}
-.challenge-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.challenge-tab{border:2px solid #ddd6cf;background:#fff;border-radius:17px;padding:13px 10px;font-weight:1000;cursor:pointer;color:#342d42}.challenge-tab.active{background:#2f205f;color:#fff;border-color:#7357f4;box-shadow:0 8px 22px rgba(75,49,150,.18)}
+.challenge-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0}.challenge-tab{border:2px solid #ddd6cf;background:#fff;border-radius:17px;padding:13px 10px;font-weight:1000;cursor:pointer;color:#342d42}.challenge-tab.active{background:#2f205f;color:#fff;border-color:#7357f4;box-shadow:0 8px 22px rgba(75,49,150,.18)}
 .challenges-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.challenge-card{background:#fff;border:2px solid #e1dbd4;border-radius:22px;padding:17px;display:grid;grid-template-columns:58px minmax(0,1fr);gap:13px;align-items:start;box-shadow:0 8px 20px rgba(51,43,71,.06)}.challenge-card.done{border-color:#65c887;background:linear-gradient(135deg,#f4fff7,#fff)}
 .challenge-card-icon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;background:#eee9ff}.challenge-card.done .challenge-card-icon{background:#dcfce7}.challenge-card h3{margin:1px 0 5px;font-size:20px}.challenge-condition{font-size:13px;color:#6e6876;font-weight:800;min-height:31px}.challenge-progress-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px;font-weight:950}.challenge-progress-track{height:10px;background:#eee9e3;border-radius:999px;overflow:hidden;margin-top:6px}.challenge-progress-fill{height:100%;background:linear-gradient(90deg,#6647e8,#aa54ef);border-radius:999px}.challenge-card.done .challenge-progress-fill{background:linear-gradient(90deg,#24a35a,#5bd483)}.challenge-reward{margin-top:11px;padding-top:10px;border-top:1px solid #ebe6e1;font-size:13px;font-weight:950;color:#4a3e65}.challenge-done-label{color:#168447}
 .challenge-puzzle-panel{margin:0 0 16px;padding:18px;border-radius:23px;background:linear-gradient(135deg,#17132e,#30205d);color:#fff;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.challenge-puzzle-visual{height:112px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 38%,#9d8cff 0 12%,#483a7e 13% 32%,#17132e 33%);filter:blur(5px);opacity:.72}.challenge-puzzle-visual:after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:1000;filter:blur(0);color:#fff}.challenge-puzzle-panel h3{margin:0 0 6px;font-size:25px}.challenge-puzzle-count{font-size:34px;font-weight:1000;color:#ffd45d}.challenge-puzzle-panel p{margin:4px 0;color:#d9d1f6;font-weight:800}.challenge-puzzle-panel.complete{background:linear-gradient(135deg,#183b2a,#4a2b79)}
@@ -3828,6 +3828,83 @@ button.profile-collection-card{cursor:pointer}
   #studentQuestionText,#questionText{font-size:clamp(20px,2.2vw,30px)!important;}
 }
 </style>
+
+<style id="fv-v01462-greece-pj-fixes">
+/* V0.14.62 · Grècia: visuals verticals de 4 opcions en una sola fila */
+#studentAnswers.visual-row4,
+#answers.visual-row4{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  width:min(1280px,100%)!important;
+  max-width:1280px!important;
+  gap:12px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+#studentAnswers.visual-row4 .visual-choice,
+#answers.visual-row4 .visual-choice{
+  min-width:0!important;
+  min-height:300px!important;
+  padding:8px!important;
+}
+#studentAnswers.visual-row4 .visual-choice img,
+#answers.visual-row4 .visual-choice img{
+  width:100%!important;
+  max-width:none!important;
+  height:235px!important;
+  object-fit:contain!important;
+  transform:none!important;
+}
+#studentAnswers.visual-row4 .visual-choice-label,
+#answers.visual-row4 .visual-choice-label{
+  font-size:17px!important;
+  line-height:1.1!important;
+  min-height:20px;
+}
+
+/* El rètol de la pregunta del Preu Just: contrast clar i mida correcta */
+#priceTeacherQuestion .pj-question-card > .chip{
+  align-self:center!important;
+  display:inline-flex!important;
+  width:auto!important;
+  max-width:max-content!important;
+  padding:9px 18px!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg,#7357f3,#5438d3)!important;
+  border:1px solid rgba(255,255,255,.32)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  letter-spacing:.02em!important;
+  box-shadow:0 8px 22px rgba(68,47,190,.28)!important;
+  margin-bottom:2px!important;
+}
+#priceTeacherQuestion .pj-question-card > h2{
+  margin-top:14px!important;
+}
+
+@media(max-width:900px){
+  #studentAnswers.visual-row4,
+  #answers.visual-row4{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    width:min(760px,100%)!important;
+  }
+  #studentAnswers.visual-row4 .visual-choice img,
+  #answers.visual-row4 .visual-choice img{height:190px!important}
+}
+</style>
+
+
+<style id="fv-v01463-roma">
+#romeSessions .hero{background:linear-gradient(145deg,rgba(42,21,16,.97),rgba(16,15,38,.97))!important;border:2px solid rgba(218,158,74,.55)!important;color:#fff!important}
+#romeSessions .roman-session-card{cursor:pointer;border-color:rgba(218,158,74,.42)!important;background:linear-gradient(145deg,#fffaf3,#fff)!important;transition:.18s ease}
+#romeSessions .roman-session-card:hover{transform:translateY(-3px);border-color:#d49a4a!important;box-shadow:0 16px 34px rgba(90,50,20,.13)}
+#romeSessions .roman-session-card .session-number{color:#9d5c1f!important}
+.history-era-card[data-era="roma"]{border-color:rgba(218,158,74,.65)!important}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -3941,6 +4018,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="kahoot" type="button">🧪 KAHOOT</button>
     <button class="challenge-tab" data-challenge-area="pj" type="button">💰 PREU JUST</button>
     <button class="challenge-tab" data-challenge-area="snake" type="button">🐍 ANIMAL SNAKE</button>
+    <button class="challenge-tab" data-challenge-area="portals" type="button">🌀 PORTALS</button>
   </div>
   <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
   <div id="challengesGrid" class="challenges-grid"></div>
@@ -4119,8 +4197,8 @@ button.profile-collection-card{cursor:pointer}
   <div class="grid grid2 history-era-grid" style="margin-top:18px">
     <div class="card history-era-card" data-era="prehistoria"><div class="history-era-icon">🦴</div><h3>PREHISTÒRIA</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
     <div class="card history-era-card" data-era="egipte"><div class="history-era-icon">𓂀</div><h3>EGIPTE</h3><p class="muted">REPÀS · PROPERAMENT</p></div>
-    <div class="card history-era-card" data-era="grecia"><div class="history-era-icon">🏛️</div><h3>GRÈCIA</h3><p class="muted">REPÀS · 1 SESSIÓ ACTIVA</p></div>
-    <div class="card history-era-card" data-era="roma"><div class="history-era-icon">🦅</div><h3>ROMA</h3><p class="muted">PROPERAMENT</p></div>
+    <div class="card history-era-card" data-era="grecia"><div class="history-era-icon">🏛️</div><h3>GRÈCIA</h3><p class="muted">REPÀS · 3 SESSIONS</p></div>
+    <div class="card history-era-card active-history-era" data-era="roma"><div class="history-era-icon">🦅</div><h3>ROMA</h3><p class="muted">REPÀS · 8 SESSIONS</p></div>
   </div>
 </div></section>
 
@@ -4131,6 +4209,20 @@ button.profile-collection-card{cursor:pointer}
     <div class="card session-card active-session greece-session-card" data-session="G2"><div class="session-number">SESSIÓ 2</div><h3>GRÈCIA I ELS JOCS OLÍMPICS</h3><p class="muted">15 PREGUNTES</p></div>
 <div class="card session-card active-session greece-session-card" data-session="G3"><div class="session-number">SESSIÓ 3</div><h3>ELS DÉUS GRECS</h3><p class="muted">15 PREGUNTES</p></div>
     
+  </div>
+</div></section>
+
+<section id="romeSessions" class="screen"><div class="inner">
+  <div class="hero row"><div><span class="chip">🦅 ROMA</span><h2 class="big" style="margin-top:10px">REPÀS DE L’ANTIGA ROMA</h2><p class="muted">8 SESSIONS · 7 DE 10 PREGUNTES · RELIGIÓ 20</p></div><button id="backRomeEras" class="btn secondary">← TORNAR A HISTÒRIA</button></div>
+  <div class="grid grid3" style="margin-top:18px">
+    <div class="card session-card roman-session-card" data-session="R1"><div class="session-number">SESSIÓ 1</div><h3>INICIS DE ROMA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R2"><div class="session-number">SESSIÓ 2</div><h3>LA SOCIETAT ROMANA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R3"><div class="session-number">SESSIÓ 3</div><h3>ELS GOVERNS DE ROMA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R4"><div class="session-number">SESSIÓ 4</div><h3>L’ECONOMIA ROMANA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R5"><div class="session-number">SESSIÓ 5</div><h3>LES CASES ROMANES</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R6"><div class="session-number">SESSIÓ 6</div><h3>L’ALIMENTACIÓ ROMANA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R7"><div class="session-number">SESSIÓ 7</div><h3>L’OCI A ROMA</h3><p class="muted">10 PREGUNTES · EN PREPARACIÓ</p></div>
+    <div class="card session-card roman-session-card" data-session="R8"><div class="session-number">SESSIÓ 8</div><h3>LA RELIGIÓ ROMANA</h3><p class="muted">20 PREGUNTES · EN PREPARACIÓ</p></div>
   </div>
 </div></section>
 
@@ -4558,7 +4650,19 @@ const CHALLENGE_CATALOG=[
   {id:"sn_recollector",area:"snake",icon:"🪙",name:"RECOL·LECTOR",condition:"Aconsegueix 20 monedes Tucà acumulades.",stat:"snake.tucanTotal",target:20,reward:{type:"title",id:"recollector",label:"🏷️ Títol RECOL·LECTOR"}},
   {id:"sn_paradoxa",area:"snake",icon:"🌀",name:"PARADOXA TEMPORAL",condition:"Provoca una paradoxa en 3 partides diferents (61 animals: Moderna → Prehistòria).",stat:"snake.paradoxGames",target:3,reward:{type:"fragment",puzzle:"snake",id:"sn_paradoxa3",label:"🧩 Fragment de puzle"}},
   {id:"sn_tucans",area:"snake",icon:"🐦",name:"CAÇADOR DE TUCANS",condition:"Aconsegueix 5 monedes Tucà en una sola partida.",stat:"snake.tucanGameMax",target:5,reward:{type:"fragment",puzzle:"snake",id:"sn_tucans5",label:"🧩 Fragment de puzle"}},
-  {id:"sn_supervivent",area:"snake",icon:"⏱️",name:"SUPERVIVENT",condition:"Sobreviu 3 minuts en una partida.",stat:"snake.survivalMaxSec",target:180,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}}
+  {id:"sn_supervivent",area:"snake",icon:"⏱️",name:"SUPERVIVENT",condition:"Sobreviu 3 minuts en una partida.",stat:"snake.survivalMaxSec",target:180,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+
+  {id:"ws_primer_portal",area:"portals",icon:"🚪",name:"PRIMER PORTAL",condition:"Completa 1 portal amb ⭐⭐⭐.",stat:"portals.completedDistinct",target:1,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
+  {id:"ws_explorador",area:"portals",icon:"🧭",name:"EXPLORADOR",condition:"Completa 3 portals diferents amb ⭐⭐⭐.",stat:"portals.completedDistinct",target:3,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"ws_viatger",area:"portals",icon:"🗺️",name:"VIATGER DEL VERSE",condition:"Completa 6 portals diferents amb ⭐⭐⭐.",stat:"portals.completedDistinct",target:6,reward:{type:"title",id:"viatger_del_verse",label:"🏷️ Títol VIATGER DEL VERSE"}},
+  {id:"ws_mestre",area:"portals",icon:"🖼️",name:"MESTRE DELS PORTALS",condition:"Completa els 12 portals en qualsevol mode.",stat:"portals.completedDistinct",target:12,reward:{type:"exclusive_frame",id:"marc_llegenda_portals",label:"🖼️ Marc LLEGENDA DELS PORTALS"}},
+  {id:"ws_rapid",area:"portals",icon:"⚡",name:"SENSE PERDRE TEMPS",condition:"Completa una sopa en menys d'1 minut.",stat:"portals.underMinute",target:1,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"ws_cacaparaules",area:"portals",icon:"🔎",name:"CAÇAPARAULES",condition:"Troba 100 paraules acumulades.",stat:"portals.wordsFound",target:100,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
+  {id:"ws_poliglota",area:"portals",icon:"🌍",name:"POLÍGLOTA",condition:"Completa almenys 1 portal en CAT, ESP i ANG.",stat:"portals.languagesCompleted",target:3,reward:{type:"title",id:"poliglota",label:"🏷️ Títol POLÍGLOTA"}},
+  {id:"ws_doble",area:"portals",icon:"🌟",name:"DOBLE EXPLORADOR",condition:"Completa els 12 portals en 2 modes diferents.",stat:"portals.fullModes",target:2,reward:{type:"title",id:"doble_explorador",label:"🏷️ Títol DOBLE EXPLORADOR"}},
+  {id:"ws_llegenda_cat",area:"portals",icon:"🐉",name:"LLEGENDA DELS PORTALS CAT",condition:"Completa CAT Fàcil + Normal al 100%.",stat:"portals.legendCat",target:1,reward:{type:"exclusive",id:"drac_portals_cat",label:"🐉 Drac · avatar exclusiu CAT"}},
+  {id:"ws_llegenda_esp",area:"portals",icon:"🐾",name:"LLEGENDA DELS PORTALS ESP",condition:"Completa ESP Fàcil + Normal al 100%.",stat:"portals.legendEsp",target:1,reward:{type:"exclusive",id:"linx_portals_esp",label:"🐾 Linx ibèric · avatar exclusiu ESP"}},
+  {id:"ws_llegenda_ang",area:"portals",icon:"🦊",name:"LLEGENDA DELS PORTALS ANG",condition:"Completa English Fàcil al 100%.",stat:"portals.legendAng",target:1,reward:{type:"exclusive",id:"guineu_portals_ang",label:"🦊 Guineu · avatar exclusiu ANG"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4573,13 +4677,17 @@ const CHALLENGE_REWARD_ASSETS={
   colom_olimpic:"assets/avatars/exclusius/colom_olimpic.webp",
   marc_ciencia:"assets/marcs/marc_ciencia.webp",
   marc_preu_just:"assets/marcs/marc_preu_just.webp",
-  marc_regres_futur:"assets/marcs/marc_regres_futur.webp"
+  marc_regres_futur:"assets/marcs/marc_regres_futur.webp",
+  drac_portals_cat:"assets/avatars/exclusius/drac_portals_cat.webp",
+  linx_portals_esp:"assets/avatars/exclusius/linx_portals_esp.webp",
+  guineu_portals_ang:"assets/avatars/exclusius/guineu_portals_ang.webp",
+  marc_llegenda_portals:"assets/marcs/marc_llegenda_portals.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -4619,11 +4727,37 @@ async function grantChallengeReward(state,ch){
       challengeQueue(state,{kind:"puzzle",icon:"🧩",title:`${cfg.reward} DESBLOQUEJAT!`,text:`Has completat ${cfg.name}.`,special:`AVATAR EXCLUSIU · ${cfg.reward}`,rewardId:cfg.exclusiveId,image:challengeRewardAsset(cfg.exclusiveId)});
     }
   }
-  if(r.type==="exclusive"&&r.id&&!state.unlockedExclusives.includes(r.id))state.unlockedExclusives.push(r.id);
-  if(r.type==="exclusive_frame"&&r.id&&!state.unlockedExclusiveFrames.includes(r.id))state.unlockedExclusiveFrames.push(r.id);
+  if(r.type==="exclusive"&&r.id&&!state.unlockedExclusives.includes(r.id)){
+    state.unlockedExclusives.push(r.id);
+    const owned=[...(currentProfile.owned_skins||[])];if(!owned.includes(r.id)){owned.push(r.id);await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",body:JSON.stringify({owned_skins:owned})});currentProfile.owned_skins=owned;}
+  }
+  if(r.type==="exclusive_frame"&&r.id&&!state.unlockedExclusiveFrames.includes(r.id)){
+    state.unlockedExclusiveFrames.push(r.id);
+    const owned=[...(currentProfile.owned_frames||[])];if(!owned.includes(r.id)){owned.push(r.id);await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",body:JSON.stringify({owned_frames:owned})});currentProfile.owned_frames=owned;}
+  }
   challengeQueue(state,{kind:"challenge",icon:ch.icon||"🎯",title:ch.name,text:`Recompensa: ${challengeRewardText(r)}`,rewardId:r.id||"",image:challengeRewardAsset(r.id)});
 }
+function portalComboCompleted(pr){return !!pr && Number(pr.portal||1)===12 && Number(pr.stars||0)>=3}
+function syncPortalChallengeStats(state){
+  const wp=currentProfile?.wordsearch_progress||{};
+  const combos=[["ca","easy"],["ca","normal"],["es","easy"],["es","normal"],["en","easy"]];
+  const completedSets=[];
+  for(const [lang,diff] of combos){
+    const pr=wp?.[lang]?.[diff]||{portal:1,stars:0};
+    const cur=Math.max(1,Math.min(12,Number(pr.portal||1))), stars=Math.max(0,Math.min(3,Number(pr.stars||0)));
+    const set=new Set(); for(let i=1;i<cur;i++)set.add(i); if(stars>=3)set.add(cur); completedSets.push({lang,diff,set,full:portalComboCompleted(pr)});
+  }
+  const distinct=new Set();completedSets.forEach(x=>x.set.forEach(i=>distinct.add(i)));
+  const langs=new Set(completedSets.filter(x=>x.set.size>0).map(x=>x.lang));
+  const ps=state.stats.portals||(state.stats.portals={});
+  ps.completedDistinct=distinct.size;ps.languagesCompleted=langs.size;ps.fullModes=completedSets.filter(x=>x.full).length;
+  ps.legendCat=completedSets.some(x=>x.lang==="ca"&&x.diff==="easy"&&x.full)&&completedSets.some(x=>x.lang==="ca"&&x.diff==="normal"&&x.full)?1:0;
+  ps.legendEsp=completedSets.some(x=>x.lang==="es"&&x.diff==="easy"&&x.full)&&completedSets.some(x=>x.lang==="es"&&x.diff==="normal"&&x.full)?1:0;
+  ps.legendAng=completedSets.some(x=>x.lang==="en"&&x.diff==="easy"&&x.full)?1:0;
+  return state;
+}
 async function evaluateChallenges(state=challengeState()){
+  syncPortalChallengeStats(state);
   const completed=new Set(state.completed||[]);let changed=false;
   for(const ch of CHALLENGE_CATALOG){
     if(completed.has(ch.id))continue;
@@ -4763,14 +4897,16 @@ const api=async(path,options={})=>{
 };
 
 const TROPHY_IMAGES={'S1_gold':'assets/trofeus/s1_gold.webp','S1_silver':'assets/trofeus/s1_silver.webp','S1_bronze':'assets/trofeus/s1_bronze.webp','S1_green':'assets/trofeus/s1_green.webp','S2_gold':'assets/trofeus/s2_gold.webp','S2_silver':'assets/trofeus/s2_silver.webp','S2_bronze':'assets/trofeus/s2_bronze.webp','S2_green':'assets/trofeus/s2_green.webp','S3_gold':'assets/trofeus/s3_gold.webp','S3_silver':'assets/trofeus/s3_silver.webp','S3_bronze':'assets/trofeus/s3_bronze.webp','S3_green':'assets/trofeus/s3_green.webp','S4_gold':'assets/trofeus/s4_gold.webp','S4_silver':'assets/trofeus/s4_silver.webp','S4_bronze':'assets/trofeus/s4_bronze.webp','S4_green':'assets/trofeus/s4_green.webp','S5_gold':'assets/trofeus/s5_gold.webp','S5_silver':'assets/trofeus/s5_silver.webp','S5_bronze':'assets/trofeus/s5_bronze.webp','S5_green':'assets/trofeus/s5_green.webp','S6_gold':'assets/trofeus/s6_gold.webp','S6_silver':'assets/trofeus/s6_silver.webp','S6_bronze':'assets/trofeus/s6_bronze.webp','S6_green':'assets/trofeus/s6_green.webp','S7_gold':'assets/trofeus/s7_gold.webp','S7_silver':'assets/trofeus/s7_silver.webp','S7_bronze':'assets/trofeus/s7_bronze.webp','S7_green':'assets/trofeus/s7_green.webp','S8_gold':'assets/trofeus/s8_gold.webp','S8_silver':'assets/trofeus/s8_silver.webp','S8_bronze':'assets/trofeus/s8_bronze.webp','S8_green':'assets/trofeus/s8_green.webp','S9_gold':'assets/trofeus/s9_gold.webp','S9_silver':'assets/trofeus/s9_silver.webp','S9_bronze':'assets/trofeus/s9_bronze.webp','S9_green':'assets/trofeus/s9_green.webp','S10_gold':'assets/trofeus/s10_gold.webp','S10_silver':'assets/trofeus/s10_silver.webp','S10_bronze':'assets/trofeus/s10_bronze.webp','S10_green':'assets/trofeus/s10_green.webp','S11_gold':'assets/trofeus/s11_gold.webp','S11_silver':'assets/trofeus/s11_silver.webp','S11_bronze':'assets/trofeus/s11_bronze.webp','S11_green':'assets/trofeus/s11_green.webp','S12_gold':'assets/trofeus/s12_gold.webp','S12_silver':'assets/trofeus/s12_silver.webp','S12_bronze':'assets/trofeus/s12_bronze.webp','S12_green':'assets/trofeus/s12_green.webp','S13_gold':'assets/trofeus/s13_gold.webp','S13_silver':'assets/trofeus/s13_silver.webp','S13_bronze':'assets/trofeus/s13_bronze.webp','S13_green':'assets/trofeus/s13_green.webp','S14_gold':'assets/trofeus/s14_gold.webp','S14_silver':'assets/trofeus/s14_silver.webp','S14_bronze':'assets/trofeus/s14_bronze.webp','S14_green':'assets/trofeus/s14_green.webp'};
-const TROPHY_LABELS={gold:"OR",silver:"PLATA",bronze:"BRONZE",green:"VERD"};const PJ_TROPHY_IMAGES={r1:{gold:"assets/preu_just/trofeus/r1_gold.webp",silver:"assets/preu_just/trofeus/r1_silver.webp",bronze:"assets/preu_just/trofeus/r1_bronze.webp",green:"assets/preu_just/trofeus/r1_green.webp"},r2:{gold:"assets/preu_just/trofeus/r2_gold.webp",silver:"assets/preu_just/trofeus/r2_silver.webp",bronze:"assets/preu_just/trofeus/r2_bronze.webp",green:"assets/preu_just/trofeus/r2_green.webp"},r3:{gold:"assets/preu_just/trofeus/r3_gold.webp",silver:"assets/preu_just/trofeus/r3_silver.webp",bronze:"assets/preu_just/trofeus/r3_bronze.webp",green:"assets/preu_just/trofeus/r3_green.webp"},r4:{gold:"assets/preu_just/trofeus/r4_gold.webp",silver:"assets/preu_just/trofeus/r4_silver.webp",bronze:"assets/preu_just/trofeus/r4_bronze.webp",green:"assets/preu_just/trofeus/r4_green.webp"},r5:{gold:"assets/preu_just/trofeus/r5_gold.webp",silver:"assets/preu_just/trofeus/r5_silver.webp",bronze:"assets/preu_just/trofeus/r5_bronze.webp",green:"assets/preu_just/trofeus/r5_green.webp"},r6:{gold:"assets/preu_just/trofeus/r6_gold.webp",silver:"assets/preu_just/trofeus/r6_silver.webp",bronze:"assets/preu_just/trofeus/r6_bronze.webp",green:"assets/preu_just/trofeus/r6_green.webp"},r7:{gold:"assets/preu_just/trofeus/r7_gold.webp",silver:"assets/preu_just/trofeus/r7_silver.webp",bronze:"assets/preu_just/trofeus/r7_bronze.webp",green:"assets/preu_just/trofeus/r7_green.webp"},r8:{gold:"assets/preu_just/trofeus/r8_gold.webp",silver:"assets/preu_just/trofeus/r8_silver.webp",bronze:"assets/preu_just/trofeus/r8_bronze.webp",green:"assets/preu_just/trofeus/r8_green.webp"},r9:{gold:"assets/preu_just/trofeus/r9_gold.webp",silver:"assets/preu_just/trofeus/r9_silver.webp",bronze:"assets/preu_just/trofeus/r9_bronze.webp",green:"assets/preu_just/trofeus/r9_green.webp"}};
+const TROPHY_LABELS={gold:"OR",silver:"PLATA",bronze:"BRONZE",green:"VERD"};
+const HISTORY_TROPHY_IMAGES={"G1_gold":"assets/history/grecia/trophies/g1_gold.webp","G1_silver":"assets/history/grecia/trophies/g1_silver.webp","G1_bronze":"assets/history/grecia/trophies/g1_bronze.webp","G1_green":"assets/history/grecia/trophies/g1_wood.webp","G2_gold":"assets/history/grecia/trophies/g2_gold.webp","G2_silver":"assets/history/grecia/trophies/g2_silver.webp","G2_bronze":"assets/history/grecia/trophies/g2_bronze.webp","G2_green":"assets/history/grecia/trophies/g2_wood.webp","G3_gold":"assets/history/grecia/trophies/g3_gold.webp","G3_silver":"assets/history/grecia/trophies/g3_silver.webp","G3_bronze":"assets/history/grecia/trophies/g3_bronze.webp","G3_green":"assets/history/grecia/trophies/g3_wood.webp","R1_gold":"assets/history/roma/trophies/r1_gold.webp","R1_silver":"assets/history/roma/trophies/r1_silver.webp","R1_bronze":"assets/history/roma/trophies/r1_bronze.webp","R1_green":"assets/history/roma/trophies/r1_green.webp","R2_gold":"assets/history/roma/trophies/r2_gold.webp","R2_silver":"assets/history/roma/trophies/r2_silver.webp","R2_bronze":"assets/history/roma/trophies/r2_bronze.webp","R2_green":"assets/history/roma/trophies/r2_green.webp","R3_gold":"assets/history/roma/trophies/r3_gold.webp","R3_silver":"assets/history/roma/trophies/r3_silver.webp","R3_bronze":"assets/history/roma/trophies/r3_bronze.webp","R3_green":"assets/history/roma/trophies/r3_green.webp","R4_gold":"assets/history/roma/trophies/r4_gold.webp","R4_silver":"assets/history/roma/trophies/r4_silver.webp","R4_bronze":"assets/history/roma/trophies/r4_bronze.webp","R4_green":"assets/history/roma/trophies/r4_green.webp","R5_gold":"assets/history/roma/trophies/r5_gold.webp","R5_silver":"assets/history/roma/trophies/r5_silver.webp","R5_bronze":"assets/history/roma/trophies/r5_bronze.webp","R5_green":"assets/history/roma/trophies/r5_green.webp","R6_gold":"assets/history/roma/trophies/r6_gold.webp","R6_silver":"assets/history/roma/trophies/r6_silver.webp","R6_bronze":"assets/history/roma/trophies/r6_bronze.webp","R6_green":"assets/history/roma/trophies/r6_green.webp","R7_gold":"assets/history/roma/trophies/r7_gold.webp","R7_silver":"assets/history/roma/trophies/r7_silver.webp","R7_bronze":"assets/history/roma/trophies/r7_bronze.webp","R7_green":"assets/history/roma/trophies/r7_green.webp","R8_gold":"assets/history/roma/trophies/r8_gold.webp","R8_silver":"assets/history/roma/trophies/r8_silver.webp","R8_bronze":"assets/history/roma/trophies/r8_bronze.webp","R8_green":"assets/history/roma/trophies/r8_green.webp"};
+const PJ_TROPHY_IMAGES={r1:{gold:"assets/preu_just/trofeus/r1_gold.webp",silver:"assets/preu_just/trofeus/r1_silver.webp",bronze:"assets/preu_just/trofeus/r1_bronze.webp",green:"assets/preu_just/trofeus/r1_green.webp"},r2:{gold:"assets/preu_just/trofeus/r2_gold.webp",silver:"assets/preu_just/trofeus/r2_silver.webp",bronze:"assets/preu_just/trofeus/r2_bronze.webp",green:"assets/preu_just/trofeus/r2_green.webp"},r3:{gold:"assets/preu_just/trofeus/r3_gold.webp",silver:"assets/preu_just/trofeus/r3_silver.webp",bronze:"assets/preu_just/trofeus/r3_bronze.webp",green:"assets/preu_just/trofeus/r3_green.webp"},r4:{gold:"assets/preu_just/trofeus/r4_gold.webp",silver:"assets/preu_just/trofeus/r4_silver.webp",bronze:"assets/preu_just/trofeus/r4_bronze.webp",green:"assets/preu_just/trofeus/r4_green.webp"},r5:{gold:"assets/preu_just/trofeus/r5_gold.webp",silver:"assets/preu_just/trofeus/r5_silver.webp",bronze:"assets/preu_just/trofeus/r5_bronze.webp",green:"assets/preu_just/trofeus/r5_green.webp"},r6:{gold:"assets/preu_just/trofeus/r6_gold.webp",silver:"assets/preu_just/trofeus/r6_silver.webp",bronze:"assets/preu_just/trofeus/r6_bronze.webp",green:"assets/preu_just/trofeus/r6_green.webp"},r7:{gold:"assets/preu_just/trofeus/r7_gold.webp",silver:"assets/preu_just/trofeus/r7_silver.webp",bronze:"assets/preu_just/trofeus/r7_bronze.webp",green:"assets/preu_just/trofeus/r7_green.webp"},r8:{gold:"assets/preu_just/trofeus/r8_gold.webp",silver:"assets/preu_just/trofeus/r8_silver.webp",bronze:"assets/preu_just/trofeus/r8_bronze.webp",green:"assets/preu_just/trofeus/r8_green.webp"},r9:{gold:"assets/preu_just/trofeus/r9_gold.webp",silver:"assets/preu_just/trofeus/r9_silver.webp",bronze:"assets/preu_just/trofeus/r9_bronze.webp",green:"assets/preu_just/trofeus/r9_green.webp"}};
 function pjRecipeIdFromTopic(topic){const m=String(topic||"").match(/^PJ\|([^|]+)/i);return m?m[1].toLowerCase():""}
 function pjTier(score,all){const ds=[...new Set((all||[]).map(p=>Number(p.score||0)))].sort((a,b)=>b-a),rank=ds.indexOf(Number(score||0))+1;return{rank,tier:rank===1?"gold":rank===2?"silver":rank===3?"bronze":"green"}}
 
 function trophyTierForRank(rank){return rank===1?"gold":rank===2?"silver":rank===3?"bronze":"green"}
 
-async function persistEarnedGreeceTrophy(profileId,sessionId,tier){
-  if(!profileId || !/^G[1-3]$/.test(String(sessionId||"").toUpperCase())) return;
+async function persistEarnedHistoryTrophy(profileId,sessionId,tier){
+  if(!profileId || !/^(?:G[1-3]|R[1-8])$/.test(String(sessionId||"").toUpperCase())) return;
   try{
     const sid=String(sessionId).toUpperCase();
     const key=`${sid}|${tier}`;
@@ -4787,7 +4923,7 @@ async function persistEarnedGreeceTrophy(profileId,sessionId,tier){
     cleaned.push(`${sid}|${bestTier}`);
     await api(`profiles?id=eq.${profileId}`,{method:"PATCH",body:JSON.stringify({manual_trophies:cleaned})});
   }catch(e){
-    console.warn("No s'ha pogut persistir el trofeu de Grècia al perfil",e);
+    console.warn("No s'ha pogut persistir el trofeu d’història al perfil",e);
   }
 }
 
@@ -4799,7 +4935,7 @@ function ordinalCat(rank){
   if(n===4)return "4t";
   return `${n}è`;
 }
-function trophyImage(sessionId,tier){const raw=String(sessionId||""),rid=pjRecipeIdFromTopic(raw);if(rid)return PJ_TROPHY_IMAGES[rid]?.[tier]||"";const n=Number(raw.replace(/\D/g,""));return TROPHY_IMAGES[`S${n}_${tier}`]||""}
+function trophyImage(sessionId,tier){const raw=String(sessionId||"").toUpperCase(),rid=pjRecipeIdFromTopic(raw);if(rid)return PJ_TROPHY_IMAGES[rid]?.[tier]||"";if(HISTORY_TROPHY_IMAGES[`${raw}_${tier}`])return HISTORY_TROPHY_IMAGES[`${raw}_${tier}`];const n=Number(raw.replace(/\D/g,""));return TROPHY_IMAGES[`S${n}_${tier}`]||""}
 function trophyEquipKey(t){return t?`${String(t.sessionId||"").toUpperCase()}|${String(t.tier||"")}`:""}
 function trophyFromEquipKey(key){
   const parts=String(key||"").split("|"); if(parts.length<2)return null;
@@ -4848,7 +4984,7 @@ async function getProfileTrophies(profileId,{includeManual=true}={}){
     if(rank<1)continue;
     const sessionId=String(game.topic||'').toUpperCase();
     let trophy=null;
-    if(/^(?:S(?:[1-9]|1[0-4])|G[1-3])$/.test(sessionId)) trophy={game_id:me.game_id,sessionId,rank,tier:trophyTierForRank(rank),date:me.created_at};
+    if(/^(?:S(?:[1-9]|1[0-4])|G[1-3]|R[1-8])$/.test(sessionId)) trophy={game_id:me.game_id,sessionId,rank,tier:trophyTierForRank(rank),date:me.created_at};
     else if(/^PJ\|/i.test(sessionId)){const tr=pjTier(me.score,all);trophy={game_id:me.game_id,sessionId,rank:tr.rank,tier:tr.tier,date:me.created_at};}
     if(!trophy)continue;
     /* Una sola copa per sessió/recepta: sempre conservem la millor. */
@@ -4915,7 +5051,7 @@ async function showEarnedTrophy(){
   try{const [g,all]=await Promise.all([api(`games?id=eq.${onlineGameId}&select=topic,status&limit=1`),api(`players?game_id=eq.${onlineGameId}&select=id,score,created_at&order=created_at.asc`)]);if(!g?.[0])return;
     const ranked=(all||[]).slice().sort((a,b)=>Number(b.score||0)-Number(a.score||0)||String(a.created_at||"").localeCompare(String(b.created_at||"")));const rank=ranked.findIndex(p=>p.id===onlinePlayerId)+1;if(rank<1)return;
     const tier=trophyTierForRank(rank), sid=String(g[0].topic||"").toUpperCase();
-    if(/^G[1-3]$/.test(sid)) await persistEarnedGreeceTrophy(currentProfile.id,sid,tier);
+    if(/^(?:G[1-3]|R[1-8])$/.test(sid)) await persistEarnedHistoryTrophy(currentProfile.id,sid,tier);
     box.innerHTML=`<p class="muted"><b>HAS ACONSEGUIT UN TROFEU!</b></p><img src="${trophyImage(sid,tier)}" alt="Trofeu"><div class="big" style="font-size:32px">${TROPHY_LABELS[tier]}</div><p><b>${sessionNameById(sid)}</b></p><p class="muted">POSICIÓ ${rank}</p>`;box.classList.remove("hidden");
   }catch(e){console.error("Error mostrant trofeu final",e)}
 }
@@ -5080,6 +5216,9 @@ const SHOP_CONFIG={
 {id:"medusa",name:"MEDUSA",emoji:"🪼",exclusive:true,skins:[
   {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null}
 ]},
+{id:"portals_cat",name:"LLEGENDA CAT",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"DRAC DELS PORTALS CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
+{id:"portals_esp",name:"LLEGENDA ESP",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LINX DELS PORTALS ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
+{id:"portals_ang",name:"LLEGENDA ANG",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"GUINEU DELS PORTALS ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null}]},
 {id:"rinoceront",name:"RINOCERONT",emoji:"🦏",skins:[
   {id:"rinoceront_boxejador",name:"RINOCERONT BOXEJADOR",price:15,available:true,event:null,image:"assets/avatars/rinoceront_boxejador.webp",cropIndex:null},
   {id:"rinoceront_ballet",name:"RINOCERONT BALLARÍ DE BALLET",price:20,available:true,event:null,image:"assets/avatars/rinoceront_ballari_de_ballet.webp",cropIndex:null},
@@ -5212,6 +5351,12 @@ const TITLE_CATALOG=[
   {id:"viatger_temporal",name:"VIATGER TEMPORAL",desc:"HAS DOBLEGAT LES REGLES DEL TEMPS",category:"🐍 ANIMAL SNAKE",challenge:"Arriba a 45 animals en una sola partida."},
   {id:"recollector",name:"RECOL·LECTOR",desc:"CAP MONEDA TUCÀ S'ESCAPA",category:"🐍 ANIMAL SNAKE",challenge:"Aconsegueix 20 monedes Tucà acumulades entre totes les partides."},
 
+
+  /* PORTALS DE LES LLETRES */
+  {id:"viatger_del_verse",name:"VIATGER DEL VERSE",desc:"HAS RECORREGUT MIG VERSE PARAULA A PARAULA",category:"🌀 PORTALS",challenge:"Completa 6 portals diferents amb ⭐⭐⭐."},
+  {id:"poliglota",name:"POLÍGLOTA",desc:"TRES LLENGÜES, UN SOL VERSE",category:"🌀 PORTALS",challenge:"Completa almenys 1 portal en CAT, ESP i ANG."},
+  {id:"doble_explorador",name:"DOBLE EXPLORADOR",desc:"HAS COMPLETAT DUES RUTES SENCERES DELS PORTALS",category:"🌀 PORTALS",challenge:"Completa els 12 portals en 2 modes diferents."},
+
   /* GENERAL */
   {id:"colleccionista",name:"COL·LECCIONISTA",desc:"UNA COL·LECCIÓ QUE COMENÇA A IMPRESSIONAR",category:"🌐 GENERAL",challenge:"Compra 5 skins a la botiga."}
 ];
@@ -5296,7 +5441,8 @@ const FRAME_CATALOG=[
 {id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"},
 {id:"marc_ciencia",name:"CIÈNCIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_ciencia.webp"},
 {id:"marc_preu_just",name:"PREU JUST",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_preu_just.webp"},
-{id:"marc_regres_futur",name:"REGRES AL FUTUR",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_regres_futur.webp"}];
+{id:"marc_regres_futur",name:"REGRES AL FUTUR",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_regres_futur.webp"},
+{id:"marc_llegenda_portals",name:"LLEGENDA DELS PORTALS",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_llegenda_portals.webp"}];
 function frameById(id){return FRAME_CATALOG.find(f=>f.id===id)||null}
 async function saveFrameProfile(patch){const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(patch)});currentProfile=normalizeShopProfile({...currentProfile,...((rows&&rows[0])||patch)})}
 async function openFramesShop(){
@@ -5646,7 +5792,19 @@ function eduSvg(kind){
  return 'data:image/svg+xml,'+encodeURIComponent(svg);
 }
 
-const historySessions=[{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"},{id:"G2",number:"SESSIÓ 2",title:"GRÈCIA I ELS JOCS OLÍMPICS",status:"active"},{id:"G3",number:"SESSIÓ 3",title:"ELS DÉUS GRECS",status:"active"}];
+const historySessions=[
+{id:"G1",number:"SESSIÓ 1",title:"VIDA A L’ANTIGA GRÈCIA",status:"active"},
+{id:"G2",number:"SESSIÓ 2",title:"GRÈCIA I ELS JOCS OLÍMPICS",status:"active"},
+{id:"G3",number:"SESSIÓ 3",title:"ELS DÉUS GRECS",status:"active"},
+{id:"R1",number:"SESSIÓ 1",title:"INICIS DE ROMA",status:"preparing"},
+{id:"R2",number:"SESSIÓ 2",title:"LA SOCIETAT ROMANA",status:"preparing"},
+{id:"R3",number:"SESSIÓ 3",title:"ELS GOVERNS DE ROMA",status:"preparing"},
+{id:"R4",number:"SESSIÓ 4",title:"L’ECONOMIA ROMANA",status:"preparing"},
+{id:"R5",number:"SESSIÓ 5",title:"LES CASES ROMANES",status:"preparing"},
+{id:"R6",number:"SESSIÓ 6",title:"L’ALIMENTACIÓ ROMANA",status:"preparing"},
+{id:"R7",number:"SESSIÓ 7",title:"L’OCI A ROMA",status:"preparing"},
+{id:"R8",number:"SESSIÓ 8",title:"LA RELIGIÓ ROMANA",status:"preparing"}
+];
 
 const scienceSessions=[
   {id:"S1",number:"SESSIÓ 1",title:"LA INÈRCIA I EL TRUC DE LES ESTOVALLES",status:"active"},
@@ -5688,19 +5846,19 @@ const sessionQuestionBanks={
 "G2":[
 {type:"choice",text:"COM ERA PRINCIPALMENT EL TERRITORI DE L’ANTIGA GRÈCIA?",answers:["PLANER I DESÈRTIC","MUNTANYÓS I COSTANER","GELAT I SENSE COSTA"],correct:1},
 {type:"vf",text:"EL MAR EGEU ERA MOLT IMPORTANT PER ALS GRECS.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",text:"QUINA D’AQUESTES ACTIVITATS ERA HABITUAL A LES ZONES COSTANERES?",answers:["AGRICULTURA","CERÀMICA","RAMADERIA","PESCA"],images:["assets/history/grecia/s2/q03_02.webp","assets/history/grecia/s2/q03_03.webp","assets/history/grecia/s2/q03_04.webp","assets/history/grecia/s2/q03_01.webp"],correct:3},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES ACTIVITATS ERA HABITUAL A LES ZONES COSTANERES?",answers:["AGRICULTURA","CERÀMICA","RAMADERIA","PESCA"],images:["assets/history/grecia/s2/q03_02.webp","assets/history/grecia/s2/q03_03.webp","assets/history/grecia/s2/q03_04.webp","assets/history/grecia/s2/q03_01.webp"],correct:3},
 {type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA CARACTERÍSTICA.",left:["ATENES","ESPARTA","CRETA"],right:["CULTURA I ART","CIUTAT MILITAR","ILLA"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"choice",text:"QUIN D’AQUESTS NO ERA UN CULTIU TÍPIC DE L’ANTIGA GRÈCIA?",answers:["OLIVERES","RAÏM","ARRÒS","CEREALS"],correct:2},
 {type:"vf",text:"EL CLIMA DE GRÈCIA ERA PRINCIPALMENT FRED I POLAR.",answers:["CERT","FALS"],correct:1},
 {type:"choice",text:"QUIN RECURS NATURAL ERA MOLT VALORAT PELS GRECS?",answers:["MARBRE","CARBÓ","PETROLI"],correct:0},
-{type:"visual4",text:"QUIN D’AQUESTS ESPORTS PRACTICAVEN ELS ANTICS GRECS?",answers:["CURSA","LLANÇAMENT DE DISC","LLUITA","TIR AMB ARC"],images:["assets/history/grecia/s2/q08_02.webp","assets/history/grecia/s2/q08_03.webp","assets/history/grecia/s2/q08_01.webp","assets/history/grecia/s2/q08_04.webp"],correct:2},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES IMATGES REPRESENTA LA LLUITA?",answers:["CURSA","LLANÇAMENT DE DISC","LLUITA","TIR AMB ARC"],images:["assets/history/grecia/s2/q08_02.webp","assets/history/grecia/s2/q08_03.webp","assets/history/grecia/s2/q08_01.webp","assets/history/grecia/s2/q08_04.webp"],correct:2},
 {type:"choice",text:"ON SE CELEBRAVEN ELS JOCS OLÍMPICS?",answers:["ATENES","OLÍMPIA","ESPARTA"],correct:1},
 {type:"match",text:"RELACIONA CADA ESPORT AMB EL QUE NECESSITA.",left:["CURSA","LLUITA","JOCS DE PILOTA"],right:["VELOCITAT","FORÇA I HABILITAT","JOC I COORDINACIÓ"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"vf",text:"ELS JOCS OLÍMPICS SE CELEBRAVEN A ATENES.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",text:"QUIN D’AQUESTS ESPORTS NO TROBARIES ALS JOCS DE L’ANTIGA GRÈCIA?",answers:["CURSA","LLUITA","LLANÇAMENT DE JAVELINA","BÀSQUET"],images:["assets/history/grecia/s2/q12_01.webp","assets/history/grecia/s2/q12_02.webp","assets/history/grecia/s2/q12_03.webp","assets/history/grecia/s2/q12_04.webp"],correct:3},
-{type:"visual4",text:"QUINA IMATGE REPRESENTA MILLOR ESPARTA, LA CIUTAT DESTACADA PER LA VIDA MILITAR?",answers:["A","B","C","D"],images:["assets/history/grecia/s2/q13_02.webp","assets/history/grecia/s2/q13_01.webp","assets/history/grecia/s2/q13_03.webp","assets/history/grecia/s2/q13_04.webp"],correct:0},
+{type:"visual4",row4:true,text:"QUIN D’AQUESTS ESPORTS NO TROBARIES ALS JOCS DE L’ANTIGA GRÈCIA?",answers:["CURSA","LLUITA","LLANÇAMENT DE JAVELINA","BÀSQUET"],images:["assets/history/grecia/s2/q12_01.webp","assets/history/grecia/s2/q12_02.webp","assets/history/grecia/s2/q12_03.webp","assets/history/grecia/s2/q12_04.webp"],correct:3},
+{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA MILLOR ESPARTA, LA CIUTAT DESTACADA PER LA VIDA MILITAR?",answers:["A","B","C","D"],images:["assets/history/grecia/s2/q13_02.webp","assets/history/grecia/s2/q13_01.webp","assets/history/grecia/s2/q13_03.webp","assets/history/grecia/s2/q13_04.webp"],correct:0},
 {type:"vf",text:"ATENES DESTACAVA PER LA CULTURA I L’ART.",answers:["CERT","FALS"],correct:0},
-{type:"visual4",text:"REPTE FINAL: QUINA D’AQUESTES IMATGES NO RELACIONEM AMB L’ANTIGA GRÈCIA?",answers:["MAR EGEU","PIRÀMIDE","OLIVERES","OLÍMPIA"],images:["assets/history/grecia/s2/q15_01.webp","assets/history/grecia/s2/q15_04.webp","assets/history/grecia/s2/q15_02.webp","assets/history/grecia/s2/q15_03.webp"],correct:1}
+{type:"visual4",row4:true,text:"REPTE FINAL: QUINA D’AQUESTES IMATGES NO RELACIONEM AMB L’ANTIGA GRÈCIA?",answers:["MAR EGEU","PIRÀMIDE","OLIVERES","OLÍMPIA"],images:["assets/history/grecia/s2/q15_01.webp","assets/history/grecia/s2/q15_04.webp","assets/history/grecia/s2/q15_02.webp","assets/history/grecia/s2/q15_03.webp"],correct:1}
 ],
 "G1":[
 {type:"choice",text:"QUANTS ÀPATS FEIEN NORMALMENT ELS GRECS AL DIA?",answers:["1","5","3"],correct:2},
@@ -5709,7 +5867,7 @@ const sessionQuestionBanks={
 {type:"match",text:"RELACIONA CADA ALIMENT AMB EL SEU GRUP O ÚS.",left:["OLI D’OLIVA","RAÏM","BLAT"],leftImages:["assets/history/grecia/s1/q04_01.webp","assets/history/grecia/s1/q04_02.webp","assets/history/grecia/s1/q04_03.webp"],right:["CUINAR","FRUITA","CEREAL"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"choice",text:"QUIN D’AQUESTS ALIMENTS NO ERA PROPI DE LA DIETA GREGA?",answers:["PA","MANGO","RAÏM","OLI D’OLIVA"],correct:1},
 {type:"vf",text:"LES OVELLES EREN POC HABITUALS EN LA RAMADERIA GREGA.",answers:["CERT","FALS"],correct:1},
-{type:"visual4",text:"QUINA D’AQUESTES VESTIMENTES ÉS GREGA?",answers:["A","B","C","D"],images:["assets/history/grecia/s1/q07_01.webp","assets/history/grecia/s1/q07_02.webp","assets/history/grecia/s1/q07_03.webp","assets/history/grecia/s1/q07_04.webp"],correct:0},
+{type:"visual4",row4:true,text:"QUINA D’AQUESTES VESTIMENTES ÉS GREGA?",answers:["A","B","C","D"],images:["assets/history/grecia/s1/q07_02.webp","assets/history/grecia/s1/q07_03.webp","assets/history/grecia/s1/q07_04.webp","assets/history/grecia/s1/q07_01.webp"],correct:3},
 {type:"vf",text:"LA LIRA ERA UN INSTRUMENT HABITUAL A L’ANTIGA GRÈCIA.",answers:["CERT","FALS"],correct:0},
 {type:"match",text:"RELACIONA CADA OBJECTE AMB EL SEU ÚS O ÀMBIT.",left:["LIRA","ARGILA","MÀSCARA"],leftImages:["assets/history/grecia/s1/q09_01.webp","assets/history/grecia/s1/q09_02.webp","assets/history/grecia/s1/q09_03.webp"],right:["MÚSICA","CERÀMICA","TEATRE"],correctMap:[0,1,2],correct:encodeMatch([0,1,2])},
 {type:"choice",questionImage:"assets/history/grecia/s1/q10_01.webp",text:"DE QUIN MATERIAL ESTAVA FETA AQUESTA CERÀMICA?",answers:["FERRO","FUSTA","ARGILA"],correct:2},
@@ -6052,7 +6210,7 @@ function makeRichDrag(label,img,index){
  installPointerDrag(el);return el;
 }
 function renderVisualChoices(q,box,questionIndex,count){
- box.classList.add(count===4?"four-choice-grid":(count===3?"visual-three-grid":"visual-two-grid"));
+ box.classList.add(count===4?"four-choice-grid":(count===3?"visual-three-grid":"visual-two-grid")); if(count===4&&q.row4)box.classList.add("visual-row4");
  let selected=-1;
  q.answers.forEach((answer,index)=>{
   const btn=document.createElement("button");
@@ -6963,7 +7121,7 @@ async function loadQuestion(){
     box.appendChild(renderTeacherMatch(q,false));
 
   }else if(q.type==="visual2" || q.type==="visual3" || q.type==="visual4"){
-    box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid"));
+    box.classList.add(q.type==="visual4"?"four-choice-grid":(q.type==="visual3"?"visual-three-grid":"visual-two-grid")); if(q.type==="visual4"&&q.row4)box.classList.add("visual-row4");
     q.answers.forEach((a,i)=>{
       const b=document.createElement("button");b.className="answer visual-choice";b.disabled=true;
       b.innerHTML=`<img class="teacher-player-avatar-img" src="${q.images[i]}" alt="${a}"><div class="visual-choice-label">${a}</div>`;box.appendChild(b);
@@ -7135,7 +7293,7 @@ $("#nextQuestion").onclick=async()=>{
       if(/^G[1-3]$/.test(String(activeSessionId||"").toUpperCase())){
         for(let i=0;i<players.length;i++){
           const pp=players[i];
-          if(pp.profile_id) await persistEarnedGreeceTrophy(pp.profile_id,String(activeSessionId).toUpperCase(),trophyTierForRank(i+1));
+          if(pp.profile_id) await persistEarnedHistoryTrophy(pp.profile_id,String(activeSessionId).toUpperCase(),trophyTierForRank(i+1));
         }
       }
       if(onlineGameId)await api(`games?id=eq.${onlineGameId}`,{method:"PATCH",body:JSON.stringify({status:"finished"})});
@@ -7752,11 +7910,13 @@ document.addEventListener("keydown",e=>{
 
   function score(ans,real,mult=1){
     const diff=Math.abs(ans-real),pct=real>0?(diff/real)*100:999;
-    let pts=250,coins=0,label=">30%";
+    let pts=0,coins=0,label=">100%";
     if(diff===0){pts=1000;coins=2;label="PREU JUST"}
     else if(pct<=5){pts=900;coins=1;label="≤5%"}
     else if(pct<=15){pts=750;coins=1;label="≤15%"}
     else if(pct<=30){pts=500;coins=1;label="≤30%"}
+    else if(pct<=50){pts=250;label="≤50%"}
+    else if(pct<=100){pts=125;label="≤100%"}
     return{diff,pct,pts:pts*mult,coins,label};
   }
   function diffText(ans,real){
@@ -8355,11 +8515,19 @@ document.addEventListener("keydown",e=>{
   document.querySelectorAll(".history-era-card").forEach(card=>{
     card.onclick=()=>{
       if(card.dataset.era==="grecia"){show("greeceSessions");return;}
+      if(card.dataset.era==="roma"){show("romeSessions");return;}
       const name=card.querySelector("h3")?.textContent||"AQUESTA ÈPOCA";
       alert(`${name} · ELS JOCS DE REPÀS S’AFEGIRAN AQUÍ`);
     };
   });
   document.getElementById("backGreeceEras")?.addEventListener("click",()=>show("historyEras"));
+  document.getElementById("backRomeEras")?.addEventListener("click",()=>show("historyEras"));
+  document.querySelectorAll(".roman-session-card[data-session]").forEach(card=>card.addEventListener("click",()=>{
+    const id=card.dataset.session;
+    const sess=sessionMetaById(id);
+    const expected=id==="R8"?20:10;
+    alert(`${sess.number}: ${sess.title}\n${expected} PREGUNTES · LES ESTEM PREPARANT`);
+  }));
   document.querySelectorAll(".greece-session-card[data-session]").forEach(card=>card.addEventListener("click",()=>{
     const id=card.dataset.session; activeSessionId=id; questions=sessionQuestionBanks[id]||[];
     const sess=sessionMetaById(id);
@@ -8370,7 +8538,7 @@ document.addEventListener("keydown",e=>{
     questions.forEach((q,i)=>{const d=document.createElement("div");d.className="question-preview";d.innerHTML=`<b>${i+1}. ${q.text}</b><span class="muted">${q.type.toUpperCase()}</span>`;l.appendChild(d)});
     show("scienceSessionDetail");
   }));
-  document.getElementById("backScienceSessions")?.addEventListener("click",()=>{if(String(activeSessionId||"").startsWith("G"))show("greeceSessions")});
+  document.getElementById("backScienceSessions")?.addEventListener("click",()=>{if(String(activeSessionId||"").startsWith("G"))show("greeceSessions");else if(String(activeSessionId||"").startsWith("R"))show("romeSessions")});
   console.info("Fasia Verse V0.14.45 · FIX CLASSIFICAR + PODI carregat");
 })();
 </script>
@@ -8432,6 +8600,8 @@ document.addEventListener("keydown",e=>{
   #studentAnswers,#answers{margin-top:8px!important;}
 }
 </style>
+<script>console.info("Fasia Verse · V0.14.62 · Grècia fila 4 + PJ 50/100 + badge");</script>
+<script>console.info("Fasia Verse · V0.14.63 · Roma desbloquejada + 8 sessions + 32 trofeus WebP");</script>
 </body>
 </html>
 <style>

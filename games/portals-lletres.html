@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Fasia Verse · Portals de les Lletres · v23 Integrat | Fasia Verse · Portals de les Lletres · v23</title>
+<title>Portals de les Lletres · V0.14.64 · DESAFIAMENTS</title>
 <style>
 :root{
   --bg:#061525; --bg2:#0a2741; --panel:#0b2138; --panel2:#102d49;
@@ -252,11 +252,12 @@ const SUPABASE_KEY='sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu';
 const PROFILE_ID=new URLSearchParams(location.search).get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';
 let profileData=null;
 let wordProgress={};
+let challengeStateData={};
 async function sb(path,options={}){const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:options.prefer||'return=representation',...(options.headers||{})}});if(!r.ok)throw new Error(await r.text());const t=await r.text();return t?JSON.parse(t):null;}
 function comboProgress(){return wordProgress?.[state.lang]?.[state.diff]||{portal:1,stars:0};}
 function starsFor(id){const i=PORTALS.findIndex(p=>p.id===id)+1,pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1))),stars=Math.max(0,Math.min(3,Number(pr.stars||0)));if(i<cur)return 3;if(i===cur)return stars;return 0;}
 function isUnlocked(index){const pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1)));return index+1<=cur;}
-async function loadProfileProgress(){if(!PROFILE_ID)return;try{const rows=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=id,coins,wordsearch_progress&limit=1`);if(rows?.[0]){profileData=rows[0];wordProgress=profileData.wordsearch_progress&&typeof profileData.wordsearch_progress==='object'?profileData.wordsearch_progress:{};}}catch(e){console.error('No s’ha pogut carregar el progrés',e);showToast('No s’ha pogut carregar el progrés.');}}
+async function loadProfileProgress(){if(!PROFILE_ID)return;try{const rows=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=id,coins,wordsearch_progress,challenge_state&limit=1`);if(rows?.[0]){profileData=rows[0];wordProgress=profileData.wordsearch_progress&&typeof profileData.wordsearch_progress==='object'?profileData.wordsearch_progress:{};challengeStateData=profileData.challenge_state&&typeof profileData.challenge_state==='object'?profileData.challenge_state:{};}}catch(e){console.error('No s’ha pogut carregar el progrés',e);showToast('No s’ha pogut carregar el progrés.');}}
 async function savePortalStar(id){
   if(!PROFILE_ID||!profileData)throw new Error('Perfil no identificat');
   const idx=PORTALS.findIndex(p=>p.id===id)+1, pr=comboProgress();
@@ -272,7 +273,18 @@ async function savePortalStar(id){
   profileData.coins=coins;profileData.wordsearch_progress=wordProgress;
   return {stars:now,reward};
 }
-
+async function recordPortalChallengeRun(seconds,words){
+  if(!PROFILE_ID||!profileData)return;
+  try{
+    const fresh=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=challenge_state&limit=1`);
+    const cs=(fresh?.[0]?.challenge_state&&typeof fresh[0].challenge_state==='object')?fresh[0].challenge_state:(challengeStateData||{});
+    cs.version=cs.version||1;cs.stats=cs.stats||{};cs.stats.portals=cs.stats.portals||{};
+    cs.stats.portals.wordsFound=Number(cs.stats.portals.wordsFound||0)+Number(words||0);
+    if(Number(seconds)<60)cs.stats.portals.underMinute=Math.max(1,Number(cs.stats.portals.underMinute||0));
+    await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}`,{method:'PATCH',body:JSON.stringify({challenge_state:cs})});
+    challengeStateData=cs;profileData.challenge_state=cs;
+  }catch(e){console.error('No s’ha pogut registrar el progrés dels desafiaments',e);}
+}
 
 function norm(s){return String(s).replace(/Ç/g,'__CEDILLA_UP__').replace(/ç/g,'__CEDILLA_LOW__').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/__CEDILLA_UP__/g,'Ç').replace(/__CEDILLA_LOW__/g,'Ç').toUpperCase().replace(/[^A-ZÇ]/g,'');}
 function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
@@ -348,6 +360,7 @@ async function win(){
  const p=currentPortal(), idx=PORTALS.findIndex(x=>x.id===p.id), before=starsFor(p.id);
  let now=before,reward=0;
  if(before<3){try{const saved=await savePortalStar(p.id);now=saved.stars;reward=saved.reward;}catch(e){console.error(e);showToast('Error guardant el progrés');}}
+ await recordPortalChallengeRun(sec,state.puzzle.placed.length);
  let msg=`Has trobat les ${state.puzzle.placed.length} paraules en ${fmt(sec)}.`;
  if(before<3&&now>before){
    msg+=` Has aconseguit ${'⭐'.repeat(now)}${'☆'.repeat(3-now)} en aquest portal. +${reward} ${reward===1?'moneda':'monedes'}.`;
