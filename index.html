@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.70 · FIX TROFEUS GRÈCIA</title>
+<title>Fasia Verse · V0.14.71 · MARCS VISUALS COMPACTES</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -8745,6 +8745,33 @@ ${expected} PREGUNTES · LES ESTEM PREPARANT`);
   console.info("Fasia Verse · V0.14.70 · trofeus Grècia forçats als assets correctes");
 })();
 </script>
+
+
+<style id="fv-v01471-compact-visual-cards">
+/* Manté la mida de la IMATGE, però elimina l'espai blanc sobrant del MARC */
+#studentAnswers.visual-row4 .visual-choice,
+#answers.visual-row4 .visual-choice,
+#simAnswers.visual-row4 .visual-choice{
+  min-height:0!important;
+  height:auto!important;
+  padding:4px 4px 0!important;
+  align-self:start!important;
+}
+#studentAnswers.visual-row4 .visual-choice img,
+#answers.visual-row4 .visual-choice img,
+#simAnswers.visual-row4 .visual-choice img{
+  height:370px!important;
+  max-height:370px!important;
+  object-fit:contain!important;
+  display:block!important;
+}
+#studentAnswers.visual-row4 .visual-choice .visual-label,
+#answers.visual-row4 .visual-choice .visual-label,
+#simAnswers.visual-row4 .visual-choice .visual-label{
+  margin-top:2px!important;
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.71 · marc compacte, imatge mantinguda");</script>
 
 </body>
 </html>
