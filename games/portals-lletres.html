@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Portals de les Lletres · V0.14.64 · DESAFIAMENTS</title>
+<title>Portals de les Lletres · V0.14.65 · PROGRÉS SEPARAT</title>
 <style>
 :root{
   --bg:#061525; --bg2:#0a2741; --panel:#0b2138; --panel2:#102d49;
@@ -254,19 +254,21 @@ let profileData=null;
 let wordProgress={};
 let challengeStateData={};
 async function sb(path,options={}){const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:options.prefer||'return=representation',...(options.headers||{})}});if(!r.ok)throw new Error(await r.text());const t=await r.text();return t?JSON.parse(t):null;}
-function comboProgress(){return wordProgress?.[state.lang]?.[state.diff]||{portal:1,stars:0};}
-function starsFor(id){const i=PORTALS.findIndex(p=>p.id===id)+1,pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1))),stars=Math.max(0,Math.min(3,Number(pr.stars||0)));if(i<cur)return 3;if(i===cur)return stars;return 0;}
-function isUnlocked(index){const pr=comboProgress(),cur=Math.max(1,Math.min(12,Number(pr.portal||1)));return index+1<=cur;}
+function comboProgress(lang=state.lang,diff=state.diff){return wordProgress?.[lang]?.[diff]||{portal:1,stars:0};}
+function starsFor(id,lang=state.lang,diff=state.diff){const i=PORTALS.findIndex(p=>p.id===id)+1,pr=comboProgress(lang,diff),cur=Math.max(1,Math.min(12,Number(pr.portal||1))),stars=Math.max(0,Math.min(3,Number(pr.stars||0)));if(i<cur)return 3;if(i===cur)return stars;return 0;}
+function isUnlocked(index,lang=state.lang,diff=state.diff){const pr=comboProgress(lang,diff),cur=Math.max(1,Math.min(12,Number(pr.portal||1)));return index+1<=cur;}
 async function loadProfileProgress(){if(!PROFILE_ID)return;try{const rows=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=id,coins,wordsearch_progress,challenge_state&limit=1`);if(rows?.[0]){profileData=rows[0];wordProgress=profileData.wordsearch_progress&&typeof profileData.wordsearch_progress==='object'?profileData.wordsearch_progress:{};challengeStateData=profileData.challenge_state&&typeof profileData.challenge_state==='object'?profileData.challenge_state:{};}}catch(e){console.error('No s’ha pogut carregar el progrés',e);showToast('No s’ha pogut carregar el progrés.');}}
-async function savePortalStar(id){
+async function savePortalStar(id,lang,diff){
   if(!PROFILE_ID||!profileData)throw new Error('Perfil no identificat');
-  const idx=PORTALS.findIndex(p=>p.id===id)+1, pr=comboProgress();
-  let cur=Math.max(1,Math.min(12,Number(pr.portal||1))), before=starsFor(id);
+  // IMPORTANT: cada idioma + dificultat és un món completament independent.
+  // Capturem lang/diff en acabar la partida i només escrivim aquella combinació.
+  const idx=PORTALS.findIndex(p=>p.id===id)+1, pr=comboProgress(lang,diff);
+  let cur=Math.max(1,Math.min(12,Number(pr.portal||1))), before=starsFor(id,lang,diff);
   if(idx!==cur||before>=3)return {stars:before,reward:0};
   const now=Math.min(3,before+1), reward=1+(now===3?2:0);
   wordProgress=JSON.parse(JSON.stringify(wordProgress||{}));
-  wordProgress[state.lang]=wordProgress[state.lang]||{};
-  wordProgress[state.lang][state.diff]=now===3&&cur<12?{portal:cur+1,stars:0}:{portal:cur,stars:now};
+  wordProgress[lang]=wordProgress[lang]||{};
+  wordProgress[lang][diff]=now===3&&cur<12?{portal:cur+1,stars:0}:{portal:cur,stars:now};
   const fresh=await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}&select=coins&limit=1`);
   const coins=Number(fresh?.[0]?.coins??profileData.coins??0)+reward;
   await sb(`profiles?id=eq.${encodeURIComponent(PROFILE_ID)}`,{method:'PATCH',body:JSON.stringify({wordsearch_progress:wordProgress,coins})});
@@ -357,9 +359,9 @@ async function ensureGameFullscreenExited(){
 async function win(){
  const sec=elapsed();stopTimer();
  await ensureGameFullscreenExited();
- const p=currentPortal(), idx=PORTALS.findIndex(x=>x.id===p.id), before=starsFor(p.id);
+ const p=currentPortal(), lang=state.lang, diff=state.diff, idx=PORTALS.findIndex(x=>x.id===p.id), before=starsFor(p.id,lang,diff);
  let now=before,reward=0;
- if(before<3){try{const saved=await savePortalStar(p.id);now=saved.stars;reward=saved.reward;}catch(e){console.error(e);showToast('Error guardant el progrés');}}
+ if(before<3){try{const saved=await savePortalStar(p.id,lang,diff);now=saved.stars;reward=saved.reward;}catch(e){console.error(e);showToast('Error guardant el progrés');}}
  await recordPortalChallengeRun(sec,state.puzzle.placed.length);
  let msg=`Has trobat les ${state.puzzle.placed.length} paraules en ${fmt(sec)}.`;
  if(before<3&&now>before){
