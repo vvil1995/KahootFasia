@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.21 · Online entrar amb codi</title>
+<title>Fasia Verse · Nexus 4 v0.22 · Online 1vs1 sincronitzat</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -332,10 +332,12 @@ let onlineRoomCode='';
 let onlineRole=null;
 let onlinePollTimer=null;
 let onlineRoom=null;
+let onlineStarting=false;
+let onlineFinishedShown=false;
 function stopOnlinePoll(){if(onlinePollTimer){clearInterval(onlinePollTimer);onlinePollTimer=null;}}
 function makeRoomCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let out='';for(let i=0;i<5;i++)out+=chars[Math.floor(Math.random()*chars.length)];return out;}
-async function profileDisplayName(){const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return 'Jugador';try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name&limit=1');return safeName(rows?.[0]?.display_name,'Jugador')}catch(e){console.warn(e);return 'Jugador'}}
-async function getOnlineRoom(){if(!onlineRoomCode)return null;const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&select=code,status,p1_name,p1_animal,p2_name,p2_animal,current_player,winner_index&limit=1');return rows?.[0]||null;}
+async function profileDisplayName(){const cached=sessionStorage.getItem('fasiaVerseProfileName')||'';const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return safeName(cached,'Jugador');try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name,name&limit=1');const name=safeName(rows?.[0]?.display_name||rows?.[0]?.name||cached,'Jugador');sessionStorage.setItem('fasiaVerseProfileName',name);sessionStorage.setItem('fasiaVerseProfileId',String(pid));return name}catch(e){console.warn(e);return safeName(cached,'Jugador')}}
+async function getOnlineRoom(){if(!onlineRoomCode)return null;const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&select=code,status,board,p1_name,p1_animal,p2_name,p2_animal,current_player,winner_index&limit=1');return rows?.[0]||null;}
 function animalById(id){return animals.find(a=>a.id===id)||null;}
 function isChosenAnimal(id){return !!id && id!=='pending';}
 function renderOnlineSelection(room){
@@ -359,7 +361,8 @@ function renderOnlineSelection(room){
     $('#onlineReadyStatus').textContent=`✓ Has triat ${a?.name||myAnimal}. ${isChosenAnimal(rivalAnimal)?'El rival també està preparat.':'Esperant que el rival triï...'}`;
   }else $('#onlineReadyStatus').textContent='Encara no has triat fitxa.';
   if(isChosenAnimal(myAnimal)&&isChosenAnimal(rivalAnimal)){
-    $('#onlineReadyStatus').textContent='✅ TOTS DOS PREPARATS · Preparant partida online...';
+    $('#onlineReadyStatus').textContent='✅ TOTS DOS PREPARATS · Entrant a la partida...';
+    if(!onlineStarting){onlineStarting=true;setTimeout(()=>enterOnlineGame(room),350);}
   }
 }
 async function selectOnlineAnimal(animalId){
@@ -381,20 +384,74 @@ function beginSelectionPolling(){
     try{const room=await getOnlineRoom();if(!room)return;renderOnlineSelection(room);}catch(e){console.warn('poll online select',e)}
   },1500);
 }
-function enterOnlineSelection(){show('onlineSelect');beginSelectionPolling();getOnlineRoom().then(r=>r&&renderOnlineSelection(r));}
+async function enterOnlineSelection(){show('onlineSelect');try{const actualName=await profileDisplayName();const room=await getOnlineRoom();if(room&&actualName&&actualName!=='Jugador'){const field=onlineRole===0?'p1_name':'p2_name';if(room[field]!==actualName){await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode),{method:'PATCH',body:JSON.stringify({[field]:actualName,updated_at:new Date().toISOString()})});}}}catch(e){console.warn('actualitzant nom online',e)}beginSelectionPolling();getOnlineRoom().then(r=>r&&renderOnlineSelection(r));}
+function normalizeOnlineBoard(board){
+  if(Array.isArray(board)&&board.length===6&&board.every(r=>Array.isArray(r)&&r.length===7))return board.map(r=>r.map(v=>v===0||v===1?v:null));
+  return Array.from({length:6},()=>Array(7).fill(null));
+}
+function renderBoardFromGrid(){
+  const board=$('#board');board.innerHTML='';
+  for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+    const cell=document.createElement('button');cell.type='button';cell.className='cell';cell.dataset.r=r;cell.dataset.c=c;cell.setAttribute('aria-label',`Columna ${c+1}`);cell.addEventListener('click',()=>humanMove(c));board.appendChild(cell);
+    const p=grid[r][c];if(p===0||p===1)drawPiece(r,c,p);
+  }
+}
+function onlinePlayerName(i){return safeName(i===0?onlineRoom?.p1_name:onlineRoom?.p2_name,i===0?'Jugador 1':'Jugador 2');}
+function renderOnlineGameHeader(){
+  [0,1].forEach(i=>{const aid=i===0?onlineRoom?.p1_animal:onlineRoom?.p2_animal,a=animalById(aid)||animals[i],t=$('#miniToken'+(i+1));t.innerHTML=avatarHTML(a);t.style.color=a.color;$('#miniName'+(i+1)).textContent=onlinePlayerName(i);$('#miniAnimal'+(i+1)).textContent=a.name;});
+}
+function updateOnlineTurn(){
+  const mine=current===onlineRole;
+  $('#turnCenter').innerHTML=`<span class="turn-dot"></span>Torn de ${onlinePlayerName(current)}`;
+  $('#status').textContent=mine?'És el teu torn. Tria una columna.':'Esperant la jugada del rival...';
+}
+function findWinningLineAny(){for(let r=0;r<6;r++)for(let c=0;c<7;c++){const p=grid[r][c];if(p===0||p===1){const line=getWinLine(r,c,p);if(line)return {player:p,line};}}return null;}
+function showOnlineFinished(room){
+  if(onlineFinishedShown)return;onlineFinishedShown=true;playing=false;
+  const found=findWinningLineAny();if(found){winningCells=found.line;winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`)?.classList.add('win'));}
+  const p=room.winner_index;
+  if(p===0||p===1){const a=animalById(p===0?room.p1_animal:room.p2_animal)||animals[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${safeName(p===0?room.p1_name:room.p2_name,'Jugador')} ha connectat 4 fitxes.`;}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}
+  setTimeout(()=>$('#endModal').classList.add('show'),250);
+}
+function applyOnlineRoom(room){
+  onlineRoom=room;grid=normalizeOnlineBoard(room.board);current=Number(room.current_player||0);renderBoardFromGrid();renderOnlineGameHeader();
+  if(room.status==='finished')showOnlineFinished(room);else{playing=true;updateOnlineTurn();}
+}
+function beginOnlineGamePolling(){
+  stopOnlinePoll();onlinePollTimer=setInterval(async()=>{try{const room=await getOnlineRoom();if(room)applyOnlineRoom(room);}catch(e){console.warn('poll partida online',e)}},1200);
+}
+async function enterOnlineGame(room){
+  stopOnlinePoll();onlineFinishedShown=false;mode='online';onlineRoom=room||await getOnlineRoom();if(!onlineRoom)return;
+  selected=[animalById(onlineRoom.p1_animal)||animals[0],animalById(onlineRoom.p2_animal)||animals[1]];
+  $('#nameInput1').value=safeName(onlineRoom.p1_name,'Jugador 1');$('#nameInput2').value=safeName(onlineRoom.p2_name,'Jugador 2');
+  $('#btnRestartTop').style.display='none';$('#btnRestart').style.display='none';show('game');applyOnlineRoom(onlineRoom);beginOnlineGamePolling();
+}
+async function onlineHumanMove(c){
+  if(!playing)return;
+  try{
+    const room=await getOnlineRoom();if(!room||room.status==='finished')return;
+    if(Number(room.current_player)!==onlineRole){applyOnlineRoom(room);return;}
+    const fresh=normalizeOnlineBoard(room.board);grid=fresh;const r=findRow(c);if(r<0)return;
+    grid[r][c]=onlineRole;const line=getWinLine(r,c,onlineRole);const full=grid.flat().every(v=>v!==null);
+    const patch={board:grid,current_player:1-onlineRole,updated_at:new Date().toISOString()};
+    if(line||full){patch.status='finished';patch.winner_index=line?onlineRole:null;}
+    const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&current_player=eq.'+onlineRole,{method:'PATCH',body:JSON.stringify(patch)});
+    const updated=rows?.[0]||await getOnlineRoom();if(updated)applyOnlineRoom(updated);
+  }catch(e){console.error(e);alert('No s’ha pogut enviar la jugada. '+(e.message||e));}
+}
 function beginWaitingForRival(){
   stopOnlinePoll();
   onlinePollTimer=setInterval(async()=>{
     try{const room=await getOnlineRoom();if(room?.p2_name){$('#waitingRoomStatus').textContent=`${room.p2_name} s'ha connectat!`;stopOnlinePoll();setTimeout(enterOnlineSelection,450);}}catch(e){console.warn('poll rival',e)}
   },1500);
 }
-$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pending'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;onlineRole=0;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');beginWaitingForRival();}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
+$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pending'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;onlineRole=0;onlineStarting=false;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');beginWaitingForRival();}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
 $('#btnCopyRoomCode').addEventListener('click',async()=>{if(!onlineRoomCode)return;try{await navigator.clipboard.writeText(onlineRoomCode);$('#btnCopyRoomCode').textContent='COPIAT ✓';setTimeout(()=>$('#btnCopyRoomCode').textContent='COPIAR CODI',1200)}catch{alert('Codi: '+onlineRoomCode)}});
 $('#btnCancelWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
 $('#btnBackFromWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
 $('#btnBackJoined').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
 $('#btnJoinedBack').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
-$('#btnBackOnlineSelect').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
+$('#btnBackOnlineSelect').addEventListener('click',()=>{stopOnlinePoll();onlineStarting=false;show('onlineDuel')});
 $('#btnJoinRoom').addEventListener('click',async()=>{
   const code=$('#roomCodeInput').value.trim().toUpperCase();
   if(!code){alert('Escriu un codi de sala.');return;}
@@ -407,7 +464,7 @@ $('#btnJoinRoom').addEventListener('click',async()=>{
     if(room.p2_name)throw new Error('Aquesta sala ja té dos jugadors.');
     const p2=await profileDisplayName();
     await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:'pending',updated_at:new Date().toISOString()})});
-    onlineRoomCode=code;onlineRole=1;
+    onlineRoomCode=code;onlineRole=1;onlineStarting=false;
     $('#joinedRoomCode').textContent=code;
     $('#joinedRoomStatus').textContent=`Has entrat com ${p2} · Jugador 2. Preparant selecció...`;
     show('onlineJoined');
@@ -452,6 +509,7 @@ function chooseAnimal(a){
 
 $('#btnStart').addEventListener('click',startGame);
 function startGame(){
+  $('#btnRestartTop').style.display='';$('#btnRestart').style.display='';
   $('#nameInput1').value=playerName(0); $('#nameInput2').value=playerName(1);
   show('game'); setupBoard(); renderGameHeader(); playing=true; current=0; updateTurn();
 }
@@ -464,7 +522,7 @@ function renderGameHeader(){
 }
 function updateTurn(){const n=playerName(current);$('#turnCenter').innerHTML=`<span class="turn-dot"></span>Torn de ${n}`;$('#status').textContent=mode==='cpu'&&current===1?'La CPU està pensant...':'Tria una columna.';}
 function findRow(c){for(let r=5;r>=0;r--)if(grid[r][c]===null)return r;return -1;}
-function humanMove(c){if(!playing||(mode==='cpu'&&current===1))return;makeMove(c,current);}
+function humanMove(c){if(!playing)return;if(mode==='online'){onlineHumanMove(c);return;}if(mode==='cpu'&&current===1)return;makeMove(c,current);}
 function makeMove(c,p){const r=findRow(c);if(r<0)return false;grid[r][c]=p;drawPiece(r,c,p);const line=getWinLine(r,c,p);if(line){winningCells=line;finish(p);return true;}if(grid.flat().every(v=>v!==null)){finish(null);return true;}current=1-current;updateTurn();if(mode==='cpu'&&current===1)setTimeout(cpuMove,430);return true;}
 function drawPiece(r,c,p){const cell=$(`#board .cell[data-r="${r}"][data-c="${c}"]`),a=selected[p],piece=document.createElement('div');piece.className='piece';piece.style.color=a.color;piece.innerHTML=avatarHTML(a,'');cell.appendChild(piece);}
 function cpuMove(){if(!playing)return;let c=null;if(difficulty==='easy')c=randomColumn();else if(difficulty==='normal')c=tacticalColumn()??weightedColumn();else c=bestColumn();if(c==null)c=randomColumn();makeMove(c,1);}
@@ -525,7 +583,7 @@ function evaluateBoard(){
 }
 function getWinLine(r,c,p){const dirs=[[1,0],[0,1],[1,1],[1,-1]];for(const [dr,dc] of dirs){const cells=[[r,c]];let rr=r+dr,cc=c+dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.push([rr,cc]);rr+=dr;cc+=dc}rr=r-dr;cc=c-dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.unshift([rr,cc]);rr-=dr;cc-=dc}if(cells.length>=4)return cells;}return null}
 function finish(p){playing=false;if(p!==null){winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`).classList.add('win'));const a=selected[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${playerName(p)} ha connectat 4 fitxes.`;}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}setTimeout(()=>$('#endModal').classList.add('show'),420);}
-function restartSame(){ $('#endModal').classList.remove('show');setupBoard();playing=true;current=0;updateTurn(); }
+function restartSame(){ if(mode==='online'){ $('#endModal').classList.remove('show');show('onlineDuel');stopOnlinePoll();onlineStarting=false;return;} $('#endModal').classList.remove('show');setupBoard();playing=true;current=0;updateTurn(); }
 $('#btnAgain').addEventListener('click',restartSame);$('#btnRestart').addEventListener('click',restartSame);$('#btnRestartTop').addEventListener('click',restartSame);
 $('#btnHomeModal').addEventListener('click',()=>{$('#endModal').classList.remove('show');playing=false;show('home')});
 $('#btnExitGame').addEventListener('click',()=>{playing=false;show('home')});
