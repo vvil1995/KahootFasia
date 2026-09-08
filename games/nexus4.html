@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.17 · Integrat al Verse</title>
+<title>Fasia Verse · Nexus 4 v0.18 · Integrat al Verse</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -102,6 +102,19 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
 #viewGame .mini-player{background:rgba(8,28,70,.86);backdrop-filter:blur(5px)}
 #viewGame .board-shell{box-shadow:inset 0 0 30px #041c50,0 0 34px #45baff66,0 14px 35px #0008}
 
+/* v0.18 — Hub Online */
+.online-header img{width:min(480px,78vw);max-height:145px}
+.online-title{margin-top:4px}
+.online-main-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:980px;margin:26px auto 0}
+.online-option-card{min-height:220px;border:1px solid #8ad2ff55;border-radius:28px;padding:26px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;color:#fff;text-align:left;cursor:pointer;transition:.16s;box-shadow:0 18px 40px #0005}
+.online-option-card.duel{background:linear-gradient(145deg,#123d80,#0b2457)}
+.online-option-card.tournament{background:linear-gradient(145deg,#5b2c8f,#281b5d)}
+.online-option-card:hover{transform:translateY(-4px);filter:brightness(1.08)}
+.online-card-icon{width:92px;height:92px;border-radius:26px;display:grid;place-items:center;font-size:48px;background:#071a42aa;border:1px solid #ffffff2c;box-shadow:inset 0 1px 0 #fff2}
+.online-card-copy h3{font-size:28px;margin:0 0 8px}.online-card-copy p{margin:0;color:#c8daf4;font-weight:700;line-height:1.45}.online-card-arrow{font-size:54px;font-weight:400;color:#bfe7ff}
+.duel-actions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;max-width:900px;margin:26px auto 16px}.duel-action-panel{text-align:center;padding:30px 28px}.duel-big-icon{font-size:58px}.duel-action-panel h3{font-size:26px;margin:12px 0 8px}.duel-action-panel p{color:#c6d8f1;font-weight:700;min-height:46px}.duel-btn{width:min(260px,100%);margin-top:12px}.room-code-input{display:block;width:min(260px,100%);margin:12px auto 8px;padding:16px 18px;border-radius:16px;border:2px solid #70c8ff;background:#06183c;color:#fff;font-size:28px;font-weight:1000;text-align:center;letter-spacing:.16em;text-transform:uppercase;outline:none}.room-code-input:focus{box-shadow:0 0 0 4px #59c8ff26,0 0 24px #45baff44}.online-note{max-width:900px;margin:18px auto 0;text-align:center;color:#aac2e5;font-weight:700}.tournament-actions{display:grid;gap:16px;max-width:820px;margin:28px auto}.tournament-action-card{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;border:1px solid #a98cff66;border-radius:22px;padding:20px 22px;background:linear-gradient(145deg,#2d2465,#172650);color:#fff;cursor:pointer;text-align:left;box-shadow:0 14px 32px #0004;transition:.16s}.tournament-action-card:hover{transform:translateY(-3px);filter:brightness(1.08)}.tournament-action-icon{font-size:34px}.tournament-action-card b{display:block;font-size:22px}.tournament-action-card small{display:block;margin-top:5px;color:#c9d5ef;font-size:14px;font-weight:700}.tournament-action-card>span:last-child{font-size:38px;color:#c9e9ff}
+@media(max-width:760px){.online-main-grid,.duel-actions-grid{grid-template-columns:1fr}.online-option-card{min-height:170px;padding:20px}.online-card-icon{width:72px;height:72px;font-size:38px}.online-card-copy h3{font-size:22px}.online-card-arrow{font-size:42px}}
+
 </style>
 </head>
 <body>
@@ -174,8 +187,62 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
   </section>
 
   <section class="view" id="viewOnline">
-    <div class="topbar"><button class="back" data-go="mode">← MODES</button><div class="brand">FASIA VERSE</div><span style="width:84px"></span></div>
-    <div class="panel coming"><div class="mode-icon">🌐</div><h2>MODE ONLINE</h2><p>Aquesta pantalla ja queda preparada. El següent pas serà connectar-la amb Supabase per crear sales, codis i tornejos.</p><button class="secondary" data-go="mode">TORNAR</button></div>
+    <div class="topbar"><button class="back" data-go="mode">← MODES</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-title online-title">MODE ONLINE</div>
+    <div class="section-sub">Juga contra altres alumnes o crea una competició de classe.</div>
+
+    <div class="online-main-grid">
+      <button class="online-option-card duel" id="btnOnline1v1">
+        <div class="online-card-icon">⚔️</div>
+        <div class="online-card-copy"><h3>PARTIDA 1 VS 1</h3><p>Crea una sala privada o entra amb el codi d'un altre jugador.</p></div>
+        <div class="online-card-arrow">›</div>
+      </button>
+      <button class="online-option-card tournament" id="btnOnlineTournament">
+        <div class="online-card-icon">🏆</div>
+        <div class="online-card-copy"><h3>TORNEJOS</h3><p>Lliga · Playoff · Lliga + Playoff. Tornejos que es poden continuar un altre dia.</p></div>
+        <div class="online-card-arrow">›</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="view" id="viewOnlineDuel">
+    <div class="topbar"><button class="back" id="btnBackOnlineHub">← ONLINE</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-title online-title">PARTIDA 1 VS 1</div>
+    <div class="section-sub">Crea una sala nova o entra a una sala existent.</div>
+    <div class="duel-actions-grid">
+      <article class="panel duel-action-panel">
+        <div class="duel-big-icon">✨</div>
+        <h3>CREAR SALA</h3>
+        <p>Generarem un codi perquè el teu rival pugui entrar.</p>
+        <button class="primary duel-btn" id="btnCreateRoom">CREAR SALA</button>
+      </article>
+      <article class="panel duel-action-panel">
+        <div class="duel-big-icon">🔑</div>
+        <h3>ENTRAR AMB CODI</h3>
+        <p>Escriu el codi que t'ha passat l'altre jugador.</p>
+        <input class="room-code-input" id="roomCodeInput" maxlength="6" placeholder="CODI" autocomplete="off" />
+        <button class="primary duel-btn" id="btnJoinRoom">ENTRAR</button>
+      </article>
+    </div>
+    <div class="online-note">La connexió real amb Supabase serà el següent pas. Aquesta pantalla ja queda preparada.</div>
+  </section>
+
+  <section class="view" id="viewOnlineTournament">
+    <div class="topbar"><button class="back" id="btnBackTournamentHub">← ONLINE</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-title online-title">TORNEJOS</div>
+    <div class="section-sub">Competicions de classe persistents i controlades pel professor.</div>
+    <div class="tournament-actions">
+      <button class="tournament-action-card" id="btnCreateTournament">
+        <span class="tournament-action-icon">➕</span><span><b>CREAR TORNEIG</b><small>Lliga · Playoff · Lliga + Playoff</small></span><span>›</span>
+      </button>
+      <button class="tournament-action-card" id="btnContinueTournament">
+        <span class="tournament-action-icon">▶️</span><span><b>CONTINUAR TORNEIG</b><small>Recupera una competició guardada</small></span><span>›</span>
+      </button>
+    </div>
+    <div class="online-note">La gestió de tornejos la connectarem després del 1 vs 1 online.</div>
   </section>
 </main>
 
@@ -199,7 +266,7 @@ const animals=[
 {id:'mussol',name:'Mussol',img:'../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
 {id:'capibara',name:'Capibara',img:'../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
 ];
-const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline'};
+const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament'};
 let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function show(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.body.classList.toggle('game-screen',name==='game');window.scrollTo({top:0,behavior:'smooth'});}
@@ -216,6 +283,15 @@ $('#btnVerse').addEventListener('click',()=>{
 });
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.go)));
 $$('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;if(mode==='cpu')show('difficulty');else if(mode==='local'){prepareSelection();show('select');}else show('online');}));
+$('#btnOnline1v1').addEventListener('click',()=>show('onlineDuel'));
+$('#btnOnlineTournament').addEventListener('click',()=>show('onlineTournament'));
+$('#btnBackOnlineHub').addEventListener('click',()=>show('online'));
+$('#btnBackTournamentHub').addEventListener('click',()=>show('online'));
+$('#btnCreateRoom').addEventListener('click',()=>alert('Següent pas: connectar CREAR SALA amb Supabase i generar el codi.'));
+$('#btnJoinRoom').addEventListener('click',()=>{const code=$('#roomCodeInput').value.trim().toUpperCase();if(!code){alert('Escriu un codi de sala.');return;}alert('Següent pas: buscar la sala '+code+' a Supabase.');});
+$('#roomCodeInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));
+$('#btnCreateTournament').addEventListener('click',()=>alert('Després del 1 vs 1 muntarem la creació de tornejos.'));
+$('#btnContinueTournament').addEventListener('click',()=>alert('Aquí apareixeran els tornejos guardats del professor.'));
 $$('[data-diff]').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.diff;prepareSelection();show('select');}));
 $('#selectBack').addEventListener('click',()=>show(mode==='cpu'?'difficulty':'mode'));
 
