@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.18 · Integrat al Verse</title>
+<title>Fasia Verse · Nexus 4 v0.20 · Online entrar amb codi</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -226,7 +226,7 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
         <button class="primary duel-btn" id="btnJoinRoom">ENTRAR</button>
       </article>
     </div>
-    <div class="online-note">CREAR SALA ja està connectat a Supabase. El següent pas serà ENTRAR AMB CODI.</div>
+    <div class="online-note">CREAR SALA i ENTRAR AMB CODI ja estan connectats a Supabase.</div>
   </section>
 
   <section class="view" id="viewOnlineWaiting">
@@ -237,7 +237,19 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
       <p>Passa aquest codi al teu rival:</p>
       <div id="createdRoomCode" style="font-size:54px;font-weight:1000;letter-spacing:.16em;color:#ffd86d;margin:16px 0">-----</div>
       <p id="waitingRoomStatus">Esperant rival...</p>
-      <button class="secondary" id="btnCopyRoomCode">COPIAR CODI</button>
+      <div class="modal-actions" style="margin-top:18px"><button class="secondary" id="btnCopyRoomCode">COPIAR CODI</button><button class="secondary" id="btnBackFromWaiting">TORNAR</button></div>
+    </div>
+  </section>
+
+  <section class="view" id="viewOnlineJoined">
+    <div class="topbar"><button class="back" id="btnBackJoined">← 1 VS 1</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="panel coming" style="max-width:720px">
+      <div class="mode-icon">✅</div><h2>SALA CONNECTADA</h2>
+      <p>Has entrat correctament a la sala:</p>
+      <div id="joinedRoomCode" style="font-size:54px;font-weight:1000;letter-spacing:.16em;color:#ffd86d;margin:16px 0">-----</div>
+      <p id="joinedRoomStatus">Preparant la partida...</p>
+      <button class="secondary" id="btnJoinedBack">TORNAR A 1 VS 1</button>
     </div>
   </section>
 
@@ -278,7 +290,7 @@ const animals=[
 {id:'mussol',name:'Mussol',img:'../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
 {id:'capibara',name:'Capibara',img:'../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
 ];
-const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament',onlineWaiting:'viewOnlineWaiting'};
+const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament',onlineWaiting:'viewOnlineWaiting',onlineJoined:'viewOnlineJoined'};
 let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function show(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.body.classList.toggle('game-screen',name==='game');window.scrollTo({top:0,behavior:'smooth'});}
@@ -308,7 +320,29 @@ async function profileDisplayName(){const params=new URLSearchParams(location.se
 $('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pincher'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
 $('#btnCopyRoomCode').addEventListener('click',async()=>{if(!onlineRoomCode)return;try{await navigator.clipboard.writeText(onlineRoomCode);$('#btnCopyRoomCode').textContent='COPIAT ✓';setTimeout(()=>$('#btnCopyRoomCode').textContent='COPIAR CODI',1200)}catch{alert('Codi: '+onlineRoomCode)}});
 $('#btnCancelWaiting').addEventListener('click',()=>show('onlineDuel'));
-$('#btnJoinRoom').addEventListener('click',()=>{const code=$('#roomCodeInput').value.trim().toUpperCase();if(!code){alert('Escriu un codi de sala.');return;}alert('Següent pas: buscar la sala '+code+' a Supabase.');});
+$('#btnBackFromWaiting').addEventListener('click',()=>show('onlineDuel'));
+$('#btnBackJoined').addEventListener('click',()=>show('onlineDuel'));
+$('#btnJoinedBack').addEventListener('click',()=>show('onlineDuel'));
+$('#btnJoinRoom').addEventListener('click',async()=>{
+  const code=$('#roomCodeInput').value.trim().toUpperCase();
+  if(!code){alert('Escriu un codi de sala.');return;}
+  const btn=$('#btnJoinRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='ENTRANT...';
+  try{
+    const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code)+'&select=code,status,p1_name,p1_animal,p2_name&limit=1');
+    const room=rows?.[0];
+    if(!room)throw new Error('Aquest codi no existeix.');
+    if(room.status!=='waiting')throw new Error('Aquesta sala ja no està disponible.');
+    if(room.p2_name)throw new Error('Aquesta sala ja té dos jugadors.');
+    const p2=await profileDisplayName();
+    const p2Animal=room.p1_animal==='gat'?'pincher':'gat';
+    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:p2Animal,status:'playing',updated_at:new Date().toISOString()})});
+    onlineRoomCode=code;
+    $('#joinedRoomCode').textContent=code;
+    $('#joinedRoomStatus').textContent=`Has entrat com ${p2}. El següent pas serà sincronitzar la selecció i la partida.`;
+    show('onlineJoined');
+  }catch(e){console.error(e);alert(e.message||'No s’ha pogut entrar a la sala.');}
+  finally{btn.disabled=false;btn.textContent=oldText;}
+});
 $('#roomCodeInput').addEventListener('input',e=>e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,''));
 $('#btnCreateTournament').addEventListener('click',()=>alert('Després del 1 vs 1 muntarem la creació de tornejos.'));
 $('#btnContinueTournament').addEventListener('click',()=>alert('Aquí apareixeran els tornejos guardats del professor.'));
