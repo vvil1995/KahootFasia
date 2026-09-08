@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.20 · Online entrar amb codi</title>
+<title>Fasia Verse · Nexus 4 v0.21 · Online entrar amb codi</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -253,6 +253,20 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
     </div>
   </section>
 
+  <section class="view" id="viewOnlineSelect">
+    <div class="topbar"><button class="back" id="btnBackOnlineSelect">← 1 VS 1</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-title online-title">TRIA LA TEVA FITXA</div>
+    <div class="section-sub" id="onlineSelectInfo">Sala ----- · Preparant jugadors...</div>
+    <section class="panel animal-picker" style="max-width:1000px">
+      <p class="picker-help" id="onlinePickerHelp">Selecciona un animal. El rival no podrà escollir el mateix.</p>
+      <div class="animals" id="onlineAnimals"></div>
+      <div class="select-actions" style="margin-top:18px">
+        <div id="onlineReadyStatus" style="font-weight:900;color:#d7eaff;min-height:26px">Encara no has triat fitxa.</div>
+      </div>
+    </section>
+  </section>
+
   <section class="view" id="viewOnlineTournament">
     <div class="topbar"><button class="back" id="btnBackTournamentHub">← ONLINE</button><span></span><span style="width:84px"></span></div>
     <div class="nexus-header online-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
@@ -290,7 +304,7 @@ const animals=[
 {id:'mussol',name:'Mussol',img:'../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
 {id:'capibara',name:'Capibara',img:'../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
 ];
-const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament',onlineWaiting:'viewOnlineWaiting',onlineJoined:'viewOnlineJoined'};
+const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament',onlineWaiting:'viewOnlineWaiting',onlineJoined:'viewOnlineJoined',onlineSelect:'viewOnlineSelect'};
 let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function show(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.body.classList.toggle('game-screen',name==='game');window.scrollTo({top:0,behavior:'smooth'});}
@@ -315,31 +329,89 @@ const SUPABASE_URL='https://gzbvcxputhkyunemxzjm.supabase.co';
 const SUPABASE_KEY='sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu';
 const sbApi=async(path,options={})=>{const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:options.prefer||'return=representation',...(options.headers||{})}});const text=await r.text();let data=null;try{data=text?JSON.parse(text):null}catch{data=text}if(!r.ok)throw new Error((data&&data.message)||text||('HTTP '+r.status));return data;};
 let onlineRoomCode='';
+let onlineRole=null;
+let onlinePollTimer=null;
+let onlineRoom=null;
+function stopOnlinePoll(){if(onlinePollTimer){clearInterval(onlinePollTimer);onlinePollTimer=null;}}
 function makeRoomCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let out='';for(let i=0;i<5;i++)out+=chars[Math.floor(Math.random()*chars.length)];return out;}
-async function profileDisplayName(){const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return 'Jugador 1';try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name&limit=1');return safeName(rows?.[0]?.display_name,'Jugador 1')}catch(e){console.warn(e);return 'Jugador 1'}}
-$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pincher'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
+async function profileDisplayName(){const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return 'Jugador';try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name&limit=1');return safeName(rows?.[0]?.display_name,'Jugador')}catch(e){console.warn(e);return 'Jugador'}}
+async function getOnlineRoom(){if(!onlineRoomCode)return null;const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&select=code,status,p1_name,p1_animal,p2_name,p2_animal,current_player,winner_index&limit=1');return rows?.[0]||null;}
+function animalById(id){return animals.find(a=>a.id===id)||null;}
+function isChosenAnimal(id){return !!id && id!=='pending';}
+function renderOnlineSelection(room){
+  onlineRoom=room;
+  const meName=onlineRole===0?room.p1_name:room.p2_name;
+  const rivalName=onlineRole===0?room.p2_name:room.p1_name;
+  const myAnimal=onlineRole===0?room.p1_animal:room.p2_animal;
+  const rivalAnimal=onlineRole===0?room.p2_animal:room.p1_animal;
+  $('#onlineSelectInfo').textContent=`Sala ${room.code} · ${meName||'Tu'} VS ${rivalName||'Rival'}`;
+  const picker=$('#onlineAnimals'); picker.innerHTML='';
+  animals.forEach(a=>{
+    const b=document.createElement('button');b.type='button';b.className='animal';b.style.color=a.color;
+    const taken=isChosenAnimal(rivalAnimal)&&rivalAnimal===a.id;
+    const mine=isChosenAnimal(myAnimal)&&myAnimal===a.id;
+    if(taken)b.classList.add('taken'); if(mine)b.classList.add('selected'); b.disabled=taken;
+    b.innerHTML=`<span class="face">${avatarHTML(a)}</span><b>${a.name}</b>`;
+    b.addEventListener('click',()=>selectOnlineAnimal(a.id));picker.appendChild(b);
+  });
+  if(isChosenAnimal(myAnimal)){
+    const a=animalById(myAnimal);
+    $('#onlineReadyStatus').textContent=`✓ Has triat ${a?.name||myAnimal}. ${isChosenAnimal(rivalAnimal)?'El rival també està preparat.':'Esperant que el rival triï...'}`;
+  }else $('#onlineReadyStatus').textContent='Encara no has triat fitxa.';
+  if(isChosenAnimal(myAnimal)&&isChosenAnimal(rivalAnimal)){
+    $('#onlineReadyStatus').textContent='✅ TOTS DOS PREPARATS · Preparant partida online...';
+  }
+}
+async function selectOnlineAnimal(animalId){
+  try{
+    const room=await getOnlineRoom(); if(!room)throw new Error('La sala ja no existeix.');
+    const rivalAnimal=onlineRole===0?room.p2_animal:room.p1_animal;
+    if(isChosenAnimal(rivalAnimal)&&rivalAnimal===animalId)throw new Error('El rival ja ha escollit aquesta fitxa.');
+    const field=onlineRole===0?'p1_animal':'p2_animal';
+    const patch={[field]:animalId,updated_at:new Date().toISOString()};
+    const other=onlineRole===0?room.p2_animal:room.p1_animal;
+    if(isChosenAnimal(other))patch.status='playing';
+    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode),{method:'PATCH',body:JSON.stringify(patch)});
+    const updated=await getOnlineRoom(); if(updated)renderOnlineSelection(updated);
+  }catch(e){console.error(e);alert(e.message||'No s’ha pogut seleccionar la fitxa.');}
+}
+function beginSelectionPolling(){
+  stopOnlinePoll();
+  onlinePollTimer=setInterval(async()=>{
+    try{const room=await getOnlineRoom();if(!room)return;renderOnlineSelection(room);}catch(e){console.warn('poll online select',e)}
+  },1500);
+}
+function enterOnlineSelection(){show('onlineSelect');beginSelectionPolling();getOnlineRoom().then(r=>r&&renderOnlineSelection(r));}
+function beginWaitingForRival(){
+  stopOnlinePoll();
+  onlinePollTimer=setInterval(async()=>{
+    try{const room=await getOnlineRoom();if(room?.p2_name){$('#waitingRoomStatus').textContent=`${room.p2_name} s'ha connectat!`;stopOnlinePoll();setTimeout(enterOnlineSelection,450);}}catch(e){console.warn('poll rival',e)}
+  },1500);
+}
+$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pending'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;onlineRole=0;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');beginWaitingForRival();}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
 $('#btnCopyRoomCode').addEventListener('click',async()=>{if(!onlineRoomCode)return;try{await navigator.clipboard.writeText(onlineRoomCode);$('#btnCopyRoomCode').textContent='COPIAT ✓';setTimeout(()=>$('#btnCopyRoomCode').textContent='COPIAR CODI',1200)}catch{alert('Codi: '+onlineRoomCode)}});
-$('#btnCancelWaiting').addEventListener('click',()=>show('onlineDuel'));
-$('#btnBackFromWaiting').addEventListener('click',()=>show('onlineDuel'));
-$('#btnBackJoined').addEventListener('click',()=>show('onlineDuel'));
-$('#btnJoinedBack').addEventListener('click',()=>show('onlineDuel'));
+$('#btnCancelWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
+$('#btnBackFromWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
+$('#btnBackJoined').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
+$('#btnJoinedBack').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
+$('#btnBackOnlineSelect').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
 $('#btnJoinRoom').addEventListener('click',async()=>{
   const code=$('#roomCodeInput').value.trim().toUpperCase();
   if(!code){alert('Escriu un codi de sala.');return;}
   const btn=$('#btnJoinRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='ENTRANT...';
   try{
-    const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code)+'&select=code,status,p1_name,p1_animal,p2_name&limit=1');
+    const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code)+'&select=code,status,p1_name,p1_animal,p2_name,p2_animal&limit=1');
     const room=rows?.[0];
     if(!room)throw new Error('Aquest codi no existeix.');
     if(room.status!=='waiting')throw new Error('Aquesta sala ja no està disponible.');
     if(room.p2_name)throw new Error('Aquesta sala ja té dos jugadors.');
     const p2=await profileDisplayName();
-    const p2Animal=room.p1_animal==='gat'?'pincher':'gat';
-    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:p2Animal,status:'playing',updated_at:new Date().toISOString()})});
-    onlineRoomCode=code;
+    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:'pending',updated_at:new Date().toISOString()})});
+    onlineRoomCode=code;onlineRole=1;
     $('#joinedRoomCode').textContent=code;
-    $('#joinedRoomStatus').textContent=`Has entrat com ${p2}. El següent pas serà sincronitzar la selecció i la partida.`;
+    $('#joinedRoomStatus').textContent=`Has entrat com ${p2} · Jugador 2. Preparant selecció...`;
     show('onlineJoined');
+    setTimeout(enterOnlineSelection,650);
   }catch(e){console.error(e);alert(e.message||'No s’ha pogut entrar a la sala.');}
   finally{btn.disabled=false;btn.textContent=oldText;}
 });
