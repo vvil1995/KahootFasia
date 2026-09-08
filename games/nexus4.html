@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.23 · Online estable sense parpelleig</title>
+<title>Fasia Verse · Nexus 4 v0.24 · Online estable sense parpelleig</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -390,11 +390,31 @@ function normalizeOnlineBoard(board){
   if(Array.isArray(board)&&board.length===6&&board.every(r=>Array.isArray(r)&&r.length===7))return board.map(r=>r.map(v=>v===0||v===1?v:null));
   return Array.from({length:6},()=>Array(7).fill(null));
 }
-function renderBoardFromGrid(){
-  const board=$('#board');board.innerHTML='';
+function ensureOnlineBoardCells(){
+  const board=$('#board');
+  if(board.children.length===42)return;
+  board.innerHTML='';
   for(let r=0;r<6;r++)for(let c=0;c<7;c++){
     const cell=document.createElement('button');cell.type='button';cell.className='cell';cell.dataset.r=r;cell.dataset.c=c;cell.setAttribute('aria-label',`Columna ${c+1}`);cell.addEventListener('click',()=>humanMove(c));board.appendChild(cell);
-    const p=grid[r][c];if(p===0||p===1)drawPiece(r,c,p);
+  }
+}
+function syncOnlineBoard(nextGrid,animateNew=true){
+  ensureOnlineBoardCells();
+  const prev=Array.isArray(grid)&&grid.length===6?grid:Array.from({length:6},()=>Array(7).fill(null));
+  for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+    const before=prev?.[r]?.[c]??null;
+    const after=nextGrid[r][c];
+    if(before===after)continue;
+    const cell=$(`#board .cell[data-r="${r}"][data-c="${c}"]`);
+    if(!cell)continue;
+    const oldPiece=cell.querySelector('.piece');
+    if(oldPiece)oldPiece.remove();
+    if(after===0||after===1){
+      const a=selected[after],piece=document.createElement('div');
+      piece.className='piece';piece.style.color=a.color;piece.innerHTML=avatarHTML(a,'');
+      if(!animateNew)piece.style.animation='none';
+      cell.appendChild(piece);
+    }
   }
 }
 function onlinePlayerName(i){return safeName(i===0?onlineRoom?.p1_name:onlineRoom?.p2_name,i===0?'Jugador 1':'Jugador 2');}
@@ -419,12 +439,15 @@ function applyOnlineRoom(room){
   const nextGrid=normalizeOnlineBoard(room.board);
   const nextSignature=JSON.stringify(nextGrid);
   const boardChanged=nextSignature!==onlineBoardSignature;
-  grid=nextGrid;
-  current=Number(room.current_player||0);
   if(boardChanged){
+    const firstPaint=onlineBoardSignature===null;
+    syncOnlineBoard(nextGrid,!firstPaint);
+    grid=nextGrid.map(row=>row.slice());
     onlineBoardSignature=nextSignature;
-    renderBoardFromGrid();
+  }else{
+    grid=nextGrid.map(row=>row.slice());
   }
+  current=Number(room.current_player||0);
   renderOnlineGameHeader();
   if(room.status==='finished')showOnlineFinished(room);else{playing=true;updateOnlineTurn();}
 }

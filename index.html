@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.79 · NEXUS 4 INTEGRAT</title>
+<title>Fasia Verse · V0.14.80 · ROMA FIXES + BOTIGA + MEDUSA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -5278,7 +5278,15 @@ function ownedSkinSet(){
   FREE_SKIN_IDS.forEach(id=>purchased.add(id));
   return purchased;
 }
-function isSkinOwned(skinId){return ownedSkinSet().has(skinId)}
+function isSkinOwned(skinId){
+  if(ownedSkinSet().has(skinId))return true;
+  try{
+    const st=challengeState();
+    return Array.isArray(st?.unlockedExclusives) && st.unlockedExclusives.includes(skinId);
+  }catch(e){
+    return false;
+  }
+}
 function isSkinAvailable(s){
   if(s.available===false){
     return !!(s.event && SHOP_CONFIG.events && SHOP_CONFIG.events[s.event]===true);
@@ -5862,7 +5870,7 @@ const sessionQuestionBanks={
 {type:"classify",text:"CLASSIFICA QUI ERA LLIURE I QUI NO.",zones:["LLIURE","NO LLIURE"],labels:["PATRICI","PLEBEU","ESCLAU"],textOnly:true,correctZones:[0,0,1],correct:encodeClassify([0,0,1])},
 {type:"visual2",hideLabels:true,text:"QUINA IMATGE REPRESENTA MILLOR UN ESCLAU ROMÀ?",answers:["PATRICI","ESCLAU"],images:["assets/history/roma/s2/patrici.webp","assets/history/roma/s2/esclau.webp"],correct:1},
 {type:"match",text:"RELACIONA CADA GRUP AMB LA SEVA SITUACIÓ.",left:["PATRICI","PLEBEU","ESCLAU"],right:["PODER I RIQUESA","TREBALL I VIDA LLIURE","DEPÈN D’UN AMO"],correctMap:[0,1,2],textOnly:true,correct:encodeMatch([0,1,2])},
-{type:"visual4",row4:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/plebeu.webp","assets/history/roma/s2/esclau.webp","assets/history/roma/s2/patrici.webp","assets/history/roma/s2/cavaller_medieval.webp"],correct:2}
+{type:"visual4",row4:true,noCrop:true,text:"QUI TENIA MÉS PODER DINS LA SOCIETAT ROMANA?",answers:["PLEBEU","ESCLAU","PATRICI","CAVALLER MEDIEVAL"],images:["assets/history/roma/s2/plebeu.webp","assets/history/roma/s2/esclau.webp","assets/history/roma/s2/patrici.webp","assets/history/roma/s2/cavaller_medieval.webp"],correct:2}
 ],
 
 "R3":[
@@ -5882,24 +5890,24 @@ const sessionQuestionBanks={
 {type:"match",text:"RELACIONA EL PRODUCTE AMB EL SEU ORIGEN.",left:["BLAT","OLI","VI"],right:["RAÏM","CAMP DE CEREALS","OLIVERA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"L’AGRICULTURA ERA IMPORTANT PER A L’ECONOMIA ROMANA.",answers:["CERT","FALS"],correct:0},
 {type:"choice",text:"QUIN D’AQUESTS ANIMALS NO ERA HABITUAL EN LA RAMADERIA ROMANA?",answers:["PORC","LLEÓ","OVELLA","VACA"],correct:1},
-{type:"choice",questionImagePlaceholder:true,text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["NEDANT","COMERCIANT","DORMINT"],correct:1},
+{type:"choice",questionImage:"assets/history/roma/s5/mercat.webp",text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["NEDANT","COMERCIANT","DORMINT"],correct:1},
 {type:"match",text:"RELACIONA CADA ACTIVITAT AMB QUÈ PRODUEIX O FA.",left:["AGRICULTURA","RAMADERIA","COMERÇ"],right:["INTERCANVI DE PRODUCTES","ALIMENTS DEL CAMP","PRODUCTES ANIMALS"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"ELS ROMANS NOMÉS PRODUÏEN PER A ELLS MATEIXOS I NO COMERCIAVEN.",answers:["CERT","FALS"],correct:1},
 {type:"choice",text:"QUI FEIA UNA PART IMPORTANT DELS TREBALLS MÉS DURS?",answers:["ELS DÉUS","ELS EMPERADORS","ELS ESCLAUS"],correct:2},
 {type:"choice",questionImage:"assets/history/roma/s4/vaixell_comerc.webp",text:"PER A QUÈ SERVIEN ELS VAIXELLS COM AQUEST?",answers:["PER CULTIVAR BLAT","PER TRANSPORTAR I COMERCIAR AMB PRODUCTES","PER VOLAR"],correct:1},
-{type:"choice",text:"QUIN NO FORMA PART DE L’ECONOMIA ROMANA QUE HEM TREBALLAT?",answers:["RAMADERIA","INFORMÀTICA","COMERÇ","AGRICULTURA"],correct:1}
+{type:"choice",text:"QUIN OFICI O ACTIVITAT NO FORMA PART DE L’ECONOMIA ROMANA QUE HEM TREBALLAT?",answers:["RAMADERIA","INFORMÀTICA","COMERÇ","AGRICULTURA"],correct:1}
 ],
 "R5":[
-{type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES ÉS UNA DOMUS ROMANA?",answers:["CASTELL MEDIEVAL","PIRÀMIDE","DOMUS","IGLÚ"],images:["assets/history/roma/s5/castell_medieval.webp","assets/history/roma/s5/fortalesa.webp","assets/history/roma/s5/domus.webp","assets/history/roma/s5/menjar.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES ÉS UNA DOMUS ROMANA?",answers:["CASTELL MEDIEVAL","AMFITEATRE","DOMUS","INSULA"],images:["assets/history/roma/s5/castell_medieval.webp","assets/history/roma/s5/amfiteatre.webp","assets/history/roma/s5/domus.webp","assets/history/roma/s5/insula.webp"],correct:2},
 {type:"match",text:"RELACIONA CADA CASA AMB QUI HI VIVIA.",left:["DOMUS","INSULA","VILLA"],right:["AL CAMP","FAMÍLIES RIQUES","FAMÍLIES MÉS POBRES"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"LES INSULAE EREN EDIFICIS AMB DIVERSOS PISOS.",answers:["CERT","FALS"],correct:0},
 {type:"visual4",row4:true,text:"QUINA D’AQUESTES NO ÉS UNA CONSTRUCCIÓ ROMANA QUE HEM TREBALLAT?",answers:["VILLA","CASTELL MEDIEVAL","DOMUS","INSULA"],images:["assets/history/roma/s5/villa.webp","assets/history/roma/s5/castell_medieval.webp","assets/history/roma/s5/domus.webp","assets/history/roma/s5/insula.webp"],correct:1},
-{type:"visual2",hideLabels:true,text:"QUINA ÉS UNA VILLA ROMANA?",answers:["CASA DE CIUTAT","VILLA ROMANA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/villa.webp"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUINA ÉS UNA VILLA ROMANA?",answers:["CASA DE CIUTAT","VILLA ROMANA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/atrium_domus.webp"],correct:1},
 {type:"choice",questionImagePlaceholder:true,text:"QUÈ ERA UNA TABERNA?",answers:["UN PORT","UN LOCAL O BOTIGA","UN PALAU IMPERIAL"],correct:1},
 {type:"match",text:"RELACIONA CADA LLOC AMB LA SEVA FUNCIÓ.",left:["TABERNA","FONT","LATRINA"],right:["ANAR AL LAVABO","COMPRAR I VENDRE","ACONSEGUIR AIGUA"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"TOTES LES CASES ROMANES TENIEN AIGUA CORRENT I LAVABO PRIVAT.",answers:["CERT","FALS"],correct:1},
-{type:"choice",text:"SI VIVIES EN UNA INSULA I NECESSITAVES AIGUA, ON PODIES ANAR?",answers:["A UN CIRC","A UNA FONT PÚBLICA","A UN AEROPORT"],correct:1},
-{type:"visual4",row4:true,text:"QUINA CASA TROBARÍEM FORA DE LA CIUTAT, AL CAMP?",answers:["DOMUS","AMFITEATRE","INSULA","VILLA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/amfiteatre.webp","assets/history/roma/s5/insula.webp","assets/history/roma/s5/villa.webp"],correct:3}
+{type:"choice",text:"SI VIVIES EN UNA INSULA I NECESSITAVES AIGUA, ON PODIES ANAR?",answers:["A UN CIRC","A UNA FONT PÚBLICA","AL MAR"],correct:1},
+{type:"visual4",row4:true,text:"QUINA CASA TROBARÍEM FORA DE LA CIUTAT, AL CAMP?",answers:["DOMUS","AMFITEATRE","INSULA","VILLA"],images:["assets/history/roma/s5/domus.webp","assets/history/roma/s5/amfiteatre.webp","assets/history/roma/s5/insula.webp","assets/history/roma/s5/atrium_domus.webp"],correct:3}
 ],
 "R6":[
 {type:"visual4",row4:true,text:"QUIN D’AQUESTS ALIMENTS NO FORMAVA PART DE L’ALIMENTACIÓ ROMANA?",answers:["OLIVES","HAMBURGUESA MODERNA","PA","RAÏM"],images:["assets/history/roma/s6/olives.webp","assets/history/roma/s6/hamburguesa.webp","assets/history/roma/s6/pa.webp","assets/history/roma/s6/raim.webp"],correct:1},
@@ -5910,11 +5918,11 @@ const sessionQuestionBanks={
 {type:"choice",questionImage:"assets/history/roma/s6/banquet_romans.webp",text:"QUÈ ESTAN FENT AQUESTS ROMANS?",answers:["UNA BATALLA","UN BANQUET","UNA CURSA"],correct:1},
 {type:"choice",text:"QUIN ALIMENT S’OBTENIA DEL RAÏM?",answers:["OLI","PA","VI"],correct:2},
 {type:"vf",text:"TOTS ELS ROMANS MENJAVEN GRANS BANQUETS CADA DIA.",answers:["CERT","FALS"],correct:1},
-{type:"visual2",hideLabels:true,text:"QUIN ÀPAT SEMBLA D’UNA FAMÍLIA ROMANA RICA?",answers:["ÀPAT SENZILL","BANQUET RIC"],images:["assets/history/roma/s6/menjar_pobres.webp","assets/history/roma/s6/menjar_rics.webp"],correct:1},
+{type:"visual2",hideLabels:true,text:"QUIN ÀPAT SEMBLA D’UNA FAMÍLIA ROMANA RICA?",answers:["ÀPAT SENZILL","BANQUET RIC"],images:["assets/history/roma/s6/menjar_pobres.webp","assets/history/roma/s6/banquet_romans.webp"],correct:1},
 {type:"choice",text:"QUIN D’AQUESTS PRODUCTES UTILITZAVEN ELS ROMANS PER DONAR SABOR AL MENJAR?",answers:["MAIONESA","XOCOLATA","GARUM","KÈTXUP"],correct:2}
 ],
 "R7":[
-{type:"visual4",row4:true,text:"QUINA IMATGE REPRESENTA UN CIRC ROMÀ?",answers:["TEMPLE","AMFITEATRE","CIRC ROMÀ","TEATRE"],images:["assets/history/roma/s7/temple.webp","assets/history/roma/s7/amfiteatre.webp","assets/history/roma/s7/circ.webp","assets/history/roma/s7/teatre.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUINA IMATGE REPRESENTA UN CIRC ROMÀ?",answers:["TEMPLE","AMFITEATRE","CIRC ROMÀ","TEATRE"],images:["assets/history/roma/s7/temple.webp","assets/history/roma/s7/amfiteatre.webp","assets/history/roma/s7/circ.webp","assets/history/roma/s7/teatre.webp"],correct:2},
 {type:"match",text:"RELACIONA CADA ESPECTACLE AMB EL LLOC ON ES FEIA.",left:["OBRES DE TEATRE","QUADRIGUES","GLADIADORS"],right:["CIRC","AMFITEATRE","TEATRE"],correctMap:[2,0,1],textOnly:true,correct:encodeMatch([2,0,1])},
 {type:"vf",text:"ELS ROMANS ANAVEN AL TEATRE PER VEURE REPRESENTACIONS I COMÈDIES.",answers:["CERT","FALS"],correct:0},
 {type:"choice",questionImage:"assets/history/roma/s7/quadriga_rect.webp",text:"COM S’ANOMENAVA AQUEST VEHICLE DE CURSES?",answers:["TRINEU","QUADRIGA","CARRO DE COMPRA"],correct:1},
@@ -5930,7 +5938,7 @@ const sessionQuestionBanks={
 {type:"match",text:"RELACIONA JÚPITER, JUNO I NEPTÚ AMB EL QUE REPRESENTAVEN.",left:["JÚPITER","JUNO","NEPTÚ"],right:["MAR","CEL","DONES CASADES"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"visual4",row4:true,text:"QUIN SÍMBOL RELACIONEM AMB JÚPITER?",answers:["TRIDENT","LIRA","LLAMP","ARC"],images:["assets/history/grecia/s3/trident.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/arc.webp"],correct:2},
 {type:"visual4",row4:true,hideLabels:true,text:"QUIN OBJECTE ESTÀ RELACIONAT AMB NEPTÚ?",answers:["ARC","LLAMP","LIRA","TRIDENT"],images:["assets/history/grecia/s3/arc.webp","assets/history/grecia/s3/llamp.webp","assets/history/grecia/s3/lira.webp","assets/history/grecia/s3/trident.webp"],correct:3},
-{type:"visual4",row4:true,text:"QUIN D’AQUESTS PERSONATGES ÉS MART?",answers:["VENUS","DIANA","MART","MINERVA"],images:["assets/history/roma/s8/venus.webp","assets/history/roma/s8/diana.webp","assets/history/roma/s8/mart.webp","assets/history/roma/s8/minerva.webp"],correct:2},
+{type:"visual4",row4:true,hideLabels:true,text:"QUIN D’AQUESTS PERSONATGES ÉS MART?",answers:["VENUS","DIANA","MART","MINERVA"],images:["assets/history/roma/s8/venus.webp","assets/history/roma/s8/diana.webp","assets/history/roma/s8/mart.webp","assets/history/roma/s8/minerva.webp"],correct:2},
 {type:"match",text:"RELACIONA MART, VENUS I MINERVA.",left:["MART","VENUS","MINERVA"],right:["SAVIESA","GUERRA","AMOR"],correctMap:[1,2,0],textOnly:true,correct:encodeMatch([1,2,0])},
 {type:"vf",text:"MART ERA EL DÉU DEL MAR.",answers:["CERT","FALS"],correct:1},
 {type:"visual4",row4:true,hideLabels:true,text:"QUINA D’AQUESTES ÉS VENUS?",answers:["JUNO","MINERVA","DIANA","VENUS"],images:["assets/history/roma/s8/juno.webp","assets/history/roma/s8/minerva.webp","assets/history/roma/s8/diana.webp","assets/history/roma/s8/venus.webp"],correct:3},
@@ -6342,6 +6350,7 @@ function renderVisualChoices(q,box,questionIndex,count){
     : `<div class="visual-image-placeholder" aria-label="Imatge pendent"></div>`;
   btn.innerHTML=`${media}${q.hideLabels?"":`<div class="visual-choice-label">${answer}</div>`}`;
   if(q.hideLabels) btn.classList.add("no-visual-label");
+  if(q.noCrop) btn.classList.add("no-crop");
   btn.onclick=()=>{
    if(studentAnsweredQuestion===questionIndex)return;
    selected=index;box.querySelectorAll(".visual-choice").forEach(x=>x.classList.remove("selected"));
@@ -7196,13 +7205,15 @@ function renderTeacherMatch(q,reveal=false){
   q.left.forEach((label,i)=>{
     const d=document.createElement("div");
     d.className="teacher-match-item";
-    d.innerHTML=q.leftImages?.[i]?`<img src="${q.leftImages[i]}" alt="" class="match-option-img"><span>${label}</span>`:`<span class="teacher-match-icon">${matchIcon(label)}</span><span>${label}</span>`;
+    d.innerHTML=q.leftImages?.[i]
+      ? `<img src="${q.leftImages[i]}" alt="" class="match-option-img"><span>${label}</span>`
+      : `<span class="teacher-match-icon">${matchIcon(label)}</span><span>${label}</span>`;
     left.appendChild(d);
   });
 
   const right=document.createElement("div");
   right.className="teacher-match-col";
-  right.innerHTML='<div class="teacher-match-title">ACCIÓ</div>';
+  right.innerHTML='<div class="teacher-match-title">RELACIONA</div>';
 
   if(reveal){
     q.left.forEach((label,i)=>{
@@ -7212,10 +7223,27 @@ function renderTeacherMatch(q,reveal=false){
       right.appendChild(d);
     });
   }else{
-    shuffledIndices(q.right.length).forEach((rightIndex)=>{
+    // Desordre forçat: cap fila coincideix amb la seva resposta correcta.
+    const n=q.right.length;
+    let order=shuffledIndices(n);
+    if(n>1){
+      let tries=0;
+      const isDeranged=arr=>arr.every((rightIndex,row)=>rightIndex!==q.correctMap[row]);
+      while(!isDeranged(order) && tries<30){
+        order=shuffledIndices(n);
+        tries++;
+      }
+      // Garantia final: rotació de la solució correcta.
+      if(!isDeranged(order)){
+        order=q.correctMap.map((_,row)=>q.correctMap[(row+1)%n]);
+      }
+    }
+    order.forEach((rightIndex)=>{
       const d=document.createElement("div");
       d.className="teacher-match-target";
-      d.innerHTML=q.rightImages?.[rightIndex]?`<img src="${q.rightImages[rightIndex]}" alt="" class="match-option-img"><span>${q.right[rightIndex]}</span>`:`${q.right[rightIndex]}`;
+      d.innerHTML=q.rightImages?.[rightIndex]
+        ? `<img src="${q.rightImages[rightIndex]}" alt="" class="match-option-img"><span>${q.right[rightIndex]}</span>`
+        : `${q.right[rightIndex]}`;
       right.appendChild(d);
     });
   }
@@ -7268,6 +7296,7 @@ async function loadQuestion(){
         : `<div class="visual-image-placeholder" aria-label="Imatge pendent"></div>`;
       b.innerHTML=`${media}${q.hideLabels?"":`<div class="visual-choice-label">${a}</div>`}`;
       if(q.hideLabels)b.classList.add("no-visual-label");
+      if(q.noCrop)b.classList.add("no-crop");
       box.appendChild(b);
     });
   }else if(q.type==="order"){
@@ -7689,7 +7718,9 @@ function simRenderLocal(){
       b.type="button";
       b.className="answer visual-choice";
       b.disabled=true;
-      b.innerHTML=`<img src="${q.images?.[i]||""}" alt="${a}"><div class="visual-choice-label">${a}</div>`;
+      if(q.noCrop)b.classList.add("no-crop");
+      if(q.hideLabels)b.classList.add("no-visual-label");
+      b.innerHTML=`<img src="${q.images?.[i]||""}" alt="${q.hideLabels?"":a}">${q.hideLabels?"":`<div class="visual-choice-label">${a}</div>`}`;
       box.appendChild(b);
     });
     return;
@@ -9073,6 +9104,44 @@ console.info("Fasia Verse · V0.14.75 · G2 P8 sense text + G3 P9 objecte");
 </script>
 
 <script>console.info("Fasia Verse · V0.14.78 · Roma S3-S8 revisada + assets S7-S8");</script>
+
+<script id="fv-v01480-shop-order-medusa">
+(()=>{
+  try{
+    if(window.SHOP_CONFIG?.characters || (typeof SHOP_CONFIG!=="undefined" && Array.isArray(SHOP_CONFIG.characters))){
+      const chars=SHOP_CONFIG.characters.slice();
+      const normal=chars.filter(c=>!c.exclusive && !["lleo","tuca"].includes(c.id));
+      const lleo=chars.filter(c=>c.id==="lleo");
+      const tuca=chars.filter(c=>c.id==="tuca");
+      const exclusius=chars.filter(c=>c.exclusive && c.id!=="tuca");
+      SHOP_CONFIG.characters.splice(0,SHOP_CONFIG.characters.length,...normal,...lleo,...tuca,...exclusius);
+    }
+  }catch(e){console.error("Ordre botiga:",e)}
+  console.info("Fasia Verse · V0.14.80 · botiga reordenada + exclusius al final");
+})();
+</script>
+
+
+<style id="fv-v01480-fixes">
+/* R2 P10: sense zoom/crop. Manté la imatge sencera dins de la targeta. */
+.visual-choice.no-crop img{
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  background:#fff!important;
+}
+
+/* També anul·la regles antigues que poguessin tornar a fer crop. */
+#studentAnswers.visual-row4 .visual-choice.no-crop img,
+#answers.visual-row4 .visual-choice.no-crop img,
+#simAnswers.visual-row4 .visual-choice.no-crop img{
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
+</style>
+<script>console.info("Fasia Verse · V0.14.80 · Roma S2-S8 + relacionar professor + Medusa");</script>
+
 </body>
 </html>
 <style>
