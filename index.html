@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.78 · ROMA S3-S8 REVISIÓ + ASSETS S7-S8</title>
+<title>Fasia Verse · V0.14.79 · NEXUS 4 INTEGRAT</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3198,6 +3198,12 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   color:#fff;
 }
 .game-choice-words .game-choice-content{max-width:72%}
+.game-choice-nexus{
+  background:
+    linear-gradient(to top,rgba(3,12,24,.88),rgba(3,12,24,.10) 62%),
+    url("assets/nexus4/nexus4_portada.webp") center/cover no-repeat;
+  color:#fff;
+}
 
 .game-choice-soon{
   grid-column:1/-1;
@@ -4070,6 +4076,15 @@ button.profile-collection-card{cursor:pointer}
         <span class="game-choice-tag">JOC INDIVIDUAL</span>
         <h3>PORTALS DE LES LLETRES</h3>
         <p>Travessa portals, troba paraules i avança per CAT, ESP i ANG.</p>
+      </div>
+    </button>
+
+    <button id="openNexus4" class="game-choice game-choice-nexus" type="button">
+      <div class="game-choice-arrow">›</div>
+      <div class="game-choice-content">
+        <span class="game-choice-tag">JOC INDIVIDUAL · ONLINE</span>
+        <h3>NEXUS 4</h3>
+        <p>Connecta 4, juga contra la CPU, en local o entra al mode online.</p>
       </div>
     </button>
 
@@ -6792,6 +6807,17 @@ $("#openWordSearch").onclick=()=>{
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/portals-lletres.html?profile="+encodeURIComponent(pid);
 };
+$("#openNexus4").onclick=()=>{
+  if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
+    alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+    return;
+  }
+  const pid=String(currentProfile.id);
+  sessionStorage.setItem("fasiaVerseProfileId", pid);
+  sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
+  window.location.href="games/nexus4.html?profile="+encodeURIComponent(pid);
+};
+
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 
 async function returnStudentToProfile(){

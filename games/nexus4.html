@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.16 · GitHub + Online 1vs1</title>
+<title>Fasia Verse · Nexus 4 v0.17 · Integrat al Verse</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -208,7 +208,12 @@ function playerName(i){return safeName($('#nameInput'+(i+1)).value,i===0?'Jugado
 function avatarHTML(a,alt=''){return `<img class="avatar-img" src="${a.img}" alt="${alt||a.name}">`;}
 
 $('#btnPlay').addEventListener('click',()=>show('mode'));
-$('#btnVerse').addEventListener('click',()=>{ if(history.length>1) history.back(); else alert('Quan integrem aquest minijoc dins de Fasia Verse, aquest botó tornarà al hub principal.'); });
+$('#btnVerse').addEventListener('click',()=>{
+  const params=new URLSearchParams(window.location.search);
+  const pid=params.get('profile') || sessionStorage.getItem('fasiaVerseProfileId') || '';
+  const target='../index.html?return=profile'+(pid?'&profile='+encodeURIComponent(pid):'');
+  window.location.href=target;
+});
 $$('[data-go]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.go)));
 $$('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;if(mode==='cpu')show('difficulty');else if(mode==='local'){prepareSelection();show('select');}else show('online');}));
 $$('[data-diff]').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.diff;prepareSelection();show('select');}));
