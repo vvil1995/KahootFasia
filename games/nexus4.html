@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.15 · GitHub + Online 1vs1</title>
+<title>Fasia Verse · Nexus 4 v0.16 · GitHub + Online 1vs1</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -36,7 +36,7 @@ button,input{font:inherit}.app{width:min(1200px,95vw);margin:0 auto;padding:18px
 @media(max-width:800px){.mode-grid,.diff-grid{grid-template-columns:1fr}.animals{grid-template-columns:repeat(4,1fr)}.select-layout{grid-template-columns:1fr}.game-head{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:2}.mini-player.right{justify-content:flex-start;text-align:left}.board-shell{width:min(96vw,640px)}}
 @media(max-width:470px){.animals{grid-template-columns:repeat(2,1fr)}.preview{width:105px;font-size:54px}.board{gap:5px}.board-shell{padding:10px}.piece{font-size:28px}.hero{padding-top:28px}}
 
-.home-cover{position:relative;max-width:1280px;margin:0 auto;min-height:min(88vh,900px);border-radius:30px;overflow:hidden;border:1px solid #8ad2ff66;box-shadow:0 24px 65px #0009;background:#07142f url("../../assets/nexus4/nexus4_portada.webp") center/cover no-repeat;display:flex;align-items:flex-end;justify-content:center}
+.home-cover{position:relative;max-width:1280px;margin:0 auto;min-height:min(88vh,900px);border-radius:30px;overflow:hidden;border:1px solid #8ad2ff66;box-shadow:0 24px 65px #0009;background:#07142f url("../assets/nexus4/nexus4_portada.webp") center/cover no-repeat;display:flex;align-items:flex-end;justify-content:center}
 .home-cover:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,26,.08) 0%,rgba(4,10,26,.18) 52%,rgba(2,8,24,.78) 100%)}
 .home-actions{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:18px;width:100%;padding:24px 24px 28px;min-height:170px}
 .home-back{position:absolute;left:24px;bottom:28px}
@@ -96,7 +96,7 @@ button,input{font:inherit}.app{width:min(1200px,95vw);margin:0 auto;padding:18px
 body.game-screen{
   background:
     linear-gradient(180deg,rgba(3,10,30,.18),rgba(3,10,30,.34)),
-    url("../../assets/nexus4/nexus4_fons_joc.webp") center center / cover no-repeat fixed;
+    url("../assets/nexus4/nexus4_fons_joc.webp") center center / cover no-repeat fixed;
 }
 body.game-screen:before,body.game-screen:after{opacity:.12}
 #viewGame .mini-player{background:rgba(8,28,70,.86);backdrop-filter:blur(5px)}
@@ -117,7 +117,7 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
 
   <section class="view" id="viewMode">
     <div class="topbar"><button class="back" data-go="home">← INICI</button><span></span><span style="width:84px"></span></div>
-    <div class="nexus-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="nexus-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
     <div class="section-sub">Com vols jugar aquesta partida?</div>
     <div class="mode-grid">
       <button class="mode-card" data-mode="cpu"><div class="mode-icon">🤖</div><h3>CONTRA CPU</h3><p>Juga contra l'ordinador.</p></button>
@@ -128,7 +128,7 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
 
   <section class="view" id="viewDifficulty">
     <div class="topbar"><button class="back" data-go="mode">← MODES</button><div class="brand">FASIA VERSE</div><span style="width:84px"></span></div>
-    <div class="nexus-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="nexus-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
     
     <div class="section-sub">Tria el nivell de la CPU</div>
     <div class="diff-grid">
@@ -140,7 +140,7 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
 
   <section class="view" id="viewSelect">
     <div class="topbar"><button class="back" id="selectBack">← ENRERE</button><span></span><span style="width:84px"></span></div>
-    <div class="nexus-header select-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="nexus-header select-header"><img src="../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
     <div class="section-sub" id="selectSubtitle">Cada jugador ha de tenir un animal diferent.</div>
     <div class="select-layout">
       <article class="panel player-select">
@@ -190,14 +190,14 @@ body.game-screen:before,body.game-screen:after{opacity:.12}
 
 <script>
 const animals=[
-{id:'pincher',name:'Gos',img:'../../assets/nexus4/nexus4_fitxa_pincher.webp',color:'#20d86f'},
-{id:'gat',name:'Gat',img:'../../assets/nexus4/nexus4_fitxa_gat.webp',color:'#ff3fa6'},
-{id:'gorilla',name:'Goril·la',img:'../../assets/nexus4/nexus4_fitxa_gorilla.webp',color:'#a63cff'},
-{id:'zebra',name:'Zebra',img:'../../assets/nexus4/nexus4_fitxa_zebra.webp',color:'#e8eef7'},
-{id:'tuca',name:'Tucà',img:'../../assets/nexus4/nexus4_fitxa_tuca.webp',color:'#ffc928'},
-{id:'camaleo',name:'Camaleó',img:'../../assets/nexus4/nexus4_fitxa_camaleo.webp',color:'#ff3a2f'},
-{id:'mussol',name:'Mussol',img:'../../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
-{id:'capibara',name:'Capibara',img:'../../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
+{id:'pincher',name:'Gos',img:'../assets/nexus4/nexus4_fitxa_pincher.webp',color:'#20d86f'},
+{id:'gat',name:'Gat',img:'../assets/nexus4/nexus4_fitxa_gat.webp',color:'#ff3fa6'},
+{id:'gorilla',name:'Goril·la',img:'../assets/nexus4/nexus4_fitxa_gorilla.webp',color:'#a63cff'},
+{id:'zebra',name:'Zebra',img:'../assets/nexus4/nexus4_fitxa_zebra.webp',color:'#e8eef7'},
+{id:'tuca',name:'Tucà',img:'../assets/nexus4/nexus4_fitxa_tuca.webp',color:'#ffc928'},
+{id:'camaleo',name:'Camaleó',img:'../assets/nexus4/nexus4_fitxa_camaleo.webp',color:'#ff3a2f'},
+{id:'mussol',name:'Mussol',img:'../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
+{id:'capibara',name:'Capibara',img:'../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
 ];
 const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline'};
 let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
