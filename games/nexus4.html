@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.22 · Online 1vs1 sincronitzat</title>
+<title>Fasia Verse · Nexus 4 v0.23 · Online estable sense parpelleig</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -334,6 +334,7 @@ let onlinePollTimer=null;
 let onlineRoom=null;
 let onlineStarting=false;
 let onlineFinishedShown=false;
+let onlineBoardSignature=null;
 function stopOnlinePoll(){if(onlinePollTimer){clearInterval(onlinePollTimer);onlinePollTimer=null;}}
 function makeRoomCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let out='';for(let i=0;i<5;i++)out+=chars[Math.floor(Math.random()*chars.length)];return out;}
 async function profileDisplayName(){const cached=sessionStorage.getItem('fasiaVerseProfileName')||'';const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return safeName(cached,'Jugador');try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name,name&limit=1');const name=safeName(rows?.[0]?.display_name||rows?.[0]?.name||cached,'Jugador');sessionStorage.setItem('fasiaVerseProfileName',name);sessionStorage.setItem('fasiaVerseProfileId',String(pid));return name}catch(e){console.warn(e);return safeName(cached,'Jugador')}}
@@ -414,14 +415,24 @@ function showOnlineFinished(room){
   setTimeout(()=>$('#endModal').classList.add('show'),250);
 }
 function applyOnlineRoom(room){
-  onlineRoom=room;grid=normalizeOnlineBoard(room.board);current=Number(room.current_player||0);renderBoardFromGrid();renderOnlineGameHeader();
+  onlineRoom=room;
+  const nextGrid=normalizeOnlineBoard(room.board);
+  const nextSignature=JSON.stringify(nextGrid);
+  const boardChanged=nextSignature!==onlineBoardSignature;
+  grid=nextGrid;
+  current=Number(room.current_player||0);
+  if(boardChanged){
+    onlineBoardSignature=nextSignature;
+    renderBoardFromGrid();
+  }
+  renderOnlineGameHeader();
   if(room.status==='finished')showOnlineFinished(room);else{playing=true;updateOnlineTurn();}
 }
 function beginOnlineGamePolling(){
   stopOnlinePoll();onlinePollTimer=setInterval(async()=>{try{const room=await getOnlineRoom();if(room)applyOnlineRoom(room);}catch(e){console.warn('poll partida online',e)}},1200);
 }
 async function enterOnlineGame(room){
-  stopOnlinePoll();onlineFinishedShown=false;mode='online';onlineRoom=room||await getOnlineRoom();if(!onlineRoom)return;
+  stopOnlinePoll();onlineFinishedShown=false;onlineBoardSignature=null;mode='online';onlineRoom=room||await getOnlineRoom();if(!onlineRoom)return;
   selected=[animalById(onlineRoom.p1_animal)||animals[0],animalById(onlineRoom.p2_animal)||animals[1]];
   $('#nameInput1').value=safeName(onlineRoom.p1_name,'Jugador 1');$('#nameInput2').value=safeName(onlineRoom.p2_name,'Jugador 2');
   $('#btnRestartTop').style.display='none';$('#btnRestart').style.display='none';show('game');applyOnlineRoom(onlineRoom);beginOnlineGamePolling();
