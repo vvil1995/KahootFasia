@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fasia Verse · Nexus 4 v0.15 · GitHub + Online 1vs1</title>
+<style>
+:root{
+  --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
+  --line:#78c8ff; --gold:#ffd86d; --text:#f7fbff; --muted:#b8cae9;
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text)}
+body{
+  min-height:100vh;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 12% 20%,rgba(111,61,255,.45),transparent 28%),
+    radial-gradient(circle at 88% 15%,rgba(0,204,255,.28),transparent 30%),
+    radial-gradient(circle at 50% 105%,rgba(31,224,131,.20),transparent 38%),
+    linear-gradient(180deg,#193875 0%,#0b1c43 53%,#050b1c 100%);
+}
+body:before,body:after{content:"";position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(90px);opacity:.3;pointer-events:none}
+body:before{left:-150px;top:260px;background:#8b4dff} body:after{right:-140px;bottom:50px;background:#00c9ff}
+button,input{font:inherit}.app{width:min(1200px,95vw);margin:0 auto;padding:18px 0 34px;position:relative;z-index:1}
+.view{display:none;animation:fade .2s ease}.view.active{display:block}@keyframes fade{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{font-weight:1000;letter-spacing:.08em;text-shadow:0 0 18px #55d8ff}.ghost{visibility:hidden}
+.back,.secondary,.primary{border-radius:16px;cursor:pointer;font-weight:950;color:#fff}.back,.secondary{border:1px solid #7ec9ff55;background:#142e62;padding:11px 16px}.primary{border:0;padding:14px 25px;background:linear-gradient(180deg,#22dd79,#078543);box-shadow:0 4px 0 #045524,0 0 20px #1bdc7370;font-size:18px}.primary:hover,.back:hover,.secondary:hover,.mode-card:hover,.animal:hover,.diff-card:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.hero{text-align:center;padding:52px 14px 18px}.logo-badge{display:inline-grid;place-items:center;width:86px;height:86px;border-radius:28px;background:linear-gradient(145deg,#2b74ff,#842cff);box-shadow:0 0 35px #74cbff66;font-size:46px;border:2px solid #ffffff44}.title{margin:18px 0 6px;text-align:center;font-size:clamp(42px,7vw,84px);line-height:.95;text-transform:uppercase;color:var(--gold);font-weight:1000;text-shadow:0 4px 0 #774000,0 0 26px #ffd86c55;letter-spacing:.015em}.subtitle{text-align:center;color:#d9e8ff;font-weight:800;font-size:clamp(16px,2vw,22px);margin:10px auto 26px}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.play-big{min-width:230px;font-size:24px;padding:18px 32px}
+.panel{border:1px solid #87cfff4a;background:linear-gradient(180deg,var(--panel2),var(--panel));border-radius:26px;box-shadow:inset 0 1px 0 #ffffff1e,0 18px 48px #0005}.section-title{text-align:center;font-size:clamp(28px,4vw,46px);margin:14px 0 6px;font-weight:1000}.section-sub{text-align:center;color:var(--muted);font-weight:700;margin-bottom:24px}
+.mode-grid,.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1000px;margin:28px auto}.mode-card,.diff-card{border:1px solid #8ad2ff55;background:linear-gradient(180deg,#163a7b,#0c2453);border-radius:24px;color:white;padding:26px 18px;cursor:pointer;text-align:center;transition:.15s;box-shadow:0 14px 30px #0004}.mode-icon{font-size:50px}.mode-card h3,.diff-card h3{font-size:24px;margin:12px 0 6px}.mode-card p,.diff-card p{color:#bdd0ef;margin:0;font-weight:650}.online-card{background:linear-gradient(180deg,#3d2478,#20164e)}
+.select-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1000px;margin:0 auto 18px}.player-select{padding:20px;text-align:center}.player-select h3{margin:0 0 12px}.name-input{width:min(300px,100%);padding:12px 14px;border-radius:14px;border:1px solid #9bd5ff55;background:#071a42;color:#fff;text-align:center;font-size:18px;font-weight:900;outline:none}.name-input:focus{border-color:#80d8ff;box-shadow:0 0 0 3px #50bfff2c}.preview{width:130px;aspect-ratio:1;margin:18px auto 8px;border-radius:50%;display:grid;place-items:center;font-size:68px;border:6px solid currentColor;background:#081632;box-shadow:0 0 30px currentColor}.chosen-name{font-size:24px;font-weight:1000}.animal-picker{padding:18px;max-width:1100px;margin:0 auto}.animals{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}.animal{border:1px solid #ffffff2e;background:#0b1d46;border-radius:16px;padding:10px 5px;color:white;cursor:pointer;transition:.15s}.animal .face{width:60px;aspect-ratio:1;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;font-size:34px;border:3px solid currentColor;box-shadow:0 0 16px currentColor;background:#06132d}.animal b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.animal.selected{outline:3px solid #fff;box-shadow:0 0 22px currentColor}.animal.taken{opacity:.22;filter:grayscale(1);cursor:not-allowed;transform:none}.picker-help{text-align:center;color:#b8cae9;font-weight:800;margin:0 0 14px}.select-actions{text-align:center;margin-top:16px}
+.game-head{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-bottom:14px}.mini-player{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid #7fc8ff3d;background:#0b2050b8;border-radius:18px;min-width:0}.mini-player.right{justify-content:flex-end;text-align:right}.mini-token{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:28px;border:3px solid currentColor;background:#08142f;box-shadow:0 0 13px currentColor;flex:0 0 auto}.mini-name{font-weight:1000;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-animal{font-size:12px;color:#b9cae6;font-weight:800}.turn-center{text-align:center;font-weight:1000;color:#dff4ff}.turn-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#47e58a;box-shadow:0 0 12px #47e58a;margin-right:7px}
+.board-shell{max-width:640px;margin:0 auto;padding:16px;border-radius:28px;background:linear-gradient(180deg,#1260cb,#0a347c);border:4px solid #8bd0ff;box-shadow:inset 0 0 30px #041c50,0 0 34px #45baff4a}.board{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.cell{position:relative;aspect-ratio:1;border-radius:50%;border:3px solid #061b4b;background:radial-gradient(circle at 35% 27%,#173f7d,#061538 67%);padding:0;overflow:hidden;cursor:pointer;box-shadow:inset 0 4px 9px #0008}.cell:after{content:"";position:absolute;inset:7%;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff10;pointer-events:none}.piece{position:absolute;inset:5%;border-radius:50%;display:grid;place-items:center;font-size:clamp(24px,4vw,43px);border:3px solid currentColor;background:#0b1733;box-shadow:inset 0 4px 8px #ffffff44,0 3px 7px #0008;animation:drop .24s ease-out;z-index:1}@keyframes drop{from{transform:translateY(-450%);opacity:.1}to{transform:none;opacity:1}}.cell.win .piece{animation:winPulse .65s infinite alternate}@keyframes winPulse{to{filter:brightness(1.5);transform:scale(.88);box-shadow:0 0 18px #fff,0 0 32px currentColor}}
+.game-actions{display:flex;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap}.status{text-align:center;margin:10px 0 0;color:#d7eaff;font-weight:900;min-height:24px}
+.modal{position:fixed;inset:0;background:#020716cc;display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.modal-card{width:min(500px,95vw);border:1px solid #9ed7ff66;background:linear-gradient(180deg,#173b7a,#081b43);border-radius:28px;padding:28px;text-align:center;box-shadow:0 24px 70px #000b}.winner-token{width:110px;aspect-ratio:1;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:58px;border:5px solid currentColor;background:#071733;box-shadow:0 0 28px currentColor}.modal-card h2{font-size:34px;margin:8px 0}.modal-card p{color:#c7d9f1;font-weight:800}.modal-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}.coming{max-width:650px;margin:30px auto;padding:30px;text-align:center}.coming .mode-icon{font-size:70px}
+@media(max-width:800px){.mode-grid,.diff-grid{grid-template-columns:1fr}.animals{grid-template-columns:repeat(4,1fr)}.select-layout{grid-template-columns:1fr}.game-head{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:2}.mini-player.right{justify-content:flex-start;text-align:left}.board-shell{width:min(96vw,640px)}}
+@media(max-width:470px){.animals{grid-template-columns:repeat(2,1fr)}.preview{width:105px;font-size:54px}.board{gap:5px}.board-shell{padding:10px}.piece{font-size:28px}.hero{padding-top:28px}}
+
+.home-cover{position:relative;max-width:1280px;margin:0 auto;min-height:min(88vh,900px);border-radius:30px;overflow:hidden;border:1px solid #8ad2ff66;box-shadow:0 24px 65px #0009;background:#07142f url("../../assets/nexus4/nexus4_portada.webp") center/cover no-repeat;display:flex;align-items:flex-end;justify-content:center}
+.home-cover:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,26,.08) 0%,rgba(4,10,26,.18) 52%,rgba(2,8,24,.78) 100%)}
+.home-actions{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:center;gap:18px;width:100%;padding:24px 24px 28px;min-height:170px}
+.home-back{position:absolute;left:24px;bottom:28px}
+.play-home{min-width:min(210px,42vw);font-size:clamp(18px,2vw,24px);padding:12px 22px;border-radius:18px;transform:translateY(14px);background:linear-gradient(180deg,#31a8ff,#0b5fda);box-shadow:0 5px 0 #063a8f,0 0 24px #38abff77;border:1px solid #b9e7ff88}
+.play-home:hover{transform:translateY(12px);filter:brightness(1.07)}
+.view-home-shell{padding:0}
+@media(max-width:800px){.home-cover{min-height:70vh;background-position:center center}.home-actions{padding:16px 16px 18px;min-height:150px}.home-back{left:16px;bottom:18px}.play-home{min-width:170px;width:min(48vw,210px)}}
+@media(max-width:520px){.home-actions{justify-content:center;align-items:flex-end;min-height:132px}.home-back{position:absolute;left:12px;bottom:16px}.play-home{font-size:18px;padding:11px 20px;border-radius:16px}}
+
+
+.nexus-header{display:flex;justify-content:center;align-items:center;margin:0 auto 6px;padding:0 12px}.nexus-header img{display:block;width:min(620px,88vw);height:auto;max-height:190px;object-fit:contain;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35))}
+
+/* v0.8 — dificultat amb el mateix layout que la selecció de mode */
+#viewDifficulty .diff-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  max-width:1000px;
+  margin:28px auto;
+}
+#viewDifficulty .diff-card{
+  min-height:206px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+#viewDifficulty .mode-logo,
+#viewDifficulty .mode-header-logo,
+#viewDifficulty .nexus-header-logo{
+  max-width:360px !important;
+  width:min(360px,70vw) !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+@media(max-width:800px){
+  #viewDifficulty .diff-grid{grid-template-columns:1fr;}
+}
+
+
+/* v0.9 — fitxes definitives Nexus 4 */
+.nexus-header.select-header{margin-top:0;margin-bottom:4px}
+.avatar-img{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;user-select:none}
+.preview{overflow:hidden;padding:0;background:transparent;border:0;box-shadow:none}
+.preview .avatar-img{filter:drop-shadow(0 0 10px currentColor)}
+.animal .face{overflow:hidden;padding:0;background:transparent;border:0;box-shadow:none}
+.animal .face .avatar-img{filter:drop-shadow(0 0 6px currentColor)}
+.mini-token{overflow:hidden;padding:0;background:transparent;border:0;box-shadow:none}
+.mini-token .avatar-img{filter:drop-shadow(0 0 5px currentColor)}
+.piece{overflow:hidden;padding:0;background:transparent !important;border:0 !important;box-shadow:none !important}
+.piece .avatar-img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px #0008)}
+.winner-token{overflow:hidden;padding:0;background:transparent;border:0;box-shadow:none}
+.winner-token .avatar-img{filter:drop-shadow(0 0 10px currentColor)}
+
+
+/* v0.11 — fons exclusiu de la pantalla de partida */
+body.game-screen{
+  background:
+    linear-gradient(180deg,rgba(3,10,30,.18),rgba(3,10,30,.34)),
+    url("../../assets/nexus4/nexus4_fons_joc.webp") center center / cover no-repeat fixed;
+}
+body.game-screen:before,body.game-screen:after{opacity:.12}
+#viewGame .mini-player{background:rgba(8,28,70,.86);backdrop-filter:blur(5px)}
+#viewGame .board-shell{box-shadow:inset 0 0 30px #041c50,0 0 34px #45baff66,0 14px 35px #0008}
+
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="view active view-home-shell" id="viewHome">
+    <div class="home-cover panel" aria-label="Portada de Nexus 4">
+      <div class="home-actions">
+        <button class="secondary home-back" id="btnVerse">← TORNAR AL VERSE</button>
+        <button class="primary play-home" id="btnPlay">JUGAR</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="viewMode">
+    <div class="topbar"><button class="back" data-go="home">← INICI</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-sub">Com vols jugar aquesta partida?</div>
+    <div class="mode-grid">
+      <button class="mode-card" data-mode="cpu"><div class="mode-icon">🤖</div><h3>CONTRA CPU</h3><p>Juga contra l'ordinador.</p></button>
+      <button class="mode-card" data-mode="local"><div class="mode-icon">👥</div><h3>2 JUGADORS</h3><p>Dos jugadors al mateix dispositiu.</p></button>
+      <button class="mode-card online-card" data-mode="online"><div class="mode-icon">🌐</div><h3>ONLINE</h3><p>Partides i tornejos amb codi.</p></button>
+    </div>
+  </section>
+
+  <section class="view" id="viewDifficulty">
+    <div class="topbar"><button class="back" data-go="mode">← MODES</button><div class="brand">FASIA VERSE</div><span style="width:84px"></span></div>
+    <div class="nexus-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    
+    <div class="section-sub">Tria el nivell de la CPU</div>
+    <div class="diff-grid">
+      <button class="diff-card" data-diff="easy"><div class="mode-icon">🌱</div><h3>FÀCIL</h3><p>Juga bastant aleatori.</p></button>
+      <button class="diff-card" data-diff="normal"><div class="mode-icon">⚔️</div><h3>NORMAL</h3><p>Ataca i bloqueja jugades.</p></button>
+      <button class="diff-card" data-diff="hard"><div class="mode-icon">🔥</div><h3>DIFÍCIL</h3><p>Pensa 2 jugades endavant.</p></button>
+    </div>
+  </section>
+
+  <section class="view" id="viewSelect">
+    <div class="topbar"><button class="back" id="selectBack">← ENRERE</button><span></span><span style="width:84px"></span></div>
+    <div class="nexus-header select-header"><img src="../../assets/nexus4/nexus4_logo.webp" alt="Fasia Verse Nexus 4"></div>
+    <div class="section-sub" id="selectSubtitle">Cada jugador ha de tenir un animal diferent.</div>
+    <div class="select-layout">
+      <article class="panel player-select">
+        <h3>JUGADOR 1</h3>
+        <input class="name-input" id="nameInput1" maxlength="14" value="Jugador 1" aria-label="Nom del jugador 1" />
+        <div class="preview" id="preview1"></div><div class="chosen-name" id="chosen1"></div>
+      </article>
+      <article class="panel player-select">
+        <h3 id="p2Heading">JUGADOR 2</h3>
+        <input class="name-input" id="nameInput2" maxlength="14" value="Jugador 2" aria-label="Nom del jugador 2" />
+        <div class="preview" id="preview2"></div><div class="chosen-name" id="chosen2"></div>
+      </article>
+    </div>
+    <section class="panel animal-picker">
+      <p class="picker-help" id="pickerHelp">Selecciona primer la fitxa del Jugador 1.</p>
+      <div class="animals" id="animals"></div>
+      <div class="select-actions"><button class="primary" id="btnStart">COMENÇAR PARTIDA ▶</button></div>
+    </section>
+  </section>
+
+  <section class="view" id="viewGame">
+    <div class="topbar"><button class="back" id="btnExitGame">← INICI</button><div class="brand">NEXUS 4</div><button class="secondary" id="btnRestartTop">REINICIAR</button></div>
+    <div class="game-head">
+      <div class="mini-player"><div class="mini-token" id="miniToken1"></div><div><div class="mini-name" id="miniName1"></div><div class="mini-animal" id="miniAnimal1"></div></div></div>
+      <div class="turn-center" id="turnCenter"><span class="turn-dot"></span>Torn</div>
+      <div class="mini-player right"><div><div class="mini-name" id="miniName2"></div><div class="mini-animal" id="miniAnimal2"></div></div><div class="mini-token" id="miniToken2"></div></div>
+    </div>
+    <div class="board-shell"><div class="board" id="board" aria-label="Tauler de 4 en ratlla"></div></div>
+    <div class="status" id="status"></div>
+    <div class="game-actions"><button class="secondary" id="btnRestart">REINICIAR PARTIDA</button></div>
+  </section>
+
+  <section class="view" id="viewOnline">
+    <div class="topbar"><button class="back" data-go="mode">← MODES</button><div class="brand">FASIA VERSE</div><span style="width:84px"></span></div>
+    <div class="panel coming"><div class="mode-icon">🌐</div><h2>MODE ONLINE</h2><p>Aquesta pantalla ja queda preparada. El següent pas serà connectar-la amb Supabase per crear sales, codis i tornejos.</p><button class="secondary" data-go="mode">TORNAR</button></div>
+  </section>
+</main>
+
+<div class="modal" id="endModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+  <div class="modal-card">
+    <div class="winner-token" id="winnerToken">🏆</div>
+    <h2 id="resultTitle">Victòria!</h2>
+    <p id="resultText"></p>
+    <div class="modal-actions"><button class="primary" id="btnAgain">TORNAR A JUGAR</button><button class="secondary" id="btnHomeModal">TORNAR A INICI</button></div>
+  </div>
+</div>
+
+<script>
+const animals=[
+{id:'pincher',name:'Gos',img:'../../assets/nexus4/nexus4_fitxa_pincher.webp',color:'#20d86f'},
+{id:'gat',name:'Gat',img:'../../assets/nexus4/nexus4_fitxa_gat.webp',color:'#ff3fa6'},
+{id:'gorilla',name:'Goril·la',img:'../../assets/nexus4/nexus4_fitxa_gorilla.webp',color:'#a63cff'},
+{id:'zebra',name:'Zebra',img:'../../assets/nexus4/nexus4_fitxa_zebra.webp',color:'#e8eef7'},
+{id:'tuca',name:'Tucà',img:'../../assets/nexus4/nexus4_fitxa_tuca.webp',color:'#ffc928'},
+{id:'camaleo',name:'Camaleó',img:'../../assets/nexus4/nexus4_fitxa_camaleo.webp',color:'#ff3a2f'},
+{id:'mussol',name:'Mussol',img:'../../assets/nexus4/nexus4_fitxa_mussol.webp',color:'#26c7ff'},
+{id:'capibara',name:'Capibara',img:'../../assets/nexus4/nexus4_fitxa_capibara.webp',color:'#c87932'}
+];
+const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline'};
+let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+function show(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.body.classList.toggle('game-screen',name==='game');window.scrollTo({top:0,behavior:'smooth'});}
+function safeName(v,fallback){const t=(v||'').trim().slice(0,14);return t||fallback;}
+function playerName(i){return safeName($('#nameInput'+(i+1)).value,i===0?'Jugador 1':mode==='cpu'?'CPU':'Jugador 2');}
+function avatarHTML(a,alt=''){return `<img class="avatar-img" src="${a.img}" alt="${alt||a.name}">`;}
+
+$('#btnPlay').addEventListener('click',()=>show('mode'));
+$('#btnVerse').addEventListener('click',()=>{ if(history.length>1) history.back(); else alert('Quan integrem aquest minijoc dins de Fasia Verse, aquest botó tornarà al hub principal.'); });
+$$('[data-go]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.go)));
+$$('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;if(mode==='cpu')show('difficulty');else if(mode==='local'){prepareSelection();show('select');}else show('online');}));
+$$('[data-diff]').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.diff;prepareSelection();show('select');}));
+$('#selectBack').addEventListener('click',()=>show(mode==='cpu'?'difficulty':'mode'));
+
+function prepareSelection(){
+  pickTarget=0; selected=[animals[0],animals[1]];
+  $('#nameInput1').value='Jugador 1';
+  $('#nameInput2').value=mode==='cpu'?'CPU':'Jugador 2';
+  $('#nameInput2').disabled=mode==='cpu';
+  $('#p2Heading').textContent=mode==='cpu'?'CPU':'JUGADOR 2';
+  $('#selectSubtitle').textContent=mode==='cpu'?`Contra CPU · nivell ${difficulty==='easy'?'fàcil':difficulty==='hard'?'difícil':'normal'}. Tria la teva fitxa.`:'Cada jugador ha de tenir un animal diferent.';
+  renderSelection();
+}
+function renderSelection(){
+  [0,1].forEach(i=>{const a=selected[i],p=$('#preview'+(i+1));p.innerHTML=avatarHTML(a);p.style.color=a.color;$('#chosen'+(i+1)).textContent=a.name;});
+  const picker=$('#animals'); picker.innerHTML='';
+  animals.forEach(a=>{
+    const b=document.createElement('button');b.type='button';b.className='animal';b.style.color=a.color;
+    const taken=selected.some((x,i)=>x.id===a.id&&i!==pickTarget);
+    if(taken)b.classList.add('taken');if(selected[pickTarget].id===a.id)b.classList.add('selected');b.disabled=taken;
+    b.innerHTML=`<span class="face">${avatarHTML(a)}</span><b>${a.name}</b>`;
+    b.addEventListener('click',()=>chooseAnimal(a));picker.appendChild(b);
+  });
+  $('#pickerHelp').textContent=mode==='cpu'?'Selecciona la teva fitxa. La CPU utilitzarà un animal diferent.':`Selecciona la fitxa del ${pickTarget===0?'Jugador 1':'Jugador 2'}.`;
+}
+function chooseAnimal(a){
+  selected[pickTarget]=a;
+  if(mode==='cpu'){
+    const opts=animals.filter(x=>x.id!==a.id); selected[1]=opts[Math.floor(Math.random()*opts.length)]; pickTarget=0;
+  }else pickTarget=pickTarget===0?1:0;
+  renderSelection();
+}
+
+$('#btnStart').addEventListener('click',startGame);
+function startGame(){
+  $('#nameInput1').value=playerName(0); $('#nameInput2').value=playerName(1);
+  show('game'); setupBoard(); renderGameHeader(); playing=true; current=0; updateTurn();
+}
+function setupBoard(){
+  grid=Array.from({length:6},()=>Array(7).fill(null));winningCells=[];const board=$('#board');board.innerHTML='';
+  for(let r=0;r<6;r++)for(let c=0;c<7;c++){const cell=document.createElement('button');cell.type='button';cell.className='cell';cell.dataset.r=r;cell.dataset.c=c;cell.setAttribute('aria-label',`Columna ${c+1}`);cell.addEventListener('click',()=>humanMove(c));board.appendChild(cell);}
+}
+function renderGameHeader(){
+  [0,1].forEach(i=>{const a=selected[i],t=$('#miniToken'+(i+1));t.innerHTML=avatarHTML(a);t.style.color=a.color;$('#miniName'+(i+1)).textContent=playerName(i);$('#miniAnimal'+(i+1)).textContent=a.name;});
+}
+function updateTurn(){const n=playerName(current);$('#turnCenter').innerHTML=`<span class="turn-dot"></span>Torn de ${n}`;$('#status').textContent=mode==='cpu'&&current===1?'La CPU està pensant...':'Tria una columna.';}
+function findRow(c){for(let r=5;r>=0;r--)if(grid[r][c]===null)return r;return -1;}
+function humanMove(c){if(!playing||(mode==='cpu'&&current===1))return;makeMove(c,current);}
+function makeMove(c,p){const r=findRow(c);if(r<0)return false;grid[r][c]=p;drawPiece(r,c,p);const line=getWinLine(r,c,p);if(line){winningCells=line;finish(p);return true;}if(grid.flat().every(v=>v!==null)){finish(null);return true;}current=1-current;updateTurn();if(mode==='cpu'&&current===1)setTimeout(cpuMove,430);return true;}
+function drawPiece(r,c,p){const cell=$(`#board .cell[data-r="${r}"][data-c="${c}"]`),a=selected[p],piece=document.createElement('div');piece.className='piece';piece.style.color=a.color;piece.innerHTML=avatarHTML(a,'');cell.appendChild(piece);}
+function cpuMove(){if(!playing)return;let c=null;if(difficulty==='easy')c=randomColumn();else if(difficulty==='normal')c=tacticalColumn()??weightedColumn();else c=bestColumn();if(c==null)c=randomColumn();makeMove(c,1);}
+function validCols(){return [0,1,2,3,4,5,6].filter(c=>findRow(c)>=0)}
+function randomColumn(){const a=validCols();return a[Math.floor(Math.random()*a.length)]??null}
+function weightedColumn(){const pref=[3,3,2,4,2,4,1,5,0,6].filter(c=>findRow(c)>=0);return pref[Math.floor(Math.random()*pref.length)]??randomColumn()}
+function tacticalColumn(){return winningColumn(1)??winningColumn(0)}
+function winningColumn(p){for(const c of validCols()){const r=findRow(c);grid[r][c]=p;const w=getWinLine(r,c,p);grid[r][c]=null;if(w)return c;}return null}
+function bestColumn(){
+  const win=winningColumn(1); if(win!=null)return win;
+  const block=winningColumn(0); if(block!=null)return block;
+  const order=[3,2,4,1,5,0,6].filter(c=>findRow(c)>=0);
+  let best=order[0]??null,bestScore=-Infinity;
+  for(const c of order){
+    const r=findRow(c); grid[r][c]=1;
+    const score=minimax(2,false,-Infinity,Infinity);
+    grid[r][c]=null;
+    if(score>bestScore){bestScore=score;best=c;}
+  }
+  return best??randomColumn();
+}
+function minimax(depth,maximizing,alpha,beta){
+  const terminal=terminalScore(depth);
+  if(terminal!==null)return terminal;
+  if(depth===0)return evaluateBoard();
+  const order=[3,2,4,1,5,0,6].filter(c=>findRow(c)>=0);
+  if(maximizing){
+    let value=-Infinity;
+    for(const c of order){const r=findRow(c);grid[r][c]=1;value=Math.max(value,minimax(depth-1,false,alpha,beta));grid[r][c]=null;alpha=Math.max(alpha,value);if(alpha>=beta)break;}
+    return value;
+  }
+  let value=Infinity;
+  for(const c of order){const r=findRow(c);grid[r][c]=0;value=Math.min(value,minimax(depth-1,true,alpha,beta));grid[r][c]=null;beta=Math.min(beta,value);if(alpha>=beta)break;}
+  return value;
+}
+function terminalScore(depth){
+  for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+    const p=grid[r][c]; if(p!==null&&getWinLine(r,c,p))return p===1?100000+depth:-100000-depth;
+  }
+  if(grid.flat().every(v=>v!==null))return 0;
+  return null;
+}
+function evaluateBoard(){
+  let score=0;
+  for(let r=0;r<6;r++){if(grid[r][3]===1)score+=8;else if(grid[r][3]===0)score-=8;}
+  const windows=[];
+  for(let r=0;r<6;r++)for(let c=0;c<4;c++)windows.push([[r,c],[r,c+1],[r,c+2],[r,c+3]]);
+  for(let c=0;c<7;c++)for(let r=0;r<3;r++)windows.push([[r,c],[r+1,c],[r+2,c],[r+3,c]]);
+  for(let r=0;r<3;r++)for(let c=0;c<4;c++)windows.push([[r,c],[r+1,c+1],[r+2,c+2],[r+3,c+3]]);
+  for(let r=3;r<6;r++)for(let c=0;c<4;c++)windows.push([[r,c],[r-1,c+1],[r-2,c+2],[r-3,c+3]]);
+  for(const w of windows){
+    const vals=w.map(([r,c])=>grid[r][c]), ai=vals.filter(v=>v===1).length, hu=vals.filter(v=>v===0).length, em=4-ai-hu;
+    if(ai&&hu)continue;
+    if(ai===4)score+=10000; else if(ai===3&&em===1)score+=120; else if(ai===2&&em===2)score+=18; else if(ai===1&&em===3)score+=2;
+    if(hu===4)score-=10000; else if(hu===3&&em===1)score-=150; else if(hu===2&&em===2)score-=20; else if(hu===1&&em===3)score-=2;
+  }
+  return score;
+}
+function getWinLine(r,c,p){const dirs=[[1,0],[0,1],[1,1],[1,-1]];for(const [dr,dc] of dirs){const cells=[[r,c]];let rr=r+dr,cc=c+dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.push([rr,cc]);rr+=dr;cc+=dc}rr=r-dr;cc=c-dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.unshift([rr,cc]);rr-=dr;cc-=dc}if(cells.length>=4)return cells;}return null}
+function finish(p){playing=false;if(p!==null){winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`).classList.add('win'));const a=selected[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${playerName(p)} ha connectat 4 fitxes.`;}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}setTimeout(()=>$('#endModal').classList.add('show'),420);}
+function restartSame(){ $('#endModal').classList.remove('show');setupBoard();playing=true;current=0;updateTurn(); }
+$('#btnAgain').addEventListener('click',restartSame);$('#btnRestart').addEventListener('click',restartSame);$('#btnRestartTop').addEventListener('click',restartSame);
+$('#btnHomeModal').addEventListener('click',()=>{$('#endModal').classList.remove('show');playing=false;show('home')});
+$('#btnExitGame').addEventListener('click',()=>{playing=false;show('home')});
+</script>
+</body>
+</html>
