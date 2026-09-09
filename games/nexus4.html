@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.24 · Online estable sense parpelleig</title>
+<title>Fasia Verse · Nexus 4 v0.25 · Online estable sense parpelleig</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -465,10 +465,25 @@ async function onlineHumanMove(c){
   try{
     const room=await getOnlineRoom();if(!room||room.status==='finished')return;
     if(Number(room.current_player)!==onlineRole){applyOnlineRoom(room);return;}
-    const fresh=normalizeOnlineBoard(room.board);grid=fresh;const r=findRow(c);if(r<0)return;
-    grid[r][c]=onlineRole;const line=getWinLine(r,c,onlineRole);const full=grid.flat().every(v=>v!==null);
-    const patch={board:grid,current_player:1-onlineRole,updated_at:new Date().toISOString()};
+    // Sincronitza primer l'estat rebut del servidor. Així el DOM i `grid`
+    // representen exactament les fitxes que ja estaven fixes abans de la jugada local.
+    applyOnlineRoom(room);
+    const beforeMove=grid.map(row=>row.slice());
+    const r=findRow(c);if(r<0)return;
+
+    // Calculem la jugada sobre una còpia, però NO deixem `grid` avançat abans
+    // de renderitzar la resposta del servidor. Si ho féssim, syncOnlineBoard()
+    // creuria que la nostra fitxa ja existia i no la dibuixaria.
+    const proposed=beforeMove.map(row=>row.slice());
+    grid=proposed;
+    grid[r][c]=onlineRole;
+    const line=getWinLine(r,c,onlineRole);const full=grid.flat().every(v=>v!==null);
+    const patch={board:grid.map(row=>row.slice()),current_player:1-onlineRole,updated_at:new Date().toISOString()};
     if(line||full){patch.status='finished';patch.winner_index=line?onlineRole:null;}
+
+    // Tornem l'estat visual al tauler anterior. applyOnlineRoom(updated)
+    // detectarà només la casella nova i animarà únicament aquesta fitxa.
+    grid=beforeMove.map(row=>row.slice());
     const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&current_player=eq.'+onlineRole,{method:'PATCH',body:JSON.stringify(patch)});
     const updated=rows?.[0]||await getOnlineRoom();if(updated)applyOnlineRoom(updated);
   }catch(e){console.error(e);alert('No s’ha pogut enviar la jugada. '+(e.message||e));}
