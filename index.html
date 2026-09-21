@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.80 · ROMA FIXES + BOTIGA + MEDUSA</title>
+<title>Fasia Verse · V0.14.81 · RÀNQUING FINAL CORREGIT</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -7341,7 +7341,15 @@ function startTimer(){clearInterval(timerId);timer=40;$("#timer").textContent=ti
 $("#addTime").onclick=()=>{timer+=10;$("#timer").textContent=timer};
 function renderRanking(target){
  const box=$(target);box.innerHTML="";
- players.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy),fi=playerFrameImg(p.frame);r.innerHTML=`<div><b>${i+1}</b></div><div class="player ranking-player-identity"><div class="online-player-avatar ranking-avatar"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div>${p.title?`<div class="ranking-title-slot">${titleHtml(p.title)}</div>`:""}${ti?`<img class="ranking-player-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><b>${p.score} PTS</b>`;}box.appendChild(r)});
+ // El rànquing SEMPRE es calcula aquí mateix per puntuació.
+ // Així cap recàrrega des de Supabase pot tornar a mostrar l'ordre d'entrada.
+ const ranked=(players||[]).slice().sort((a,b)=>{
+   const scoreDiff=Number(b.score||0)-Number(a.score||0);
+   if(scoreDiff!==0)return scoreDiff;
+   // En empat mantenim un ordre estable, sense alterar els punts.
+   return String(a.nick||"").localeCompare(String(b.nick||""),"ca");
+ });
+ ranked.forEach((p,i)=>{const r=document.createElement("div");r.className="rank-row";{const ti=playerTrophyImg(p.trophy),fi=playerFrameImg(p.frame);r.innerHTML=`<div><b>${i+1}</b></div><div class="player ranking-player-identity"><div class="online-player-avatar ranking-avatar"><img class="teacher-player-avatar-img" src="${p.img}" alt="${p.variant}">${fi?`<img class="player-frame-overlay" src="${fi}" alt="Marc equipat">`:""}</div><div><b>${p.nick}</b><div class="muted">${p.coins} <span class="coin-img" aria-label="moneda"></span></div></div>${p.title?`<div class="ranking-title-slot">${titleHtml(p.title)}</div>`:""}${ti?`<img class="ranking-player-trophy" src="${ti}" alt="Trofeu exposat">`:""}</div><b>${p.score} PTS</b>`;}box.appendChild(r)});
 }
 
 function renderCorrectReview(q){
@@ -7456,7 +7464,13 @@ $("#nextQuestion").onclick=async()=>{
   if(currentQuestion>=questions.length-1){
     try{
       await refreshOnlinePlayers();
-      players.sort((a,b)=>Number(b.score||0)-Number(a.score||0));
+      // Fix V0.14.81: la classificació final i els premis parteixen exactament
+      // del mateix ordre, recalculat per puntuació després de l'última lectura de Supabase.
+      players=(players||[]).slice().sort((a,b)=>{
+        const scoreDiff=Number(b.score||0)-Number(a.score||0);
+        if(scoreDiff!==0)return scoreDiff;
+        return String(a.nick||"").localeCompare(String(b.nick||""),"ca");
+      });
       const bonuses=[2,1,1];
       for(let i=0;i<Math.min(3,players.length);i++){
         const p=players[i],bonus=bonuses[i];
@@ -9140,7 +9154,7 @@ console.info("Fasia Verse · V0.14.75 · G2 P8 sense text + G3 P9 objecte");
   transform:none!important;
 }
 </style>
-<script>console.info("Fasia Verse · V0.14.80 · Roma S2-S8 + relacionar professor + Medusa");</script>
+<script>console.info("Fasia Verse · V0.14.81 · rànquing final recalculat per puntuació");</script>
 
 </body>
 </html>
