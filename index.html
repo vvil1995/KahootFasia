@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.81 · RÀNQUING FINAL CORREGIT</title>
+<title>Fasia Verse · V0.14.82 · GM TROFEUS HISTÒRIA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4313,7 +4313,8 @@ button.profile-collection-card{cursor:pointer}
         </div>
         <div id="gmTrophiesPanel" class="gm-panel hidden">
           <div class="gm-panel-head"><h3>TROFEUS</h3><p class="muted">Trofeus manuals de GM. No modifiquen podis ni resultats històrics.</p></div>
-          <div class="gm-trophy-filter"><button class="active" data-gm-trophy-kind="science" type="button">🧪 CIÈNCIES</button><button data-gm-trophy-kind="pj" type="button">💰 PREU JUST</button></div>
+          <div class="gm-trophy-filter"><button class="active" data-gm-trophy-kind="science" type="button">🧪 CIÈNCIES</button><button data-gm-trophy-kind="pj" type="button">💰 PREU JUST</button><button data-gm-trophy-kind="history" type="button">🏛️ HISTÒRIA</button></div>
+          <div id="gmHistoryTrophyFilter" class="gm-trophy-filter hidden" style="margin-top:10px"><button class="active" data-gm-history-era="greece" type="button">🏺 GRÈCIA</button><button data-gm-history-era="rome" type="button">🏛️ ROMA</button></div>
           <div id="gmTrophiesGrid" class="gm-reward-grid gm-trophy-grid"></div>
         </div>
 
@@ -8570,6 +8571,7 @@ document.addEventListener("keydown",e=>{
   function gmOwnedTitles(p){return new Set(Array.isArray(p?.owned_titles)?p.owned_titles:[])}
   function gmManualTrophies(p){return new Set(Array.isArray(p?.manual_trophies)?p.manual_trophies:[])}
   let gmTrophyKind="science";
+  let gmHistoryEra="greece";
   async function gmFetchProfiles(){
     gmSetStatus('');
     const list=q('#gmStudentList'); if(list)list.innerHTML='<p class="muted">CARREGANT...</p>';
@@ -8654,7 +8656,20 @@ document.addEventListener("keydown",e=>{
       card.querySelector('[data-act="toggle"]')?.addEventListener('click',async()=>{if(starter)return;const set=gmOwnedTitles(gmSelected);if(set.has(t.id)){set.delete(t.id);const patch={owned_titles:[...set]};if(gmSelected.equipped_title===t.id)patch.equipped_title='';await gmPatch(patch,`${t.name} RETIRAT`)}else{set.add(t.id);await gmPatch({owned_titles:[...set]},`${t.name} DESBLOQUEJAT ✓`)}});
       card.querySelector('[data-act="equip"]')?.addEventListener('click',()=>gmPatch({equipped_title:t.id},`${t.name} EQUIPAT ✓`));grid.appendChild(card)});
   }
-  function gmTrophyCatalog(){const out=[];if(gmTrophyKind==='science'){for(let n=1;n<=14;n++)for(const tier of ['gold','silver','bronze','green'])out.push({sessionId:`S${n}`,tier,name:`SESSIÓ ${n} · ${TROPHY_LABELS[tier]}`})}else{for(let n=1;n<=9;n++)for(const tier of ['gold','silver','bronze','green'])out.push({sessionId:`PJ|r${n}`,tier,name:`RECEPTA ${n} · ${TROPHY_LABELS[tier]}`})}return out}
+  function gmTrophyCatalog(){
+    const out=[];
+    const tiers=['gold','silver','bronze','green'];
+    if(gmTrophyKind==='science'){
+      for(let n=1;n<=14;n++)for(const tier of tiers)out.push({sessionId:`S${n}`,tier,name:`SESSIÓ ${n} · ${TROPHY_LABELS[tier]}`});
+    }else if(gmTrophyKind==='pj'){
+      for(let n=1;n<=9;n++)for(const tier of tiers)out.push({sessionId:`PJ|r${n}`,tier,name:`RECEPTA ${n} · ${TROPHY_LABELS[tier]}`});
+    }else if(gmTrophyKind==='history'){
+      const prefix=gmHistoryEra==='rome'?'R':'G';
+      const total=gmHistoryEra==='rome'?8:3;
+      for(let n=1;n<=total;n++)for(const tier of tiers)out.push({sessionId:`${prefix}${n}`,tier,name:`SESSIÓ ${n} · ${TROPHY_LABELS[tier]}`});
+    }
+    return out;
+  }
   async function gmRenderTrophies(){
     const grid=q('#gmTrophiesGrid');if(!grid||!gmSelected)return;
     const selectedId=gmSelected.id;
@@ -8690,7 +8705,8 @@ document.addEventListener("keydown",e=>{
   document.querySelectorAll('[data-gm-coins]').forEach(b=>b.addEventListener('click',()=>gmChangeCoins(Number(b.dataset.gmCoins))));
   q('#gmApplyManualCoins')?.addEventListener('click',()=>{const v=Number(q('#gmManualCoins')?.value);if(!Number.isFinite(v)||v===0){gmSetStatus('ESCRIU UNA QUANTITAT VÀLIDA',true);return}gmChangeCoins(Math.trunc(v));q('#gmManualCoins').value=''})
   document.querySelectorAll('.gm-tab[data-gm-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.gm-tab[data-gm-tab]').forEach(x=>x.classList.toggle('active',x===b));const tab=b.dataset.gmTab;q('#gmSkinsPanel')?.classList.toggle('hidden',tab!=='skins');q('#gmFramesPanel')?.classList.toggle('hidden',tab!=='frames');q('#gmTitlesPanel')?.classList.toggle('hidden',tab!=='titles');q('#gmTrophiesPanel')?.classList.toggle('hidden',tab!=='trophies')}));
-  document.querySelectorAll('[data-gm-trophy-kind]').forEach(b=>b.addEventListener('click',()=>{gmTrophyKind=b.dataset.gmTrophyKind;document.querySelectorAll('[data-gm-trophy-kind]').forEach(x=>x.classList.toggle('active',x===b));gmRenderTrophies()}));
+  document.querySelectorAll('[data-gm-trophy-kind]').forEach(b=>b.addEventListener('click',()=>{gmTrophyKind=b.dataset.gmTrophyKind;document.querySelectorAll('[data-gm-trophy-kind]').forEach(x=>x.classList.toggle('active',x===b));q('#gmHistoryTrophyFilter')?.classList.toggle('hidden',gmTrophyKind!=='history');gmRenderTrophies()}));
+  document.querySelectorAll('[data-gm-history-era]').forEach(b=>b.addEventListener('click',()=>{gmHistoryEra=b.dataset.gmHistoryEra;document.querySelectorAll('[data-gm-history-era]').forEach(x=>x.classList.toggle('active',x===b));gmRenderTrophies()}));
   console.info('Fasia Verse · Mode GM v2 · títols + trofeus carregat');
 })();
 </script>
@@ -9156,6 +9172,7 @@ console.info("Fasia Verse · V0.14.75 · G2 P8 sense text + G3 P9 objecte");
 </style>
 <script>console.info("Fasia Verse · V0.14.81 · rànquing final recalculat per puntuació");</script>
 
+<script>console.info("Fasia Verse · V0.14.82 · GM TROFEUS HISTÒRIA");</script>
 </body>
 </html>
 <style>
