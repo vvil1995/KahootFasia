@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.87 · FASIA RUSH INTEGRAT</title>
+<title>Fasia Verse · V0.14.88 · DESAFIAMENTS FASIA RUSH</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4039,6 +4039,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="snake" type="button">🐍 ANIMAL SNAKE</button>
     <button class="challenge-tab" data-challenge-area="portals" type="button">🌀 PORTALS</button>
     <button class="challenge-tab" data-challenge-area="nexus" type="button">🔗 NEXUS 4</button>
+    <button class="challenge-tab" data-challenge-area="rush" type="button">🏁 FASIA RUSH</button>
   </div>
   <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
   <div id="challengesGrid" class="challenges-grid"></div>
@@ -4720,7 +4721,20 @@ const CHALLENGE_CATALOG=[
   {id:"nx_tuca",area:"nexus",icon:"🐦",name:"MESTRE DEL TUCÀ",condition:"Guanya 20 partides de Nexus 4 amb el Tucà.",stat:"nexus.tuca",target:20,reward:{type:"exclusive",id:"nexus4_tuca",label:"🐦 Tucà Fasia Verse · avatar exclusiu"}},
   {id:"nx_camaleo",area:"nexus",icon:"🦎",name:"MESTRE DEL CAMALEÓ",condition:"Guanya 20 partides de Nexus 4 amb el Camaleó.",stat:"nexus.camaleo",target:20,reward:{type:"exclusive",id:"nexus4_camaleo",label:"🦎 Camaleó Fasia Verse · avatar exclusiu"}},
   {id:"nx_mussol",area:"nexus",icon:"🦉",name:"MESTRE DEL MUSSOL",condition:"Guanya 20 partides de Nexus 4 amb el Mussol.",stat:"nexus.mussol",target:20,reward:{type:"exclusive",id:"nexus4_mussol",label:"🦉 Mussol Fasia Verse · avatar exclusiu"}},
-  {id:"nx_capibara",area:"nexus",icon:"🦫",name:"MESTRE DE LA CAPIBARA",condition:"Guanya 20 partides de Nexus 4 amb la Capibara.",stat:"nexus.capibara",target:20,reward:{type:"exclusive",id:"nexus4_capibara",label:"🦫 Capibara Fasia Verse · avatar exclusiu"}}
+  {id:"nx_capibara",area:"nexus",icon:"🦫",name:"MESTRE DE LA CAPIBARA",condition:"Guanya 20 partides de Nexus 4 amb la Capibara.",stat:"nexus.capibara",target:20,reward:{type:"exclusive",id:"nexus4_capibara",label:"🦫 Capibara Fasia Verse · avatar exclusiu"}},
+
+  {id:"rush_gp1",area:"rush",icon:"🏁",name:"GP1 COMPLETAT",condition:"Completa el GP1 per primera vegada.",stat:"rush.gp1",target:1,reward:{type:"rush_gp",amount:10,id:"fasia_rush_tuca",itemType:"exclusive",label:"🪙 10 monedes + 🐦 Tucà Fasia Rush"}},
+  {id:"rush_gp2",area:"rush",icon:"🏁",name:"GP2 COMPLETAT",condition:"Completa el GP2 per primera vegada.",stat:"rush.gp2",target:1,reward:{type:"rush_gp",amount:10,id:"fasia_rush_camaleo",itemType:"exclusive",label:"🪙 10 monedes + 🦎 Camaleó Fasia Rush"}},
+  {id:"rush_gp3",area:"rush",icon:"🏆",name:"GP3 COMPLETAT",condition:"Completa el GP3 per primera vegada.",stat:"rush.gp3",target:1,reward:{type:"rush_gp",amount:10,id:"marc_fasia_rush",itemType:"exclusive_frame",label:"🪙 10 monedes + 🖼️ Marc exclusiu Fasia Rush"}},
+  {id:"rush_gp4",area:"rush",icon:"🏁",name:"GP4 COMPLETAT",condition:"Completa el GP4 per primera vegada.",stat:"rush.gp4",target:1,reward:{type:"rush_gp",amount:15,id:"fasia_rush_medusa_blava",itemType:"exclusive",label:"🪙 15 monedes + 🪼 Medusa blava Fasia Rush"}},
+  {id:"rush_gp5",area:"rush",icon:"🏁",name:"GP5 COMPLETAT",condition:"Completa el GP5 per primera vegada.",stat:"rush.gp5",target:1,reward:{type:"rush_gp",amount:15,id:"fasia_rush_colom_f1",itemType:"exclusive",label:"🪙 15 monedes + 🕊️ Colom F1 Fasia Rush"}},
+  {id:"rush_3km10",area:"rush",icon:"🚗",name:"ESCALFANT MOTORS",condition:"Arriba als 3 km en 10 partides.",stat:"rush.km3",target:10,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"rush_5km5",area:"rush",icon:"⚡",name:"A TOT GAS",condition:"Arriba als 5 km en 5 partides.",stat:"rush.km5",target:5,reward:{type:"coins",amount:6,label:"🪙 6 monedes"}},
+  {id:"rush_75km3",area:"rush",icon:"🔥",name:"SENSE FRENAR",condition:"Arriba als 7,5 km en 3 partides.",stat:"rush.km75",target:3,reward:{type:"coins",amount:8,label:"🪙 8 monedes"}},
+  {id:"rush_gp3vegades",area:"rush",icon:"🏆",name:"PILOT DE GP",condition:"Completa qualsevol GP 3 vegades.",stat:"rush.gpCompletions",target:3,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
+  {id:"rush_total50",area:"rush",icon:"🛣️",name:"50 KM DE VERSE",condition:"Recorre 50 km totals a Fasia Rush.",stat:"rush.totalKm",target:50,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
+  {id:"rush_total100",area:"rush",icon:"🌍",name:"100 KM DE VERSE",condition:"Recorre 100 km totals a Fasia Rush.",stat:"rush.totalKm",target:100,reward:{type:"coins",amount:15,label:"🪙 15 monedes"}},
+  {id:"rush_extreme_pb5",area:"rush",icon:"👑",name:"SUPERA'T",condition:"Supera el teu propi rècord del Mode Extrem 5 vegades.",stat:"rush.extremePB",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4747,13 +4761,18 @@ const CHALLENGE_REWARD_ASSETS={
   nexus4_tuca:"assets/avatars/exclusius/nexus4_tuca.webp",
   nexus4_camaleo:"assets/avatars/exclusius/nexus4_camaleo.webp",
   nexus4_mussol:"assets/avatars/exclusius/nexus4_mussol.webp",
-  nexus4_capibara:"assets/avatars/exclusius/nexus4_capibara.webp"
+  nexus4_capibara:"assets/avatars/exclusius/nexus4_capibara.webp",
+  fasia_rush_tuca:"assets/avatars/exclusius/fasia_rush_tuca.webp",
+  fasia_rush_camaleo:"assets/avatars/exclusius/fasia_rush_camaleo.webp",
+  fasia_rush_medusa_blava:"assets/avatars/exclusius/fasia_rush_medusa-blava.webp",
+  fasia_rush_colom_f1:"assets/avatars/exclusius/fasia_rush_colom_f1.webp",
+  marc_fasia_rush:"assets/marcs/marc_fasia_rush.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -4771,6 +4790,11 @@ function challengeState(){
   const state=challengeMergeState(raw);
   const nx=currentProfile?.nexus4_progress||{};
   state.stats.nexus={...state.stats.nexus,pincher:Number(nx.pincher||0),gat:Number(nx.gat||0),gorilla:Number(nx.gorilla||0),zebra:Number(nx.zebra||0),tuca:Number(nx.tuca||0),camaleo:Number(nx.camaleo||0),mussol:Number(nx.mussol||0),capibara:Number(nx.capibara||0)};
+  try{
+    const rp=JSON.parse(localStorage.getItem(`fasia_rush_progress_v1_${currentProfile?.id||"guest"}`)||"{}");
+    const first=Array.isArray(rp.firstGpRewards)?rp.firstGpRewards.map(Number):[];
+    state.stats.rush={...state.stats.rush,gp1:first.includes(1)?1:0,gp2:first.includes(2)?1:0,gp3:first.includes(3)?1:0,gp4:first.includes(4)?1:0,gp5:first.includes(5)?1:0,km3:Number(rp.thresholdRuns?.km3||0),km5:Number(rp.thresholdRuns?.km5||0),km75:Number(rp.thresholdRuns?.km75||0),gpCompletions:Number(rp.gpCompletions||0),totalKm:Number(rp.totalKm||0),extremePB:Number(rp.extremeRecordBeats||0)};
+  }catch(e){}
   return state;
 }
 async function saveChallengeState(state){
@@ -4787,6 +4811,15 @@ function challengeRewardText(reward){return reward?.label||"RECOMPENSA"}
 async function grantChallengeReward(state,ch){
   const r=ch.reward||{};
   if(r.type==="coins"&&r.amount){currentProfile.coins=await addCoinsToProfile(currentProfile.id,Number(r.amount))}
+  if(r.type==="rush_gp"){
+    if(r.amount)currentProfile.coins=await addCoinsToProfile(currentProfile.id,Number(r.amount));
+    if(r.itemType==="exclusive"&&r.id&&!state.unlockedExclusives.includes(r.id)){
+      state.unlockedExclusives.push(r.id);const owned=[...(currentProfile.owned_skins||[])];if(!owned.includes(r.id)){owned.push(r.id);await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",body:JSON.stringify({owned_skins:owned})});currentProfile.owned_skins=owned;}
+    }
+    if(r.itemType==="exclusive_frame"&&r.id&&!state.unlockedExclusiveFrames.includes(r.id)){
+      state.unlockedExclusiveFrames.push(r.id);const owned=[...(currentProfile.owned_frames||[])];if(!owned.includes(r.id)){owned.push(r.id);await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",body:JSON.stringify({owned_frames:owned})});currentProfile.owned_frames=owned;}
+    }
+  }
   if(r.type==="title"&&r.id){await unlockProfileTitle(r.id)}
   if(r.type==="fragment"&&r.puzzle){
     const list=state.fragments[r.puzzle]||(state.fragments[r.puzzle]=[]);if(!list.includes(r.id))list.push(r.id);
@@ -5224,7 +5257,7 @@ const SHOP_CONFIG={
 {id:"zebra",name:"ZEBRA",emoji:"🦓",free:true,skins:variantData["ZEBRA"].map((x,i)=>({id:`zebra_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_zebra",name:"ZEBRA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_zebra.webp"}])},
 {id:"mussol",name:"MUSSOL",emoji:"🦉",free:true,skins:variantData["MUSSOL"].map((x,i)=>({id:`mussol_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_mussol",name:"MUSSOL NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_mussol.webp"}])},
 {id:"capibara",name:"CAPIBARA",emoji:"🦫",free:true,skins:variantData["CAPIBARA"].map((x,i)=>({id:`capibara_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_capibara",name:"CAPIBARA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_capibara.webp"}])},
-{id:"camaleo",name:"CAMALEÓ",emoji:"🦎",exclusive:true,skins:[{id:"nexus4_camaleo",name:"CAMALEÓ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_camaleo.webp"}]},
+{id:"camaleo",name:"CAMALEÓ",emoji:"🦎",exclusive:true,skins:[{id:"nexus4_camaleo",name:"CAMALEÓ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_camaleo.webp"},{id:"fasia_rush_camaleo",name:"CAMALEÓ FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_camaleo.webp"}]},
 {id:"ratoli",name:"RATOLÍ",emoji:"🐭",skins:[
       {id:"ratoli_dentista",name:"RATOLÍ DENTISTA",price:15,available:true,event:null,image:"assets/avatars/ratoli_dentista.webp"},
       {id:"ratoli_pilot",name:"RATOLÍ PILOT",price:25,available:true,event:null,image:"assets/avatars/ratoli_pilot.webp"},
@@ -5246,7 +5279,8 @@ const SHOP_CONFIG={
       {id:"tuca_plata",name:"TUCÀ PLATA",price:40,available:true,event:null,image:"assets/avatars/tuca_plata.webp"},
       {id:"tuca_daurat",name:"TUCÀ DAURAT",price:60,available:true,event:null,image:"assets/avatars/tuca_daurat.webp"},
       {id:"tuca_caixer",name:"TUCÀ CAIXER",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tuca_caixer.webp"},
-      {id:"nexus4_tuca",name:"TUCÀ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_tuca.webp"}
+      {id:"nexus4_tuca",name:"TUCÀ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_tuca.webp"},
+      {id:"fasia_rush_tuca",name:"TUCÀ FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_tuca.webp"}
     ]},
 {id:"cavall",name:"CAVALL",emoji:"🐴",skins:[
   {id:"cavall_vaquer",name:"CAVALL VAQUER",price:15,available:true,event:null,image:"assets/avatars/cavall_vaquer.webp",cropIndex:null},
@@ -5282,10 +5316,12 @@ const SHOP_CONFIG={
   {id:"colom_rus",name:"COLOM RUS",price:15,available:true,event:null,image:"assets/avatars/colom_rus.webp",cropIndex:null},
   {id:"colom_rei",name:"COLOM REI",price:40,available:true,event:null,image:"assets/avatars/colom_rei.webp",cropIndex:null},
   {id:"colom_pare_noel",name:"COLOM PARE NOEL",price:10,available:false,event:"christmas",image:"assets/avatars/colom_pare_noel.webp",cropIndex:null},
-  {id:"colom_olimpic",name:"COLOM OLÍMPIC",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/colom_olimpic.webp",cropIndex:null}
+  {id:"colom_olimpic",name:"COLOM OLÍMPIC",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/colom_olimpic.webp",cropIndex:null},
+  {id:"fasia_rush_colom_f1",name:"COLOM F1 FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_colom_f1.webp",cropIndex:null}
 ]},
 {id:"medusa",name:"MEDUSA",emoji:"🪼",exclusive:true,skins:[
-  {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null}
+  {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null},
+  {id:"fasia_rush_medusa_blava",name:"MEDUSA BLAVA FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_medusa-blava.webp",cropIndex:null}
 ]},
 {id:"portals_cat",name:"LLEGENDA CAT",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"DRAC DELS PORTALS CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
 {id:"portals_esp",name:"LLEGENDA ESP",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LINX DELS PORTALS ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
@@ -5521,7 +5557,8 @@ const FRAME_CATALOG=[
 {id:"marc_ciencia",name:"CIÈNCIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_ciencia.webp"},
 {id:"marc_preu_just",name:"PREU JUST",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_preu_just.webp"},
 {id:"marc_regres_futur",name:"REGRES AL FUTUR",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_regres_futur.webp"},
-{id:"marc_llegenda_portals",name:"LLEGENDA DELS PORTALS",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_llegenda_portals.webp"}];
+{id:"marc_llegenda_portals",name:"LLEGENDA DELS PORTALS",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_llegenda_portals.webp"},
+{id:"marc_fasia_rush",name:"FASIA RUSH",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_fasia_rush.webp"}];
 function frameById(id){return FRAME_CATALOG.find(f=>f.id===id)||null}
 async function saveFrameProfile(patch){const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(patch)});currentProfile=normalizeShopProfile({...currentProfile,...((rows&&rows[0])||patch)})}
 async function openFramesShop(){
