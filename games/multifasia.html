@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Multifasia v1.9 — Fasia Verse</title>
+<style>
+:root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
+button,input{font:inherit}.screen{display:none;min-height:100vh;padding:18px}.screen.active{display:flex;flex-direction:column;align-items:center}
+.card{width:min(980px,96vw);background:#0b1c33e8;border:2px solid #ffffff22;border-radius:24px;padding:20px;box-shadow:0 20px 60px #0008}
+h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+.btn{border:0;border-radius:16px;padding:13px 20px;font-weight:900;cursor:pointer;background:linear-gradient(#56edff,#1498d4);color:#04223b;box-shadow:0 6px 0 #08669b}.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #08669b}.btn.gold{background:linear-gradient(#fff07a,#f0a629);box-shadow:0 6px 0 #a35d10}.btn.gray{background:#708097;color:white;box-shadow:0 6px 0 #445166}
+#cover{justify-content:center;background:#030a13;padding:0;position:relative;overflow:hidden}.coverImg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.05)}.coverShade{position:absolute;inset:0;background:linear-gradient(transparent 45%,#02070de8 90%)}.coverStart{position:absolute;bottom:5vh;z-index:2;font-size:clamp(22px,4vw,42px);padding:18px 45px}
+#story{justify-content:center;background:#000}.typebox{width:min(900px,90vw);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:clamp(18px,2.3vw,28px);line-height:1.55;white-space:pre-wrap}.cursor::after{content:"▋";animation:blink .8s infinite}@keyframes blink{50%{opacity:0}}
+.portalGrid{display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:16px;width:min(1100px,96vw)}.portal{grid-column:span 3;background:#0c2039;border:2px solid #ffffff22;border-radius:20px;padding:12px;cursor:pointer;position:relative;min-height:180px;display:flex;flex-direction:column;justify-content:center;align-items:center}.portal.locked{filter:grayscale(1);opacity:.38;cursor:not-allowed}.portal .picon{width:100%;height:125px;object-fit:contain;filter:drop-shadow(0 0 14px #0008)}.portal strong{font-size:25px}.stars{letter-spacing:5px;color:#ffd34f;font-size:24px}.portalX{background:linear-gradient(120deg,#3d2b06,#8c6414,#3d2b06)}.specialPortal{min-height:250px;grid-column:span 5}.specialPortal .picon{height:175px}
+.stageGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:min(900px,96vw)}.stage{padding:25px;border-radius:22px;background:#102744;border:2px solid #ffffff24;text-align:center}.stage.locked{opacity:.35}.stage .big{font-size:48px}
+.game{width:min(950px,96vw);text-align:center}.question{font-size:clamp(42px,8vw,88px);font-weight:1000;margin:18px}.answer{width:min(300px,80vw);font-size:38px;text-align:center;border-radius:18px;padding:12px;border:3px solid #57e9ff;background:#07172a;color:white}.feedback{height:36px;font-size:25px;font-weight:900;margin:12px}.progress{height:24px;background:#06101d;border-radius:999px;overflow:hidden;border:2px solid #ffffff26}.fill{height:100%;width:0;background:linear-gradient(90deg,#35e7ff,#9b5cff);transition:.25s}.runner{height:85px;max-width:180px;object-fit:contain;transition:.25s;display:inline-block}.trackWrap{position:relative}.trackDots{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;margin:15px 0}.movingRunner{position:absolute;top:25px;width:120px;max-width:120px;transition:left .35s ease}.dot{height:14px;border-radius:10px;background:#29415e}.dot.on{background:#4eeaff;box-shadow:0 0 12px #4eeaff}
+.crystals{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px auto;width:min(620px,95%)}.crystal{width:82px;height:82px;object-fit:contain;filter:brightness(.65)}.crystal.on{filter:none;animation:pop .25s}@keyframes pop{50%{transform:scale(1.25)}}
+.battle{display:grid;grid-template-columns:1fr 1fr;gap:15px;align-items:end}.fighter{background:#091a30;border-radius:20px;padding:15px}.fighter img{height:230px;width:100%;object-fit:contain}.hearts{font-size:25px;line-height:1.5}.bossbar{height:25px;background:#341327;border-radius:99px;overflow:hidden}.bossfill{height:100%;background:linear-gradient(90deg,#a64cff,#ff4d83);transition:.2s}
+.overlay{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.overlay.show{display:flex}.result{text-align:center;max-width:600px}.result h2{font-size:42px}
+.small{font-size:14px;opacity:.75}
+@media(max-width:700px){.portalGrid{grid-template-columns:repeat(6,1fr)}.portal{grid-column:span 3}.specialPortal{grid-column:span 6}.stageGrid{grid-template-columns:1fr}.battle{grid-template-columns:1fr 1fr}.fighter img{max-height:160px}}
+</style>
+
+<style>
+#timeTrial .topbar{align-items:center}
+.timeTitleLogo{height:105px;width:190px;object-fit:contain;filter:drop-shadow(0 0 12px #0008)}
+#timePortalGrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;width:100%;max-width:1050px;margin:22px auto 0}
+#timePortalGrid .portal{grid-column:span 2;min-height:205px}
+#timePortalGrid .portal:nth-child(10){grid-column:2/span 2}
+#timePortalGrid .portal:nth-child(11){grid-column:4/span 2}
+.ttArena{display:grid;grid-template-columns:330px minmax(0,1fr);gap:26px;align-items:stretch}
+.ttRanking{margin:0!important;height:100%;padding:20px!important}
+.ttRanking table{width:100%;border-collapse:collapse;font-size:16px}
+.ttRanking th,.ttRanking td{padding:10px 6px;border-bottom:1px solid #ffffff20;text-align:left}
+.ttRanking th:last-child,.ttRanking td:last-child{text-align:right}
+.ttMain{background:#071a30;border:2px solid #ffffff18;border-radius:24px;padding:30px;min-height:420px;display:flex;flex-direction:column;justify-content:center;text-align:center}
+#timeQuestion{font-size:86px!important;line-height:1;font-weight:950!important;margin:28px 0!important;letter-spacing:2px}
+#timeAnswer{font-size:46px;width:min(330px,80%);text-align:center}
+#timeFinish{width:100%}
+.ttResultBox{max-width:580px;margin:0 auto;background:#0c2039;border:2px solid #ffffff22;border-radius:24px;padding:34px 28px;box-sizing:border-box;text-align:center}
+.ttResultLogo{height:105px;max-width:230px;object-fit:contain;margin-bottom:10px}
+#timeFinal{font-size:64px!important;margin:12px 0}
+@media(max-width:850px){
+ #timePortalGrid{grid-template-columns:repeat(2,1fr)}
+ #timePortalGrid .portal,#timePortalGrid .portal:nth-child(10),#timePortalGrid .portal:nth-child(11){grid-column:auto}
+ .ttArena{grid-template-columns:1fr}
+ #timeQuestion{font-size:62px!important}
+}
+</style>
+
+<style>
+#timePortalGrid .portal strong,
+#timePortalGrid .portal .small,
+#timePortalGrid .portal {color:#fff!important}
+
+.ttArena{
+  grid-template-columns:280px minmax(0,1fr)!important;
+  gap:20px!important;
+  width:100%;
+}
+.ttRanking{
+  width:280px!important;
+  min-width:280px!important;
+  max-width:280px!important;
+  justify-self:start!important;
+  box-sizing:border-box!important;
+}
+.ttMain{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+.ttResultBox{
+  width:min(620px,92%)!important;
+  max-width:620px!important;
+  margin:0 auto!important;
+}
+@media(max-width:850px){
+  .ttArena{grid-template-columns:1fr!important}
+  .ttRanking{width:100%!important;min-width:0!important;max-width:none!important}
+}
+</style>
+
+<style>
+.specialModeHeaderLogo{height:120px;width:220px;object-fit:contain;filter:drop-shadow(0 0 12px #0008)}
+</style>
+</head>
+<body>
+<section id="cover" class="screen active">
+<img class="coverImg" src="assets/multifasia/portada.webp"><div class="coverShade"></div>
+<button class="btn gold coverStart" onclick="startStory()">COMENÇAR</button>
+</section>
+
+<section id="story" class="screen">
+<div id="typeText" class="typebox cursor"></div>
+<button id="storyBtn" class="btn" style="display:none;margin-top:30px" onclick="showWorlds()">ENTRAR ALS PORTALS</button>
+</section>
+
+<section id="worlds" class="screen">
+<div class="topbar"><div><img src="assets/multifasia/logo.webp" style="width:min(330px,55vw);height:auto;display:block"><span class="muted">Selecció de portals</span></div><button class="btn gray" onclick="show('cover')">← Portada</button></div>
+<div id="portalGrid" class="portalGrid"></div>
+</section>
+
+<section id="stages" class="screen">
+<div class="topbar"><div><h2 id="portalTitle">Portal</h2><span id="portalSub" class="muted"></span></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
+<div id="stageGrid" class="stageGrid"></div>
+</section>
+
+<section id="play" class="screen">
+<div class="topbar"><div style="display:flex;align-items:center;gap:14px"><img id="gameLogo" style="width:145px;max-height:62px;object-fit:contain" alt="Multifasia"><div><b id="playTitle"></b><div id="playSub" class="small"></div></div></div><button class="btn gray" onclick="exitPlayMode()">SORTIR</button></div>
+<div class="card game">
+<div id="mechanic"></div>
+<div id="question" class="question"></div>
+<input id="answer" class="answer" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="Resposta">
+<div><button class="btn" style="margin-top:14px" onclick="submitAnswer()">RESPONDRE</button></div>
+<div id="feedback" class="feedback"></div>
+</div>
+</section>
+
+
+<section id="evolution" class="screen" style="justify-content:center;background:#000">
+<div class="typebox" style="text-align:center"><div id="evolutionText" class="cursor"></div></div>
+<button id="evolutionBtn" class="btn" style="display:none;margin-top:30px">CONTINUAR</button>
+</section>
+
+
+<section id="timeTrial" class="screen">
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:18px">
+    <img class="timeTitleLogo" src="assets/multifasia/portal-contrarellotge.webp" alt="Portal Contrarellotge">
+    <div><h1 style="margin:0">CONTRARELLOTGE</h1><span class="muted">20 multiplicacions · supera el teu millor temps</span></div>
+  </div>
+  <button class="btn gray" onclick="showWorlds()">← Portals</button>
+</div>
+<div class="card">
+  <div id="timeSelect">
+    <h2>ESCULL PORTAL</h2>
+    <p class="muted">Cada contrarellotge es desbloqueja quan completes les 3 estrelles del mateix portal. MIX es desbloqueja en acabar el Portal ×10.</p>
+    <div id="timePortalGrid"></div>
+  </div>
+  <div id="timeGame" style="display:none">
+    <div class="ttArena">
+      <div class="card ttRanking">
+        <h3 id="rankTitle">🏆 MILLORS TEMPS</h3>
+        <div id="timeRanking"></div>
+      </div>
+      <div class="ttMain">
+        <div id="timeCountdown" style="font-size:80px;font-weight:950"></div>
+        <div id="timeHud" style="display:none">
+          <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;font-size:20px">
+            <b>⏱️ <span id="timeClock">0.00</span> s</b>
+            <b>Pregunta <span id="timeQuestionNo">1</span>/20</b>
+          </div>
+          <div id="timeQuestion"></div>
+          <input id="timeAnswer" class="answer" inputmode="numeric" autocomplete="off" placeholder="?">
+          <div><button id="timeSubmit" class="btn" type="button" style="margin-top:18px">RESPONDRE</button></div>
+          <div id="timeFeedback" style="min-height:32px;margin-top:14px;font-size:20px;font-weight:900"></div>
+        </div>
+        <div id="timeFinish" style="display:none">
+          <div class="ttResultBox">
+            <img class="ttResultLogo" src="assets/multifasia/portal-contrarellotge.webp" alt="">
+            <h2>🏁 CONTRARELLOTGE COMPLETAT!</h2>
+            <div id="timeFinal"></div>
+            <p id="timeBestMsg"></p>
+            <button class="btn" type="button" onclick="openTimeTrial()">TORNAR A JUGAR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="vsMode" class="screen">
+<div class="topbar"><div style="display:flex;align-items:center;gap:18px"><img class="specialModeHeaderLogo" src="assets/multifasia/portal-vs.webp" alt="Portal VS"><span class="muted">Duel de multiplicacions</span></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
+<div class="card" style="text-align:center">
+<h2>Com vols entrar?</h2>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:28px 0">
+<button class="btn gold" onclick="showVsCreate()">CREAR SALA</button>
+<button class="btn" onclick="showVsJoin()">ENTRAR AMB CODI</button>
+</div>
+<div id="vsPanel"></div>
+</div>
+</section>
+
+<section id="ending" class="screen" style="justify-content:center;background:#000">
+<div id="endingText" class="typebox cursor"></div>
+<button id="endingBtn" class="btn gold" style="display:none;margin-top:30px" onclick="unlockInfinite()">DESCOBRIR EL PORTAL X</button>
+</section>
+
+<div id="overlay" class="overlay"><div class="card result"><h2 id="resultTitle"></h2><p id="resultText"></p><button id="resultBtn" class="btn gold">CONTINUAR</button></div></div>
+
+<script>
+const PORTALS={
+  "1":"assets/multifasia/portal-1.webp", "2":"assets/multifasia/portal-2.webp",
+  "3":"assets/multifasia/portal-3.webp", "4":"assets/multifasia/portal-4.webp",
+  "5":"assets/multifasia/portal-5.webp", "6":"assets/multifasia/portal-6.webp",
+  "7":"assets/multifasia/portal-7.webp", "8":"assets/multifasia/portal-8.webp",
+  "9":"assets/multifasia/portal-9.webp", "10":"assets/multifasia/portal-10.webp"
+};
+const SPECIAL_PORTALS={
+  "INF":"assets/multifasia/portal-infinit.webp",
+  "TIME":"assets/multifasia/portal-contrarellotge.webp",
+  "VS":"assets/multifasia/portal-vs.webp"
+};
+const CR_OFF="assets/multifasia/cristall-off.webp", CR_ON="assets/multifasia/cristall-on.webp";
+const NULL_PHASES=[
+  "assets/multifasia/null-1.webp", "assets/multifasia/null-2.webp",
+  "assets/multifasia/null-3.webp", "assets/multifasia/null-4.webp"
+];
+const GAME_LOGO="assets/multifasia/logo.webp";
+const HERO="assets/multifasia/hulk-mul.webp";
+const VS_CHARACTERS={
+  hulk:"assets/multifasia/vs-hulk.webp",
+  tuca:"assets/multifasia/vs-tuca.webp",
+  capi:"assets/multifasia/vs-capi.webp",
+  colom:"assets/multifasia/vs-colom.webp"
+};
+const saveKey="multifasia_v01";
+let state=JSON.parse(localStorage.getItem(saveKey)||'null')||{portal:1,stars:{},infinite:false,coins:0,rewardedPortals:[],infiniteDaily:{date:"",correct:0,coins:0}};
+state.coins=Number(state.coins||0);
+state.rewardedPortals=Array.isArray(state.rewardedPortals)?state.rewardedPortals:[];
+state.infiniteDaily=state.infiniteDaily||{date:"",correct:0,coins:0};
+let currentPortal=1,currentStage=1,correct=0,answerValue=0,position=0,crystals=0,heroHP=3,bossHP=8,bossMax=8,infiniteScore=0;
+
+function save(){localStorage.setItem(saveKey,JSON.stringify(state))}
+
+
+let lastMultiplicationKey="";
+function makeMultiplication(mode){
+  let a,b,key,tries=0;
+  do{
+    if(mode==="mix"){
+      a=2+Math.floor(Math.random()*9);
+    }else if(Array.isArray(mode)){
+      a=mode[Math.floor(Math.random()*mode.length)];
+    }else{
+      a=Number(mode);
+    }
+    b=1+Math.floor(Math.random()*10);
+    key=`${a}x${b}`;
+    tries++;
+  }while(key===lastMultiplicationKey && tries<30);
+  lastMultiplicationKey=key;
+  return {a,b,answer:a*b,key};
+}
+
+
+function portalReward(p){return 4+Number(p)}
+function awardPortalReward(p){
+  p=Number(p);
+  if(state.rewardedPortals.includes(p))return 0;
+  let reward=portalReward(p);
+  state.rewardedPortals.push(p);
+  state.coins+=reward;
+  save();
+  return reward;
+}
+function todayKey(){let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function resetInfiniteDaily(){
+  let day=todayKey();
+  if(state.infiniteDaily.date!==day){state.infiniteDaily={date:day,correct:0,coins:0};save()}
+}
+function rewardInfiniteCorrect(){
+  resetInfiniteDaily();
+  if(state.infiniteDaily.correct < 100) state.infiniteDaily.correct++;
+  let reward=0;
+  if(state.infiniteDaily.correct>0 &&
+     state.infiniteDaily.correct%20===0 &&
+     state.infiniteDaily.coins<10){
+    reward=2;
+    state.infiniteDaily.coins=Math.min(10,state.infiniteDaily.coins+2);
+    state.coins+=reward;
+  }
+  save();
+  return reward;
+}
+
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function typewrite(el,text,done,speed=23){el.textContent="";let i=0;const t=setInterval(()=>{el.textContent+=text[i++]||"";if(i>text.length){clearInterval(t);el.classList.remove("cursor");done&&done()}},speed)}
+function startStory(){show("story");const txt=`Alguna cosa està passant a Fasia Verse...
+
+En Null està robant l'energia dels portals i escapant d'un món a l'altre.
+
+En Hulk ha sortit a perseguir-lo, però no estarà sol.
+En Mul, el petit esperit de llum, l'acompanyarà en aquesta aventura.
+
+Recupereu l'energia dels portals, perseguiu en Null...
+i atureu-lo abans que sigui massa poderós.`;document.getElementById("storyBtn").style.display="none";typewrite(document.getElementById("typeText"),txt,()=>document.getElementById("storyBtn").style.display="block")}
+function showWorlds(){
+infiniteModeActive=false;
+show("worlds");renderPortals()}
+function renderPortals(){let g=document.getElementById("portalGrid");g.innerHTML="";for(let p=1;p<=10;p++){let unlocked=p<=state.portal;let s=state.stars[p]||0;let d=document.createElement("div");d.className="portal "+(unlocked?"":"locked");d.innerHTML=`<img class="picon" src="${PORTALS[String(p)]}"><strong>Portal ×${p}</strong><div class="stars">${"★".repeat(s)}${"☆".repeat(3-s)}</div><div class="small">${state.rewardedPortals.includes(p)?"✓ Recompensa recollida":`🪙 +${portalReward(p)} en completar-lo`}</div>`;if(unlocked)d.onclick=()=>openPortal(p);g.appendChild(d)}let specials=[
+["INF","PORTAL INFINIT","Taules ×1 a ×10",state.infinite,()=>startInfinite()],
+["TIME","PORTAL CONTRARRELLOTGE","20 multiplicacions · supera el teu temps",true,()=>openTimeTrial()],
+["VS","PORTAL VS","Duel de multiplicacions",true,()=>openVs()]
+];
+specials.forEach(([key,name,sub,unlocked,action])=>{
+ let x=document.createElement("div");
+ x.className="portal specialPortal "+(unlocked?"":"locked");
+ x.innerHTML=`<img class="picon" src="${SPECIAL_PORTALS[key]}"><strong>${name}</strong><div class="small">${sub}</div>`;
+ if(unlocked&&action)x.onclick=action;
+ g.appendChild(x);
+});}
+
+function exitPlayMode(){
+  if(infiniteModeActive){
+    infiniteModeActive=false;
+    showWorlds();
+    return;
+  }
+  openPortal(currentPortal);
+}
+
+function openPortal(p){currentPortal=p;show("stages");document.getElementById("portalTitle").textContent=`Portal ×${p}`;document.getElementById("portalSub").textContent=`Taula del ${p}`;renderStages()}
+function renderStages(){let done=state.stars[currentPortal]||0;let data=[["⭐ 1","Perseguir Null","15 passos"],["⭐ 2","Recuperar l'energia","10 cristalls"],["⭐ 3","Atrapar Null",`Hulk ${currentPortal+2} ❤️ · Null ${currentPortal*8} ❤️`]];let g=document.getElementById("stageGrid");g.innerHTML="";data.forEach((a,i)=>{let n=i+1, unlocked=n<=done+1;let d=document.createElement("div");d.className="stage "+(unlocked?"":"locked");d.innerHTML=`<div class="big">${a[0]}</div><h2>${a[1]}</h2><p>${a[2]}</p>${n<=done?'<b>✓ SUPERADA</b>':''}`;if(unlocked)d.onclick=()=>startStage(n);g.appendChild(d)})}
+function startStage(n){document.getElementById("gameLogo").src=GAME_LOGO;currentStage=n;position=0;crystals=0;heroHP=currentPortal+2;bossMax=currentPortal*8;bossHP=bossMax;show("play");document.getElementById("playTitle").textContent=`Portal ×${currentPortal} · Estrella ${n}`;document.getElementById("playSub").textContent=n<3?`Practica la taula del ${currentPortal}`:`Taules de l'1 al ${currentPortal}`;renderMechanic();nextQuestion();setTimeout(()=>document.getElementById("answer").focus(),50)}
+function renderMechanic(){let m=document.getElementById("mechanic");if(currentStage===1){m.innerHTML=`<div style="display:flex;justify-content:space-between"><b>INICI</b><b>META</b></div><div class="trackWrap"><div class="trackDots">${Array.from({length:15},(_,i)=>`<div class="dot ${i<position?'on':''}"></div>`).join("")}</div><img class="runner movingRunner" src="${HERO}" style="left:calc(${position}/15 * (100% - 120px))"></div><div style="margin-top:88px"><b>${position}/15</b></div>`}else if(currentStage===2){m.innerHTML=`<h3>Activa els 10 cristalls</h3><div class="crystals">${Array.from({length:10},(_,i)=>`<img class="crystal ${i<crystals?'on':''}" src="${i<crystals?CR_ON:CR_OFF}">`).join("")}</div><b>${crystals}/10</b>`}else{let pct=Math.max(0,bossHP/bossMax*100);m.innerHTML=`<div class="battle"><div class="fighter"><h3>EN HULK + EN MUL</h3><img src="${HERO}"><div class="hearts">${"❤️".repeat(heroHP)}</div></div><div class="fighter"><h3>EN NULL</h3><img src="${NULL_PHASES[currentPortal<=3?0:currentPortal<=6?1:currentPortal<=9?2:3]}"><div class="bossbar"><div class="bossfill" style="width:${pct}%"></div></div><b>${bossHP}/${bossMax}</b></div></div>`}}
+function makeQuestion(maxTable){
+  let q=currentStage===3
+    ? makeMultiplication(Array.from({length:maxTable},(_,i)=>i+1))
+    : makeMultiplication(currentPortal);
+  answerValue=q.answer;
+  document.getElementById("question").textContent=`${q.a} × ${q.b} = ?`;
+  let inp=document.getElementById("answer");inp.value="";inp.focus();
+}
+function nextQuestion(){makeQuestion(currentPortal)}
+function submitAnswer(){
+if(infiniteModeActive){submitInfiniteAnswer();return;}
+let inp=document.getElementById("answer");if(inp.value==="")return;let ok=Number(inp.value)===answerValue;let f=document.getElementById("feedback");f.textContent=ok?"✓ CORRECTE!":`✗ Era ${answerValue}`;f.style.color=ok?"#56e28c":"#ff6b7d";if(currentStage===1){position=Math.max(0,Math.min(15,position+(ok?1:-1)));renderMechanic();if(position===15)return completeStage()}else if(currentStage===2){crystals=Math.max(0,Math.min(10,crystals+(ok?1:-1)));renderMechanic();if(crystals===10)return completeStage()}else{if(ok)bossHP--;else heroHP--;renderMechanic();if(bossHP<=0)return completeStage();if(heroHP<=0)return loseBoss()}setTimeout(()=>{f.textContent="";nextQuestion()},450)}
+document.getElementById("answer").addEventListener("keydown",e=>{if(e.key==="Enter")submitAnswer()});
+function completeStage(){let done=state.stars[currentPortal]||0;if(currentStage>done)state.stars[currentPortal]=currentStage;let coinReward=0;if(currentStage===3)coinReward=awardPortalReward(currentPortal);if(currentStage===3 && currentPortal===state.portal && currentPortal<10)state.portal=currentPortal+1;save();let t=currentStage===3?(currentPortal===10?"EN NULL HA ESTAT DERROTAT!":"EN NULL TORNA A ESCAPAR!"): "ESTRELLA SUPERADA!";let txt=currentStage===3?(currentPortal===10?"El Portal ×10 torna a estar en equilibri.":"En Null travessa el següent portal abans que el pugueu atrapar. Seguiu-lo!"):"Continueu la persecució.";if(coinReward)txt+=`\n\n🪙 +${coinReward} monedes · Portal ×${currentPortal} completat per primera vegada!`;result(t,txt,()=>{if(currentStage===3&&currentPortal===10)startEnding();else if(currentStage===3&&[3,6,9].includes(currentPortal))showEvolution();else if(currentStage===3)showWorlds();else openPortal(currentPortal)})}
+function loseBoss(){openPortal(currentPortal)}
+function result(t,txt,cb){document.getElementById("resultTitle").textContent=t;document.getElementById("resultText").textContent=txt;let o=document.getElementById("overlay");o.classList.add("show");document.getElementById("resultBtn").onclick=()=>{o.classList.remove("show");cb()}}
+
+function showEvolution(){show("evolution");let e=document.getElementById("evolutionText"),b=document.getElementById("evolutionBtn");b.style.display="none";e.classList.add("cursor");typewrite(e,"En Null ha absorbit molta energia...\n\ni ha canviat de forma!",()=>{b.style.display="block";b.onclick=showWorlds},38)}
+function startEnding(){show("ending");document.getElementById("endingBtn").style.display="none";let txt=`En Null ha deixat de lluitar.
+
+En Mul s'hi acosta... i descobreix la veritat.
+
+En Null no volia destruir els portals. Estava perdut i intentava trobar el camí de tornada.
+
+En Null és el germà perdut d'en Mul.
+
+Després de molt de temps separats, els dos germans s'han retrobat.
+
+Ara marxaran junts per ajudar a mantenir l'equilibri dels portals de Fasia Verse.
+
+Però la vostra aventura no acaba aquí...`;typewrite(document.getElementById("endingText"),txt,()=>document.getElementById("endingBtn").style.display="block")}
+function unlockInfinite(){state.infinite=true;save();showWorlds()}
+
+let tt={mode:null,count:0,q:null,start:0,timer:null,running:false};
+
+function timeRecords(){
+  try{return JSON.parse(localStorage.getItem("multifasia_time_records")||"{}")}catch(e){return {}}
+}
+function saveTimeRecord(mode,seconds){
+  let all=timeRecords(), key=String(mode), arr=Array.isArray(all[key])?all[key]:[];
+  arr.push({name:"Jugador",time:seconds,date:Date.now()});
+  arr.sort((a,b)=>a.time-b.time);
+  all[key]=arr.slice(0,5);
+  localStorage.setItem("multifasia_time_records",JSON.stringify(all));
+  return arr[0]?.time===seconds;
+}
+function renderTimeRanking(mode){
+  let arr=timeRecords()[String(mode)]||[], box=document.getElementById("timeRanking");
+  document.getElementById("rankTitle").textContent=`🏆 MILLORS TEMPS — ${mode==="mix"?"MIX":"×"+mode}`;
+  let rows=arr.map((r,i)=>`<tr><td>${["🥇","🥈","🥉"][i]||i+1}</td><td>${r.name||"Jugador"}</td><td><b>${r.time.toFixed(2)} s</b></td></tr>`).join("");
+  box.innerHTML=`<table><thead><tr><th>#</th><th>ALUMNE</th><th>TEMPS</th></tr></thead><tbody>${rows||'<tr><td>—</td><td>Encara sense registres</td><td>—</td></tr>'}</tbody></table>`;
+}
+function openTimeTrial(){
+  show("timeTrial");
+  document.getElementById("timeSelect").style.display="";
+  document.getElementById("timeGame").style.display="none";
+  let g=document.getElementById("timePortalGrid"); g.innerHTML="";
+  for(let p=1;p<=10;p++){
+    let unlocked=(state.stars[p]||0)>=3, x=document.createElement("button");
+    x.type="button"; x.className="portal "+(unlocked?"":"locked");
+    x.innerHTML=`<img class="picon" src="${PORTALS[p]}"><strong>×${p}</strong><div class="small">${unlocked?"CONTRARELLOTGE":"🔒 Completa el portal"}</div>`;
+    if(unlocked)x.onclick=()=>startTimeTrial(p);
+    g.appendChild(x);
+  }
+  let mixUnlocked=(state.stars[10]||0)>=3, mix=document.createElement("button");
+  mix.type="button"; mix.className="portal specialPortal "+(mixUnlocked?"":"locked");
+  mix.innerHTML=`<img class="picon" src="${SPECIAL_PORTALS.TIME}"><strong>MIX ×2–×10</strong><div class="small">${mixUnlocked?"20 multiplicacions":"🔒 Completa Portal ×10"}</div>`;
+  if(mixUnlocked)mix.onclick=()=>startTimeTrial("mix");
+  g.appendChild(mix);
+}
+function startTimeTrial(mode){
+  tt.mode=mode;tt.count=0;tt.running=false;lastMultiplicationKey="";
+  document.getElementById("timeSelect").style.display="none";
+  document.getElementById("timeGame").style.display="";
+  document.getElementById("timeHud").style.display="none";
+  document.getElementById("timeFinish").style.display="none";
+  renderTimeRanking(mode);
+  let c=3, el=document.getElementById("timeCountdown");el.textContent=c;
+  let iv=setInterval(()=>{c--;if(c>0)el.textContent=c;else if(c===0)el.textContent="JA!";else{clearInterval(iv);el.textContent="";beginTimeTrial()}},700);
+}
+function beginTimeTrial(){
+  tt.start=performance.now();tt.running=true;
+  document.getElementById("timeHud").style.display="";
+  nextTimeQuestion();
+  tt.timer=setInterval(()=>{if(tt.running)document.getElementById("timeClock").textContent=((performance.now()-tt.start)/1000).toFixed(2)},50);
+  setTimeout(()=>document.getElementById("timeAnswer").focus(),20);
+}
+function nextTimeQuestion(){
+  tt.q=makeMultiplication(tt.mode);
+  document.getElementById("timeQuestionNo").textContent=tt.count+1;
+  document.getElementById("timeQuestion").textContent=`${tt.q.a} × ${tt.q.b} = ?`;
+  let a=document.getElementById("timeAnswer");a.value="";a.focus();
+  document.getElementById("timeFeedback").textContent="";
+}
+function submitTimeAnswer(){
+  if(!tt.running)return;
+  let a=document.getElementById("timeAnswer"), v=Number(a.value), f=document.getElementById("timeFeedback");
+  if(a.value.trim()==="")return;
+  if(v!==tt.q.answer){f.textContent="✗ Torna-ho a provar";f.style.color="#ff7b7b";a.select();return}
+  tt.count++;
+  f.textContent="✓";f.style.color="#56e28c";
+  if(tt.count>=20){finishTimeTrial();return}
+  nextTimeQuestion();
+}
+function finishTimeTrial(){
+  tt.running=false;clearInterval(tt.timer);
+  let seconds=(performance.now()-tt.start)/1000;
+  document.getElementById("timeClock").textContent=seconds.toFixed(2);
+  document.getElementById("timeHud").style.display="none";
+  document.getElementById("timeFinish").style.display="";
+  document.getElementById("timeFinal").textContent=`${seconds.toFixed(2)} s`;
+  let best=saveTimeRecord(tt.mode,seconds);
+  document.getElementById("timeBestMsg").textContent=best?"🏆 Nou millor temps!":"Temps guardat.";
+  renderTimeRanking(tt.mode);
+}
+function openVs(){show("vsMode");document.getElementById("vsPanel").innerHTML=""}
+function showVsCreate(){
+ document.getElementById("vsPanel").innerHTML=`<h3>Crear sala</h3><p>El creador podrà escollir una taula concreta o MIX (×2–×10).</p><p>Després cada jugador escollirà un dels 8 personatges i començarà amb 10 ❤️.</p><button class="btn gray">GENERAR CODI — pròxim pas</button>`;
+}
+function showVsJoin(){
+ document.getElementById("vsPanel").innerHTML=`<h3>Entrar amb codi</h3><input class="answer" style="font-size:28px" maxlength="8" placeholder="CODI"><div><button class="btn" style="margin-top:15px">ENTRAR — pròxim pas</button></div>`;
+}
+
+
+function submitInfiniteAnswer(){
+  if(!infiniteModeActive)return;
+  let input=document.getElementById("answer"), f=document.getElementById("feedback");
+  if(!input || input.value.trim()==="")return;
+  let ok=Number(input.value)===answerValue;
+  if(ok){
+    infiniteScore++;
+    let reward=rewardInfiniteCorrect();
+    let sc=document.getElementById("infScore"); if(sc)sc.textContent=infiniteScore;
+    let dc=document.getElementById("infDailyCorrect"); if(dc)dc.textContent=state.infiniteDaily.correct;
+    let dco=document.getElementById("infDailyCoins"); if(dco)dco.textContent=state.infiniteDaily.coins;
+    f.textContent=reward?`✓ CORRECTE!  🪙 +${reward}`:"✓ CORRECTE!";
+    f.style.color="#56e28c";
+    setTimeout(nextInfinite,180);
+  }else{
+    f.textContent="✗ INCORRECTE";
+    f.style.color="#ff7b7b";
+    input.select();
+  }
+}
+
+function startInfinite(){infiniteModeActive=true;lastMultiplicationKey="";resetInfiniteDaily();document.getElementById("gameLogo").src=SPECIAL_PORTALS.INF;currentPortal=10;show("play");infiniteScore=0;document.getElementById("playTitle").textContent="PORTAL INFINIT";document.getElementById("playSub").textContent="Multiplicacions de l'1 al 10 · +2 🪙 cada 20 encerts · màxim 10 🪙 al dia";document.getElementById("mechanic").innerHTML=`<h2>♾️ Encerts: <span id="infScore">0</span></h2><p>Avui: <b><span id="infDailyCorrect">${state.infiniteDaily.correct}</span>/100 encerts</b> · <b><span id="infDailyCoins">${state.infiniteDaily.coins}</span>/10 🪙</b> aconseguides</p>`;nextInfinite()}
+function nextInfinite(){
+  let q=makeMultiplication([1,2,3,4,5,6,7,8,9,10]);
+  answerValue=q.answer;
+  document.getElementById("question").textContent=`${q.a} × ${q.b} = ?`;
+  let inp=document.getElementById("answer");inp.value="";inp.focus();
+}
+
+document.getElementById("timeSubmit")?.addEventListener("click",submitTimeAnswer);
+document.getElementById("timeAnswer")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitTimeAnswer()});
+</script>
+</body></html>
