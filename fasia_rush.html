@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Fasia Rush v45 · ASSETS FASIARUSH</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#06111d;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff}
+body{display:grid;place-items:center}
+#app{position:relative;width:min(100vw,1100px);height:100vh;overflow:hidden;background:#06111d;touch-action:none}
+#game{display:block;width:100%;height:100%}
+.hidden{display:none!important}
+.screen{position:absolute;inset:0;z-index:30}
+#coverScreen{background:#04101c;display:grid;place-items:center;overflow:hidden}
+.coverBlur{position:absolute;inset:-20px;background:center/cover no-repeat url(assets/fasiarush/img_01.webp);filter:blur(16px) brightness(.42);transform:scale(1.05)}
+.coverFit{position:relative;height:100%;max-width:100%;display:flex;align-items:center;justify-content:center}
+.coverFit img{display:block;max-height:100vh;max-width:100vw;width:auto;height:auto;object-fit:contain}
+#coverPlay{position:absolute;left:50%;bottom:4.5vh;transform:translateX(-50%);z-index:5;border:0;border-radius:22px;padding:16px 42px;min-width:220px;background:#35d66c;color:#061f11;font-weight:1000;font-size:clamp(25px,4vw,40px);box-shadow:0 9px 0 #13823f,0 18px 32px #0007;cursor:pointer}
+#coverPlay:active{transform:translateX(-50%) translateY(5px);box-shadow:0 4px 0 #13823f,0 10px 18px #0006}
+#backFasiaVerse{position:absolute;left:24px;top:24px;z-index:6;border:0;border-radius:16px;padding:13px 20px;background:#102945e8;color:#fff;font-weight:1000;font-size:16px;box-shadow:0 7px 0 #061a2d,0 12px 24px #0007;cursor:pointer}
+#backFasiaVerse:active{transform:translateY(4px);box-shadow:0 3px 0 #061a2d,0 7px 14px #0006}
+#garageScreen{background:linear-gradient(#07111de8,#07111df8);overflow:auto;padding:18px;z-index:40}
+
+.circuitCardWrap{width:min(1180px,96%);margin:0 auto;background:#071829f2;border:2px solid #31537d;border-radius:28px;padding:18px;box-shadow:0 22px 70px #0009;max-height:94%;overflow:auto}
+.circuitTop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.circuitTop h1{margin:0;font-size:clamp(28px,5vw,44px)}
+.circuitGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.circuitCard{position:relative;border:3px solid #294a70;border-radius:20px;overflow:hidden;background:#102b49;cursor:pointer;box-shadow:0 10px 24px #0007;transition:.15s transform,.15s border-color}
+.circuitCard:not(.locked):hover{transform:translateY(-3px);border-color:#58d5ff}
+.circuitCard img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.circuitMeta{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;font-weight:1000;font-size:15px}
+.circuitLock{position:absolute;inset:0;display:grid;place-items:center;background:#07111dcc;backdrop-filter:blur(2px);font-size:clamp(36px,7vw,64px);text-shadow:0 5px 15px #000}
+.circuitCard.locked{cursor:not-allowed;filter:saturate(.42)}
+.circuitCard.completed{border-color:#f4c542}
+.completeTag{position:absolute;right:8px;top:8px;background:#16a34a;color:#fff;border-radius:999px;padding:7px 10px;font-weight:1000;font-size:12px;box-shadow:0 5px 12px #0007}
+#circuitCompleteScreen .dialog{max-width:560px}
+.finishTitle{font-size:clamp(34px,7vw,58px);margin:4px 0 8px;color:#ffe066;text-shadow:0 4px 0 #8a4d00}
+.finishSub{font-weight:900;font-size:20px;margin:0 0 15px}
+
+
+.extremeVisual{aspect-ratio:16/9;display:grid;place-items:center;font-size:clamp(58px,10vw,110px);background:radial-gradient(circle at 50% 42%,#713cff 0,#24105d 36%,#07111d 75%);text-shadow:0 0 28px #7dd3fc}
+.extremePanel{width:min(900px,96%);margin:0 auto;background:#071829f5;border:2px solid #6547b8;border-radius:28px;padding:18px;box-shadow:0 22px 70px #0009;max-height:94%;overflow:auto}
+.extremePanel h1{margin:0 0 8px;font-size:clamp(30px,5vw,48px)}
+.extremeInfo{opacity:.9;margin:0 0 14px;font-weight:800}
+.pilotRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}.pilotRow label{font-weight:1000}.pilotRow input{flex:1;min-width:220px;border:2px solid #45658b;background:#102b49;color:#fff;border-radius:14px;padding:12px 14px;font-size:18px;font-weight:900}
+.leaderBox{background:#0d2138;border:2px solid #31537d;border-radius:20px;padding:12px;margin-top:14px}.leaderBox h2{margin:0 0 10px}.leaderTable{width:100%;border-collapse:collapse}.leaderTable th,.leaderTable td{padding:9px 8px;border-bottom:1px solid #ffffff18;text-align:left}.leaderTable th:nth-child(1),.leaderTable td:nth-child(1){width:54px;text-align:center}.leaderTable td:nth-child(3),.leaderTable th:nth-child(3),.leaderTable td:nth-child(4),.leaderTable th:nth-child(4){text-align:right}
+.modeTag{position:absolute;left:8px;top:8px;background:#6d28d9;color:white;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:1000;box-shadow:0 5px 12px #0007}.modelLock{position:absolute;inset:0;display:grid;place-items:center;background:#07111dc9;backdrop-filter:blur(2px);font-size:44px;border-radius:18px;z-index:3}.modelCard.locked{cursor:not-allowed;filter:saturate(.4)}
+.unlockToast{position:absolute;left:50%;top:18%;transform:translate(-50%,-50%) scale(.92);z-index:40;background:linear-gradient(135deg,#0f2948,#173f69);border:3px solid #69dcff;border-radius:22px;padding:16px 24px;color:#fff;font-weight:1000;text-align:center;box-shadow:0 16px 45px #0009;opacity:0;pointer-events:none;transition:.25s;max-width:min(88vw,520px);font-size:clamp(16px,2.3vw,24px)}.unlockToast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.accentLocked{filter:saturate(.45)}
+#extremeLapScreen .dialog{max-width:620px}.lapBig{font-size:clamp(38px,7vw,68px);font-weight:1000;color:#c4b5fd;margin:0 0 8px;text-shadow:0 4px 16px #000}.rewardLine{margin:12px 0 4px;padding:10px 12px;background:#142f50;border-radius:14px;font-weight:1000;color:#ffe066}
+.garageCard{width:min(1120px,96%);margin:0 auto;background:#0d2138f5;border:2px solid #34577f;border-radius:28px;padding:18px;box-shadow:0 22px 70px #0009}
+.garageTop{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.garageTop h1{margin:0;font-size:clamp(28px,5vw,44px)}
+.backBtn,.subBtn{border:0;border-radius:15px;padding:11px 16px;background:#1d3b60;color:white;font-weight:900;cursor:pointer}
+.subBtn{background:#214b79}
+.hiddenStep{display:none!important}
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.modelCard{background:#102b49;border:3px solid #294a70;border-radius:22px;padding:10px;cursor:pointer;position:relative}
+.modelCard.active{border-color:#58d5ff;box-shadow:0 0 0 3px #58d5ff44 inset}
+.modelCard canvas,.selectedCanvas{display:block;width:100%;aspect-ratio:1.7/1;background:radial-gradient(circle at 50% 25%,#355c94,#0a1727 75%);border-radius:15px}
+.modelName{font-size:clamp(16px,2.7vw,23px);font-weight:1000;margin-top:8px;text-align:center}
+.customizerWrap{display:grid;grid-template-columns:minmax(280px,1.1fr) 1fr;gap:16px;margin-top:14px;align-items:start}
+.selectedBox,.section{background:#132d4c;border:2px solid #31537d;border-radius:20px;padding:14px}
+.selectedBox h3,.section h3{margin:0 0 10px;font-size:clamp(18px,3vw,26px)}
+.colorBox{display:grid;grid-template-columns:1fr;gap:14px}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.sw{aspect-ratio:1;border:0;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 5px #ffffff80,0 5px 12px #0005;cursor:pointer}
+.sw.active{outline:5px solid #59d5ff;outline-offset:2px}
+.garageActions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.goBtn{border:0;border-radius:20px;padding:15px 36px;background:#35d66c;color:#061f11;font-weight:1000;font-size:clamp(22px,3vw,30px);box-shadow:0 7px 0 #13823f;cursor:pointer}
+.note{font-size:13px;opacity:.78;margin:9px 0 0}
+.hud{position:absolute;inset:0;pointer-events:none;z-index:10}
+.hudLogo{display:none}
+.dashWrap{position:absolute;right:10px;top:8px;width:clamp(270px,34vw,460px);aspect-ratio:1536/864;pointer-events:none;filter:drop-shadow(0 10px 18px #000a)}
+.dashWrap img{width:100%;height:100%;display:block}
+.dashText{position:absolute;font-family:Arial Black,system-ui,sans-serif;font-weight:1000;letter-spacing:.5px;color:#f4f8ff;text-shadow:0 0 6px #000,0 2px 8px #000;transform:translate(-50%,-50%);white-space:nowrap;text-align:center}
+#speed{left:30.8%;top:53.2%;font-size:clamp(19px,2.35vw,34px)}
+#distance{left:69.6%;top:53.2%;font-size:clamp(19px,2.35vw,34px)}
+.controls{position:absolute;left:0;right:0;bottom:18px;display:flex;justify-content:space-between;padding:0 18px;z-index:12;pointer-events:none}
+.ctrl{pointer-events:auto;width:82px;height:64px;border:0;border-radius:18px;background:#102945d9;color:#fff;font-size:32px;font-weight:1000;border:2px solid #ffffff2b;box-shadow:0 8px 18px #0005}
+.overlay{position:absolute;inset:0;z-index:45;display:grid;place-items:center;background:#06111dde;padding:18px}
+.dialog{width:min(90%,480px);text-align:center;background:#10233bec;border:2px solid #ffffff25;border-radius:25px;padding:22px;box-shadow:0 22px 60px #0008}
+.dialog img{width:min(90%,340px)}
+.dialog .goBtn{margin:7px}
+@media(max-width:800px){.customizerWrap{grid-template-columns:1fr}.garageCard{width:100%}#garageScreen{padding:10px}}
+@media(max-width:650px){.models{grid-template-columns:1fr 1fr}.swatches{grid-template-columns:repeat(5,1fr)}}
+@media(min-width:760px){.controls{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+<canvas id="game"></canvas>
+<div class="hud"><img class="hudLogo" src="" alt=""><div class="dashWrap"><img src="assets/fasiarush/hud.webp" alt="HUD quilòmetres"><div id="speed" class="dashText">110</div><div id="distance" class="dashText">0.0</div></div></div></div>
+<div class="controls"><button id="leftBtn" class="ctrl">◀</button><button id="rightBtn" class="ctrl">▶</button></div>
+
+<div id="coverScreen" class="screen">
+  <div class="coverBlur"></div>
+  <button id="backFasiaVerse" type="button" onclick="returnToFasiaVerse()">← TORNAR A FASIA VERSE</button>
+  <div class="coverFit">
+    <img src="assets/fasiarush/img_01.webp" alt="Fasia Rush portada">
+    <button id="coverPlay" type="button" onclick="showCircuitSelect()">JUGAR</button>
+  </div>
+</div>
+
+
+<div id="circuitScreen" class="screen hidden">
+  <div class="circuitCardWrap">
+    <div class="circuitTop"><h1>🏁 Tria el circuit</h1><button class="backBtn" type="button" onclick="showCover()">← Portada</button></div>
+    <div class="circuitGrid">
+      <div id="gpCard1" class="circuitCard" onclick="selectCircuit(1)"><img src="assets/fasiarush/gp1_card.webp"><div class="circuitMeta"><span>GP 1</span><span>10 KM</span></div></div>
+      <div id="gpCard2" class="circuitCard" onclick="selectCircuit(2)"><img src="assets/fasiarush/gp2_card.webp"><div class="circuitMeta"><span>GP 2</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard3" class="circuitCard" onclick="selectCircuit(3)"><img src="assets/fasiarush/gp3_card.webp"><div class="circuitMeta"><span>GP 3</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard4" class="circuitCard" onclick="selectCircuit(4)"><img src="assets/fasiarush/gp4_card.webp"><div class="circuitMeta"><span>GP 4</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard5" class="circuitCard" onclick="selectCircuit(5)"><img src="assets/fasiarush/gp5_card.webp"><div class="circuitMeta"><span>GP 5</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="extremeCard" class="circuitCard locked" onclick="openExtremeMode()"><div class="extremeVisual">🌌</div><div class="circuitMeta"><span>MODE EXTREM</span><span>∞</span></div><div class="modeTag">5 MONS SEGUITS</div><div class="circuitLock">🔒</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="extremeScreen" class="screen hidden"><div class="extremePanel"><div class="circuitTop"><h1>🔥 Mode Extrem</h1><button class="backBtn" type="button" onclick="showCircuitSelect()">← Circuits</button></div><p class="extremeInfo">Comença a 0 km i recorre els 5 mons sense aturar-te. Cada 10 km canvia la dimensió. Cada 50 km completes una volta sencera.</p><div class="pilotRow"><label for="extremePlayerName">Pilot:</label><input id="extremePlayerName" maxlength="24" placeholder="Nom de l'alumne"></div><div class="garageActions"><button class="goBtn" type="button" onclick="startExtremeSetup()">TRIAR COTXE I JUGAR</button></div><div class="leaderBox"><h2>🏆 Millors resultats</h2><table class="leaderTable"><thead><tr><th>#</th><th>Alumne</th><th>KM</th><th>Volta</th></tr></thead><tbody id="extremeLeaderboardBody"></tbody></table></div></div></div>
+<div id="garageScreen" class="screen hidden">
+  <div class="garageCard">
+    <div id="garagePickStep">
+      <div class="garageTop"><h1>🏁 Tria el teu kart</h1><button class="backBtn" type="button" onclick="showCircuitSelect()">← Circuits</button></div>
+      <div class="models">
+        <div id="modelOld" class="modelCard" onclick="selectModel('classic')"><canvas id="oldPreview" width="760" height="450"></canvas><div class="modelName">Kart clàssic</div></div>
+        <div id="modelOff" class="modelCard" onclick="selectModel('offroad')"><canvas id="offPreview" width="760" height="450"></canvas><div class="modelName">Tot terreny</div></div>
+        <div id="modelNew" class="modelCard" onclick="selectModel('new')"><canvas id="newPreview" width="760" height="450"></canvas><div class="modelName">Kart Fasia</div></div>
+        <div id="modelRetro" class="modelCard" onclick="selectModel('retro')"><canvas id="retroPreview" width="760" height="450"></canvas><div class="modelName">Kart retro</div></div>
+        <div id="modelTurbo" class="modelCard" onclick="selectModel('turbo')"><canvas id="turboPreview" width="760" height="450"></canvas><div class="modelName">Kart coet</div></div>
+        <div id="modelEpic" class="modelCard" onclick="selectModel('epic')"><canvas id="epicPreview" width="760" height="450"></canvas><div class="modelName">Car interdimensional</div></div>
+      </div>
+    </div>
+    <div id="garageCustomizeStep" class="hiddenStep">
+      <div class="garageTop"><h1>🎨 Personalitza el kart</h1><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="subBtn" type="button" onclick="backToModelPick()">← Un altre cotxe</button><button class="backBtn" type="button" onclick="showCircuitSelect()">← Circuits</button></div></div>
+      <div class="customizerWrap">
+        <div class="selectedBox">
+          <h3 id="selectedModelTitle">Kart seleccionat</h3>
+          <canvas id="selectedPreview" class="selectedCanvas" width="960" height="560"></canvas>
+        </div>
+        <div class="colorBox">
+          <div class="section"><h3>🎨 Color carrosseria</h3><div id="primaryColors" class="swatches"></div></div>
+          <div id="accentSection" class="section"><h3>✨ Color secundari</h3><div id="accentColors" class="swatches"></div><p class="note" id="accentNote">Desbloqueja el segon color arribant als 5 km del circuit corresponent.</p></div>
+        </div>
+      </div>
+      <div class="garageActions"><button id="startRace" class="goBtn" type="button" onclick="startRace()">COMENÇAR CURSA</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="unlockToast" class="unlockToast"></div>
+
+<div id="pauseScreen" class="overlay hidden"><div class="dialog"><img src="assets/fasiarush/img_09.webp" alt=""><h2>⏸ Pausa</h2><button class="goBtn" onclick="resumeRace()">CONTINUAR</button></div></div>
+
+<div id="circuitCompleteScreen" class="overlay hidden"><div class="dialog">
+  <div class="finishTitle">🏆 META!</div>
+  <p id="completeCircuitText" class="finishSub">Circuit completat!</p><div id="rewardText" class="rewardLine">Recompensa desbloquejada!</div>
+  <button class="goBtn" onclick="showCircuitSelect()">CIRCUITS</button>
+  <button class="backBtn" onclick="startRace()">TORNAR-HI</button>
+</div></div>
+<div id="extremeLapScreen" class="overlay hidden"><div class="dialog"><div class="lapBig">🌌 VOLTA COMPLETA!</div><p id="extremeLapText" class="finishSub">Has aconseguit donar una volta a tota la dimensió. Felicitats!</p><button class="goBtn" onclick="continueExtremeLap()">SEGUIR CIRCULANT</button></div></div>
+<div id="gameOverScreen" class="overlay hidden"><div class="dialog"><img src="assets/fasiarush/img_09.webp" alt=""><h2>💥 Final de partida</h2><p>Has recorregut <b id="finalDistance">0.0</b> km.</p><button class="goBtn" onclick="startRace()">TORNAR-HI</button><button class="backBtn" onclick="showGarage()">CANVIAR KART</button></div></div>
+</div>
+<script>
+function returnToFasiaVerse(){
+  const params=new URLSearchParams(location.search);
+  const profile=params.get('profile');
+  const target='../index.html'+(profile?'?profile='+encodeURIComponent(profile):'');
+  location.href=target;
+}
+const ASSETS={gp1Bg:"assets/fasiarush/gp1Bg.webp",gp2Bg:"assets/fasiarush/gp2Bg.webp",gp3Bg:"assets/fasiarush/gp3Bg.webp",gp4Bg:"assets/fasiarush/gp4Bg.webp",gp5Bg:"assets/fasiarush/gp5Bg.webp",gp1Cover:"assets/fasiarush/gp1_card.webp",gp2Cover:"assets/fasiarush/gp2_card.webp",gp3Cover:"assets/fasiarush/gp3_card.webp",gp4Cover:"assets/fasiarush/gp4_card.webp",gp5Cover:"assets/fasiarush/gp5_card.webp",epicFixed:"assets/fasiarush/epicFixed.webp",epicBody:"assets/fasiarush/epicBody.webp",retroFixed:"assets/fasiarush/retroFixed.webp",retroBody:"assets/fasiarush/retroBody.webp","cover": "assets/fasiarush/img_01.webp", "logo": "assets/fasiarush/img_09.webp", "oldFixed": "assets/fasiarush/img_30.webp", "oldBody": "assets/fasiarush/img_31.webp", "newFixed": "assets/fasiarush/img_32.webp", "newPrimary": "assets/fasiarush/img_33.webp", "newAccent": "assets/fasiarush/img_34.webp",offFixed:"assets/fasiarush/offFixed.webp",turboFixed:"assets/fasiarush/turboFixed.webp",turboBody:"assets/fasiarush/turboBody.webp",offBody:"assets/fasiarush/offBody.webp"};
+const primaryPalette=['#ffffff','#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#111827','#facc15'];
+const accentPalette=['#3b82f6','#f97316','#22c55e','#8b5cf6','#ef4444','#facc15','#ec4899','#38bdf8','#ffffff','#111827'];
+function safeGet(key,fallback){try{return localStorage.getItem(key)||fallback}catch(e){return fallback}}
+function safeSet(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+let selectedModel=safeGet('fr_model','classic');
+const ALL_MODELS=['classic','offroad','new','retro','turbo','epic'];
+if(!ALL_MODELS.includes(selectedModel)) selectedModel='classic';
+const legacyPrimary=safeGet('fr_primary','#ffffff');
+const legacyAccent=safeGet('fr_accent','#3b82f6');
+let carColorState={};
+try{carColorState=JSON.parse(safeGet('fr_car_colors','{}'))||{}}catch(e){carColorState={}}
+for(const m of ALL_MODELS){if(!carColorState[m])carColorState[m]={primary:legacyPrimary,accent:legacyAccent};if(!carColorState[m].primary)carColorState[m].primary=legacyPrimary;if(!carColorState[m].accent)carColorState[m].accent=legacyAccent;}
+function colorsFor(model){const c=carColorState[model]||{primary:'#ffffff',accent:'#3b82f6'};return {primary:c.primary||'#ffffff',accent:c.accent||'#3b82f6'};}
+function loadSelectedColors(){const c=colorsFor(selectedModel);primaryColor=c.primary;accentColor=c.accent;}
+function saveSelectedColors(){carColorState[selectedModel]={primary:primaryColor,accent:accentColor};safeSet('fr_car_colors',JSON.stringify(carColorState));safeSet('fr_primary',primaryColor);safeSet('fr_accent',accentColor);}
+let primaryColor=colorsFor(selectedModel).primary;
+let accentColor=colorsFor(selectedModel).accent;
+let garageMode='pick',gameMode='gp',extremeLap=0;
+const TEST_UNLOCKS=true; // MODE PROVA: posa-ho a false per recuperar els bloquejos normals
+const modelTitles={classic:'Kart clàssic',new:'Kart Fasia',epic:'Car interdimensional',offroad:'Tot terreny',turbo:'Kart coet',retro:'Kart retro'};
+const carUnlockLevel={classic:0,offroad:1,new:2,retro:3,turbo:4,epic:5};
+const rewardCars={1:'Tot terreny',2:'Kart Fasia',3:'Kart retro',4:'Kart coet',5:'Car interdimensional'};
+const secondaryCircuitModel={1:'classic',2:'offroad',3:'new',4:'retro',5:'turbo'};
+const secondaryModelCircuit={classic:1,offroad:2,new:3,retro:4,turbo:5};
+let secondaryUnlocked={};try{secondaryUnlocked=JSON.parse(safeGet('fr_secondary_unlocks','{}'))||{}}catch(e){secondaryUnlocked={}}
+secondaryUnlocked.epic=true;
+const circuitConfig={1:{name:'GP 1 · Pradera Fasia',target:10000,bg:'gp1Bg'},2:{name:'GP 2 · Neu Eterna',target:10000,bg:'gp2Bg'},3:{name:'GP 3 · Volcà Infernal',target:10000,bg:'gp3Bg'},4:{name:'GP 4 · Ciutat Neó',target:15000,bg:'gp4Bg'},5:{name:'GP 5 · Univers',target:15000,bg:'gp5Bg'}};
+const migratedUnlocked=Math.max(1,Math.min(5,parseInt(safeGet('fr_unlocked_gp','1'),10)||1));
+let completedGP=Math.max(0,Math.min(5,parseInt(safeGet('fr_completed_gp',String(migratedUnlocked-1)),10)||0));
+let currentCircuit=1,unlockedCircuit=Math.min(5,completedGP+1);
+const app=document.getElementById('app'),canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const coverScreen=document.getElementById('coverScreen'),circuitScreen=document.getElementById('circuitScreen'),extremeScreen=document.getElementById('extremeScreen'),garageScreen=document.getElementById('garageScreen'),pauseScreen=document.getElementById('pauseScreen'),gameOverScreen=document.getElementById('gameOverScreen'),circuitCompleteScreen=document.getElementById('circuitCompleteScreen'),extremeLapScreen=document.getElementById('extremeLapScreen'),completeCircuitText=document.getElementById('completeCircuitText');
+const distanceEl=document.getElementById('distance'),speedEl=document.getElementById('speed'),finalDistance=document.getElementById('finalDistance'),rewardText=document.getElementById('rewardText'),extremeLapText=document.getElementById('extremeLapText');
+const unlockToast=document.getElementById('unlockToast');
+const oldPreview=document.getElementById('oldPreview'),newPreview=document.getElementById('newPreview'),epicPreview=document.getElementById('epicPreview'),offPreview=document.getElementById('offPreview'),turboPreview=document.getElementById('turboPreview'),retroPreview=document.getElementById('retroPreview'),selectedPreview=document.getElementById('selectedPreview');
+const garagePickStep=document.getElementById('garagePickStep'),garageCustomizeStep=document.getElementById('garageCustomizeStep'),selectedModelTitle=document.getElementById('selectedModelTitle');
+const imgs={}; let ready=false, playerSprite=null, enemyPool=[];
+let W=0,H=0,dpr=1,running=false,paused=false,last=0,score=0,speed=.34,roadTick=0,spawnTimer=0,playerLane=1,targetLane=1,playerX=0,cars=[],roadSigns=[],lastKm=0,touchStartX=null;
+function load(name,src){return new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>{imgs[name]=i;resolve(i)};i.onerror=reject;i.src=src;})}
+function resize(){const r=app.getBoundingClientRect();dpr=Math.min(2,devicePixelRatio||1);W=Math.max(320,r.width);H=Math.max(480,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(ready&&!running)drawStatic();}
+addEventListener('resize',resize);resize();
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), lerp=(a,b,t)=>a+(b-a)*t;
+function roadY(z){return lerp(H*.36,H*1.08,Math.pow(z,1.45))}
+function roadHalfWidth(z){return lerp(W*.085,W*.42,Math.pow(z,1.2))}
+function laneX(l,z){return W/2+[-.58,0,.58][l]*roadHalfWidth(z)}
+function hexRgb(h){h=h.slice(1);return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+function tintMask(img,color){
+  const c=document.createElement('canvas');
+  c.width=img.naturalWidth;
+  c.height=img.naturalHeight;
+  const x=c.getContext('2d');
+  x.drawImage(img,0,0);
+  x.globalCompositeOperation='source-in';
+  x.fillStyle=color;
+  x.fillRect(0,0,c.width,c.height);
+  x.globalCompositeOperation='source-over';
+  return c;
+}
+function tintMaskDetailed(img,color){
+  const c=document.createElement('canvas');
+  c.width=img.naturalWidth;
+  c.height=img.naturalHeight;
+  const x=c.getContext('2d');
+
+  x.fillStyle=color;
+  x.fillRect(0,0,c.width,c.height);
+
+  // Conserva el relleu, llums i ombres originals de la màscara.
+  x.globalCompositeOperation='multiply';
+  x.drawImage(img,0,0);
+
+  // Conserva exactament la transparència de la peça.
+  x.globalCompositeOperation='destination-in';
+  x.drawImage(img,0,0);
+
+  x.globalCompositeOperation='source-over';
+  return c;
+}
+
+function secondaryRegion(mask,color,model){
+  // Crea una màscara d'UNIÓ de totes les zones secundàries. A la versió anterior
+  // cada polígon feia destination-in per separat i acabava intersectant les zones,
+  // per això en alguns cotxes el color secundari pràcticament no es veia.
+  const base=tintMask(mask,color),c=document.createElement('canvas'),m=document.createElement('canvas');
+  c.width=base.width;c.height=base.height;m.width=base.width;m.height=base.height;
+  const x=c.getContext('2d'),mx=m.getContext('2d'),w=c.width,h=c.height;
+  const poly=(pts)=>{mx.beginPath();mx.moveTo(pts[0][0]*w,pts[0][1]*h);for(let i=1;i<pts.length;i++)mx.lineTo(pts[i][0]*w,pts[i][1]*h);mx.closePath();mx.fill();};
+  mx.fillStyle='#fff';
+  if(model==='classic'){
+    poly([[.35,.26],[.65,.26],[.73,.84],[.27,.84]]);
+  }else if(model==='offroad'){
+    poly([[.18,.53],[.82,.53],[.75,.82],[.25,.82]]);
+  }else if(model==='turbo'){
+    // Kart coet: color secundari als dos parafangs/panells posteriors i una peça superior petita.
+    poly([[.14,.42],[.37,.34],[.43,.50],[.40,.70],[.23,.79],[.13,.64]]);
+    poly([[.86,.42],[.63,.34],[.57,.50],[.60,.70],[.77,.79],[.87,.64]]);
+    poly([[.43,.24],[.57,.24],[.59,.38],[.41,.38]]);
+  }else if(model==='retro'){
+    poly([[.30,.29],[.70,.29],[.79,.63],[.21,.63]]);
+  }else if(model==='epic'){
+    // Car interdimensional: secundari clarament als alerons/ales laterals i al nervi central.
+    poly([[.08,.45],[.39,.31],[.45,.46],[.39,.58],[.18,.70],[.08,.60]]);
+    poly([[.92,.45],[.61,.31],[.55,.46],[.61,.58],[.82,.70],[.92,.60]]);
+    poly([[.45,.18],[.55,.18],[.58,.63],[.52,.78],[.48,.78],[.42,.63]]);
+  }else{
+    poly([[.31,.30],[.69,.30],[.75,.78],[.25,.78]]);
+  }
+  x.drawImage(base,0,0);
+  x.globalCompositeOperation='destination-in';
+  x.drawImage(m,0,0);
+  x.globalCompositeOperation='source-over';
+  return c;
+}
+function composeClassic(pc,ac=accentColor){const c=document.createElement('canvas');c.width=imgs.oldFixed.naturalWidth;c.height=imgs.oldFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(imgs.oldFixed,0,0);x.drawImage(tintMask(imgs.oldBody,pc),0,0);x.drawImage(secondaryRegion(imgs.oldBody,ac,'classic'),0,0);c.dataset.model='classic';return c}
+function composeNew(pc,ac){const c=document.createElement('canvas');c.width=imgs.newFixed.naturalWidth;c.height=imgs.newFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(tintMaskDetailed(imgs.newPrimary,pc),0,0);x.drawImage(tintMaskDetailed(imgs.newAccent,ac),0,0);x.drawImage(imgs.newFixed,0,0);c.dataset.model='new';return c}
+function composeOffroad(pc,ac=accentColor){const c=document.createElement('canvas');c.width=imgs.offFixed.naturalWidth;c.height=imgs.offFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(imgs.offFixed,0,0);x.drawImage(tintMask(imgs.offBody,pc),0,0);x.drawImage(secondaryRegion(imgs.offBody,ac,'offroad'),0,0);c.dataset.model='offroad';return c}
+function composeTurbo(pc,ac=accentColor){const c=document.createElement('canvas');c.width=imgs.turboFixed.naturalWidth;c.height=imgs.turboFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(imgs.turboFixed,0,0);x.drawImage(tintMask(imgs.turboBody,pc),0,0);x.drawImage(secondaryRegion(imgs.turboBody,ac,'turbo'),0,0);c.dataset.model='turbo';return c}
+function composeEpic(pc,ac=accentColor){const c=document.createElement('canvas');c.width=imgs.epicFixed.naturalWidth;c.height=imgs.epicFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(imgs.epicFixed,0,0);x.drawImage(tintMask(imgs.epicBody,pc),0,0);x.drawImage(secondaryRegion(imgs.epicBody,ac,'epic'),0,0);c.dataset.model='epic';return c}
+function composeRetro(pc,ac=accentColor){const c=document.createElement('canvas');c.width=imgs.retroFixed.naturalWidth;c.height=imgs.retroFixed.naturalHeight;const x=c.getContext('2d');x.drawImage(imgs.retroFixed,0,0);x.drawImage(tintMask(imgs.retroBody,pc),0,0);x.drawImage(secondaryRegion(imgs.retroBody,ac,'retro'),0,0);c.dataset.model='retro';return c}
+function spriteFor(model,pc=primaryColor,ac=accentColor){if(model==='classic')return composeClassic(pc,ac); if(model==='new')return composeNew(pc,ac); if(model==='offroad')return composeOffroad(pc,ac); if(model==='turbo')return composeTurbo(pc,ac); if(model==='epic')return composeEpic(pc,ac); if(model==='retro')return composeRetro(pc,ac); return composeClassic(pc,ac)}
+function buildPlayer(){saveSelectedColors();playerSprite=spriteFor(selectedModel,primaryColor,accentColor);safeSet('fr_model',selectedModel);drawModelPreviews();if(!running)drawStatic();}
+function buildEnemies(){const combos=[['#ef4444','#111827'],['#f59e0b','#facc15'],['#22c55e','#ffffff'],['#3b82f6','#f97316'],['#8b5cf6','#38bdf8'],['#ec4899','#111827'],['#14b8a6','#facc15']];enemyPool=[];for(const [p,a] of combos){enemyPool.push(composeClassic(p,a));enemyPool.push(composeNew(p,a));enemyPool.push(composeEpic(p,a));enemyPool.push(composeOffroad(p,a));enemyPool.push(composeTurbo(p,a));enemyPool.push(composeRetro(p,a));}}
+function drawPreview(canvas,sprite){const x=canvas.getContext('2d'),cw=canvas.width,ch=canvas.height;x.clearRect(0,0,cw,ch);const g=x.createLinearGradient(0,0,0,ch);g.addColorStop(0,'#284f84');g.addColorStop(1,'#091421');x.fillStyle=g;x.fillRect(0,0,cw,ch);const padX=cw*.08,padTop=ch*.08,padBottom=ch*.12,scale=Math.min((cw-padX*2)/sprite.width,(ch-padTop-padBottom)/sprite.height);const w=sprite.width*scale,h=sprite.height*scale,dx=(cw-w)/2,dy=ch-padBottom-h;x.drawImage(sprite,dx,dy,w,h)}
+function updateGarageView(){garagePickStep.classList.toggle('hiddenStep',garageMode!=='pick');garageCustomizeStep.classList.toggle('hiddenStep',garageMode!=='customize');}
+function isSecondaryUnlocked(model){return TEST_UNLOCKS||model==='epic'||!!secondaryUnlocked[model]}
+function unlockSecondary(model){if(!model||model==='epic'||secondaryUnlocked[model])return false;secondaryUnlocked[model]=true;safeSet('fr_secondary_unlocks',JSON.stringify(secondaryUnlocked));return true}
+function showUnlockToast(model){if(!unlockToast)return;unlockToast.innerHTML='✨ <b>COLOR SECUNDARI DESBLOQUEJAT!</b><br>'+modelTitles[model];unlockToast.classList.add('show');clearTimeout(showUnlockToast.t);showUnlockToast.t=setTimeout(()=>unlockToast.classList.remove('show'),2600)}
+function drawModelPreviews(){if(!ready)return;const cc=colorsFor('classic'),nc=colorsFor('new'),ec=colorsFor('epic'),oc=colorsFor('offroad'),tc=colorsFor('turbo'),rc=colorsFor('retro');drawPreview(oldPreview,composeClassic(cc.primary,cc.accent));drawPreview(newPreview,composeNew(nc.primary,nc.accent));drawPreview(epicPreview,composeEpic(ec.primary,ec.accent));drawPreview(offPreview,composeOffroad(oc.primary,oc.accent));drawPreview(turboPreview,composeTurbo(tc.primary,tc.accent));drawPreview(retroPreview,composeRetro(rc.primary,rc.accent));if(selectedPreview)drawPreview(selectedPreview,spriteFor(selectedModel,primaryColor,accentColor));document.getElementById('modelOld').classList.toggle('active',selectedModel==='classic');document.getElementById('modelNew').classList.toggle('active',selectedModel==='new');document.getElementById('modelEpic').classList.toggle('active',selectedModel==='epic');document.getElementById('modelOff').classList.toggle('active',selectedModel==='offroad');document.getElementById('modelTurbo').classList.toggle('active',selectedModel==='turbo');document.getElementById('modelRetro').classList.toggle('active',selectedModel==='retro');selectedModelTitle.textContent=modelTitles[selectedModel]||'Kart seleccionat';const allowAccent=isSecondaryUnlocked(selectedModel),sec=document.getElementById('accentSection');sec.style.opacity=allowAccent?'1':'.48';sec.style.pointerEvents=allowAccent?'auto':'none';sec.classList.toggle('accentLocked',!allowAccent);if(TEST_UNLOCKS)document.getElementById('accentNote').textContent='🧪 Mode prova: color principal i secundari disponibles.';else if(selectedModel==='epic')document.getElementById('accentNote').textContent='Car interdimensional: color principal i secundari desbloquejats.';else if(allowAccent)document.getElementById('accentNote').textContent='Color secundari desbloquejat. Tria la combinació que vulguis.';else{const gp=secondaryModelCircuit[selectedModel];document.getElementById('accentNote').textContent='🔒 Arriba als 5 km del GP '+gp+' per desbloquejar el color secundari.';}refreshModelLocks();updateGarageView();}
+function buildSwatches(id,palette,which){const box=document.getElementById(id);box.innerHTML='';for(const c of palette){const b=document.createElement('button');b.className='sw';b.style.setProperty('--c',c);if((which==='primary'?primaryColor:accentColor)===c)b.classList.add('active');b.onclick=()=>{if(which==='accent'&&!isSecondaryUnlocked(selectedModel))return;if(which==='primary')primaryColor=c;else accentColor=c;saveSelectedColors();[...box.children].forEach(z=>z.classList.remove('active'));b.classList.add('active');buildPlayer();};box.appendChild(b)}}
+function refreshColorControls(){buildSwatches('primaryColors',primaryPalette,'primary');buildSwatches('accentColors',accentPalette,'accent');}
+function isModelUnlocked(model){return TEST_UNLOCKS||completedGP>=(carUnlockLevel[model]??99)}
+function ensureUnlockedModel(){if(!isModelUnlocked(selectedModel))selectedModel='classic'}
+function refreshCircuitCards(){unlockedCircuit=TEST_UNLOCKS?5:Math.min(5,completedGP+1);for(let i=1;i<=5;i++){const card=document.getElementById('gpCard'+i);if(!card)continue;const locked=!TEST_UNLOCKS&&i>unlockedCircuit,done=i<=completedGP;card.classList.toggle('locked',locked);card.classList.toggle('completed',done);let lock=card.querySelector('.circuitLock');if(locked&&!lock){lock=document.createElement('div');lock.className='circuitLock';lock.textContent='🔒';card.appendChild(lock)}if(!locked&&lock)lock.remove();let tag=card.querySelector('.completeTag');if(done&&!tag){tag=document.createElement('div');tag.className='completeTag';tag.textContent='SUPERAT';card.appendChild(tag)}if(!done&&tag)tag.remove();}const ex=document.getElementById('extremeCard');if(ex){const locked=!TEST_UNLOCKS&&completedGP<5;ex.classList.toggle('locked',locked);let lock=ex.querySelector('.circuitLock');if(locked&&!lock){lock=document.createElement('div');lock.className='circuitLock';lock.textContent='🔒';ex.appendChild(lock)}if(!locked&&lock)lock.remove();}}
+function refreshModelLocks(){for(const [model,id] of [['classic','modelOld'],['new','modelNew'],['epic','modelEpic'],['offroad','modelOff'],['turbo','modelTurbo'],['retro','modelRetro']]){const card=document.getElementById(id);if(!card)continue;const locked=!isModelUnlocked(model);card.classList.toggle('locked',locked);let lock=card.querySelector('.modelLock');if(locked&&!lock){lock=document.createElement('div');lock.className='modelLock';lock.textContent='🔒';card.appendChild(lock)}if(!locked&&lock)lock.remove();}}
+function getExtremeBoard(){try{return JSON.parse(safeGet('fr_extreme_board','[]'))||[]}catch(e){return[]}}
+function renderExtremeLeaderboard(){const body=document.getElementById('extremeLeaderboardBody');if(!body)return;const board=getExtremeBoard().sort((a,b)=>b.distance-a.distance).slice(0,10);body.innerHTML=board.length?'':'<tr><td colspan="4" style="text-align:center;opacity:.7">Encara no hi ha cap rècord.</td></tr>';board.forEach((r,i)=>{const tr=document.createElement('tr');tr.innerHTML='<td>'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1))+'</td><td>'+String(r.name||'Pilot').replace(/[<>]/g,'')+'</td><td>'+Number(r.distance||0).toFixed(1)+'</td><td>'+Math.max(1,Math.floor((r.distance||0)/50)+1)+'</td>';body.appendChild(tr)});const inp=document.getElementById('extremePlayerName');if(inp&&!inp.value)inp.value=safeGet('fr_extreme_name','');}
+function saveExtremeScore(){const inp=document.getElementById('extremePlayerName');const name=((inp&&inp.value)||safeGet('fr_extreme_name','')||'Pilot').trim().slice(0,24)||'Pilot';safeSet('fr_extreme_name',name);const km=score/1000;let board=getExtremeBoard();const found=board.find(r=>r.name.toLowerCase()===name.toLowerCase());if(found){if(km>Number(found.distance||0))found.distance=km}else board.push({name,distance:km});board.sort((a,b)=>b.distance-a.distance);safeSet('fr_extreme_board',JSON.stringify(board.slice(0,30)));renderExtremeLeaderboard();}
+window.showCircuitSelect=function(){coverScreen.classList.add('hidden');garageScreen.classList.add('hidden');extremeScreen.classList.add('hidden');gameOverScreen.classList.add('hidden');pauseScreen.classList.add('hidden');circuitCompleteScreen.classList.add('hidden');extremeLapScreen.classList.add('hidden');circuitScreen.classList.remove('hidden');running=false;paused=false;garageMode='pick';gameMode='gp';refreshCircuitCards();}
+window.selectCircuit=function(n){if(!TEST_UNLOCKS&&n>unlockedCircuit)return;gameMode='gp';currentCircuit=n;circuitScreen.classList.add('hidden');window.showGarage();}
+window.openExtremeMode=function(){if(!TEST_UNLOCKS&&completedGP<5)return;circuitScreen.classList.add('hidden');extremeScreen.classList.remove('hidden');running=false;paused=false;renderExtremeLeaderboard();}
+window.startExtremeSetup=function(){if(!TEST_UNLOCKS&&completedGP<5)return;const inp=document.getElementById('extremePlayerName');if(inp)safeSet('fr_extreme_name',(inp.value||'Pilot').trim()||'Pilot');gameMode='extreme';extremeScreen.classList.add('hidden');window.showGarage();}
+window.showGarage=function(){coverScreen.classList.add('hidden');circuitScreen.classList.add('hidden');extremeScreen.classList.add('hidden');gameOverScreen.classList.add('hidden');pauseScreen.classList.add('hidden');circuitCompleteScreen.classList.add('hidden');extremeLapScreen.classList.add('hidden');garageScreen.classList.remove('hidden');running=false;paused=false;garageMode='pick';ensureUnlockedModel();refreshModelLocks();if(ready){drawModelPreviews();drawStatic();}}
+window.showCover=function(){circuitScreen.classList.add('hidden');extremeScreen.classList.add('hidden');garageScreen.classList.add('hidden');circuitCompleteScreen.classList.add('hidden');extremeLapScreen.classList.add('hidden');coverScreen.classList.remove('hidden');running=false;paused=false;garageMode='pick';gameMode='gp'}
+window.backToModelPick=function(){garageMode='pick';drawModelPreviews();if(!running)drawStatic();}
+window.selectModel=function(m){if(!isModelUnlocked(m))return;saveSelectedColors();selectedModel=m;loadSelectedColors();garageMode='customize';refreshColorControls();buildPlayer();}
+function drawBackground(){let bg;if(gameMode==='extreme'){const world=(Math.floor(score/10000)%5)+1;bg=imgs['gp'+world+'Bg'];}else{const cfg=circuitConfig[currentCircuit]||circuitConfig[1];bg=imgs[cfg.bg];}bg=bg||imgs.gp1Bg||imgs.bg;ctx.drawImage(bg,0,0,W,H)}
+function drawRoad(){const hy=H*.36,by=H*1.08,th=W*.085,bh=W*.42;ctx.fillStyle='#e9e6d6';ctx.beginPath();ctx.moveTo(W/2-th-8,hy);ctx.lineTo(W/2+th+8,hy);ctx.lineTo(W/2+bh+22,by);ctx.lineTo(W/2-bh-22,by);ctx.closePath();ctx.fill();ctx.fillStyle='#353a40';ctx.beginPath();ctx.moveTo(W/2-th,hy);ctx.lineTo(W/2+th,hy);ctx.lineTo(W/2+bh,by);ctx.lineTo(W/2-bh,by);ctx.closePath();ctx.fill();roadTick=(roadTick+speed*.012)%1;for(const d of [-.29,.29]){for(let i=0;i<7;i++){let z=(i/7+roadTick)%1;if(z<.04)continue;const z2=clamp(z+.032,0,1),y1=roadY(z),y2=roadY(z2),x1=W/2+d*roadHalfWidth(z),x2=W/2+d*roadHalfWidth(z2),w1=lerp(1.5,8,z),w2=lerp(2,11,z2);ctx.fillStyle='#f7f5e8';ctx.beginPath();ctx.moveTo(x1-w1,y1);ctx.lineTo(x1+w1,y1);ctx.lineTo(x2+w2,y2);ctx.lineTo(x2-w2,y2);ctx.closePath();ctx.fill()}}}
+function drawFinishLine(){if(gameMode==='extreme')return;const target=(circuitConfig[currentCircuit]||circuitConfig[1]).target,remaining=target-score;if(remaining<0||remaining>420)return;const z=clamp(1-remaining/420,.05,.99),y=roadY(z),half=roadHalfWidth(z),depth=lerp(4,24,z),cells=10,cellW=(half*2)/cells;ctx.save();for(let row=0;row<2;row++){for(let i=0;i<cells;i++){ctx.fillStyle=((i+row)%2===0)?'#fff':'#111';ctx.fillRect(W/2-half+i*cellW,y+row*depth,cellW+1,depth+1)}}ctx.restore()}
+function drawCar(sprite,x,y,w){const ratio=sprite.height/sprite.width,h=w*ratio;ctx.drawImage(sprite,x-w/2,y-h*.8,w,h)}
+function makeEnemy(l,z=.02){const sprite=enemyPool[Math.floor(Math.random()*enemyPool.length)];return {lane:l,z,sprite,wiggle:(Math.random()-.5)*.035,widthMul:.92+Math.random()*.14}}
+function difficulty(){
+  if(gameMode==='extreme') return clamp((score%50000)/18000+extremeLap*.12,0,1);
+  const gpBonus=[0,0,.10,.20,.30,.40][currentCircuit]||0;
+  return clamp(score/4000+gpBonus,0,1);
+}
+function spawnGroup(){
+  const near=cars.filter(c=>c.z<.2).length;
+  if(near>=2)return;
+
+  const cfg=circuitConfig[currentCircuit]||circuitConfig[1];
+  const last2km=gameMode==='gp'&&(cfg.target-score)<=2000;
+  const doubleChance=gameMode==='extreme'
+    ?Math.min(.72,.36+extremeLap*.08)
+    :(last2km?.68:.36);
+
+  if(score>=4000&&Math.random()<doubleChance){
+    const open=Math.floor(Math.random()*3);
+    for(let l=0;l<3;l++)if(l!==open)cars.push(makeEnemy(l));
+    return;
+  }
+
+  cars.push(makeEnemy(Math.floor(Math.random()*3)));
+}
+function addKm(k){}
+function updateSigns(dt){const k=Math.floor(score/1000);if(k>lastKm){lastKm=k;if(k>0)addKm(k)}for(const s of roadSigns)s.z+=dt*speed*(.44+s.z*.68);roadSigns=roadSigns.filter(s=>s.z<1.12)}
+function drawSigns(){}
+function resetRace(){
+  score=0;
+  const gpSpeedFactor=gameMode==='gp'?([0,1,1.05,1.10,1.15,1.20][currentCircuit]||1):1;
+  speed=.34*gpSpeedFactor;
+  roadTick=0;
+  spawnTimer=1.65;
+  playerLane=1;
+  targetLane=1;
+  playerX=laneX(1,.93);
+  cars=[];
+  roadSigns=[];
+  lastKm=0;
+  extremeLap=0;
+  distanceEl.textContent='0.0';
+  speedEl.textContent=Math.round(speed*325);
+  last=performance.now();
+}
+window.startRace=function(){if(!ready)return;ensureUnlockedModel();buildPlayer();resetRace();garageScreen.classList.add('hidden');circuitScreen.classList.add('hidden');extremeScreen.classList.add('hidden');gameOverScreen.classList.add('hidden');pauseScreen.classList.add('hidden');circuitCompleteScreen.classList.add('hidden');extremeLapScreen.classList.add('hidden');running=true;paused=false;requestAnimationFrame(loop)}
+function endRace(){running=false;finalDistance.textContent=(score/1000).toFixed(1);if(gameMode==='extreme')saveExtremeScore();gameOverScreen.classList.remove('hidden')}
+function completeCircuit(){running=false;const cfg=circuitConfig[currentCircuit];if(currentCircuit>completedGP){completedGP=currentCircuit;safeSet('fr_completed_gp',String(completedGP));unlockedCircuit=Math.min(5,completedGP+1);safeSet('fr_unlocked_gp',String(unlockedCircuit));}let msg=cfg.name+' superat!';let reward='🚗 '+rewardCars[currentCircuit]+' desbloquejat!';if(currentCircuit<5)msg+=' Nou circuit desbloquejat.';else{msg+=' Has completat tots els GP!';reward='🌌 Car interdimensional + MODE EXTREM desbloquejats!';}completeCircuitText.textContent=msg;rewardText.textContent=reward;refreshCircuitCards();refreshModelLocks();circuitCompleteScreen.classList.remove('hidden')}
+function pauseForExtremeLap(lap){paused=true;extremeLapText.textContent='Has aconseguit donar una volta a tota la dimensió. Felicitats! Volta '+lap+' completada · '+(lap*50)+' km.';extremeLapScreen.classList.remove('hidden')}
+window.continueExtremeLap=function(){extremeLapScreen.classList.add('hidden');paused=false;last=performance.now();requestAnimationFrame(loop)}
+function moveLeft(){if(running&&!paused)targetLane=Math.max(0,targetLane-1)}function moveRight(){if(running&&!paused)targetLane=Math.min(2,targetLane+1)}
+function update(dt){speed+=dt*.0042;score+=dt*(26+speed*52);if(gameMode==='gp'){const rewardModel=secondaryCircuitModel[currentCircuit];if(score>=5000&&rewardModel&&!isSecondaryUnlocked(rewardModel)){if(unlockSecondary(rewardModel)){showUnlockToast(rewardModel);drawModelPreviews();}}const target=(circuitConfig[currentCircuit]||circuitConfig[1]).target;if(score>=target){score=target;distanceEl.textContent=(score/1000).toFixed(1);completeCircuit();return}}else{const lapNow=Math.floor(score/50000);if(lapNow>extremeLap){extremeLap=lapNow;distanceEl.textContent=(score/1000).toFixed(1);pauseForExtremeLap(extremeLap);return}}distanceEl.textContent=(score/1000).toFixed(1);speedEl.textContent=Math.round(speed*325);playerX=lerp(playerX,laneX(targetLane,.93),1-Math.pow(.0009,dt));spawnTimer-=dt;if(spawnTimer<=0){spawnGroup();const d=difficulty();const lapFactor=gameMode==='extreme'?Math.max(.55,1-extremeLap*.07):1;
+const cfg=circuitConfig[currentCircuit]||circuitConfig[1];
+const last2km=gameMode==='gp'&&(cfg.target-score)<=2000;
+const finalPush=last2km?.62:1;
+spawnTimer=(lerp(1.65,.64,d)+Math.random()*lerp(.62,.28,d))*lapFactor*finalPush}updateSigns(dt);for(const c of cars)c.z+=dt*speed*(.42+c.z*.68);cars=cars.filter(c=>c.z<1.14);for(const c of cars){if(c.lane===targetLane&&c.z>.79&&c.z<1.03&&Math.abs(playerX-laneX(c.lane,c.z))<W*.082){endRace();return}}}
+function draw(){drawBackground();drawRoad();drawFinishLine();drawSigns();for(const c of cars.slice().sort((a,b)=>a.z-b.z)){const z=clamp(c.z,0,1.08),x=laneX(c.lane,z)+c.wiggle*roadHalfWidth(z),y=roadY(z),w=lerp(W*.028,W*.19,Math.pow(z,1.25))*c.widthMul;drawCar(c.sprite,x,y,w)}drawCar(playerSprite,playerX,H*.97,Math.min(W*.29,245))}
+function drawStatic(){if(!ready)return;drawBackground();drawRoad();playerX=laneX(1,.93);drawCar(playerSprite||spriteFor(selectedModel,primaryColor,accentColor),playerX,H*.97,Math.min(W*.29,245))}
+function loop(t){if(!running||paused)return;const dt=Math.min(.033,(t-last)/1000||0);last=t;update(dt);draw();if(running)requestAnimationFrame(loop)}
+window.resumeRace=function(){if(!running)return;paused=false;pauseScreen.classList.add('hidden');last=performance.now();requestAnimationFrame(loop)}
+function togglePause(){if(!running)return;paused=!paused;if(paused)pauseScreen.classList.remove('hidden');else resumeRace()}
+addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','KeyA','KeyD','Space'].includes(e.code))e.preventDefault();if(e.code==='Space')return togglePause();if(e.code==='ArrowLeft'||e.code==='KeyA')moveLeft();if(e.code==='ArrowRight'||e.code==='KeyD')moveRight()});
+document.getElementById('leftBtn').addEventListener('pointerdown',moveLeft);document.getElementById('rightBtn').addEventListener('pointerdown',moveRight);app.addEventListener('pointerdown',e=>touchStartX=e.clientX);app.addEventListener('pointerup',e=>{if(touchStartX==null)return;const dx=e.clientX-touchStartX;if(Math.abs(dx)>36)(dx<0?moveLeft:moveRight)();touchStartX=null});
+safeSet('fr_secondary_unlocks',JSON.stringify(secondaryUnlocked));
+safeSet('fr_car_colors',JSON.stringify(carColorState));
+Promise.all([load('gp1Bg',ASSETS.gp1Bg),load('gp2Bg',ASSETS.gp2Bg),load('gp3Bg',ASSETS.gp3Bg),load('gp4Bg',ASSETS.gp4Bg),load('gp5Bg',ASSETS.gp5Bg),load('bg',ASSETS.gp1Bg),load('oldFixed',ASSETS.oldFixed),load('oldBody',ASSETS.oldBody),load('newFixed',ASSETS.newFixed),load('newPrimary',ASSETS.newPrimary),load('newAccent',ASSETS.newAccent),load('offFixed',ASSETS.offFixed),load('offBody',ASSETS.offBody),load('turboFixed',ASSETS.turboFixed),load('turboBody',ASSETS.turboBody),load('epicFixed',ASSETS.epicFixed),load('epicBody',ASSETS.epicBody),load('retroFixed',ASSETS.retroFixed),load('retroBody',ASSETS.retroBody)]).then(()=>{ready=true;loadSelectedColors();refreshColorControls();buildEnemies();ensureUnlockedModel();loadSelectedColors();buildPlayer();refreshCircuitCards();refreshModelLocks();renderExtremeLeaderboard();drawStatic();});
+</script>
+</body>
+</html>

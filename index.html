@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.86 · NEXUS 4 DESAFIAMENTS CONNECTATS</title>
+<title>Fasia Verse · V0.14.87 · FASIA RUSH INTEGRAT</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3211,6 +3211,13 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
   color:#fff;
 }
 
+.game-choice-rush{
+  background:
+    linear-gradient(to top,rgba(3,12,24,.88),rgba(3,12,24,.08) 62%),
+    url("games/assets/img_01.webp") center/cover no-repeat;
+  color:#fff;
+}
+
 .game-choice-soon{
   grid-column:1/-1;
   min-height:170px;
@@ -4101,6 +4108,16 @@ button.profile-collection-card{cursor:pointer}
         <span class="game-choice-tag">JOC INDIVIDUAL</span>
         <h3>MULTIFASIA</h3>
         <p>Travessa els portals, practica les taules i derrota en Null.</p>
+      </div>
+    </button>
+
+
+    <button id="openFasiaRush" class="game-choice game-choice-rush" type="button">
+      <div class="game-choice-arrow">›</div>
+      <div class="game-choice-content">
+        <span class="game-choice-tag">JOC INDIVIDUAL</span>
+        <h3>FASIA RUSH</h3>
+        <p>Tria el teu kart, supera els circuits i arriba fins al Mode Extrem.</p>
       </div>
     </button>
 
@@ -5131,18 +5148,17 @@ function normalizeShopProfile(p){
   p.owned_titles=Array.isArray(p.owned_titles)?p.owned_titles:[];
   p.equipped_title=p.equipped_title||"";
   p.challenge_state=(p.challenge_state&&typeof p.challenge_state==="object"&&!Array.isArray(p.challenge_state))?p.challenge_state:{};
-  p.nexus4_progress=(p.nexus4_progress&&typeof p.nexus4_progress==="object"&&!Array.isArray(p.nexus4_progress))?p.nexus4_progress:{};
   return p;
 }
 async function loadProfileByName(name){
   const filter=`profiles?name=eq.${encodeURIComponent(normalizeName(name))}`;
   try{
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress,nexus4_progress&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }catch(e){
     console.warn("Desafiaments: challenge_state encara no disponible; carrego el perfil existent.",e);
-    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress,nexus4_progress&limit=1`);
+    const rows=await api(`${filter}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     shopPersistenceReady=true;
     return rows&&rows[0]?normalizeShopProfile(rows[0]):null;
   }
@@ -5150,11 +5166,11 @@ async function loadProfileByName(name){
 async function refreshCurrentProfile(){
   if(!currentProfile||!currentProfile.id)return;
   try{
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress,nexus4_progress&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }catch(e){
-    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress,nexus4_progress&limit=1`);
+    const rows=await api(`profiles?id=eq.${currentProfile.id}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     if(rows&&rows[0])currentProfile=normalizeShopProfile(rows[0]);
     shopPersistenceReady=true;
   }
@@ -6878,6 +6894,18 @@ $("#openMultifasia").onclick=()=>{
   window.location.href="games/multifasia.html?profile="+encodeURIComponent(pid);
 };
 
+
+$("#openFasiaRush").onclick=()=>{
+  if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
+    alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+    return;
+  }
+  const pid=String(currentProfile.id);
+  sessionStorage.setItem("fasiaVerseProfileId", pid);
+  sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
+  window.location.href="games/fasia_rush.html?profile="+encodeURIComponent(pid);
+};
+
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};
 
 async function returnStudentToProfile(){
@@ -7580,10 +7608,10 @@ $("#startGame").onclick=async()=>{
   try{
     let rows;
     try{
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress,nexus4_progress&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,challenge_state,wordsearch_progress&limit=1`);
     }catch(shopErr){
       /* Alguns perfils/Supabase encara no tenen les columnes de botiga. */
-      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress,nexus4_progress&limit=1`);
+      rows = await api(`profiles?id=eq.${encodeURIComponent(profileId)}&select=id,name,display_name,coins,role,owned_skins,equipped_skin,equipped_trophy,manual_trophies,owned_frames,equipped_frame,owned_titles,equipped_title,wordsearch_progress&limit=1`);
     }
 
     if(!rows || !rows[0] || rows[0].role!=="student") throw new Error("Perfil no trobat");
