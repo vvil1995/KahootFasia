@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Fasia Verse · Nexus 4 v0.25 · Online estable sense parpelleig</title>
+<title>Fasia Verse · Nexus 4 v0.26 · Recompenses i desafiaments</title>
 <style>
 :root{
   --bg:#08132f; --bg2:#142b61; --panel:rgba(10,26,65,.88); --panel2:rgba(17,44,94,.88);
@@ -306,6 +306,8 @@ const animals=[
 ];
 const views={home:'viewHome',mode:'viewMode',difficulty:'viewDifficulty',select:'viewSelect',game:'viewGame',online:'viewOnline',onlineDuel:'viewOnlineDuel',onlineTournament:'viewOnlineTournament',onlineWaiting:'viewOnlineWaiting',onlineJoined:'viewOnlineJoined',onlineSelect:'viewOnlineSelect'};
 let mode=null,difficulty='normal',pickTarget=0,selected=[animals[0],animals[1]],grid=[],current=0,playing=false,winningCells=[];
+let resultAwarded=false;
+const NEXUS_SKIN_IDS={pincher:'nexus4_gos',gat:'nexus4_gat',gorilla:'nexus4_gorilla',zebra:'nexus4_zebra',tuca:'nexus4_tuca',camaleo:'nexus4_camaleo',mussol:'nexus4_mussol',capibara:'nexus4_capibara'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function show(name){Object.values(views).forEach(id=>document.getElementById(id).classList.remove('active'));document.getElementById(views[name]).classList.add('active');document.body.classList.toggle('game-screen',name==='game');window.scrollTo({top:0,behavior:'smooth'});}
 function safeName(v,fallback){const t=(v||'').trim().slice(0,14);return t||fallback;}
@@ -328,6 +330,19 @@ $('#btnBackTournamentHub').addEventListener('click',()=>show('online'));
 const SUPABASE_URL='https://gzbvcxputhkyunemxzjm.supabase.co';
 const SUPABASE_KEY='sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu';
 const sbApi=async(path,options={})=>{const r=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers:{apikey:SUPABASE_KEY,Authorization:'Bearer '+SUPABASE_KEY,'Content-Type':'application/json',Prefer:options.prefer||'return=representation',...(options.headers||{})}});const text=await r.text();let data=null;try{data=text?JSON.parse(text):null}catch{data=text}if(!r.ok)throw new Error((data&&data.message)||text||('HTTP '+r.status));return data;};
+async function awardNexusResult({animalId,coins=0,eventKey}){
+  const pid=profileId(); if(!pid||!animalId||!eventKey)return null;
+  try{
+    const rows=await sbApi('rpc/award_nexus4_result',{method:'POST',body:JSON.stringify({p_profile_id:Number(pid),p_animal:animalId,p_coins:Number(coins)||0,p_event_key:eventKey})});
+    const result=Array.isArray(rows)?rows[0]:rows;
+    if(result?.awarded){
+      const bits=[]; if(coins>0)bits.push(`+${coins} 🪙`); bits.push(`${result.wins}/20 amb ${animalById(animalId)?.name||animalId}`);
+      if(result.unlocked)bits.push('🎁 AVATAR EXCLUSIU DESBLOQUEJAT!');
+      $('#resultText').textContent += ' · '+bits.join(' · ');
+    }
+    return result;
+  }catch(e){console.warn('recompensa Nexus 4',e);return null;}
+}
 let onlineRoomCode='';
 let onlineRole=null;
 let onlinePollTimer=null;
@@ -337,8 +352,9 @@ let onlineFinishedShown=false;
 let onlineBoardSignature=null;
 function stopOnlinePoll(){if(onlinePollTimer){clearInterval(onlinePollTimer);onlinePollTimer=null;}}
 function makeRoomCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let out='';for(let i=0;i<5;i++)out+=chars[Math.floor(Math.random()*chars.length)];return out;}
-async function profileDisplayName(){const cached=sessionStorage.getItem('fasiaVerseProfileName')||'';const params=new URLSearchParams(location.search),pid=params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';if(!pid)return safeName(cached,'Jugador');try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name,name&limit=1');const name=safeName(rows?.[0]?.display_name||rows?.[0]?.name||cached,'Jugador');sessionStorage.setItem('fasiaVerseProfileName',name);sessionStorage.setItem('fasiaVerseProfileId',String(pid));return name}catch(e){console.warn(e);return safeName(cached,'Jugador')}}
-async function getOnlineRoom(){if(!onlineRoomCode)return null;const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&select=code,status,board,p1_name,p1_animal,p2_name,p2_animal,current_player,winner_index&limit=1');return rows?.[0]||null;}
+function profileId(){const params=new URLSearchParams(location.search);return params.get('profile')||sessionStorage.getItem('fasiaVerseProfileId')||'';}
+async function profileDisplayName(){const cached=sessionStorage.getItem('fasiaVerseProfileName')||'';const pid=profileId();if(!pid)return safeName(cached,'Jugador');try{const rows=await sbApi('profiles?id=eq.'+encodeURIComponent(pid)+'&select=display_name,name&limit=1');const name=safeName(rows?.[0]?.display_name||rows?.[0]?.name||cached,'Jugador');sessionStorage.setItem('fasiaVerseProfileName',name);sessionStorage.setItem('fasiaVerseProfileId',String(pid));return name}catch(e){console.warn(e);return safeName(cached,'Jugador')}}
+async function getOnlineRoom(){if(!onlineRoomCode)return null;const rows=await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(onlineRoomCode)+'&select=code,status,board,p1_name,p1_animal,p1_profile_id,p2_name,p2_animal,p2_profile_id,current_player,winner_index&limit=1');return rows?.[0]||null;}
 function animalById(id){return animals.find(a=>a.id===id)||null;}
 function isChosenAnimal(id){return !!id && id!=='pending';}
 function renderOnlineSelection(room){
@@ -432,6 +448,7 @@ function showOnlineFinished(room){
   const found=findWinningLineAny();if(found){winningCells=found.line;winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`)?.classList.add('win'));}
   const p=room.winner_index;
   if(p===0||p===1){const a=animalById(p===0?room.p1_animal:room.p2_animal)||animals[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${safeName(p===0?room.p1_name:room.p2_name,'Jugador')} ha connectat 4 fitxes.`;}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}
+  if((p===0||p===1)&&p===onlineRole&&!resultAwarded){resultAwarded=true;const aid=p===0?room.p1_animal:room.p2_animal;awardNexusResult({animalId:aid,coins:0,eventKey:`online:${room.code}`});}
   setTimeout(()=>$('#endModal').classList.add('show'),250);
 }
 function applyOnlineRoom(room){
@@ -455,7 +472,7 @@ function beginOnlineGamePolling(){
   stopOnlinePoll();onlinePollTimer=setInterval(async()=>{try{const room=await getOnlineRoom();if(room)applyOnlineRoom(room);}catch(e){console.warn('poll partida online',e)}},1200);
 }
 async function enterOnlineGame(room){
-  stopOnlinePoll();onlineFinishedShown=false;onlineBoardSignature=null;mode='online';onlineRoom=room||await getOnlineRoom();if(!onlineRoom)return;
+  stopOnlinePoll();onlineFinishedShown=false;onlineBoardSignature=null;resultAwarded=false;mode='online';onlineRoom=room||await getOnlineRoom();if(!onlineRoom)return;
   selected=[animalById(onlineRoom.p1_animal)||animals[0],animalById(onlineRoom.p2_animal)||animals[1]];
   $('#nameInput1').value=safeName(onlineRoom.p1_name,'Jugador 1');$('#nameInput2').value=safeName(onlineRoom.p2_name,'Jugador 2');
   $('#btnRestartTop').style.display='none';$('#btnRestart').style.display='none';show('game');applyOnlineRoom(onlineRoom);beginOnlineGamePolling();
@@ -494,7 +511,7 @@ function beginWaitingForRival(){
     try{const room=await getOnlineRoom();if(room?.p2_name){$('#waitingRoomStatus').textContent=`${room.p2_name} s'ha connectat!`;stopOnlinePoll();setTimeout(enterOnlineSelection,450);}}catch(e){console.warn('poll rival',e)}
   },1500);
 }
-$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pending'})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;onlineRole=0;onlineStarting=false;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');beginWaitingForRival();}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
+$('#btnCreateRoom').addEventListener('click',async()=>{const btn=$('#btnCreateRoom'),oldText=btn.textContent;btn.disabled=true;btn.textContent='CREANT...';try{const p1=await profileDisplayName();let created=null;for(let tries=0;tries<5&&!created;tries++){const code=makeRoomCode();try{const rows=await sbApi('nexus4_rooms',{method:'POST',body:JSON.stringify({code,status:'waiting',current_player:0,p1_name:p1,p1_animal:'pending',p1_profile_id:Number(profileId())||null})});created=rows?.[0]||{code};}catch(e){if(String(e.message).toLowerCase().includes('duplicate'))continue;throw e;}}if(!created)throw new Error('No s’ha pogut generar un codi únic.');onlineRoomCode=created.code;onlineRole=0;onlineStarting=false;$('#createdRoomCode').textContent=onlineRoomCode;$('#waitingRoomStatus').textContent='Esperant rival...';show('onlineWaiting');beginWaitingForRival();}catch(e){console.error(e);alert('No s’ha pogut crear la sala a Supabase. '+e.message);}finally{btn.disabled=false;btn.textContent=oldText;}});
 $('#btnCopyRoomCode').addEventListener('click',async()=>{if(!onlineRoomCode)return;try{await navigator.clipboard.writeText(onlineRoomCode);$('#btnCopyRoomCode').textContent='COPIAT ✓';setTimeout(()=>$('#btnCopyRoomCode').textContent='COPIAR CODI',1200)}catch{alert('Codi: '+onlineRoomCode)}});
 $('#btnCancelWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
 $('#btnBackFromWaiting').addEventListener('click',()=>{stopOnlinePoll();show('onlineDuel')});
@@ -512,7 +529,7 @@ $('#btnJoinRoom').addEventListener('click',async()=>{
     if(room.status!=='waiting')throw new Error('Aquesta sala ja no està disponible.');
     if(room.p2_name)throw new Error('Aquesta sala ja té dos jugadors.');
     const p2=await profileDisplayName();
-    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:'pending',updated_at:new Date().toISOString()})});
+    await sbApi('nexus4_rooms?code=eq.'+encodeURIComponent(code),{method:'PATCH',body:JSON.stringify({p2_name:p2,p2_animal:'pending',p2_profile_id:Number(profileId())||null,updated_at:new Date().toISOString()})});
     onlineRoomCode=code;onlineRole=1;onlineStarting=false;
     $('#joinedRoomCode').textContent=code;
     $('#joinedRoomStatus').textContent=`Has entrat com ${p2} · Jugador 2. Preparant selecció...`;
@@ -560,7 +577,7 @@ $('#btnStart').addEventListener('click',startGame);
 function startGame(){
   $('#btnRestartTop').style.display='';$('#btnRestart').style.display='';
   $('#nameInput1').value=playerName(0); $('#nameInput2').value=playerName(1);
-  show('game'); setupBoard(); renderGameHeader(); playing=true; current=0; updateTurn();
+  show('game'); setupBoard(); renderGameHeader(); resultAwarded=false; playing=true; current=0; updateTurn();
 }
 function setupBoard(){
   grid=Array.from({length:6},()=>Array(7).fill(null));winningCells=[];const board=$('#board');board.innerHTML='';
@@ -574,7 +591,7 @@ function findRow(c){for(let r=5;r>=0;r--)if(grid[r][c]===null)return r;return -1
 function humanMove(c){if(!playing)return;if(mode==='online'){onlineHumanMove(c);return;}if(mode==='cpu'&&current===1)return;makeMove(c,current);}
 function makeMove(c,p){const r=findRow(c);if(r<0)return false;grid[r][c]=p;drawPiece(r,c,p);const line=getWinLine(r,c,p);if(line){winningCells=line;finish(p);return true;}if(grid.flat().every(v=>v!==null)){finish(null);return true;}current=1-current;updateTurn();if(mode==='cpu'&&current===1)setTimeout(cpuMove,430);return true;}
 function drawPiece(r,c,p){const cell=$(`#board .cell[data-r="${r}"][data-c="${c}"]`),a=selected[p],piece=document.createElement('div');piece.className='piece';piece.style.color=a.color;piece.innerHTML=avatarHTML(a,'');cell.appendChild(piece);}
-function cpuMove(){if(!playing)return;let c=null;if(difficulty==='easy')c=randomColumn();else if(difficulty==='normal')c=tacticalColumn()??weightedColumn();else c=bestColumn();if(c==null)c=randomColumn();makeMove(c,1);}
+function cpuMove(){if(!playing)return;let c=null;if(difficulty==='easy')c=tacticalColumn()??randomColumn();else if(difficulty==='normal')c=tacticalColumn()??weightedColumn();else c=bestColumn();if(c==null)c=randomColumn();makeMove(c,1);}
 function validCols(){return [0,1,2,3,4,5,6].filter(c=>findRow(c)>=0)}
 function randomColumn(){const a=validCols();return a[Math.floor(Math.random()*a.length)]??null}
 function weightedColumn(){const pref=[3,3,2,4,2,4,1,5,0,6].filter(c=>findRow(c)>=0);return pref[Math.floor(Math.random()*pref.length)]??randomColumn()}
@@ -631,8 +648,8 @@ function evaluateBoard(){
   return score;
 }
 function getWinLine(r,c,p){const dirs=[[1,0],[0,1],[1,1],[1,-1]];for(const [dr,dc] of dirs){const cells=[[r,c]];let rr=r+dr,cc=c+dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.push([rr,cc]);rr+=dr;cc+=dc}rr=r-dr;cc=c-dc;while(rr>=0&&rr<6&&cc>=0&&cc<7&&grid[rr][cc]===p){cells.unshift([rr,cc]);rr-=dr;cc-=dc}if(cells.length>=4)return cells;}return null}
-function finish(p){playing=false;if(p!==null){winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`).classList.add('win'));const a=selected[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${playerName(p)} ha connectat 4 fitxes.`;}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}setTimeout(()=>$('#endModal').classList.add('show'),420);}
-function restartSame(){ if(mode==='online'){ $('#endModal').classList.remove('show');show('onlineDuel');stopOnlinePoll();onlineStarting=false;return;} $('#endModal').classList.remove('show');setupBoard();playing=true;current=0;updateTurn(); }
+function finish(p){playing=false;if(p!==null){winningCells.forEach(([r,c])=>$(`#board .cell[data-r="${r}"][data-c="${c}"]`).classList.add('win'));const a=selected[p];$('#winnerToken').innerHTML=avatarHTML(a);$('#winnerToken').style.color=a.color;$('#resultTitle').textContent='VICTÒRIA!';$('#resultText').textContent=`${playerName(p)} ha connectat 4 fitxes.`;if(mode==='cpu'&&p===0&&!resultAwarded){resultAwarded=true;const coins=difficulty==='hard'?3:difficulty==='normal'?1:0;const eventKey=`cpu:${profileId()}:${Date.now()}:${Math.random().toString(36).slice(2)}`;awardNexusResult({animalId:selected[0].id,coins,eventKey});}}else{$('#winnerToken').textContent='🤝';$('#winnerToken').style.color='#fff';$('#resultTitle').textContent='EMPAT!';$('#resultText').textContent='El tauler ha quedat complet.';}setTimeout(()=>$('#endModal').classList.add('show'),420);}
+function restartSame(){ if(mode==='online'){ $('#endModal').classList.remove('show');show('onlineDuel');stopOnlinePoll();onlineStarting=false;return;} $('#endModal').classList.remove('show');setupBoard();resultAwarded=false;playing=true;current=0;updateTurn(); }
 $('#btnAgain').addEventListener('click',restartSame);$('#btnRestart').addEventListener('click',restartSame);$('#btnRestartTop').addEventListener('click',restartSame);
 $('#btnHomeModal').addEventListener('click',()=>{$('#endModal').classList.remove('show');playing=false;show('home')});
 $('#btnExitGame').addEventListener('click',()=>{playing=false;show('home')});
