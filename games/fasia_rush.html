@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Fasia Rush v45 · ASSETS FASIARUSH</title>
+<title>Fasia Rush v50 · RUTES ASSETS FIX</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#06111d;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff}
@@ -13,7 +13,7 @@ body{display:grid;place-items:center}
 .hidden{display:none!important}
 .screen{position:absolute;inset:0;z-index:30}
 #coverScreen{background:#04101c;display:grid;place-items:center;overflow:hidden}
-.coverBlur{position:absolute;inset:-20px;background:center/cover no-repeat url(assets/fasiarush/img_01.webp);filter:blur(16px) brightness(.42);transform:scale(1.05)}
+.coverBlur{position:absolute;inset:-20px;background:center/cover no-repeat url(../assets/fasiarush/img_01.webp);filter:blur(16px) brightness(.42);transform:scale(1.05)}
 .coverFit{position:relative;height:100%;max-width:100%;display:flex;align-items:center;justify-content:center}
 .coverFit img{display:block;max-height:100vh;max-width:100vw;width:auto;height:auto;object-fit:contain}
 #coverPlay{position:absolute;left:50%;bottom:4.5vh;transform:translateX(-50%);z-index:5;border:0;border-radius:22px;padding:16px 42px;min-width:220px;background:#35d66c;color:#061f11;font-weight:1000;font-size:clamp(25px,4vw,40px);box-shadow:0 9px 0 #13823f,0 18px 32px #0007;cursor:pointer}
@@ -85,19 +85,20 @@ body{display:grid;place-items:center}
 @media(max-width:800px){.customizerWrap{grid-template-columns:1fr}.garageCard{width:100%}#garageScreen{padding:10px}}
 @media(max-width:650px){.models{grid-template-columns:1fr 1fr}.swatches{grid-template-columns:repeat(5,1fr)}}
 @media(min-width:760px){.controls{display:none}}
+
 </style>
 </head>
 <body>
 <div id="app">
 <canvas id="game"></canvas>
-<div class="hud"><img class="hudLogo" src="" alt=""><div class="dashWrap"><img src="assets/fasiarush/hud.webp" alt="HUD quilòmetres"><div id="speed" class="dashText">110</div><div id="distance" class="dashText">0.0</div></div></div></div>
+<div class="hud"><img class="hudLogo" src="" alt=""><div class="dashWrap"><img src="../assets/fasiarush/hud.webp" alt="HUD quilòmetres"><div id="speed" class="dashText">110</div><div id="distance" class="dashText">0.0</div></div></div></div>
 <div class="controls"><button id="leftBtn" class="ctrl">◀</button><button id="rightBtn" class="ctrl">▶</button></div>
 
 <div id="coverScreen" class="screen">
   <div class="coverBlur"></div>
   <button id="backFasiaVerse" type="button" onclick="returnToFasiaVerse()">← TORNAR A FASIA VERSE</button>
   <div class="coverFit">
-    <img src="assets/fasiarush/img_01.webp" alt="Fasia Rush portada">
+    <img src="../assets/fasiarush/img_01.webp" alt="Fasia Rush portada">
     <button id="coverPlay" type="button" onclick="showCircuitSelect()">JUGAR</button>
   </div>
 </div>
@@ -107,11 +108,11 @@ body{display:grid;place-items:center}
   <div class="circuitCardWrap">
     <div class="circuitTop"><h1>🏁 Tria el circuit</h1><button class="backBtn" type="button" onclick="showCover()">← Portada</button></div>
     <div class="circuitGrid">
-      <div id="gpCard1" class="circuitCard" onclick="selectCircuit(1)"><img src="assets/fasiarush/gp1_card.webp"><div class="circuitMeta"><span>GP 1</span><span>10 KM</span></div></div>
-      <div id="gpCard2" class="circuitCard" onclick="selectCircuit(2)"><img src="assets/fasiarush/gp2_card.webp"><div class="circuitMeta"><span>GP 2</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
-      <div id="gpCard3" class="circuitCard" onclick="selectCircuit(3)"><img src="assets/fasiarush/gp3_card.webp"><div class="circuitMeta"><span>GP 3</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
-      <div id="gpCard4" class="circuitCard" onclick="selectCircuit(4)"><img src="assets/fasiarush/gp4_card.webp"><div class="circuitMeta"><span>GP 4</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
-      <div id="gpCard5" class="circuitCard" onclick="selectCircuit(5)"><img src="assets/fasiarush/gp5_card.webp"><div class="circuitMeta"><span>GP 5</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard1" class="circuitCard" onclick="selectCircuit(1)"><img src="../assets/fasiarush/gp1_card.webp"><div class="circuitMeta"><span>GP 1</span><span>10 KM</span></div></div>
+      <div id="gpCard2" class="circuitCard" onclick="selectCircuit(2)"><img src="../assets/fasiarush/gp2_card.webp"><div class="circuitMeta"><span>GP 2</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard3" class="circuitCard" onclick="selectCircuit(3)"><img src="../assets/fasiarush/gp3_card.webp"><div class="circuitMeta"><span>GP 3</span><span>10 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard4" class="circuitCard" onclick="selectCircuit(4)"><img src="../assets/fasiarush/gp4_card.webp"><div class="circuitMeta"><span>GP 4</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
+      <div id="gpCard5" class="circuitCard" onclick="selectCircuit(5)"><img src="../assets/fasiarush/gp5_card.webp"><div class="circuitMeta"><span>GP 5</span><span>15 KM</span></div><div class="circuitLock">🔒</div></div>
       <div id="extremeCard" class="circuitCard locked" onclick="openExtremeMode()"><div class="extremeVisual">🌌</div><div class="circuitMeta"><span>MODE EXTREM</span><span>∞</span></div><div class="modeTag">5 MONS SEGUITS</div><div class="circuitLock">🔒</div></div>
     </div>
   </div>
@@ -150,7 +151,7 @@ body{display:grid;place-items:center}
 
 <div id="unlockToast" class="unlockToast"></div>
 
-<div id="pauseScreen" class="overlay hidden"><div class="dialog"><img src="assets/fasiarush/img_09.webp" alt=""><h2>⏸ Pausa</h2><button class="goBtn" onclick="resumeRace()">CONTINUAR</button></div></div>
+<div id="pauseScreen" class="overlay hidden"><div class="dialog"><img src="../assets/fasiarush/img_09.webp" alt=""><h2>⏸ Pausa</h2><button class="goBtn" onclick="resumeRace()">CONTINUAR</button></div></div>
 
 <div id="circuitCompleteScreen" class="overlay hidden"><div class="dialog">
   <div class="finishTitle">🏆 META!</div>
@@ -159,20 +160,61 @@ body{display:grid;place-items:center}
   <button class="backBtn" onclick="startRace()">TORNAR-HI</button>
 </div></div>
 <div id="extremeLapScreen" class="overlay hidden"><div class="dialog"><div class="lapBig">🌌 VOLTA COMPLETA!</div><p id="extremeLapText" class="finishSub">Has aconseguit donar una volta a tota la dimensió. Felicitats!</p><button class="goBtn" onclick="continueExtremeLap()">SEGUIR CIRCULANT</button></div></div>
-<div id="gameOverScreen" class="overlay hidden"><div class="dialog"><img src="assets/fasiarush/img_09.webp" alt=""><h2>💥 Final de partida</h2><p>Has recorregut <b id="finalDistance">0.0</b> km.</p><button class="goBtn" onclick="startRace()">TORNAR-HI</button><button class="backBtn" onclick="showGarage()">CANVIAR KART</button></div></div>
+<div id="gameOverScreen" class="overlay hidden"><div class="dialog"><img src="../assets/fasiarush/img_09.webp" alt=""><h2>💥 Final de partida</h2><p>Has recorregut <b id="finalDistance">0.0</b> km.</p><button class="goBtn" onclick="startRace()">TORNAR-HI</button><button class="backBtn" onclick="showGarage()">CANVIAR KART</button></div></div>
 </div>
+
+
 <script>
 function returnToFasiaVerse(){
   const params=new URLSearchParams(location.search);
   const profile=params.get('profile');
-  const target='../index.html'+(profile?'?profile='+encodeURIComponent(profile):'');
+  const target='../index.html'+(profile?'?return=profile&profile='+encodeURIComponent(profile):'');
   location.href=target;
 }
-const ASSETS={gp1Bg:"assets/fasiarush/gp1Bg.webp",gp2Bg:"assets/fasiarush/gp2Bg.webp",gp3Bg:"assets/fasiarush/gp3Bg.webp",gp4Bg:"assets/fasiarush/gp4Bg.webp",gp5Bg:"assets/fasiarush/gp5Bg.webp",gp1Cover:"assets/fasiarush/gp1_card.webp",gp2Cover:"assets/fasiarush/gp2_card.webp",gp3Cover:"assets/fasiarush/gp3_card.webp",gp4Cover:"assets/fasiarush/gp4_card.webp",gp5Cover:"assets/fasiarush/gp5_card.webp",epicFixed:"assets/fasiarush/epicFixed.webp",epicBody:"assets/fasiarush/epicBody.webp",retroFixed:"assets/fasiarush/retroFixed.webp",retroBody:"assets/fasiarush/retroBody.webp","cover": "assets/fasiarush/img_01.webp", "logo": "assets/fasiarush/img_09.webp", "oldFixed": "assets/fasiarush/img_30.webp", "oldBody": "assets/fasiarush/img_31.webp", "newFixed": "assets/fasiarush/img_32.webp", "newPrimary": "assets/fasiarush/img_33.webp", "newAccent": "assets/fasiarush/img_34.webp",offFixed:"assets/fasiarush/offFixed.webp",turboFixed:"assets/fasiarush/turboFixed.webp",turboBody:"assets/fasiarush/turboBody.webp",offBody:"assets/fasiarush/offBody.webp"};
+const ASSETS={gp1Bg:"../assets/fasiarush/gp1Bg.webp",gp2Bg:"../assets/fasiarush/gp2Bg.webp",gp3Bg:"../assets/fasiarush/gp3Bg.webp",gp4Bg:"../assets/fasiarush/gp4Bg.webp",gp5Bg:"../assets/fasiarush/gp5Bg.webp",gp1Cover:"../assets/fasiarush/gp1_card.webp",gp2Cover:"../assets/fasiarush/gp2_card.webp",gp3Cover:"../assets/fasiarush/gp3_card.webp",gp4Cover:"../assets/fasiarush/gp4_card.webp",gp5Cover:"../assets/fasiarush/gp5_card.webp",epicFixed:"../assets/fasiarush/epicFixed.webp",epicBody:"../assets/fasiarush/epicBody.webp",retroFixed:"../assets/fasiarush/retroFixed.webp",retroBody:"../assets/fasiarush/retroBody.webp","cover": "../assets/fasiarush/img_01.webp", "logo": "../assets/fasiarush/img_09.webp", "oldFixed": "../assets/fasiarush/img_30.webp", "oldBody": "../assets/fasiarush/img_31.webp", "newFixed": "../assets/fasiarush/img_32.webp", "newPrimary": "../assets/fasiarush/img_33.webp", "newAccent": "../assets/fasiarush/img_34.webp",offFixed:"../assets/fasiarush/offFixed.webp",turboFixed:"../assets/fasiarush/turboFixed.webp",turboBody:"../assets/fasiarush/turboBody.webp",offBody:"../assets/fasiarush/offBody.webp"};
 const primaryPalette=['#ffffff','#ef4444','#f59e0b','#22c55e','#3b82f6','#8b5cf6','#ec4899','#14b8a6','#111827','#facc15'];
 const accentPalette=['#3b82f6','#f97316','#22c55e','#8b5cf6','#ef4444','#facc15','#ec4899','#38bdf8','#ffffff','#111827'];
 function safeGet(key,fallback){try{return localStorage.getItem(key)||fallback}catch(e){return fallback}}
 function safeSet(key,value){try{localStorage.setItem(key,value)}catch(e){}}
+
+/* ===== FASIA RUSH · PROGRÉS PER FASIA VERSE v2 =====
+   Fasia Rush NO concedeix monedes, avatars ni marcs. Només registra el progrés.
+   Fasia Verse / Supabase serà qui llegeixi aquest estat i concedeixi les recompenses. */
+const FR_PROFILE_ID=new URLSearchParams(location.search).get('profile')||'guest';
+const FR_PROGRESS_KEY='fasia_rush_progress_v1_'+FR_PROFILE_ID;
+const FR_EXCLUSIVE_REWARDS={
+  1:{type:'avatar',id:'fasia_rush_tuca',name:'Avatar exclusiu del Tucà'},
+  2:{type:'avatar',id:'fasia_rush_camaleo',name:'Avatar exclusiu del Camaleó'},
+  3:{type:'frame',id:'fasia_rush_frame_gp3',name:'Marc exclusiu Fasia Rush'},
+  4:{type:'avatar',id:'fasia_rush_medusa_blava',name:'Avatar exclusiu de la Medusa'},
+  5:{type:'avatar',id:'fasia_rush_colom_f1',name:'Avatar exclusiu del Colom'}
+};
+const FR_CHALLENGES={
+  km3_10:{target:10,reward:5,label:'Arriba als 3 km en 10 partides'},
+  km5_5:{target:5,reward:6,label:'Arriba als 5 km en 5 partides'},
+  km75_3:{target:3,reward:8,label:'Arriba als 7,5 km en 3 partides'},
+  gp3:{target:3,reward:10,label:'Completa qualsevol GP 3 vegades'},
+  total50:{target:50,reward:10,label:'Recorre 50 km totals'},
+  total100:{target:100,reward:15,label:'Recorre 100 km totals'},
+  extremePB5:{target:5,reward:10,label:'Supera el teu rècord del Mode Extrem 5 vegades'}
+};
+function frDefaultProgress(){return {version:2,profileId:FR_PROFILE_ID,totalKm:0,gpCompletions:0,thresholdRuns:{km3:0,km5:0,km75:0},extremeBestKm:0,extremeRecordBeats:0,firstGpRewards:[],extremeRewardedLaps:0,lastUpdated:0}}
+function frLoad(){try{const x=JSON.parse(localStorage.getItem(FR_PROGRESS_KEY)||'null')||{};const clean=Object.assign(frDefaultProgress(),x,{thresholdRuns:Object.assign({km3:0,km5:0,km75:0},x.thresholdRuns||{})});delete clean.coins;delete clean.claimedChallenges;delete clean.ownedAvatars;delete clean.ownedFrames;clean.version=2;return clean}catch(e){return frDefaultProgress()}}
+let frProgress=frLoad();
+function frSave(){frProgress.lastUpdated=Date.now();safeSet(FR_PROGRESS_KEY,JSON.stringify(frProgress));window.FasiaRushProgress=frProgress;try{window.dispatchEvent(new CustomEvent('fasiaRushProgressChanged',{detail:JSON.parse(JSON.stringify(frProgress))}))}catch(e){}}
+function frChallengeValue(id){switch(id){case'km3_10':return frProgress.thresholdRuns.km3;case'km5_5':return frProgress.thresholdRuns.km5;case'km75_3':return frProgress.thresholdRuns.km75;case'gp3':return frProgress.gpCompletions;case'total50':case'total100':return frProgress.totalKm;case'extremePB5':return frProgress.extremeRecordBeats;default:return 0}}
+function frRecordRaceKm(km){km=Math.max(0,Number(km)||0);frProgress.totalKm+=km;if(km>=3)frProgress.thresholdRuns.km3++;if(km>=5)frProgress.thresholdRuns.km5++;if(km>=7.5)frProgress.thresholdRuns.km75++;frSave()}
+function frRecordExtremeFinish(km){km=Math.max(0,Number(km)||0);const old=Number(frProgress.extremeBestKm)||0;frRecordRaceKm(km);if(old>0&&km>old)frProgress.extremeRecordBeats++;if(km>old)frProgress.extremeBestKm=km;frSave()}
+function frRecordGpComplete(gp,km){gp=Number(gp);frRecordRaceKm(km);frProgress.gpCompletions++;if(!frProgress.firstGpRewards.includes(gp))frProgress.firstGpRewards.push(gp);frSave()}
+function frRewardExtremeLap(lap){lap=Math.max(0,Number(lap)||0);if(lap<1)return;frProgress.extremeRewardedLaps=Math.max(Number(frProgress.extremeRewardedLaps)||0,lap);frSave()}
+function frGetChallengeSnapshot(){return Object.entries(FR_CHALLENGES).map(([id,c])=>({id,label:c.label,value:frChallengeValue(id),target:c.target,reward:c.reward,completed:frChallengeValue(id)>=c.target}))}
+function frGetRewardSnapshot(){return {firstGpCompleted:[...frProgress.firstGpRewards],exclusiveRewards:FR_EXCLUSIVE_REWARDS,extremeCompletedLaps:Number(frProgress.extremeRewardedLaps)||0,challenges:frGetChallengeSnapshot()}}
+window.getFasiaRushProgress=()=>JSON.parse(JSON.stringify(frProgress));
+window.getFasiaRushChallenges=()=>frGetChallengeSnapshot();
+window.getFasiaRushRewards=()=>frGetRewardSnapshot();
+window.getFasiaRushProfileId=()=>FR_PROFILE_ID;
+frSave();
+
 let selectedModel=safeGet('fr_model','classic');
 const ALL_MODELS=['classic','offroad','new','retro','turbo','epic'];
 if(!ALL_MODELS.includes(selectedModel)) selectedModel='classic';
@@ -363,9 +405,9 @@ function resetRace(){
   last=performance.now();
 }
 window.startRace=function(){if(!ready)return;ensureUnlockedModel();buildPlayer();resetRace();garageScreen.classList.add('hidden');circuitScreen.classList.add('hidden');extremeScreen.classList.add('hidden');gameOverScreen.classList.add('hidden');pauseScreen.classList.add('hidden');circuitCompleteScreen.classList.add('hidden');extremeLapScreen.classList.add('hidden');running=true;paused=false;requestAnimationFrame(loop)}
-function endRace(){running=false;finalDistance.textContent=(score/1000).toFixed(1);if(gameMode==='extreme')saveExtremeScore();gameOverScreen.classList.remove('hidden')}
-function completeCircuit(){running=false;const cfg=circuitConfig[currentCircuit];if(currentCircuit>completedGP){completedGP=currentCircuit;safeSet('fr_completed_gp',String(completedGP));unlockedCircuit=Math.min(5,completedGP+1);safeSet('fr_unlocked_gp',String(unlockedCircuit));}let msg=cfg.name+' superat!';let reward='🚗 '+rewardCars[currentCircuit]+' desbloquejat!';if(currentCircuit<5)msg+=' Nou circuit desbloquejat.';else{msg+=' Has completat tots els GP!';reward='🌌 Car interdimensional + MODE EXTREM desbloquejats!';}completeCircuitText.textContent=msg;rewardText.textContent=reward;refreshCircuitCards();refreshModelLocks();circuitCompleteScreen.classList.remove('hidden')}
-function pauseForExtremeLap(lap){paused=true;extremeLapText.textContent='Has aconseguit donar una volta a tota la dimensió. Felicitats! Volta '+lap+' completada · '+(lap*50)+' km.';extremeLapScreen.classList.remove('hidden')}
+function endRace(){running=false;const km=score/1000;finalDistance.textContent=km.toFixed(1);if(gameMode==='extreme'){frRecordExtremeFinish(km);saveExtremeScore();}else{frRecordRaceKm(km);}gameOverScreen.classList.remove('hidden')}
+function completeCircuit(){running=false;const cfg=circuitConfig[currentCircuit];frRecordGpComplete(currentCircuit,cfg.target/1000);if(currentCircuit>completedGP){completedGP=currentCircuit;safeSet('fr_completed_gp',String(completedGP));unlockedCircuit=Math.min(5,completedGP+1);safeSet('fr_unlocked_gp',String(unlockedCircuit));}let msg=cfg.name+' superat!';let reward='🚗 '+rewardCars[currentCircuit]+' desbloquejat!';if(currentCircuit<5)msg+=' Nou circuit desbloquejat.';else{msg+=' Has completat tots els GP!';reward='🌌 Car interdimensional + MODE EXTREM desbloquejats!';}completeCircuitText.textContent=msg;rewardText.textContent=reward;refreshCircuitCards();refreshModelLocks();circuitCompleteScreen.classList.remove('hidden')}
+function pauseForExtremeLap(lap){paused=true;frRewardExtremeLap(lap);extremeLapText.textContent='Has aconseguit donar una volta a tota la dimensió. Felicitats! Volta '+lap+' completada · '+(lap*50)+' km.';extremeLapScreen.classList.remove('hidden')}
 window.continueExtremeLap=function(){extremeLapScreen.classList.add('hidden');paused=false;last=performance.now();requestAnimationFrame(loop)}
 function moveLeft(){if(running&&!paused)targetLane=Math.max(0,targetLane-1)}function moveRight(){if(running&&!paused)targetLane=Math.min(2,targetLane+1)}
 function update(dt){speed+=dt*.0042;score+=dt*(26+speed*52);if(gameMode==='gp'){const rewardModel=secondaryCircuitModel[currentCircuit];if(score>=5000&&rewardModel&&!isSecondaryUnlocked(rewardModel)){if(unlockSecondary(rewardModel)){showUnlockToast(rewardModel);drawModelPreviews();}}const target=(circuitConfig[currentCircuit]||circuitConfig[1]).target;if(score>=target){score=target;distanceEl.textContent=(score/1000).toFixed(1);completeCircuit();return}}else{const lapNow=Math.floor(score/50000);if(lapNow>extremeLap){extremeLap=lapNow;distanceEl.textContent=(score/1000).toFixed(1);pauseForExtremeLap(extremeLap);return}}distanceEl.textContent=(score/1000).toFixed(1);speedEl.textContent=Math.round(speed*325);playerX=lerp(playerX,laneX(targetLane,.93),1-Math.pow(.0009,dt));spawnTimer-=dt;if(spawnTimer<=0){spawnGroup();const d=difficulty();const lapFactor=gameMode==='extreme'?Math.max(.55,1-extremeLap*.07):1;
@@ -382,6 +424,9 @@ addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','KeyA','KeyD','Space
 document.getElementById('leftBtn').addEventListener('pointerdown',moveLeft);document.getElementById('rightBtn').addEventListener('pointerdown',moveRight);app.addEventListener('pointerdown',e=>touchStartX=e.clientX);app.addEventListener('pointerup',e=>{if(touchStartX==null)return;const dx=e.clientX-touchStartX;if(Math.abs(dx)>36)(dx<0?moveLeft:moveRight)();touchStartX=null});
 safeSet('fr_secondary_unlocks',JSON.stringify(secondaryUnlocked));
 safeSet('fr_car_colors',JSON.stringify(carColorState));
+
+window.FasiaRushProgress=frProgress;
+
 Promise.all([load('gp1Bg',ASSETS.gp1Bg),load('gp2Bg',ASSETS.gp2Bg),load('gp3Bg',ASSETS.gp3Bg),load('gp4Bg',ASSETS.gp4Bg),load('gp5Bg',ASSETS.gp5Bg),load('bg',ASSETS.gp1Bg),load('oldFixed',ASSETS.oldFixed),load('oldBody',ASSETS.oldBody),load('newFixed',ASSETS.newFixed),load('newPrimary',ASSETS.newPrimary),load('newAccent',ASSETS.newAccent),load('offFixed',ASSETS.offFixed),load('offBody',ASSETS.offBody),load('turboFixed',ASSETS.turboFixed),load('turboBody',ASSETS.turboBody),load('epicFixed',ASSETS.epicFixed),load('epicBody',ASSETS.epicBody),load('retroFixed',ASSETS.retroFixed),load('retroBody',ASSETS.retroBody)]).then(()=>{ready=true;loadSelectedColors();refreshColorControls();buildEnemies();ensureUnlockedModel();loadSelectedColors();buildPlayer();refreshCircuitCards();refreshModelLocks();renderExtremeLeaderboard();drawStatic();});
 </script>
 </body>
