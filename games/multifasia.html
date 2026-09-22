@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Multifasia v2.1 · PORTAL CAPÇALERA</title>
+<title>Multifasia v2.2 · TORNAR A FASIA VERSE</title>
 <style>
 :root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
@@ -21,6 +21,18 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 .overlay{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.overlay.show{display:flex}.result{text-align:center;max-width:600px}.result h2{font-size:42px}
 .small{font-size:14px;opacity:.75}
 @media(max-width:700px){.portalGrid{grid-template-columns:repeat(6,1fr)}.portal{grid-column:span 3}.specialPortal{grid-column:span 6}.stageGrid{grid-template-columns:1fr}.battle{grid-template-columns:1fr 1fr}.fighter img{max-height:160px}}
+
+.coverBack{
+  position:absolute;
+  top:24px;
+  left:24px;
+  z-index:3;
+  background:#101b2dcc;
+  color:#fff;
+  box-shadow:0 6px 0 #050b14;
+  backdrop-filter:blur(6px);
+}
+
 </style>
 
 <style>
@@ -95,6 +107,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 <body>
 <section id="cover" class="screen active">
 <img class="coverImg" src="../assets/assets/multifasia/portada.webp"><div class="coverShade"></div>
+<button class="btn coverBack" onclick="window.location.href='../index.html'">← TORNAR A FASIA VERSE</button>
 <button class="btn gold coverStart" onclick="startStory()">COMENÇAR</button>
 </section>
 
