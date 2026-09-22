@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.88 · DESAFIAMENTS FASIA RUSH</title>
+<title>Fasia Verse · V0.14.89 · GUEPARD EXTREM + CARÀTULA RUSH</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3214,7 +3214,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 .game-choice-rush{
   background:
     linear-gradient(to top,rgba(3,12,24,.88),rgba(3,12,24,.08) 62%),
-    url("games/assets/img_01.webp") center/cover no-repeat;
+    url("assets/fasiarush/img_01.webp") center/cover no-repeat;
   color:#fff;
 }
 
@@ -4734,7 +4734,8 @@ const CHALLENGE_CATALOG=[
   {id:"rush_gp3vegades",area:"rush",icon:"🏆",name:"PILOT DE GP",condition:"Completa qualsevol GP 3 vegades.",stat:"rush.gpCompletions",target:3,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"rush_total50",area:"rush",icon:"🛣️",name:"50 KM DE VERSE",condition:"Recorre 50 km totals a Fasia Rush.",stat:"rush.totalKm",target:50,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"rush_total100",area:"rush",icon:"🌍",name:"100 KM DE VERSE",condition:"Recorre 100 km totals a Fasia Rush.",stat:"rush.totalKm",target:100,reward:{type:"coins",amount:15,label:"🪙 15 monedes"}},
-  {id:"rush_extreme_pb5",area:"rush",icon:"👑",name:"SUPERA'T",condition:"Supera el teu propi rècord del Mode Extrem 5 vegades.",stat:"rush.extremePB",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}}
+  {id:"rush_extreme_pb5",area:"rush",icon:"👑",name:"SUPERA'T",condition:"Supera el teu propi rècord del Mode Extrem 5 vegades.",stat:"rush.extremePB",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
+  {id:"rush_extreme_lap1",area:"rush",icon:"🐆",name:"REI DEL MODE EXTREM",condition:"Completa una volta sencera de 50 km al Mode Extrem.",stat:"rush.extremeLaps",target:1,reward:{type:"exclusive",id:"fasia_rush_guepard_f1",label:"🐆 Guepard F1 Fasia Rush · avatar exclusiu"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4766,13 +4767,14 @@ const CHALLENGE_REWARD_ASSETS={
   fasia_rush_camaleo:"assets/avatars/exclusius/fasia_rush_camaleo.webp",
   fasia_rush_medusa_blava:"assets/avatars/exclusius/fasia_rush_medusa-blava.webp",
   fasia_rush_colom_f1:"assets/avatars/exclusius/fasia_rush_colom_f1.webp",
+  fasia_rush_guepard_f1:"assets/avatars/exclusius/fasia_rush_guepard_f1.webp",
   marc_fasia_rush:"assets/marcs/marc_fasia_rush.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -4793,7 +4795,7 @@ function challengeState(){
   try{
     const rp=JSON.parse(localStorage.getItem(`fasia_rush_progress_v1_${currentProfile?.id||"guest"}`)||"{}");
     const first=Array.isArray(rp.firstGpRewards)?rp.firstGpRewards.map(Number):[];
-    state.stats.rush={...state.stats.rush,gp1:first.includes(1)?1:0,gp2:first.includes(2)?1:0,gp3:first.includes(3)?1:0,gp4:first.includes(4)?1:0,gp5:first.includes(5)?1:0,km3:Number(rp.thresholdRuns?.km3||0),km5:Number(rp.thresholdRuns?.km5||0),km75:Number(rp.thresholdRuns?.km75||0),gpCompletions:Number(rp.gpCompletions||0),totalKm:Number(rp.totalKm||0),extremePB:Number(rp.extremeRecordBeats||0)};
+    state.stats.rush={...state.stats.rush,gp1:first.includes(1)?1:0,gp2:first.includes(2)?1:0,gp3:first.includes(3)?1:0,gp4:first.includes(4)?1:0,gp5:first.includes(5)?1:0,km3:Number(rp.thresholdRuns?.km3||0),km5:Number(rp.thresholdRuns?.km5||0),km75:Number(rp.thresholdRuns?.km75||0),gpCompletions:Number(rp.gpCompletions||0),totalKm:Number(rp.totalKm||0),extremePB:Number(rp.extremeRecordBeats||0),extremeLaps:Number(rp.extremeRewardedLaps||rp.extremeCompletedLapsTotal||0)};
   }catch(e){}
   return state;
 }
@@ -5323,6 +5325,7 @@ const SHOP_CONFIG={
   {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null},
   {id:"fasia_rush_medusa_blava",name:"MEDUSA BLAVA FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_medusa-blava.webp",cropIndex:null}
 ]},
+{id:"guepard",name:"GUEPARD",emoji:"🐆",exclusive:true,skins:[{id:"fasia_rush_guepard_f1",name:"GUEPARD F1 FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_guepard_f1.webp",cropIndex:null}]},
 {id:"portals_cat",name:"LLEGENDA CAT",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"DRAC DELS PORTALS CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
 {id:"portals_esp",name:"LLEGENDA ESP",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LINX DELS PORTALS ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
 {id:"portals_ang",name:"LLEGENDA ANG",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"GUINEU DELS PORTALS ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null}]},

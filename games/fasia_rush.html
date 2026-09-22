@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Fasia Rush v51 · PROGRESSIÓ BLOQUEJADA</title>
+<title>Fasia Rush v52 · DIFICULTAT GLOBAL AJUSTADA</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#06111d;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#fff}
@@ -362,9 +362,9 @@ function drawFinishLine(){if(gameMode==='extreme')return;const target=(circuitCo
 function drawCar(sprite,x,y,w){const ratio=sprite.height/sprite.width,h=w*ratio;ctx.drawImage(sprite,x-w/2,y-h*.8,w,h)}
 function makeEnemy(l,z=.02){const sprite=enemyPool[Math.floor(Math.random()*enemyPool.length)];return {lane:l,z,sprite,wiggle:(Math.random()-.5)*.035,widthMul:.92+Math.random()*.14}}
 function difficulty(){
-  if(gameMode==='extreme') return clamp((score%50000)/18000+extremeLap*.12,0,1);
-  const gpBonus=[0,0,.10,.20,.30,.40][currentCircuit]||0;
-  return clamp(score/4000+gpBonus,0,1);
+  if(gameMode==='extreme') return clamp((score%50000)/22000+extremeLap*.10,0,1);
+  const gpBonus=[0,0,.08,.16,.24,.32][currentCircuit]||0;
+  return clamp(score/5200+gpBonus,0,1);
 }
 function spawnGroup(){
   const near=cars.filter(c=>c.z<.2).length;
@@ -374,7 +374,7 @@ function spawnGroup(){
   const last2km=gameMode==='gp'&&(cfg.target-score)<=2000;
   const doubleChance=gameMode==='extreme'
     ?Math.min(.72,.36+extremeLap*.08)
-    :(last2km?.68:.36);
+    :(last2km?.56:.30);
 
   if(score>=4000&&Math.random()<doubleChance){
     const open=Math.floor(Math.random()*3);
@@ -413,8 +413,8 @@ function moveLeft(){if(running&&!paused)targetLane=Math.max(0,targetLane-1)}func
 function update(dt){speed+=dt*.0042;score+=dt*(26+speed*52);if(gameMode==='gp'){const rewardModel=secondaryCircuitModel[currentCircuit];if(score>=5000&&rewardModel&&!isSecondaryUnlocked(rewardModel)){if(unlockSecondary(rewardModel)){showUnlockToast(rewardModel);drawModelPreviews();}}const target=(circuitConfig[currentCircuit]||circuitConfig[1]).target;if(score>=target){score=target;distanceEl.textContent=(score/1000).toFixed(1);completeCircuit();return}}else{const lapNow=Math.floor(score/50000);if(lapNow>extremeLap){extremeLap=lapNow;distanceEl.textContent=(score/1000).toFixed(1);pauseForExtremeLap(extremeLap);return}}distanceEl.textContent=(score/1000).toFixed(1);speedEl.textContent=Math.round(speed*325);playerX=lerp(playerX,laneX(targetLane,.93),1-Math.pow(.0009,dt));spawnTimer-=dt;if(spawnTimer<=0){spawnGroup();const d=difficulty();const lapFactor=gameMode==='extreme'?Math.max(.55,1-extremeLap*.07):1;
 const cfg=circuitConfig[currentCircuit]||circuitConfig[1];
 const last2km=gameMode==='gp'&&(cfg.target-score)<=2000;
-const finalPush=last2km?.62:1;
-spawnTimer=(lerp(1.65,.64,d)+Math.random()*lerp(.62,.28,d))*lapFactor*finalPush}updateSigns(dt);for(const c of cars)c.z+=dt*speed*(.42+c.z*.68);cars=cars.filter(c=>c.z<1.14);for(const c of cars){if(c.lane===targetLane&&c.z>.79&&c.z<1.03&&Math.abs(playerX-laneX(c.lane,c.z))<W*.082){endRace();return}}}
+const finalPush=last2km?.74:1;
+spawnTimer=(lerp(1.82,.76,d)+Math.random()*lerp(.68,.34,d))*lapFactor*finalPush}updateSigns(dt);for(const c of cars)c.z+=dt*speed*(.42+c.z*.68);cars=cars.filter(c=>c.z<1.14);for(const c of cars){if(c.lane===targetLane&&c.z>.79&&c.z<1.03&&Math.abs(playerX-laneX(c.lane,c.z))<W*.082){endRace();return}}}
 function draw(){drawBackground();drawRoad();drawFinishLine();drawSigns();for(const c of cars.slice().sort((a,b)=>a.z-b.z)){const z=clamp(c.z,0,1.08),x=laneX(c.lane,z)+c.wiggle*roadHalfWidth(z),y=roadY(z),w=lerp(W*.028,W*.19,Math.pow(z,1.25))*c.widthMul;drawCar(c.sprite,x,y,w)}drawCar(playerSprite,playerX,H*.97,Math.min(W*.29,245))}
 function drawStatic(){if(!ready)return;drawBackground();drawRoad();playerX=laneX(1,.93);drawCar(playerSprite||spriteFor(selectedModel,primaryColor,accentColor),playerX,H*.97,Math.min(W*.29,245))}
 function loop(t){if(!running||paused)return;const dt=Math.min(.033,(t-last)/1000||0);last=t;update(dt);draw();if(running)requestAnimationFrame(loop)}
