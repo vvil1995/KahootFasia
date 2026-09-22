@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.82 · GM TROFEUS HISTÒRIA</title>
+<title>Fasia Verse · V0.14.83 · NEXUS 4 DESAFIAMENTS + AVATARS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3785,7 +3785,7 @@ button.profile-collection-card{cursor:pointer}
 .challenges-summary{display:flex;align-items:baseline;gap:7px;padding:10px 16px;border-radius:18px;background:#fff;border:2px solid #e4ded7;font-weight:950}.challenges-summary span{font-size:12px;color:#777}.challenges-summary b{font-size:25px;color:#6f46ea}
 .challenges-hero{padding:24px 28px;border-radius:28px;background:linear-gradient(135deg,#281b66,#5d2f9d 58%,#9b4d19);color:#fff;box-shadow:0 16px 36px rgba(47,28,91,.18)}
 .challenges-hero h2{margin:9px 0 5px;font-size:clamp(34px,5vw,62px);font-weight:1000;letter-spacing:.02em}.challenges-hero p{margin:0;font-weight:900;color:#eee8ff}
-.challenge-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0}.challenge-tab{border:2px solid #ddd6cf;background:#fff;border-radius:17px;padding:13px 10px;font-weight:1000;cursor:pointer;color:#342d42}.challenge-tab.active{background:#2f205f;color:#fff;border-color:#7357f4;box-shadow:0 8px 22px rgba(75,49,150,.18)}
+.challenge-tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:18px 0}.challenge-tab{border:2px solid #ddd6cf;background:#fff;border-radius:17px;padding:13px 10px;font-weight:1000;cursor:pointer;color:#342d42}.challenge-tab.active{background:#2f205f;color:#fff;border-color:#7357f4;box-shadow:0 8px 22px rgba(75,49,150,.18)}
 .challenges-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.challenge-card{background:#fff;border:2px solid #e1dbd4;border-radius:22px;padding:17px;display:grid;grid-template-columns:58px minmax(0,1fr);gap:13px;align-items:start;box-shadow:0 8px 20px rgba(51,43,71,.06)}.challenge-card.done{border-color:#65c887;background:linear-gradient(135deg,#f4fff7,#fff)}
 .challenge-card-icon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;background:#eee9ff}.challenge-card.done .challenge-card-icon{background:#dcfce7}.challenge-card h3{margin:1px 0 5px;font-size:20px}.challenge-condition{font-size:13px;color:#6e6876;font-weight:800;min-height:31px}.challenge-progress-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px;font-weight:950}.challenge-progress-track{height:10px;background:#eee9e3;border-radius:999px;overflow:hidden;margin-top:6px}.challenge-progress-fill{height:100%;background:linear-gradient(90deg,#6647e8,#aa54ef);border-radius:999px}.challenge-card.done .challenge-progress-fill{background:linear-gradient(90deg,#24a35a,#5bd483)}.challenge-reward{margin-top:11px;padding-top:10px;border-top:1px solid #ebe6e1;font-size:13px;font-weight:950;color:#4a3e65}.challenge-done-label{color:#168447}
 .challenge-puzzle-panel{margin:0 0 16px;padding:18px;border-radius:23px;background:linear-gradient(135deg,#17132e,#30205d);color:#fff;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.challenge-puzzle-visual{height:112px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 38%,#9d8cff 0 12%,#483a7e 13% 32%,#17132e 33%);filter:blur(5px);opacity:.72}.challenge-puzzle-visual:after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:1000;filter:blur(0);color:#fff}.challenge-puzzle-panel h3{margin:0 0 6px;font-size:25px}.challenge-puzzle-count{font-size:34px;font-weight:1000;color:#ffd45d}.challenge-puzzle-panel p{margin:4px 0;color:#d9d1f6;font-weight:800}.challenge-puzzle-panel.complete{background:linear-gradient(135deg,#183b2a,#4a2b79)}
@@ -4025,6 +4025,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="pj" type="button">💰 PREU JUST</button>
     <button class="challenge-tab" data-challenge-area="snake" type="button">🐍 ANIMAL SNAKE</button>
     <button class="challenge-tab" data-challenge-area="portals" type="button">🌀 PORTALS</button>
+    <button class="challenge-tab" data-challenge-area="nexus" type="button">🔗 NEXUS 4</button>
   </div>
   <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
   <div id="challengesGrid" class="challenges-grid"></div>
@@ -4678,7 +4679,16 @@ const CHALLENGE_CATALOG=[
   {id:"ws_doble",area:"portals",icon:"🌟",name:"DOBLE EXPLORADOR",condition:"Completa els 12 portals en 2 modes diferents.",stat:"portals.fullModes",target:2,reward:{type:"title",id:"doble_explorador",label:"🏷️ Títol DOBLE EXPLORADOR"}},
   {id:"ws_llegenda_cat",area:"portals",icon:"🐉",name:"LLEGENDA DELS PORTALS CAT",condition:"Completa CAT Fàcil + Normal al 100%.",stat:"portals.legendCat",target:1,reward:{type:"exclusive",id:"drac_portals_cat",label:"🐉 Drac · avatar exclusiu CAT"}},
   {id:"ws_llegenda_esp",area:"portals",icon:"🐾",name:"LLEGENDA DELS PORTALS ESP",condition:"Completa ESP Fàcil + Normal al 100%.",stat:"portals.legendEsp",target:1,reward:{type:"exclusive",id:"linx_portals_esp",label:"🐾 Linx ibèric · avatar exclusiu ESP"}},
-  {id:"ws_llegenda_ang",area:"portals",icon:"🦊",name:"LLEGENDA DELS PORTALS ANG",condition:"Completa English Fàcil al 100%.",stat:"portals.legendAng",target:1,reward:{type:"exclusive",id:"guineu_portals_ang",label:"🦊 Guineu · avatar exclusiu ANG"}}
+  {id:"ws_llegenda_ang",area:"portals",icon:"🦊",name:"LLEGENDA DELS PORTALS ANG",condition:"Completa English Fàcil al 100%.",stat:"portals.legendAng",target:1,reward:{type:"exclusive",id:"guineu_portals_ang",label:"🦊 Guineu · avatar exclusiu ANG"}},
+
+  {id:"nx_gos",area:"nexus",icon:"🐶",name:"MESTRE DEL GOS",condition:"Guanya 20 partides de Nexus 4 amb el Gos.",stat:"nexus.pincher",target:20,reward:{type:"exclusive",id:"nexus4_gos",label:"🐶 Gos Fasia Verse · avatar exclusiu"}},
+  {id:"nx_gat",area:"nexus",icon:"🐱",name:"MESTRE DEL GAT",condition:"Guanya 20 partides de Nexus 4 amb el Gat.",stat:"nexus.gat",target:20,reward:{type:"exclusive",id:"nexus4_gat",label:"🐱 Gat Fasia Verse · avatar exclusiu"}},
+  {id:"nx_gorilla",area:"nexus",icon:"🦍",name:"MESTRE DEL GORIL·LA",condition:"Guanya 20 partides de Nexus 4 amb el Goril·la.",stat:"nexus.gorilla",target:20,reward:{type:"exclusive",id:"nexus4_gorilla",label:"🦍 Goril·la Fasia Verse · avatar exclusiu"}},
+  {id:"nx_zebra",area:"nexus",icon:"🦓",name:"MESTRE DE LA ZEBRA",condition:"Guanya 20 partides de Nexus 4 amb la Zebra.",stat:"nexus.zebra",target:20,reward:{type:"exclusive",id:"nexus4_zebra",label:"🦓 Zebra Fasia Verse · avatar exclusiu"}},
+  {id:"nx_tuca",area:"nexus",icon:"🐦",name:"MESTRE DEL TUCÀ",condition:"Guanya 20 partides de Nexus 4 amb el Tucà.",stat:"nexus.tuca",target:20,reward:{type:"exclusive",id:"nexus4_tuca",label:"🐦 Tucà Fasia Verse · avatar exclusiu"}},
+  {id:"nx_camaleo",area:"nexus",icon:"🦎",name:"MESTRE DEL CAMALEÓ",condition:"Guanya 20 partides de Nexus 4 amb el Camaleó.",stat:"nexus.camaleo",target:20,reward:{type:"exclusive",id:"nexus4_camaleo",label:"🦎 Camaleó Fasia Verse · avatar exclusiu"}},
+  {id:"nx_mussol",area:"nexus",icon:"🦉",name:"MESTRE DEL MUSSOL",condition:"Guanya 20 partides de Nexus 4 amb el Mussol.",stat:"nexus.mussol",target:20,reward:{type:"exclusive",id:"nexus4_mussol",label:"🦉 Mussol Fasia Verse · avatar exclusiu"}},
+  {id:"nx_capibara",area:"nexus",icon:"🦫",name:"MESTRE DE LA CAPIBARA",condition:"Guanya 20 partides de Nexus 4 amb la Capibara.",stat:"nexus.capibara",target:20,reward:{type:"exclusive",id:"nexus4_capibara",label:"🦫 Capibara Fasia Verse · avatar exclusiu"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4697,13 +4707,21 @@ const CHALLENGE_REWARD_ASSETS={
   drac_portals_cat:"assets/avatars/exclusius/drac_portals_cat.webp",
   linx_portals_esp:"assets/avatars/exclusius/linx_portals_esp.webp",
   guineu_portals_ang:"assets/avatars/exclusius/guineu_portals_ang.webp",
-  marc_llegenda_portals:"assets/marcs/marc_llegenda_portals.webp"
+  marc_llegenda_portals:"assets/marcs/marc_llegenda_portals.webp",
+  nexus4_gos:"assets/avatars/exclusius/nexus4_gos.webp",
+  nexus4_gat:"assets/avatars/exclusius/nexus4_gat.webp",
+  nexus4_gorilla:"assets/avatars/exclusius/nexus4_gorilla.webp",
+  nexus4_zebra:"assets/avatars/exclusius/nexus4_zebra.webp",
+  nexus4_tuca:"assets/avatars/exclusius/nexus4_tuca.webp",
+  nexus4_camaleo:"assets/avatars/exclusius/nexus4_camaleo.webp",
+  nexus4_mussol:"assets/avatars/exclusius/nexus4_mussol.webp",
+  nexus4_capibara:"assets/avatars/exclusius/nexus4_capibara.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -4718,7 +4736,10 @@ function challengeLocalKey(){return `fv_challenge_state_${currentProfile?.id||"g
 function challengeState(){
   let raw=currentProfile?.challenge_state;
   if(!raw||!Object.keys(raw).length){try{raw=JSON.parse(localStorage.getItem(challengeLocalKey())||"{}")}catch(e){raw={}}}
-  return challengeMergeState(raw);
+  const state=challengeMergeState(raw);
+  const nx=currentProfile?.nexus4_progress||{};
+  state.stats.nexus={...state.stats.nexus,pincher:Number(nx.pincher||0),gat:Number(nx.gat||0),gorilla:Number(nx.gorilla||0),zebra:Number(nx.zebra||0),tuca:Number(nx.tuca||0),camaleo:Number(nx.camaleo||0),mussol:Number(nx.mussol||0),capibara:Number(nx.capibara||0)};
+  return state;
 }
 async function saveChallengeState(state){
   if(!currentProfile?.id)return; currentProfile.challenge_state=state; localStorage.setItem(challengeLocalKey(),JSON.stringify(state));
@@ -4877,7 +4898,7 @@ function challengePuzzleHtml(area,state){
 }
 function renderChallenges(){
   const state=challengeState();syncHistoricalPurchasedSkins(state);const done=new Set(state.completed||[]);$("#challengesDoneCount").textContent=done.size;$("#challengesTotalCount").textContent=`/ ${CHALLENGE_CATALOG.length}`;
-  const puzzle=$("#challengePuzzlePanel");if(activeChallengeArea!=="global"){puzzle.innerHTML=challengePuzzleHtml(activeChallengeArea,state);puzzle.classList.remove("hidden");puzzle.classList.toggle("complete",state.puzzlesCompleted.includes(activeChallengeArea))}else{puzzle.classList.add("hidden");puzzle.innerHTML=""}
+  const puzzle=$("#challengePuzzlePanel"),hasPuzzle=!!PUZZLE_CONFIG[activeChallengeArea];if(activeChallengeArea!=="global"&&hasPuzzle){puzzle.innerHTML=challengePuzzleHtml(activeChallengeArea,state);puzzle.classList.remove("hidden");puzzle.classList.toggle("complete",state.puzzlesCompleted.includes(activeChallengeArea))}else{puzzle.classList.add("hidden");puzzle.innerHTML=""}
   const items=CHALLENGE_CATALOG.filter(c=>c.area===activeChallengeArea).sort((a,b)=>Number(done.has(a.id))-Number(done.has(b.id)));
   $("#challengesGrid").innerHTML=items.map(ch=>{const value=challengeGetStat(state,ch.stat),shown=Math.min(value,ch.target),pct=Math.max(0,Math.min(100,shown/ch.target*100)),isDone=done.has(ch.id);return `<article class="challenge-card ${isDone?"done":""}"><div class="challenge-card-icon">${isDone?"✅":ch.icon}</div><div><h3>${ch.name}</h3><div class="challenge-condition">${ch.condition}</div><div class="challenge-progress-line"><span>${isDone?"COMPLETAT":"PROGRÉS"}</span><b>${shown}/${ch.target}</b></div><div class="challenge-progress-track"><div class="challenge-progress-fill" style="width:${pct}%"></div></div><div class="challenge-reward ${isDone?"challenge-done-label":""}">${isDone?"✓ ":"RECOMPENSA · "}${challengeRewardText(ch.reward)}</div></div></article>`}).join("");
 }
@@ -5165,12 +5186,13 @@ function imageForVariant(v){
 const SHOP_CONFIG={
   events:{halloween:false,christmas:false},
   characters:[
-{id:"gat",name:"GAT",emoji:"🐱",free:true,skins:variantData["GAT"].map((x,i)=>({id:`gat_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
-{id:"gos",name:"GOS",emoji:"🐶",free:true,skins:variantData["GOS"].map((x,i)=>({id:`gos_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
-{id:"gorilla",name:"GORIL·LA",emoji:"🦍",free:true,skins:variantData["GORIL·LA"].map((x,i)=>({id:`gorilla_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
-{id:"zebra",name:"ZEBRA",emoji:"🦓",free:true,skins:variantData["ZEBRA"].map((x,i)=>({id:`zebra_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
-{id:"mussol",name:"MUSSOL",emoji:"🦉",free:true,skins:variantData["MUSSOL"].map((x,i)=>({id:`mussol_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
-{id:"capibara",name:"CAPIBARA",emoji:"🦫",free:true,skins:variantData["CAPIBARA"].map((x,i)=>({id:`capibara_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null}))},
+{id:"gat",name:"GAT",emoji:"🐱",free:true,skins:variantData["GAT"].map((x,i)=>({id:`gat_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gat",name:"GAT NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gat.webp"}])},
+{id:"gos",name:"GOS",emoji:"🐶",free:true,skins:variantData["GOS"].map((x,i)=>({id:`gos_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gos",name:"GOS NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gos.webp"}])},
+{id:"gorilla",name:"GORIL·LA",emoji:"🦍",free:true,skins:variantData["GORIL·LA"].map((x,i)=>({id:`gorilla_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gorilla",name:"GORIL·LA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gorilla.webp"}])},
+{id:"zebra",name:"ZEBRA",emoji:"🦓",free:true,skins:variantData["ZEBRA"].map((x,i)=>({id:`zebra_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_zebra",name:"ZEBRA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_zebra.webp"}])},
+{id:"mussol",name:"MUSSOL",emoji:"🦉",free:true,skins:variantData["MUSSOL"].map((x,i)=>({id:`mussol_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_mussol",name:"MUSSOL NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_mussol.webp"}])},
+{id:"capibara",name:"CAPIBARA",emoji:"🦫",free:true,skins:variantData["CAPIBARA"].map((x,i)=>({id:`capibara_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_capibara",name:"CAPIBARA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_capibara.webp"}])},
+{id:"camaleo",name:"CAMALEÓ",emoji:"🦎",exclusive:true,skins:[{id:"nexus4_camaleo",name:"CAMALEÓ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_camaleo.webp"}]},
 {id:"ratoli",name:"RATOLÍ",emoji:"🐭",skins:[
       {id:"ratoli_dentista",name:"RATOLÍ DENTISTA",price:15,available:true,event:null,image:"assets/avatars/ratoli_dentista.webp"},
       {id:"ratoli_pilot",name:"RATOLÍ PILOT",price:25,available:true,event:null,image:"assets/avatars/ratoli_pilot.webp"},
@@ -5191,7 +5213,8 @@ const SHOP_CONFIG={
       {id:"tuca_bronze",name:"TUCÀ BRONZE",price:20,available:true,event:null,image:"assets/avatars/tuca_bronze.webp"},
       {id:"tuca_plata",name:"TUCÀ PLATA",price:40,available:true,event:null,image:"assets/avatars/tuca_plata.webp"},
       {id:"tuca_daurat",name:"TUCÀ DAURAT",price:60,available:true,event:null,image:"assets/avatars/tuca_daurat.webp"},
-      {id:"tuca_caixer",name:"TUCÀ CAIXER",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tuca_caixer.webp"}
+      {id:"tuca_caixer",name:"TUCÀ CAIXER",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tuca_caixer.webp"},
+      {id:"nexus4_tuca",name:"TUCÀ NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_tuca.webp"}
     ]},
 {id:"cavall",name:"CAVALL",emoji:"🐴",skins:[
   {id:"cavall_vaquer",name:"CAVALL VAQUER",price:15,available:true,event:null,image:"assets/avatars/cavall_vaquer.webp",cropIndex:null},
