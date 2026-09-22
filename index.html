@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.83 · NEXUS 4 DESAFIAMENTS + AVATARS</title>
+<title>Fasia Verse · V0.14.84 · MULTIFASIA INTEGRAT</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4089,6 +4089,15 @@ button.profile-collection-card{cursor:pointer}
       </div>
     </button>
 
+    <button id="openMultifasia" class="game-choice game-choice-multifasia" type="button">
+      <div class="game-choice-arrow">›</div>
+      <div class="game-choice-content">
+        <span class="game-choice-tag">JOC INDIVIDUAL</span>
+        <h3>MULTIFASIA</h3>
+        <p>Travessa els portals, practica les taules i derrota en Null.</p>
+      </div>
+    </button>
+
     <div class="game-choice game-choice-soon" aria-disabled="true">
       <div class="game-choice-content">
         <span class="game-choice-tag">PRÒXIMAMENT</span>
@@ -6849,6 +6858,17 @@ $("#openNexus4").onclick=()=>{
   sessionStorage.setItem("fasiaVerseProfileId", pid);
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/nexus4.html?profile="+encodeURIComponent(pid);
+};
+
+$("#openMultifasia").onclick=()=>{
+  if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
+    alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+    return;
+  }
+  const pid=String(currentProfile.id);
+  sessionStorage.setItem("fasiaVerseProfileId", pid);
+  sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
+  window.location.href="games/multifasia.html?profile="+encodeURIComponent(pid);
 };
 
 $("#backToProfile").onclick=async()=>{await refreshCurrentProfile();show("profileHome")};

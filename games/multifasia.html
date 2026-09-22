@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Multifasia v1.9 — Fasia Verse</title>
+<title>Multifasia v2.0 · INTEGRACIÓ FASIA VERSE</title>
 <style>
 :root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
@@ -89,7 +89,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 </head>
 <body>
 <section id="cover" class="screen active">
-<img class="coverImg" src="assets/multifasia/portada.webp"><div class="coverShade"></div>
+<img class="coverImg" src="../assets/assets/multifasia/portada.webp"><div class="coverShade"></div>
 <button class="btn gold coverStart" onclick="startStory()">COMENÇAR</button>
 </section>
 
@@ -99,7 +99,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 </section>
 
 <section id="worlds" class="screen">
-<div class="topbar"><div><img src="assets/multifasia/logo.webp" style="width:min(330px,55vw);height:auto;display:block"><span class="muted">Selecció de portals</span></div><button class="btn gray" onclick="show('cover')">← Portada</button></div>
+<div class="topbar"><div><img src="../assets/assets/multifasia/logo.webp" style="width:min(330px,55vw);height:auto;display:block"><span class="muted">Selecció de portals</span></div><button class="btn gray" onclick="show('cover')">← Portada</button></div>
 <div id="portalGrid" class="portalGrid"></div>
 </section>
 
@@ -129,7 +129,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 <section id="timeTrial" class="screen">
 <div class="topbar">
   <div style="display:flex;align-items:center;gap:18px">
-    <img class="timeTitleLogo" src="assets/multifasia/portal-contrarellotge.webp" alt="Portal Contrarellotge">
+    <img class="timeTitleLogo" src="../assets/assets/multifasia/portal-contrarellotge.webp" alt="Portal Contrarellotge">
     <div><h1 style="margin:0">CONTRARELLOTGE</h1><span class="muted">20 multiplicacions · supera el teu millor temps</span></div>
   </div>
   <button class="btn gray" onclick="showWorlds()">← Portals</button>
@@ -160,7 +160,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
         </div>
         <div id="timeFinish" style="display:none">
           <div class="ttResultBox">
-            <img class="ttResultLogo" src="assets/multifasia/portal-contrarellotge.webp" alt="">
+            <img class="ttResultLogo" src="../assets/assets/multifasia/portal-contrarellotge.webp" alt="">
             <h2>🏁 CONTRARELLOTGE COMPLETAT!</h2>
             <div id="timeFinal"></div>
             <p id="timeBestMsg"></p>
@@ -174,7 +174,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 </section>
 
 <section id="vsMode" class="screen">
-<div class="topbar"><div style="display:flex;align-items:center;gap:18px"><img class="specialModeHeaderLogo" src="assets/multifasia/portal-vs.webp" alt="Portal VS"><span class="muted">Duel de multiplicacions</span></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
+<div class="topbar"><div style="display:flex;align-items:center;gap:18px"><img class="specialModeHeaderLogo" src="../assets/assets/multifasia/portal-vs.webp" alt="Portal VS"><span class="muted">Duel de multiplicacions</span></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
 <div class="card" style="text-align:center">
 <h2>Com vols entrar?</h2>
 <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:28px 0">
@@ -194,29 +194,29 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 
 <script>
 const PORTALS={
-  "1":"assets/multifasia/portal-1.webp", "2":"assets/multifasia/portal-2.webp",
-  "3":"assets/multifasia/portal-3.webp", "4":"assets/multifasia/portal-4.webp",
-  "5":"assets/multifasia/portal-5.webp", "6":"assets/multifasia/portal-6.webp",
-  "7":"assets/multifasia/portal-7.webp", "8":"assets/multifasia/portal-8.webp",
-  "9":"assets/multifasia/portal-9.webp", "10":"assets/multifasia/portal-10.webp"
+  "1":"../assets/assets/multifasia/portal-1.webp", "2":"../assets/assets/multifasia/portal-2.webp",
+  "3":"../assets/assets/multifasia/portal-3.webp", "4":"../assets/assets/multifasia/portal-4.webp",
+  "5":"../assets/assets/multifasia/portal-5.webp", "6":"../assets/assets/multifasia/portal-6.webp",
+  "7":"../assets/assets/multifasia/portal-7.webp", "8":"../assets/assets/multifasia/portal-8.webp",
+  "9":"../assets/assets/multifasia/portal-9.webp", "10":"../assets/assets/multifasia/portal-10.webp"
 };
 const SPECIAL_PORTALS={
-  "INF":"assets/multifasia/portal-infinit.webp",
-  "TIME":"assets/multifasia/portal-contrarellotge.webp",
-  "VS":"assets/multifasia/portal-vs.webp"
+  "INF":"../assets/assets/multifasia/portal-infinit.webp",
+  "TIME":"../assets/assets/multifasia/portal-contrarellotge.webp",
+  "VS":"../assets/assets/multifasia/portal-vs.webp"
 };
-const CR_OFF="assets/multifasia/cristall-off.webp", CR_ON="assets/multifasia/cristall-on.webp";
+const CR_OFF="../assets/assets/multifasia/cristall-off.webp", CR_ON="../assets/assets/multifasia/cristall-on.webp";
 const NULL_PHASES=[
-  "assets/multifasia/null-1.webp", "assets/multifasia/null-2.webp",
-  "assets/multifasia/null-3.webp", "assets/multifasia/null-4.webp"
+  "../assets/assets/multifasia/null-1.webp", "../assets/assets/multifasia/null-2.webp",
+  "../assets/assets/multifasia/null-3.webp", "../assets/assets/multifasia/null-4.webp"
 ];
-const GAME_LOGO="assets/multifasia/logo.webp";
-const HERO="assets/multifasia/hulk-mul.webp";
+const GAME_LOGO="../assets/assets/multifasia/logo.webp";
+const HERO="../assets/assets/multifasia/hulk-mul.webp";
 const VS_CHARACTERS={
-  hulk:"assets/multifasia/vs-hulk.webp",
-  tuca:"assets/multifasia/vs-tuca.webp",
-  capi:"assets/multifasia/vs-capi.webp",
-  colom:"assets/multifasia/vs-colom.webp"
+  hulk:"../assets/assets/multifasia/vs-hulk.webp",
+  tuca:"../assets/assets/multifasia/vs-tuca.webp",
+  capi:"../assets/assets/multifasia/vs-capi.webp",
+  colom:"../assets/assets/multifasia/vs-colom.webp"
 };
 const saveKey="multifasia_v01";
 let state=JSON.parse(localStorage.getItem(saveKey)||'null')||{portal:1,stars:{},infinite:false,coins:0,rewardedPortals:[],infiniteDaily:{date:"",correct:0,coins:0}};
