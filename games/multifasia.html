@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Multifasia v2.0 · INTEGRACIÓ FASIA VERSE</title>
+<title>Multifasia v2.1 · PORTAL CAPÇALERA</title>
 <style>
 :root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
@@ -85,6 +85,11 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 
 <style>
 .specialModeHeaderLogo{height:120px;width:220px;object-fit:contain;filter:drop-shadow(0 0 12px #0008)}
+
+.portalHeaderInfo{display:flex;align-items:center;gap:18px}
+.portalHeaderImg{width:92px;height:92px;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3))}
+@media(max-width:700px){.portalHeaderImg{width:72px;height:72px}.portalHeaderInfo{gap:10px}}
+
 </style>
 </head>
 <body>
@@ -104,7 +109,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 </section>
 
 <section id="stages" class="screen">
-<div class="topbar"><div><h2 id="portalTitle">Portal</h2><span id="portalSub" class="muted"></span></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
+<div class="topbar"><div class="portalHeaderInfo"><img id="portalHeaderImg" class="portalHeaderImg" alt="Portal"><div><h2 id="portalTitle">Portal</h2><span id="portalSub" class="muted"></span></div></div><button class="btn gray" onclick="showWorlds()">← Portals</button></div>
 <div id="stageGrid" class="stageGrid"></div>
 </section>
 
@@ -314,7 +319,7 @@ function exitPlayMode(){
   openPortal(currentPortal);
 }
 
-function openPortal(p){currentPortal=p;show("stages");document.getElementById("portalTitle").textContent=`Portal ×${p}`;document.getElementById("portalSub").textContent=`Taula del ${p}`;renderStages()}
+function openPortal(p){currentPortal=p;show("stages");document.getElementById("portalHeaderImg").src=PORTALS[String(p)];document.getElementById("portalHeaderImg").alt=`Portal ×${p}`;document.getElementById("portalTitle").textContent=`Portal ×${p}`;document.getElementById("portalSub").textContent=`Taula del ${p}`;renderStages()}
 function renderStages(){let done=state.stars[currentPortal]||0;let data=[["⭐ 1","Perseguir Null","15 passos"],["⭐ 2","Recuperar l'energia","10 cristalls"],["⭐ 3","Atrapar Null",`Hulk ${currentPortal+2} ❤️ · Null ${currentPortal*8} ❤️`]];let g=document.getElementById("stageGrid");g.innerHTML="";data.forEach((a,i)=>{let n=i+1, unlocked=n<=done+1;let d=document.createElement("div");d.className="stage "+(unlocked?"":"locked");d.innerHTML=`<div class="big">${a[0]}</div><h2>${a[1]}</h2><p>${a[2]}</p>${n<=done?'<b>✓ SUPERADA</b>':''}`;if(unlocked)d.onclick=()=>startStage(n);g.appendChild(d)})}
 function startStage(n){document.getElementById("gameLogo").src=GAME_LOGO;currentStage=n;position=0;crystals=0;heroHP=currentPortal+2;bossMax=currentPortal*8;bossHP=bossMax;show("play");document.getElementById("playTitle").textContent=`Portal ×${currentPortal} · Estrella ${n}`;document.getElementById("playSub").textContent=n<3?`Practica la taula del ${currentPortal}`:`Taules de l'1 al ${currentPortal}`;renderMechanic();nextQuestion();setTimeout(()=>document.getElementById("answer").focus(),50)}
 function renderMechanic(){let m=document.getElementById("mechanic");if(currentStage===1){m.innerHTML=`<div style="display:flex;justify-content:space-between"><b>INICI</b><b>META</b></div><div class="trackWrap"><div class="trackDots">${Array.from({length:15},(_,i)=>`<div class="dot ${i<position?'on':''}"></div>`).join("")}</div><img class="runner movingRunner" src="${HERO}" style="left:calc(${position}/15 * (100% - 120px))"></div><div style="margin-top:88px"><b>${position}/15</b></div>`}else if(currentStage===2){m.innerHTML=`<h3>Activa els 10 cristalls</h3><div class="crystals">${Array.from({length:10},(_,i)=>`<img class="crystal ${i<crystals?'on':''}" src="${i<crystals?CR_ON:CR_OFF}">`).join("")}</div><b>${crystals}/10</b>`}else{let pct=Math.max(0,bossHP/bossMax*100);m.innerHTML=`<div class="battle"><div class="fighter"><h3>EN HULK + EN MUL</h3><img src="${HERO}"><div class="hearts">${"❤️".repeat(heroHP)}</div></div><div class="fighter"><h3>EN NULL</h3><img src="${NULL_PHASES[currentPortal<=3?0:currentPortal<=6?1:currentPortal<=9?2:3]}"><div class="bossbar"><div class="bossfill" style="width:${pct}%"></div></div><b>${bossHP}/${bossMax}</b></div></div>`}}
