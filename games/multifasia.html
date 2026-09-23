@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Multifasia v2.1 · PERFILS + RÀNQUING GLOBAL</title>
+<title>Multifasia v2.2 · VS ONLINE + TORNAR PERFIL</title>
 <style>
 :root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
@@ -91,6 +91,7 @@ h1,h2,h3{margin:.3em 0}.muted{opacity:.8}.topbar{width:min(1050px,96vw);display:
 <section id="cover" class="screen active">
 <img class="coverImg" src="../assets/assets/multifasia/portada.webp"><div class="coverShade"></div>
 <button class="btn gold coverStart" onclick="startStory()">COMENÇAR</button>
+<button class="btn gray" style="position:absolute;left:24px;top:24px;z-index:3" onclick="returnToFasiaVerse()">← TORNAR AL PERFIL</button>
 </section>
 
 <section id="story" class="screen">
@@ -471,13 +472,89 @@ async function finishTimeTrial(){
   document.getElementById("timeBestMsg").textContent=best?"🏆 Nou millor temps!":"Temps guardat.";
   await renderTimeRanking(tt.mode);
 }
-function openVs(){show("vsMode");document.getElementById("vsPanel").innerHTML=""}
-function showVsCreate(){
- document.getElementById("vsPanel").innerHTML=`<h3>Crear sala</h3><p>El creador podrà escollir una taula concreta o MIX (×2–×10).</p><p>Després cada jugador escollirà un dels 8 personatges i començarà amb 10 ❤️.</p><button class="btn gray">GENERAR CODI — pròxim pas</button>`;
+function returnToFasiaVerse(){
+  const p=new URLSearchParams(location.search).get("profile")||sessionStorage.getItem("fasiaVerseProfileId");
+  location.href=p?`../index.html?return=profile&profile=${encodeURIComponent(p)}`:"../index.html";
 }
-function showVsJoin(){
- document.getElementById("vsPanel").innerHTML=`<h3>Entrar amb codi</h3><input class="answer" style="font-size:28px" maxlength="8" placeholder="CODI"><div><button class="btn" style="margin-top:15px">ENTRAR — pròxim pas</button></div>`;
+
+let vs={code:null,slot:null,room:null,poll:null,timer:null,deadline:0,lastQuestionKey:"",busy:false};
+function vsCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";return Array.from({length:5},()=>chars[Math.floor(Math.random()*chars.length)]).join("")}
+function vsQuestion(){let q;do{q=makeMultiplication([1,2,3,4,5,6,7,8,9,10])}while(q.key===vs.lastQuestionKey);vs.lastQuestionKey=q.key;return q}
+async function vsPatch(data){return api(`multifasia_vs_rooms?code=eq.${encodeURIComponent(vs.code)}`,{method:"PATCH",body:JSON.stringify({...data,updated_at:new Date().toISOString()})})}
+async function vsGet(code=vs.code){let r=await api(`multifasia_vs_rooms?code=eq.${encodeURIComponent(code)}&select=*&limit=1`);return r?.[0]||null}
+function openVs(){show("vsMode");stopVsLoops();vs={code:null,slot:null,room:null,poll:null,timer:null,deadline:0,lastQuestionKey:"",busy:false};document.getElementById("vsPanel").innerHTML=`<p class="muted">Duel online 1 contra 1 · 10 preguntes · 10 segons</p><div style="display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:28px 0"><button class="btn gold" onclick="showVsCreate()">CREAR SALA</button><button class="btn" onclick="showVsJoin()">ENTRAR AMB CODI</button></div>`}
+function showVsCreate(){document.getElementById("vsPanel").innerHTML=`<h3>CREAR PARTIDA</h3><p>Crearem un codi perquè l'altre jugador pugui entrar.</p><button class="btn gold" onclick="createVsRoom()">GENERAR CODI</button>`}
+function showVsJoin(){document.getElementById("vsPanel").innerHTML=`<h3>ENTRAR AMB CODI</h3><input id="vsJoinCode" class="answer" style="font-size:28px;text-transform:uppercase" maxlength="5" placeholder="CODI"><div><button class="btn" style="margin-top:15px" onclick="joinVsRoom()">ENTRAR</button></div><div id="vsMsg" class="feedback"></div>`}
+async function createVsRoom(){
+ try{
+  if(profileId==="guest")throw new Error("Entra des d'un perfil de Fasia Verse.");
+  await loadProfileName(); let code=vsCode();
+  while(await vsGet(code))code=vsCode();
+  vs.code=code;vs.slot="p1";
+  await api("multifasia_vs_rooms",{method:"POST",body:JSON.stringify({code,status:"waiting",p1_id:Number(profileId),p1_name:profileName,p1_score:0,p1_answered:false,p2_score:0,p2_answered:false,question_number:0,time_limit:10,tiebreak_round:0})});
+  renderVsWaiting();startVsPolling();
+ }catch(e){document.getElementById("vsPanel").innerHTML=`<h3>NO S'HA POGUT CREAR</h3><p>${escapeHtml(e.message)}</p><button class="btn" onclick="openVs()">TORNAR</button>`}
 }
+async function joinVsRoom(){
+ const inp=document.getElementById("vsJoinCode"),code=(inp?.value||"").trim().toUpperCase(),msg=document.getElementById("vsMsg");
+ if(code.length!==5){if(msg)msg.textContent="Escriu el codi de 5 caràcters.";return}
+ try{
+  if(profileId==="guest")throw new Error("Entra des d'un perfil de Fasia Verse."); await loadProfileName();
+  let room=await vsGet(code);if(!room)throw new Error("No existeix aquesta sala.");if(room.status!=="waiting"||room.p2_id)throw new Error("Aquesta sala ja ha començat.");
+  vs.code=code;vs.slot="p2";let q=vsQuestion();
+  await vsPatch({p2_id:Number(profileId),p2_name:profileName,status:"playing",question_number:1,question_a:q.a,question_b:q.b,time_limit:10,p1_answer:null,p2_answer:null,p1_answered:false,p2_answered:false,p1_correct:null,p2_correct:null});
+  startVsPolling();await refreshVs();
+ }catch(e){if(msg)msg.textContent=e.message}
+}
+function renderVsWaiting(){document.getElementById("vsPanel").innerHTML=`<h2>CODI DE LA PARTIDA</h2><div style="font-size:64px;font-weight:1000;letter-spacing:10px;color:var(--gold)">${vs.code}</div><p>Digues aquest codi al rival.</p><h3>⏳ ESPERANT EL SEGON JUGADOR...</h3><button class="btn gray" onclick="leaveVs()">CANCEL·LAR</button>`}
+function startVsPolling(){stopVsLoops();vs.poll=setInterval(refreshVs,450);refreshVs()}
+function stopVsLoops(){if(vs.poll)clearInterval(vs.poll);if(vs.timer)clearInterval(vs.timer);vs.poll=vs.timer=null}
+async function refreshVs(){
+ if(!vs.code||vs.busy)return;try{let room=await vsGet();if(!room)return;let old=vs.room;vs.room=room;
+  if(room.status==="waiting"){if(vs.slot==="p1")renderVsWaiting();return}
+  if(room.status==="rematch"&&vs.slot==="p1"){await resetVsMatch();return}
+  if(room.status==="playing"||room.status==="tiebreak"){
+    if(!old||old.question_number!==room.question_number||old.tiebreak_round!==room.tiebreak_round||old.status!==room.status)renderVsRound(room);else updateVsHud(room);
+    if(vs.slot==="p1")await maybeAdvanceVs(room);return;
+  }
+  if(room.status==="finished")renderVsFinished(room);
+ }catch(e){console.warn("VS refresh",e)}
+}
+function renderVsRound(r){
+ const tb=r.status==="tiebreak";vs.deadline=new Date(r.updated_at).getTime()+Number(r.time_limit)*1000;
+ document.getElementById("vsPanel").innerHTML=`${tb?`<h2 style="color:var(--red)">⚔️ MODE SENSE FALLOS ⚔️</h2><h3>RONDA ${r.tiebreak_round} · ${r.time_limit} SEGONS</h3>`:`<h2>PREGUNTA ${r.question_number}/10</h2>`}<div style="display:flex;justify-content:center;gap:35px;flex-wrap:wrap;font-size:22px"><b>${escapeHtml(r.p1_name||"Jugador 1")} <span id="vsp1">${r.p1_score}</span></b><b>—</b><b><span id="vsp2">${r.p2_score}</span> ${escapeHtml(r.p2_name||"Jugador 2")}</b></div><div id="vsClock" style="font-size:42px;font-weight:1000;margin:18px">${r.time_limit}</div><div class="question">${r.question_a} × ${r.question_b} = ?</div><input id="vsAnswer" class="answer" inputmode="numeric" autocomplete="off" placeholder="?"><div><button id="vsSubmit" class="btn" style="margin-top:14px" onclick="submitVsAnswer()">RESPONDRE</button></div><div id="vsRoundMsg" class="feedback"></div><button class="btn gray" style="margin-top:18px" onclick="leaveVs()">SORTIR</button>`;
+ document.getElementById("vsAnswer")?.addEventListener("keydown",e=>{if(e.key==="Enter")submitVsAnswer()});
+ if((vs.slot==="p1"&&r.p1_answered)||(vs.slot==="p2"&&r.p2_answered))lockVsAnswer();
+ if(vs.timer)clearInterval(vs.timer);vs.timer=setInterval(()=>tickVsClock(),100);tickVsClock();setTimeout(()=>document.getElementById("vsAnswer")?.focus(),30)
+}
+function updateVsHud(r){let a=document.getElementById("vsp1"),b=document.getElementById("vsp2");if(a)a.textContent=r.p1_score;if(b)b.textContent=r.p2_score;if((vs.slot==="p1"&&r.p1_answered)||(vs.slot==="p2"&&r.p2_answered))lockVsAnswer()}
+function tickVsClock(){if(!vs.room)return;let left=Math.max(0,(vs.deadline-Date.now())/1000),el=document.getElementById("vsClock");if(el)el.textContent=left.toFixed(1);if(left<=0){clearInterval(vs.timer);vs.timer=null;autoFailVs()}}
+function lockVsAnswer(msg="✓ RESPOSTA ENVIADA · esperant rival..."){let i=document.getElementById("vsAnswer"),b=document.getElementById("vsSubmit"),m=document.getElementById("vsRoundMsg");if(i)i.disabled=true;if(b)b.disabled=true;if(m)m.textContent=msg}
+async function submitVsAnswer(){
+ let r=vs.room,i=document.getElementById("vsAnswer");if(!r||!i||i.disabled||i.value.trim()==="")return;let val=Number(i.value),ok=val===Number(r.question_a)*Number(r.question_b);lockVsAnswer(ok?"✓ RESPOSTA ENVIADA":"✗ RESPOSTA ENVIADA");
+ let d={};d[vs.slot+"_answer"]=String(val);d[vs.slot+"_answered"]=true;d[vs.slot+"_correct"]=ok;if(r.status==="playing"&&ok)d[vs.slot+"_score"]=Number(r[vs.slot+"_score"]||0)+1;await vsPatch(d);await refreshVs();
+}
+async function autoFailVs(){let r=await vsGet();if(!r)return;let answered=r[vs.slot+"_answered"];if(answered)return;lockVsAnswer("⏱️ TEMPS! · esperant rival...");let d={};d[vs.slot+"_answered"]=true;d[vs.slot+"_correct"]=false;d[vs.slot+"_answer"]="TIME";await vsPatch(d);await refreshVs()}
+async function maybeAdvanceVs(r){
+ if(vs.busy)return;let expired=Date.now()>=new Date(r.updated_at).getTime()+Number(r.time_limit)*1000+250;if(!(r.p1_answered&&r.p2_answered)&&!expired)return;vs.busy=true;
+ try{
+  let latest=await vsGet();if(!latest)return;
+  if(expired){let d={};if(!latest.p1_answered){d.p1_answered=true;d.p1_correct=false;d.p1_answer="TIME"}if(!latest.p2_answered){d.p2_answered=true;d.p2_correct=false;d.p2_answer="TIME"}if(Object.keys(d).length){await vsPatch(d);latest=await vsGet()}}
+  if(latest.status==="playing"){
+   if(latest.question_number>=10){if(Number(latest.p1_score)!==Number(latest.p2_score)){await vsPatch({status:"finished",winner_id:Number(latest.p1_score)>Number(latest.p2_score)?latest.p1_id:latest.p2_id});return}let q=vsQuestion();await vsPatch({status:"tiebreak",tiebreak_round:1,time_limit:9,question_number:11,question_a:q.a,question_b:q.b,p1_answer:null,p2_answer:null,p1_answered:false,p2_answered:false,p1_correct:null,p2_correct:null});return}
+   let q=vsQuestion();await vsPatch({question_number:Number(latest.question_number)+1,question_a:q.a,question_b:q.b,p1_answer:null,p2_answer:null,p1_answered:false,p2_answered:false,p1_correct:null,p2_correct:null});return;
+  }
+  if(latest.status==="tiebreak"){
+   if(Boolean(latest.p1_correct)!==Boolean(latest.p2_correct)){await vsPatch({status:"finished",winner_id:latest.p1_correct?latest.p1_id:latest.p2_id});return}
+   let round=Number(latest.tiebreak_round)+1,q=vsQuestion();await vsPatch({tiebreak_round:round,time_limit:Math.max(2,10-round),question_number:Number(latest.question_number)+1,question_a:q.a,question_b:q.b,p1_answer:null,p2_answer:null,p1_answered:false,p2_answered:false,p1_correct:null,p2_correct:null});
+  }
+ }finally{vs.busy=false}
+}
+function renderVsFinished(r){if(vs.timer)clearInterval(vs.timer);vs.timer=null;let mine=String(r.winner_id)===String(profileId),winner=String(r.winner_id)===String(r.p1_id)?r.p1_name:r.p2_name;document.getElementById("vsPanel").innerHTML=`<h1>${mine?"🏆 HAS GUANYAT!":"🏁 PARTIDA ACABADA"}</h1><h2>${escapeHtml(winner||"Guanyador")}</h2><p style="font-size:26px"><b>${escapeHtml(r.p1_name||"")} ${r.p1_score} — ${r.p2_score} ${escapeHtml(r.p2_name||"")}</b></p><div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap"><button class="btn gold" onclick="requestVsRematch()">REVANXA</button><button class="btn gray" onclick="leaveVs()">SORTIR</button></div>`}
+async function requestVsRematch(){if(vs.slot==="p1")await resetVsMatch();else{await vsPatch({status:"rematch"});document.getElementById("vsPanel").innerHTML=`<h2>🔁 REVANXA</h2><p>Esperant que el creador reiniciï la partida...</p>`}}
+async function resetVsMatch(){let q=vsQuestion();await vsPatch({status:"playing",p1_score:0,p2_score:0,question_number:1,question_a:q.a,question_b:q.b,time_limit:10,tiebreak_round:0,winner_id:null,p1_answer:null,p2_answer:null,p1_answered:false,p2_answered:false,p1_correct:null,p2_correct:null});await refreshVs()}
+async function leaveVs(){stopVsLoops();if(vs.code&&vs.slot==="p1"){try{await api(`multifasia_vs_rooms?code=eq.${encodeURIComponent(vs.code)}`,{method:"DELETE"})}catch(e){}}vs.code=null;vs.room=null;showWorlds()}
+function escapeHtml(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
 
 function submitInfiniteAnswer(){
