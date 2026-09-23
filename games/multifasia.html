@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Multifasia v2.4 · RETORN PERFIL FIX</title>
+<title>Multifasia v2.5 · DESAFIAMENTS PERFIL</title>
 <style>
 :root{--bg:#071426;--panel:#102744;--cyan:#35e7ff;--gold:#ffd55c;--purple:#b05cff;--red:#ff5d73;--green:#56e28c}
 *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 50% 0,#16345d,#06111f 62%);color:white;min-height:100vh;overflow-x:hidden}
@@ -236,11 +236,16 @@ const VS_CHARACTERS={
   capi:"../assets/assets/multifasia/vs-capi.webp",
   colom:"../assets/assets/multifasia/vs-colom.webp"
 };
-const saveKey="multifasia_v01";
-let state=JSON.parse(localStorage.getItem(saveKey)||'null')||{portal:1,stars:{},infinite:false,coins:0,rewardedPortals:[],infiniteDaily:{date:"",correct:0,coins:0}};
+const MF_PROFILE_ID=new URLSearchParams(location.search).get("profile")||sessionStorage.getItem("fasiaVerseProfileId")||"guest";
+const saveKey=`multifasia_v01_${MF_PROFILE_ID}`;
+let savedRaw=localStorage.getItem(saveKey);
+if(!savedRaw && MF_PROFILE_ID!=="guest" && localStorage.getItem("multifasia_v01")){savedRaw=localStorage.getItem("multifasia_v01");}
+let state=JSON.parse(savedRaw||'null')||{portal:1,stars:{},infinite:false,coins:0,rewardedPortals:[],infiniteDaily:{date:"",correct:0,coins:0},bestInfiniteRun:0,timeCompleted:[]};
 state.coins=Number(state.coins||0);
 state.rewardedPortals=Array.isArray(state.rewardedPortals)?state.rewardedPortals:[];
 state.infiniteDaily=state.infiniteDaily||{date:"",correct:0,coins:0};
+state.bestInfiniteRun=Number(state.bestInfiniteRun||0);
+state.timeCompleted=Array.isArray(state.timeCompleted)?state.timeCompleted:[];
 let currentPortal=1,currentStage=1,correct=0,answerValue=0,position=0,crystals=0,heroHP=3,bossHP=8,bossMax=8,infiniteScore=0;
 
 function save(){localStorage.setItem(saveKey,JSON.stringify(state))}
@@ -380,14 +385,14 @@ function unlockInfinite(){state.infinite=true;save();showWorlds()}
 let tt={mode:null,count:0,q:null,start:0,timer:null,running:false};
 
 function timeRecords(){
-  try{return JSON.parse(localStorage.getItem("multifasia_time_records")||"{}")}catch(e){return {}}
+  try{return JSON.parse(localStorage.getItem(`multifasia_time_records_${MF_PROFILE_ID}`)||localStorage.getItem("multifasia_time_records")||"{}")}catch(e){return {}}
 }
 function saveTimeRecord(mode,seconds){
   let all=timeRecords(), key=String(mode), arr=Array.isArray(all[key])?all[key]:[];
   arr.push({name:"Jugador",time:seconds,date:Date.now()});
   arr.sort((a,b)=>a.time-b.time);
   all[key]=arr.slice(0,5);
-  localStorage.setItem("multifasia_time_records",JSON.stringify(all));
+  localStorage.setItem(`multifasia_time_records_${MF_PROFILE_ID}`,JSON.stringify(all));
   return arr[0]?.time===seconds;
 }
 function renderTimeRanking(mode){
@@ -456,6 +461,7 @@ function finishTimeTrial(){
   document.getElementById("timeFinish").style.display="";
   document.getElementById("timeFinal").textContent=`${seconds.toFixed(2)} s`;
   let best=saveTimeRecord(tt.mode,seconds);
+  const ttKey=String(tt.mode);if(!state.timeCompleted.includes(ttKey)){state.timeCompleted.push(ttKey);save();}
   document.getElementById("timeBestMsg").textContent=best?"🏆 Nou millor temps!":"Temps guardat.";
   renderTimeRanking(tt.mode);
 }
@@ -475,6 +481,7 @@ function submitInfiniteAnswer(){
   let ok=Number(input.value)===answerValue;
   if(ok){
     infiniteScore++;
+    if(infiniteScore>state.bestInfiniteRun){state.bestInfiniteRun=infiniteScore;save();}
     let reward=rewardInfiniteCorrect();
     let sc=document.getElementById("infScore"); if(sc)sc.textContent=infiniteScore;
     let dc=document.getElementById("infDailyCorrect"); if(dc)dc.textContent=state.infiniteDaily.correct;
