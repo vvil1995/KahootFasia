@@ -1,0 +1,956 @@
+<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fasia Prisma · v2.6.2 FASIA VERSE POLIT</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 30%,#173554,#07111f 55%,#02060b);color:#f7fbff;font-family:Arial,sans-serif;min-height:100vh}button{font:inherit;color:inherit;cursor:pointer}.screen{display:none;min-height:100vh}.active{display:flex}#home{align-items:center;justify-content:center;text-align:center}.hero{width:min(760px,92vw);padding:42px 24px;border:1px solid #34516d;border-radius:28px;background:#0b1929e8;box-shadow:0 30px 80px #0009}.logo{display:flex;justify-content:center;align-items:center}.logo img{display:block;width:min(520px,88vw);max-height:230px;object-fit:contain}.topLogo{height:48px;width:auto;max-width:210px;object-fit:contain;display:block}.btn{border:0;border-radius:15px;padding:14px 22px;font-weight:800;background:linear-gradient(135deg,#42b9ff,#735cff)}#game{padding:12px;flex-direction:column}.top{width:min(1150px,100%);margin:auto;display:flex;justify-content:space-between;align-items:center;padding:8px}.layout{width:min(1150px,100%);margin:auto;display:grid;grid-template-columns:1fr 280px;gap:14px}.boardbox{aspect-ratio:1;border-radius:26px;background:#071321 url('assets/fasiaprisma/board.webp') center center / 100% 100% no-repeat;border:1px solid #29445f;overflow:hidden;box-shadow:0 20px 55px #0008}svg{width:100%;height:100%}.edge{stroke:transparent;stroke-width:2;stroke-linecap:round}.space{stroke:#ffffffd8;stroke-width:2.1;fill-opacity:.88;filter:drop-shadow(0 2px 3px #0008)}.normal{}.reroll{fill:#f7fbff!important;stroke:#a9bdd0;stroke-width:2}.destination{stroke:#fff;stroke-width:8;filter:drop-shadow(0 0 14px #fff);cursor:pointer;animation:pulse 1s infinite alternate}@keyframes pulse{to{stroke-width:12}}.portal{stroke:#fff;stroke-width:4;opacity:0;fill:none!important;fill-opacity:0!important;pointer-events:none}.portal.destination{opacity:1;fill:none!important;fill-opacity:0!important;stroke-width:8;pointer-events:auto;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}.portal.occupied:not(.destination){opacity:0;fill:none!important;fill-opacity:0!important}.center{fill:none!important;stroke:#fff;stroke-width:6;opacity:0;pointer-events:none}
+.center.destination{fill:none!important;opacity:1;stroke-width:8;pointer-events:auto;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}
+.center.occupied:not(.destination){opacity:0}.choice{stroke:#fff;stroke-width:7;filter:drop-shadow(0 0 10px #fff);cursor:pointer}.token{stroke:#fff;stroke-width:3}.player{fill:#67d7ff}.cpu{fill:#ff6577}.side{display:flex;flex-direction:column;gap:12px}.card{background:#0c1a2ae8;border:1px solid #29455f;border-radius:20px;padding:16px}.card h3{margin-top:0}.die{width:82px;height:82px;background:white;color:#102033;border-radius:18px;display:grid;place-items:center;margin:8px auto 12px;font-size:42px;font-weight:900}.wide{width:100%}.crystals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.crystal{aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-size:24px;opacity:.18;border:2px solid #fff8}.crystal.got{opacity:1;box-shadow:0 0 18px currentColor}.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ffffff14}.muted{color:#a9bdd0;font-size:13px}.modal{display:none;position:fixed;inset:0;background:#02060bdd;z-index:5;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{width:min(700px,96vw);background:#0c1929;border:1px solid #36536f;border-radius:24px;padding:24px}.cat{font-size:13px;letter-spacing:2px;font-weight:900;text-transform:uppercase}.question{font-size:clamp(21px,4vw,30px);font-weight:900;margin:10px 0 18px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{min-height:68px;text-align:left;border:1px solid #3b536a;background:#14283b;border-radius:15px;padding:14px;font-weight:700}.answer.good{background:#174c36}.answer.bad{background:#542330}.rolls{display:flex;justify-content:center;gap:18px;text-align:center}.roll{padding:16px 24px;background:#13283b;border-radius:16px}.big{font-size:42px;font-weight:900}@media(max-width:800px){.layout{grid-template-columns:1fr}.answers{grid-template-columns:1fr}}
+
+.diffs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.diff{border:1px solid #45627d;background:#11263a;border-radius:18px;padding:18px 10px;font-weight:900}.diff small{display:block;margin-top:6px;color:#a9bdd0}.finalScore{font-size:48px;font-weight:900;margin:8px 0}@media(max-width:600px){.diffs{grid-template-columns:1fr}}
+
+.die{background:#0d1d2d;border:1px solid #38536e;padding:5px;overflow:hidden}
+.die img{width:100%;height:100%;object-fit:contain;display:block}
+.crystals{grid-template-columns:repeat(3,1fr);gap:12px}
+.crystal{
+  aspect-ratio:1;
+  border-radius:16px;
+  display:grid;
+  place-items:center;
+  opacity:1;
+  border:1px solid #ffffff16;
+  background:linear-gradient(180deg,#102237cc,#091522cc);
+  overflow:hidden;
+  padding:4px;
+}
+.crystal img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  filter:brightness(.38) saturate(.85) contrast(.95);
+  opacity:.78;
+  transition:.3s ease;
+}
+.crystal.got{
+  box-shadow:0 0 20px #ffffff22,inset 0 0 18px #ffffff0d;
+}
+.crystal.got img{
+  filter:brightness(1.03) saturate(1.05);
+  opacity:1;
+  transform:scale(1.02);
+}
+
+
+.roll .big{
+  min-width:88px;
+  min-height:88px;
+  display:grid;
+  place-items:center;
+}
+.roll .big img{
+  width:84px;
+  height:84px;
+  object-fit:contain;
+  display:block;
+}
+
+
+/* Geometry is registered to the native 1254px board art; both scale 1:1 at any viewport. */
+.boardbox svg{width:100%;height:100%;display:block;transform:none;touch-action:manipulation}
+.boardbox .edge{stroke:transparent!important}
+.boardbox .portal{fill-opacity:.32;stroke:#ffffffed;stroke-width:3.7;filter:drop-shadow(0 0 4px #fff8)}
+.boardbox .normal{fill-opacity:.90}
+.boardbox .center{fill:#0713211c;stroke:#d2f4ffcf;stroke-width:3.5}
+.boardbox .destination{fill-opacity:.97!important;stroke:#fff!important;stroke-width:8!important;filter:drop-shadow(0 0 10px #fff)!important}
+.boardbox .token{pointer-events:none}
+
+/* v2.4.2: flux Fasia Prisma sense tocar el taulell */
+#home{padding:0!important;background:#030713!important;}
+#home .hero{width:100%;min-height:100vh;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;padding:0 18px 7vh;background:linear-gradient(180deg,transparent 52%,rgba(2,5,16,.2) 66%,rgba(2,5,16,.78) 100%),url("assets/fasiaprisma/cover.webp") center/cover no-repeat!important;}
+#home .hero>*:not(.playPrisma){display:none!important}
+.playPrisma{font-size:clamp(24px,5vw,42px);font-weight:1000;padding:15px 54px;border-radius:22px;border:3px solid #ffd65a;background:linear-gradient(#9b3cff,#4b128f);color:#fff;box-shadow:0 0 0 4px #3a176d,0 10px 30px #000b,0 0 24px #b65cff;cursor:pointer}
+#levels,#characters{background:radial-gradient(circle at 50% 8%,#293578,#090c27 56%,#03040e);min-height:100vh;padding:18px;color:#fff;text-align:center;flex-direction:column;align-items:center;overflow:auto}
+.flowLogo{width:min(430px,68vw);max-height:180px;object-fit:contain;margin:0 auto 4px;display:block}
+.flowTitle{font-size:clamp(24px,4vw,38px);font-weight:1000;margin:0 0 18px;text-shadow:0 3px 12px #000}
+.levelGrid{display:grid;grid-template-columns:repeat(3,minmax(130px,220px));gap:18px;justify-content:center;max-width:760px;width:100%;margin:auto}
+.levelCard{padding:26px 10px;border-radius:22px;border:3px solid #f4c95d;background:linear-gradient(145deg,#35165d,#121936);color:#fff;font-weight:1000;font-size:22px;cursor:pointer;box-shadow:0 8px 22px #0008}
+.levelCard small{display:block;font-size:13px;opacity:.8;margin-top:5px}
+.charGrid{display:grid;grid-template-columns:repeat(4,minmax(125px,190px));gap:14px;justify-content:center;max-width:880px;width:100%;margin:auto}
+.charCard{border:3px solid #ffffff44;background:#0b1230;border-radius:20px;padding:8px 8px 11px;color:#fff;font-weight:900;font-size:16px;cursor:pointer;overflow:hidden}
+.charCard img{width:100%;aspect-ratio:1/1;object-fit:contain;object-position:center;border-radius:14px;display:block;margin-bottom:6px}
+.backFlow{position:absolute;left:14px;top:14px;z-index:4;border:2px solid #ffffff66;background:#111a3ddd;color:#fff;border-radius:14px;padding:9px 13px;font-weight:900}
+.playerMini,.cpuMini{filter:drop-shadow(0 0 3px #fff) drop-shadow(0 2px 4px #000);pointer-events:none}.cpuMini{filter:drop-shadow(0 0 3px #ff7a7a) drop-shadow(0 2px 4px #000)}
+@media(max-width:650px){.charGrid{grid-template-columns:repeat(2,minmax(120px,1fr));max-width:390px}.levelGrid{grid-template-columns:1fr;max-width:330px}.flowLogo{width:min(330px,72vw)}}
+
+.portalSeal{transition:opacity .55s ease,transform .55s ease;transform-origin:400px 400px;transform:translateY(-8px)}
+.sealOuter{fill:rgba(3,7,22,.82);stroke:#e1b84e;stroke-width:6;filter:drop-shadow(0 0 10px #815cff)}
+.sealInner{fill:rgba(6,9,30,.76);stroke:#8d73e6;stroke-width:2}
+.sealRune{fill:none;stroke:#e1b84e;stroke-width:3}
+.sealGem{fill:#20293b;stroke:#eef2ff;stroke-width:2}
+.portalSeal.open{opacity:0;transform:translateY(-8px) scale(1.35)}
+.sg0.on{fill:#2d8cff}.sg1.on{fill:#ffd23f}.sg2.on{fill:#43d17d}.sg3.on{fill:#a96cff}.sg4.on{fill:#ff9238}.sg5.on{fill:#ef5ca8}
+.sealGem.on{filter:drop-shadow(0 0 7px #fff)}
+
+.flowBox{width:min(900px,94vw);margin:auto;text-align:center}
+.modeGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:min(900px,94vw);margin:22px auto}
+.modeCard{min-height:150px;border:2px solid #82d9ff;border-radius:22px;background:linear-gradient(180deg,#172d50,#081426);color:#fff;font-size:20px;font-weight:900;padding:20px;cursor:pointer;box-shadow:0 10px 28px #0009}
+.modeCard b,.modeCard small{display:block}.modeCard small{font-size:14px;margin-top:10px;opacity:.75}.modeCard.soon{opacity:.42;cursor:default}
+.countRow{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px}
+.countRow button,.flowContinue{border:2px solid #ffd65a;border-radius:18px;background:linear-gradient(#8f39e8,#461080);color:#fff;font-weight:1000;font-size:24px;padding:14px 25px;cursor:pointer}
+.localNameRows{display:grid;gap:12px;width:min(650px,92vw);margin:20px auto}
+.localNameRow{display:grid;grid-template-columns:125px 1fr;align-items:center;gap:12px;padding:12px 14px;border:1px solid #557aa9;border-radius:16px;background:#08172dcc}
+.localNameRow b{text-align:left}.localNameRow input{min-width:0;border:2px solid #6f91bc;border-radius:12px;background:#07111f;color:#fff;font-size:18px;padding:12px}
+.localCharWho{font-size:22px;font-weight:1000;margin:8px 0 16px}.charCard.taken{opacity:.25;pointer-events:none;filter:grayscale(1)}
+@media(max-width:700px){.modeGrid{grid-template-columns:1fr;gap:10px}.modeCard{min-height:100px}.localNameRow{grid-template-columns:100px 1fr}}
+
+.localOpeningList{display:grid;gap:9px;margin:16px 0;max-height:46vh;overflow:auto}
+.localOpeningRow{display:grid;grid-template-columns:1fr 64px;align-items:center;gap:12px;background:#0a1830;border:1px solid #557aa9;border-radius:14px;padding:10px 14px}
+.localOpeningRow b{text-align:left}.localOpeningDie{font-size:30px;font-weight:1000}
+.localScoreRows{display:grid;gap:7px;margin-top:8px}.localScoreRow{display:flex;justify-content:space-between;gap:10px}
+
+.portal.destination{fill:transparent!important;fill-opacity:0!important;pointer-events:all!important;cursor:pointer}
+.occupiedDestHalo{fill:none;stroke:#fff;stroke-width:7;pointer-events:none;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #72d8ff);animation:pulse 1s infinite alternate}
+#allCrystalsModal .box{max-width:520px;text-align:center}
+.crystalDoneTitle{font-size:28px;font-weight:1000;margin-bottom:12px}.crystalDoneText{font-size:18px;line-height:1.45}
+@media (min-width:901px) and (min-height:650px){
+ #game.active{height:100vh;min-height:0;overflow:hidden;padding:4px 8px;box-sizing:border-box}
+ #game .top{min-height:50px;padding:3px 8px}
+ #game .layout{height:calc(100vh - 62px);min-height:0;align-items:start;grid-template-columns:minmax(0,1fr) 280px;gap:10px}
+ #game .boardbox{width:min(100%,calc(100vh - 70px));max-width:calc(100vh - 70px);justify-self:end}
+ #game .side{max-height:calc(100vh - 70px);overflow:hidden}
+ #game .card{padding:10px} #game .crystals{gap:4px}
+}
+
+/* v2.6.2 · caràtula + marcador local amb scroll */
+#home .hero{position:relative}
+.homeBackFV{position:absolute;top:18px;left:18px;z-index:3;border:1px solid #ffffff55;border-radius:14px;padding:11px 16px;background:#071321cc;color:#fff;font-weight:900;backdrop-filter:blur(5px);box-shadow:0 6px 18px #0007}
+#localScoreRows.localScoreRows{max-height:118px;overflow-y:auto;overflow-x:hidden;padding-right:7px;scrollbar-gutter:stable;overscroll-behavior:contain}
+#localScoreRows .localScoreRow{min-height:28px;align-items:center}
+</style></head><body>
+<section id="home" class="screen active"><div class="hero">
+<button class="homeBackFV" onclick="returnToFasiaVerse()">← TORNAR AL PERFIL</button>
+<button class="playPrisma" onclick="showModes()">JUGAR</button>
+</div></section>
+
+<section id="modes" class="screen">
+  <button class="backFlow" onclick="goHome()">←</button>
+  <div class="flowBox">
+    <img class="flowLogo modeLogo" alt="Fasia Prisma">
+    <h1>MODE DE JOC</h1>
+    <div class="modeGrid">
+      <button class="modeCard" onclick="startSoloFlow()">👤 <b>1 JUGADOR</b><small>Contra la CPU</small></button>
+      <button class="modeCard" onclick="showLocalCount()">👥 <b>MULTIJUGADOR LOCAL</b><small>2–5 jugadors</small></button>
+      <button class="modeCard soon" disabled>🌐 <b>MULTIJUGADOR ONLINE</b><small>Properament</small></button>
+    </div>
+  </div>
+</section>
+
+<section id="localCount" class="screen">
+  <button class="backFlow" onclick="showModes()">←</button>
+  <div class="flowBox">
+    <img class="flowLogo modeLogo" alt="Fasia Prisma">
+    <h1>QUANTS JUGADORS?</h1>
+    <div class="countRow">
+      <button onclick="prepareLocalNames(2)">2</button>
+      <button onclick="prepareLocalNames(3)">3</button>
+      <button onclick="prepareLocalNames(4)">4</button>
+      <button onclick="prepareLocalNames(5)">5</button>
+    </div>
+  </div>
+</section>
+
+<section id="localNames" class="screen">
+  <button class="backFlow" onclick="showLocalCount()">←</button>
+  <div class="flowBox">
+    <img class="flowLogo modeLogo" alt="Fasia Prisma">
+    <h1>NOMS DELS JUGADORS</h1>
+    <div id="localNameRows" class="localNameRows"></div>
+    <button class="flowContinue" onclick="saveLocalNames()">CONTINUAR</button>
+  </div>
+</section>
+
+<section id="localCharacters" class="screen">
+  <button class="backFlow" onclick="setFlowScreen('localNames')">←</button>
+  <div class="flowBox">
+    <img class="flowLogo modeLogo" alt="Fasia Prisma">
+    <h1>TRIA PERSONATGE</h1>
+    <div id="localCharWho" class="localCharWho"></div>
+    <div id="localCharGrid" class="charGrid"></div>
+  </div>
+</section>
+
+<section id="levels" class="screen"><button class="backFlow" onclick="goHome()">←</button><img class="flowLogo" src="assets/fasiaprisma/logo.webp" alt="Fasia Prisma"><div class="flowTitle">TRIA EL NIVELL</div><div class="levelGrid"><button class="levelCard" onclick="chooseDifficulty(.30,'FÀCIL')">FÀCIL<small>CPU · 30%</small></button><button class="levelCard" onclick="chooseDifficulty(.55,'NORMAL')">NORMAL<small>CPU · 55%</small></button><button class="levelCard" onclick="chooseDifficulty(.75,'DIFÍCIL')">DIFÍCIL<small>CPU · 75%</small></button></div></section>
+<section id="characters" class="screen"><button class="backFlow" onclick="showLevels()">←</button><img class="flowLogo" src="assets/fasiaprisma/logo.webp" alt="Fasia Prisma"><div class="flowTitle">TRIA EL PERSONATGE</div><div class="charGrid"><button class="charCard" onclick="chooseCharacter(0)"><img data-char="0" alt="Hulk"><span>Hulk</span></button><button class="charCard" onclick="chooseCharacter(1)"><img data-char="1" alt="Tauró"><span>Tauró</span></button><button class="charCard" onclick="chooseCharacter(2)"><img data-char="2" alt="Golden"><span>Golden</span></button><button class="charCard" onclick="chooseCharacter(3)"><img data-char="3" alt="Zebra"><span>Zebra</span></button><button class="charCard" onclick="chooseCharacter(4)"><img data-char="4" alt="Lleó"><span>Lleó</span></button><button class="charCard" onclick="chooseCharacter(5)"><img data-char="5" alt="Mussol"><span>Mussol</span></button><button class="charCard" onclick="chooseCharacter(6)"><img data-char="6" alt="Elefant"><span>Elefant</span></button><button class="charCard" onclick="chooseCharacter(7)"><img data-char="7" alt="Guineu"><span>Guineu</span></button></div></section>
+<section id="game" class="screen"><div class="top"><img class="topLogo" src="assets/fasiaprisma/logo.webp" alt="Fasia Trivial"><span id="status">Preparant...</span><button class="btn" onclick="returnToFasiaVerse()">SORTIR</button></div><div class="layout"><div class="boardbox"><svg id="board" viewBox="0 0 800 800">
+</svg></div><aside class="side"><div class="card"><h3>Els teus cristalls</h3><div id="crystals" class="crystals"></div></div><div class="card"><h3>Dau</h3><div id="die" class="die"><img id="dieImg" alt="Dau" src="assets/fasiaprisma/dice-1.webp" /></div><button id="rollBtn" class="btn wide" onclick="roll()">TIRAR DAU</button><p id="hint" class="muted">Tira el dau quan sigui el teu torn.</p></div><div class="card"><h3>Partida</h3><div class="row"><span>Tu</span><b id="pc">0/6</b></div><div class="row"><span>CPU</span><b id="cc">0/6</b></div><p class="muted"><span id="levelTxt">CPU · Normal · 55%</span><br>Després de tirar, tria directament una de les caselles finals il·luminades.</p></div></aside></div></section>
+
+<div id="localOpening" class="modal">
+ <div class="box" style="text-align:center">
+  <div class="cat">QUI COMENÇA?</div>
+  <div class="question">Tirada inicial</div>
+  <div id="localOpeningList" class="localOpeningList"></div>
+  <p id="localOpeningText"></p>
+  <button id="localOpeningBtn" class="btn">TIRAR DAUS</button>
+ </div>
+</div>
+<div id="allCrystalsModal" class="modal"><div class="box">
+<div class="crystalDoneTitle">💎 HAS ACONSEGUIT TOTS ELS CRISTALLS!</div>
+<div class="crystalDoneText">Si vols guanyar, ves al <b>Portal Central</b> i encerta <b>2 de 3 preguntes</b>.</div>
+<button id="allCrystalsContinue" class="btn">CONTINUAR</button>
+</div></div>
+<div id="opening" class="modal"><div class="box" style="text-align:center"><div class="cat">QUI COMENÇA?</div><div class="question">Tirada inicial</div><div class="rolls"><div class="roll">TU<div id="op" class="big"><img id="opImg" alt="Dau jugador" /></div></div><div class="roll">CPU<div id="oc" class="big"><img id="ocImg" alt="Dau CPU" /></div></div></div><p id="ot"></p><button id="ob" class="btn" onclick="openRoll()">TIRAR DAUS</button></div></div>
+<div id="qm" class="modal"><div class="box"><div id="qcat" class="cat"></div><div id="qt" class="question"></div><div id="ans" class="answers"></div><p id="res"></p></div></div><div id="fm" class="modal"><div class="box"><div class="cat">PORTAL FINAL</div><div id="fprogress" class="finalScore">0/3</div><div id="fcat" class="cat"></div><div id="fqt" class="question"></div><div id="fans" class="answers"></div><p id="fres"></p></div></div><div id="winm" class="modal"><div class="box" style="text-align:center"><div id="winTitle" class="question"></div><p id="winText"></p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" onclick="location.reload()">NOVA PARTIDA</button><button class="btn" onclick="returnToFasiaVerse()">TORNAR A FASIA VERSE</button></div></div></div>
+<script>
+// FASIA VERSE · integració perfil + recompenses del mode 1 jugador
+const FV_SUPABASE_URL="https://gzbvcxputhkyunemxzjm.supabase.co";
+const FV_SUPABASE_KEY="sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
+const fvParams=new URLSearchParams(location.search);
+const fvProfileId=fvParams.get("profile")||sessionStorage.getItem("fasiaVerseProfileId")||"";
+let fvRewardSaved=false;
+async function fvApi(path,options={}){
+  const r=await fetch(FV_SUPABASE_URL+"/rest/v1/"+path,{...options,headers:{"apikey":FV_SUPABASE_KEY,"Authorization":"Bearer "+FV_SUPABASE_KEY,"Content-Type":"application/json","Prefer":options.prefer||"return=representation",...(options.headers||{})}});
+  if(!r.ok)throw new Error(await r.text());
+  const t=await r.text();return t?JSON.parse(t):null;
+}
+function returnToFasiaVerse(){
+  if(fvProfileId){sessionStorage.setItem("fasiaVerseProfileId",String(fvProfileId));sessionStorage.setItem("fasiaVerseReturnToProfile","1");}
+  location.href="../index.html?return=profile"+(fvProfileId?"&profile="+encodeURIComponent(fvProfileId):"");
+}
+function soloVictoryReward(){
+  if(cpuRate<=.30)return 4;
+  if(cpuRate<=.55)return 7;
+  return 10;
+}
+async function awardSoloVictoryCoins(){
+  if(gameMode!=="solo"||fvRewardSaved||!fvProfileId)return 0;
+  fvRewardSaved=true;
+  const reward=soloVictoryReward();
+  try{
+    const rows=await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=coins&limit=1`);
+    if(!rows||!rows[0])throw new Error("Perfil no trobat");
+    const total=Number(rows[0].coins||0)+reward;
+    await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}`,{method:"PATCH",body:JSON.stringify({coins:total})});
+    return reward;
+  }catch(e){console.error("Fasia Prisma: no s'han pogut guardar les monedes",e);fvRewardSaved=false;return -1}
+}
+const diceFaces=["assets/fasiaprisma/dice-1.webp", "assets/fasiaprisma/dice-2.webp", "assets/fasiaprisma/dice-3.webp", "assets/fasiaprisma/dice-4.webp", "assets/fasiaprisma/dice-5.webp", "assets/fasiaprisma/dice-6.webp"];
+const crystalImgs=["assets/fasiaprisma/crystal-blue.webp", "assets/fasiaprisma/crystal-yellow.webp", "assets/fasiaprisma/crystal-green.webp", "assets/fasiaprisma/crystal-purple.webp", "assets/fasiaprisma/crystal-orange.webp", "assets/fasiaprisma/crystal-pink.webp"];
+const cats=[['Geografia','#2d8cff'],['Història','#ffd23f'],['Ciències','#43d17d'],['Art i literatura','#a96cff'],['Esports','#ff9238'],['Actualitat i invents','#ef5ca8']];
+const qs=[
+[0,'On es troba la Sagrada Família?','Barcelona','Madrid','València','Sevilla'],
+[0,'Quina és la capital d\'Espanya?','Madrid','Barcelona','Sevilla','València'],
+[0,'Quina és la capital de França?','París','Brussel·les','Roma','Lisboa'],
+[0,'Quina és la capital del Japó?','Tòquio','Pequín','Seül','Bangkok'],
+[0,'Quina és la capital d\'Itàlia?','Roma','Milà','Venècia','Nàpols'],
+[0,'Quin riu es considera tradicionalment el més llarg del món?','Nil','Amazones','Mississipí','Iang-Tsé'],
+[0,'Quina és la muntanya més alta del món?','Everest','K2','Kilimanjaro','Mont Blanc'],
+[0,'Quin és el desert càlid més gran del món?','Sàhara','Gobi','Kalahari','Atacama'],
+[0,'Quin és l\'oceà més gran?','Pacífic','Atlàntic','Índic','Àrtic'],
+[0,'Quin és el país més gran del món?','Rússia','Canadà','Xina','Estats Units'],
+[0,'Quin és el país més petit del món?','Vaticà','Mònaco','Andorra','Malta'],
+[0,'On es troba la Gran Muralla?','Xina','Japó','Índia','Mongòlia'],
+[0,'On es troben les piràmides de Gizeh?','Egipte','Mèxic','Grècia','Iraq'],
+[0,'On es troba el Coliseu?','Roma','Atenes','París','Istanbul'],
+[0,'Quin és el llac més gran del món?','Mar Caspi','Superior','Victòria','Baikal'],
+[0,'A quin país pertanyen les Illes Canàries?','Espanya','Portugal','Marroc','França'],
+[0,'Quin continent és també un país?','Austràlia','Àsia','Europa','Àfrica'],
+[0,'Quina és l\'àrea metropolitana més poblada del món?','Tòquio','Nova York','Londres','París'],
+[0,'En quin oceà es troba el Pol Nord?','Àrtic','Atlàntic','Pacífic','Índic'],
+[0,'Quins països europeus tenen frontera terrestre amb Espanya?','França, Portugal i Andorra','França, Itàlia i Portugal','Portugal, Bèlgica i França','Andorra, França i Suïssa'],
+[0,'Quina és la capital de Catalunya?','Barcelona','Girona','Tarragona','Lleida'],
+[0,'Quin és el continent més gran?','Àsia','Àfrica','Amèrica del Nord','Europa'],
+[0,'Quin és el continent més petit?','Oceania','Europa','Antàrtida','Amèrica del Sud'],
+[0,'Quin mar banya Barcelona?','Mediterrani','Cantàbric','Mar Negre','Adriàtic'],
+[0,'Quin país té forma de bota?','Itàlia','Grècia','Portugal','Croàcia'],
+[0,'Quin país és conegut com el país del sol naixent?','Japó','Xina','Corea del Sud','Tailàndia'],
+[0,'Quina és la capital d\'Alemanya?','Berlín','Viena','Brussel·les','Amsterdam'],
+[0,'Quina és la capital del Regne Unit?','Londres','Dublín','Manchester','Edimburg'],
+[0,'Quina és la capital de Portugal?','Lisboa','Porto','Coimbra','Braga'],
+[0,'Quin és el continent més fred?','Antàrtida','Europa','Àsia','Amèrica del Nord'],
+[0,'Quin riu travessa Egipte?','Nil','Congo','Níger','Zambezi'],
+[0,'A quin continent es troba el Brasil?','Amèrica del Sud','Amèrica del Nord','Àfrica','Àsia'],
+[0,'Quina serralada separa Espanya i França?','Pirineus','Alps','Andes','Apenins'],
+[0,'A quin continent es troba Kenya?','Àfrica','Àsia','Oceania','Amèrica del Sud'],
+[0,'Quina és la capital de Grècia?','Atenes','Esparta','Tessalònica','Corint'],
+[1,'Com s\'anomenaven els reis de l\'antic Egipte?','Faraons','Cònsols','Emperadors','Sultans'],
+[1,'Quin idioma parlaven els romans?','Llatí','Grec','Àrab','Hebreu'],
+[1,'Quina civilització és considerada el bressol de la democràcia?','Grècia','Egipte','Roma','Pèrsia'],
+[1,'En quin any Colom va arribar a Amèrica?','1492','1453','1519','1588'],
+[1,'En quin any va caure el Mur de Berlín?','1989','1945','1961','1999'],
+[1,'En quin any va començar la Revolució Francesa?','1789','1776','1815','1848'],
+[1,'Què és la prehistòria?','Etapa anterior a l\'escriptura','Etapa de l\'Imperi Romà','Etapa posterior a l\'Edat Mitjana','Etapa de la industrialització'],
+[1,'On trobem principalment art rupestre?','Coves','Aqüeductes','Catedrals','Amfiteatres'],
+[1,'Qui va ser Cleopatra?','Reina d\'Egipte','Emperadriu romana','Filòsofa grega','Reina francesa'],
+[1,'Qui va ser Juli Cèsar?','General i líder romà','Faraó egipci','Rei grec','Emperador francès'],
+[1,'Qui va ser Napoleó?','Emperador de França','Rei d\'Anglaterra','Emperador romà','President dels EUA'],
+[1,'Qui va construir les piràmides de Gizeh?','Egipcis','Romans','Grecs','Vikings'],
+[1,'Qui va ser Cristòfor Colom?','Navegant','Pintor','Emperador','Científic'],
+[1,'Qui va ser Marie Curie?','Científica','Pintora','Escriptora','Reina'],
+[1,'Qui va ser Mozart?','Compositor','Pintor','Escultor','Científic'],
+[1,'Quin imperi va construir el Coliseu?','Romà','Egipci','Otomà','Persa'],
+[1,'Qui va ser Leonardo da Vinci?','Artista i inventor','Emperador i general','Navegant i explorador','Rei i polític'],
+[1,'Com s\'anomenaven els guerrers del Japó feudal?','Samurais','Vikings','Gladiadors','Espartans'],
+[1,'Quina civilització és famosa pels aqüeductes?','Romans','Vikings','Maies','Egipcis'],
+[1,'Quin vaixell famós es va enfonsar el 1912?','Titànic','Santa María','Mayflower','Victoria'],
+[1,'Quina civilització va construir el Partenó?','Grecs','Romans','Egipcis','Fenicis'],
+[1,'A quina ciutat es troba el Partenó?','Atenes','Roma','Esparta','Alexandria'],
+[1,'Qui eren els gladiadors?','Lluitadors de l\'antiga Roma','Sacerdots egipcis','Filòsofs grecs','Guerrers japonesos'],
+[1,'Com s\'anomena l\'escriptura egípcia antiga?','Jeroglífics','Cuneïforme','Llatí','Alfabet ciríl·lic'],
+[1,'Qui era Tutankamon?','Faraó','Emperador romà','Filòsof grec','Rei medieval'],
+[1,'Quina ciutat va quedar enterrada pel Vesuvi?','Pompeia','Atenes','Cartago','Troia'],
+[1,'Qui va ser el primer emperador romà?','August','Juli Cèsar','Neró','Trajà'],
+[1,'Quina civilització va crear els Jocs Olímpics antics?','Grecs','Romans','Egipcis','Perses'],
+[1,'Què eren principalment els castells medievals?','Fortaleses','Temples','Teatres','Mercats'],
+[1,'Qui va ser el primer humà a trepitjar la Lluna?','Neil Armstrong','Yuri Gagarin','Buzz Aldrin','John Glenn'],
+[1,'Quin conflicte mundial va acabar el 1945?','Segona Guerra Mundial','Primera Guerra Mundial','Guerra Freda','Guerra de Vietnam'],
+[1,'Qui va ser Gandhi?','Líder de la independència de l\'Índia','Emperador japonès','President nord-americà','General romà'],
+[1,'Qui va fundar Roma segons la llegenda?','Ròmul','Rem','August','Enees'],
+[1,'Quina etapa ve després de la prehistòria?','Edat Antiga','Edat Mitjana','Edat Moderna','Edat Contemporània'],
+[2,'Quin gas és necessari per a la fotosíntesi?','Diòxid de carboni','Oxigen','Hidrogen','Nitrogen'],
+[2,'Quin és el planeta més gran del Sistema Solar?','Júpiter','Saturn','Terra','Neptú'],
+[2,'Quin òrgan controla el sistema nerviós?','Cervell','Cor','Pulmons','Fetge'],
+[2,'Quina és la unitat bàsica de la vida?','Cèl·lula','Àtom','Òrgan','Teixit'],
+[2,'Quin és l\'òrgan més gran del cos humà?','Pell','Fetge','Cervell','Pulmó'],
+[2,'Quin és l\'animal terrestre més ràpid?','Guepard','Lleó','Cavall','Gasela'],
+[2,'Quin és el mamífer més gran?','Balena blava','Elefant africà','Orca','Girafa'],
+[2,'Quin científic està relacionat amb la llei de la gravetat?','Isaac Newton','Albert Einstein','Charles Darwin','Galileo Galilei'],
+[2,'Quines són fases principals del cicle de l\'aigua?','Evaporació, condensació i precipitació','Fusió, combustió i precipitació','Respiració, evaporació i fotosíntesi','Condensació, digestió i evaporació'],
+[2,'Quin és el planeta vermell?','Mart','Venus','Mercuri','Júpiter'],
+[2,'Quin és el satèl·lit natural de la Terra?','Lluna','Sol','Mart','Venus'],
+[2,'Quin gas necessitem per respirar?','Oxigen','Hidrogen','Heli','Diòxid de carboni'],
+[2,'A quina temperatura bull l\'aigua al nivell del mar?','100 °C','0 °C','50 °C','200 °C'],
+[2,'Quin és l\'animal terrestre més gran?','Elefant africà','Girafa','Rinoceront','Hipopòtam'],
+[2,'Quants planetes té el Sistema Solar?','8','7','9','10'],
+[2,'Quin òrgan bombeja la sang?','Cor','Pulmó','Estómac','Ronyó'],
+[2,'Quin planeta és el més proper al Sol?','Mercuri','Venus','Terra','Mart'],
+[2,'Com s\'anomena la nostra galàxia?','Via Làctia','Andròmeda','Sombrero','Triangle'],
+[2,'Quin planeta té uns anells molt visibles?','Saturn','Mart','Venus','Mercuri'],
+[2,'Quina és l\'estrella més propera a la Terra?','Sol','Sírius','Polar','Betelgeuse'],
+[2,'Quants ossos té aproximadament un adult?','206','106','306','406'],
+[2,'Quins són els principals òrgans de la respiració?','Pulmons','Ronyons','Intestins','Fetge'],
+[2,'Quins òrgans filtren la sang i produeixen orina?','Ronyons','Pulmons','Estómac','Pàncrees'],
+[2,'Quin sentit està relacionat amb les orelles?','Oïda','Vista','Gust','Tacte'],
+[2,'Com s\'anomenen els animals que mengen principalment plantes?','Herbívors','Carnívors','Omnívors','Insectívors'],
+[2,'Com s\'anomenen els animals que mengen principalment carn?','Carnívors','Herbívors','Frugívors','Granívors'],
+[2,'Quin animal passa per una fase de capgròs?','Granota','Serp','Tortuga','Llangardaix'],
+[2,'Què necessita una planta per fer la fotosíntesi?','Llum, aigua i CO₂','Sal, oxigen i foscor','Aigua, carn i oxigen','Llum, nitrogen i sucre'],
+[2,'Quin metall és líquid a temperatura ambient?','Mercuri','Ferro','Alumini','Coure'],
+[2,'En quin estat es troba el gel?','Sòlid','Líquid','Gasós','Plasma'],
+[2,'Com s\'anomena el pas d\'aigua líquida a vapor?','Evaporació','Condensació','Solidificació','Fusió'],
+[2,'Quina força ens manté sobre la Terra?','Gravetat','Magnetisme','Electricitat','Fricció'],
+[2,'Quina és la substància natural més dura?','Diamant','Quars','Granit','Ferro'],
+[2,'Quin grup d\'animals té plomes?','Aus','Mamífers','Rèptils','Amfibis'],
+[3,'Qui va pintar el Guernica?','Picasso','Salvador Dalí','Joan Miró','Francisco de Goya'],
+[3,'Qui va pintar La Gioconda?','Leonardo da Vinci','Miquel Àngel','Rafael','Botticelli'],
+[3,'Qui va pintar La nit estrellada?','Van Gogh','Monet','Renoir','Cézanne'],
+[3,'Què és una simfonia?','Composició musical','Tècnica pictòrica','Tipus de novel·la','Escultura'],
+[3,'Què és una escultura?','Art de modelar formes','Art de compondre música','Art d\'escriure versos','Art de representar danses'],
+[3,'Què és l\'arquitectura?','Art i tècnica de dissenyar edificis','Art de compondre música','Art de modelar fang','Art de representar obres teatrals'],
+[3,'Què és el ballet?','Dansa clàssica','Gènere literari','Tècnica pictòrica','Instrument musical'],
+[3,'Què és l\'òpera?','Teatre musical','Dansa urbana','Novel·la il·lustrada','Escultura'],
+[3,'Què és un museu?','Espai de conservació i exposició','Escola de música','Sala esportiva','Estudi cinematogràfic'],
+[3,'Què és la pintura?','Art de representar amb colors','Art de crear sons','Art de construir edificis','Art de representar amb moviment'],
+[3,'Què és la fotografia?','Captura d\'imatges','Creació d\'escultures','Composició musical','Escriptura teatral'],
+[3,'Què és l\'art abstracte?','Art no necessàriament figuratiu','Art exclusivament religiós','Art només fotogràfic','Art exclusivament medieval'],
+[3,'Què és el cubisme?','Moviment basat en formes geomètriques','Moviment basat en paisatges realistes','Estil musical','Gènere literari'],
+[3,'Què és el Renaixement?','Moviment cultural i artístic','Instrument musical','Tècnica escultòrica','Gènere teatral'],
+[3,'Quins són els colors primaris tradicionals en pintura?','Vermell, blau i groc','Verd, taronja i violeta','Vermell, verd i blau','Blanc, negre i gris'],
+[3,'Qui va pintar Les Menines?','Velázquez','Goya','Murillo','El Greco'],
+[3,'Qui va pintar El crit?','Edvard Munch','Van Gogh','Monet','Klimt'],
+[3,'Qui va pintar El jardí de les delícies?','El Bosco','Velázquez','Rembrandt','Rubens'],
+[3,'Qui va pintar La jove de la perla?','Vermeer','Rembrandt','Van Dyck','Rubens'],
+[3,'Qui va pintar El naixement de Venus?','Botticelli','Rafael','Leonardo','Ticià'],
+[3,'Qui va pintar La persistència de la memòria?','Salvador Dalí','Picasso','Miró','Magritte'],
+[3,'Qui va pintar La ronda de nit?','Rembrandt','Vermeer','Rubens','Van Dyck'],
+[3,'Qui va pintar El petó?','Gustav Klimt','Munch','Schiele','Kandinsky'],
+[3,'Qui va pintar El passeig marítim de Niça?','Henri Matisse','Monet','Renoir','Cézanne'],
+[3,'Qui va pintar El cavaller de la mà al pit?','El Greco','Velázquez','Goya','Murillo'],
+[3,'Qui va escriure Romeu i Julieta?','Shakespeare','Cervantes','Dickens','Oscar Wilde'],
+[3,'Qui va escriure El Quixot?','Cervantes','Quevedo','Lope de Vega','Calderón'],
+[3,'Qui va escriure Harry Potter?','J. K. Rowling','Suzanne Collins','Stephenie Meyer','Roald Dahl'],
+[3,'Què és un conte?','Narració breu','Poema llarg','Obra musical','Text científic'],
+[3,'Què és una novel·la?','Narració extensa','Composició musical','Pintura mural','Poema de quatre versos'],
+[3,'Quin color obtenim barrejant blau i groc?','Verd','Taronja','Violeta','Rosa'],
+[3,'Quin color obtenim barrejant vermell i blanc?','Rosa','Verd','Taronja','Violeta'],
+[3,'A quina família pertany el violí?','Corda','Vent','Percussió','Electrònica'],
+[3,'Qui va dissenyar la Sagrada Família?','Antoni Gaudí','Lluís Domènech i Montaner','Le Corbusier','Santiago Calatrava'],
+[3,'Qui va escriure El petit príncep?','Antoine de Saint-Exupéry','Jules Verne','Victor Hugo','Alexandre Dumas'],
+[3,'Quin instrument té tecles blanques i negres?','Piano','Violí','Trompeta','Flauta'],
+[3,'Qui dirigeix una orquestra?','Director/a d\'orquestra','Solista','Compositor','Luthier'],
+[4,'Quin esport es juga habitualment amb 11 jugadors per equip?','Futbol','Bàsquet','Voleibol','Handbol'],
+[4,'Quin esport consisteix a encistellar?','Bàsquet','Futbol','Tennis','Hoquei'],
+[4,'Quin esport consisteix principalment a nedar?','Natació','Rem','Surf','Waterpolo'],
+[4,'Quin esport inclou curses, salts i llançaments?','Atletisme','Gimnàstica','Triatló','Pentatló'],
+[4,'Quin esport es juga amb raqueta i pilota groga?','Tennis','Bàdminton','Esquaix','Pàdel'],
+[4,'Quin esport es practica principalment amb bicicleta?','Ciclisme','Triatló','Motociclisme','Atletisme'],
+[4,'Cada quant se celebren els Jocs Olímpics d\'estiu?','4 anys','2 anys','3 anys','5 anys'],
+[4,'Quin esport es juga amb una pilota ovalada?','Rugbi','Futbol','Handbol','Voleibol'],
+[4,'Quin esport es juga principalment amb les mans i porteries?','Handbol','Bàsquet','Voleibol','Rugbi'],
+[4,'Quin esport d\'equip es juga amb una xarxa alta?','Voleibol','Bàsquet','Handbol','Hoquei'],
+[4,'Quin esport inclou proves amb cavalls?','Hípica','Polo aquàtic','Ciclisme','Esgrima'],
+[4,'Quin esport consisteix a lliscar sobre la neu?','Esquí','Surf','Patinatge','Rem'],
+[4,'Quin esport utilitza aparells com les anelles i la barra?','Gimnàstica','Atletisme','Halterofília','Esgrima'],
+[4,'Quin art marcial és d\'origen coreà?','Taekwondo','Judo','Karate','Kung-fu'],
+[4,'Qui és Rafa Nadal?','Tennista','Futbolista','Ciclista','Pilot'],
+[4,'Quin esport practica Lionel Messi?','Futbol','Bàsquet','Tennis','Rugbi'],
+[4,'En quin esport va destacar Michael Jordan?','Bàsquet','Beisbol','Futbol americà','Hoquei'],
+[4,'Quin esport practica Serena Williams?','Tennis','Golf','Atletisme','Gimnàstica'],
+[4,'En quin esport competeix Fernando Alonso?','Fórmula 1','MotoGP','Ral·lis','Motocròs'],
+[4,'Quants anells té el símbol olímpic?','5','4','6','7'],
+[4,'Quants jugadors de cada equip hi ha a pista en bàsquet?','5','6','7','11'],
+[4,'Quants punts val un triple en bàsquet?','3','1','2','4'],
+[4,'Quin esport practica Carlos Alcaraz?','Tennis','Futbol','Golf','Pàdel'],
+[4,'Quin esport utilitza un volant?','Bàdminton','Tennis','Pàdel','Esquaix'],
+[4,'En quin esport es fa un mate?','Bàsquet','Voleibol','Handbol','Tennis'],
+[4,'Quin esport es juga amb bat i pilota?','Beisbol','Rugbi','Hoquei','Cricket'],
+[4,'Quina és la distància aproximada d\'una marató?','42 km','21 km','50 km','100 km'],
+[4,'Quin esport practica Marc Márquez?','Motociclisme','Fórmula 1','Ciclisme','Ral·lis'],
+[4,'Quin esport practica Simone Biles?','Gimnàstica','Atletisme','Natació','Patinatge'],
+[4,'De quin país és la selecció coneguda com l\'Albiceleste?','Argentina','Uruguai','Brasil','Xile'],
+[4,'Quina targeta significa expulsió en futbol?','Vermella','Groga','Verda','Blava'],
+[4,'Quin esport practica un judoka?','Judo','Karate','Taekwondo','Aikido'],
+[4,'Quin esport es juga amb pal i disc?','Hoquei','Lacrosse','Polo','Beisbol'],
+[4,'Quants sets cal guanyar habitualment per vèncer un partit de voleibol?','3','2','4','5'],
+[4,'Quina és la principal competició mundial de seleccions de futbol?','Copa del Món','Champions League','Copa Libertadores','Europa League'],
+[5,'Què és el canvi climàtic?','Canvi a llarg termini del clima','Canvi diari del temps','Moviment de les marees','Canvi de les estacions'],
+[5,'Quines són energies renovables?','Solar, eòlica i hidràulica','Carbó, petroli i gas','Gas, nuclear i petroli','Carbó, solar i petroli'],
+[5,'Què és la intel·ligència artificial?','Tecnologia capaç de fer tasques associades a la intel·ligència humana','Xarxa exclusiva de telefonia','Tipus d\'energia renovable','Sistema de transport públic'],
+[5,'Què és un cotxe elèctric?','Vehicle impulsat per electricitat','Vehicle impulsat només per gasolina','Vehicle sense motor','Vehicle impulsat per vapor'],
+[5,'Què és una pandèmia?','Epidèmia estesa per molts països','Malaltia d\'una sola persona','Lesió esportiva','Al·lèrgia estacional'],
+[5,'Què són les fake news?','Informacions falses o enganyoses','Notícies exclusivament esportives','Informació meteorològica','Documents científics'],
+[5,'Què és la sostenibilitat?','Ús responsable dels recursos','Consum il·limitat de recursos','Eliminació de tota tecnologia','Ús exclusiu de combustibles fòssils'],
+[5,'Què és reciclar?','Transformar residus per tornar-los a utilitzar','Cremar tots els residus','Enterrar tots els residus','Llançar residus al mar'],
+[5,'D\'on prové l\'energia solar?','Sol','Vent','Aigua','Biomassa'],
+[5,'Què és la robòtica?','Tecnologia relacionada amb robots','Estudi dels planetes','Ciència dels animals','Tècnica de pintura'],
+[5,'Què és la ciberseguretat?','Protecció de sistemes i dades digitals','Protecció d\'edificis','Seguretat viària','Protecció d\'espais naturals'],
+[5,'Què és una dieta saludable?','Alimentació variada i equilibrada','Menjar només proteïnes','Menjar sempre el mateix','Eliminar tota la fruita'],
+[5,'Què és un vehicle autònom?','Vehicle capaç de conduir automàticament','Vehicle exclusivament elèctric','Vehicle sense rodes','Vehicle que només circula per vies'],
+[5,'D\'on prové l\'energia eòlica?','Vent','Sol','Aigua','Calor terrestre'],
+[5,'Què és la mobilitat sostenible?','Transport amb menor impacte ambiental','Utilitzar sempre vehicle privat','Transport exclusivament aeri','Augmentar el consum de combustible'],
+[5,'Què és el turisme sostenible?','Turisme que redueix l\'impacte ambiental i social','Turisme exclusivament de luxe','Viatjar només en avió','Turisme sense visitar ciutats'],
+[5,'Què és la contaminació?','Introducció d\'elements perjudicials al medi','Protecció d\'espais naturals','Recuperació dels boscos','Producció d\'energia solar'],
+[5,'Per què els residus plàstics són un problema?','Triguen molt a degradar-se','Desapareixen immediatament','Es converteixen sempre en aigua','Només existeixen durant l\'estiu'],
+[5,'Què és la desforestació?','Pèrdua de boscos','Plantació de boscos','Protecció d\'animals','Neteja de rius'],
+[5,'Qui va inventar la bombeta?','Thomas Edison','Alexander Graham Bell','Karl Benz','Gutenberg'],
+[5,'Qui va inventar el telèfon?','Alexander Graham Bell','Thomas Edison','Marconi','Karl Benz'],
+[5,'Qui va inventar l\'avió?','Germans Wright','Germans Lumière','Marie i Pierre Curie','Thomas Edison i Nikola Tesla'],
+[5,'Què és Internet?','Xarxa mundial d\'ordinadors connectats','Sistema de posicionament','Xarxa exclusivament telefònica','Programa de televisió'],
+[5,'Qui va inventar la impremta moderna?','Gutenberg','Edison','Bell','Marconi'],
+[5,'Quin invent antic va facilitar el transport?','Roda','Impremta','Telèfon','Bombeta'],
+[5,'Què és l\'electricitat?','Fenomen relacionat amb càrregues elèctriques','Tipus de combustible fòssil','Forma d\'aigua','Tipus de gas atmosfèric'],
+[5,'Qui va descobrir la penicil·lina?','Alexander Fleming','Louis Pasteur','Marie Curie','Charles Darwin'],
+[5,'Què és un satèl·lit artificial?','Aparell que orbita un cos celeste','Vehicle submarí','Avió comercial','Vehicle ferroviari'],
+[5,'Què és el GPS?','Sistema de posicionament','Sistema de missatgeria','Xarxa social','Sistema operatiu'],
+[5,'Qui va inventar la càmera fotogràfica?','Louis Daguerre','Gutenberg','Marconi','Baird'],
+[5,'Qui va inventar el primer automòbil modern?','Karl Benz','Henry Ford','Thomas Edison','James Watt'],
+[5,'Qui va inventar la ràdio?','Marconi','Bell','Baird','Gutenberg'],
+[5,'Qui va inventar la televisió?','John Logie Baird','Marconi','Edison','Bell'],
+[5,'Qui va iniciar el concepte modern d\'ordinador?','Alan Turing','Alexander Fleming','Isaac Newton','Louis Pasteur'],
+[5,'Quants dies té una setmana?','7','5','10','12'],
+[5,'Quants mesos té un any?','12','10','24','30'],
+[5,'Quants dies té normalment un any?','365','360','366','356'],
+[5,'Quin és el primer mes de l\'any?','Gener','Febrer','Març','Desembre'],
+[5,'Quants minuts té una hora?','60','30','100','120']
+];
+const S='http://www.w3.org/2000/svg',svg=document.getElementById('board');let pos={},P={p:'c',cr:new Set()},C={p:'c',cr:new Set()},turn='P',busy=1,cpuRate=.55,levelName='NORMAL',gameOver=false;let decks=[[],[],[],[],[],[]],lastQ=[null,null,null,null,null,null];function shuffle(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function setDieFace(n){
+  const img=document.getElementById('dieImg');
+  if(img&&n>=1&&n<=6) img.src=diceFaces[n-1];
+}
+
+function setStartDice(a,b){
+  const ia=document.getElementById('opImg');
+  const ib=document.getElementById('ocImg');
+  if(ia && a>=1 && a<=6) ia.src=diceFaces[a-1];
+  if(ib && b>=1 && b<=6) ib.src=diceFaces[b-1];
+}
+
+function nextQ(c){
+ if(!decks[c].length){
+   decks[c]=shuffle(qs.filter(q=>q[0]===c).slice());
+   if(lastQ[c]&&decks[c].length>1&&decks[c][decks[c].length-1][1]===lastQ[c]){
+     [decks[c][0],decks[c][decks[c].length-1]]=[decks[c][decks[c].length-1],decks[c][0]];
+   }
+ }
+ let q=decks[c].pop(); lastQ[c]=q[1]; return q;
+}
+function E(t,a){let e=document.createElementNS(S,t);for(let k in a)e.setAttribute(k,a[k]);return e}function pol(r,a){return[400+r*Math.cos(a),400+r*Math.sin(a)]}function line(a,b){svg.appendChild(E('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],class:'edge'}))}
+const ringCats=[0,1,2,-1,3,4,1,5,0,-1,2,3,2,4,5,-1,0,1,3,2,4,-1,5,0,4,3,1,-1,2,5,5,0,3,-1,4,1];
+const spokeCats=[[3,1,5,2],[4,0,2,5],[1,5,3,0],[2,4,0,3],[5,2,4,1],[0,3,1,4]];
+
+
+// Hexagonal test layout calibrated to the new 1:1 hex-board illustration.
+const ART_SIZE=1254, MAP_SCALE=800/ART_SIZE;
+const hubArt=[627,627];
+const portalArt=[
+  [627,134],   // top blue (quiet)
+  [1076,366],  // upper-right yellow (pujat una mica)
+  [1076,854],  // lower-right green (quiet)
+  [627,1072],  // bottom purple (baixat una mica)
+  [177,854],   // lower-left orange/red (quiet)
+  [177,378]    // upper-left pink (pujat una mica)
+];
+function artPoint(p){return[p[0]*MAP_SCALE,p[1]*MAP_SCALE]}
+function lerp(p0,p1,t){return[p0[0]+(p1[0]-p0[0])*t,p0[1]+(p1[1]-p0[1])*t]}
+function ptsWithMargins(p0,p1,count,marginStart,marginEnd){
+  const dx=p1[0]-p0[0], dy=p1[1]-p0[1];
+  const L=Math.hypot(dx,dy) || 1;
+  const ux=dx/L, uy=dy/L;
+  const usable=Math.max(0,L-marginStart-marginEnd);
+  const gap=(count>1)? usable/(count-1) : 0;
+  const out=[];
+  for(let i=0;i<count;i++){
+    const d=marginStart + gap*i;
+    out.push([p0[0]+ux*d, p0[1]+uy*d]);
+  }
+  return out;
+}
+function hexPts(x,y,r,rot=-90){
+  let pts=[];
+  for(let i=0;i<6;i++){
+    let a=(rot+i*60)*Math.PI/180;
+    pts.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1));
+  }
+  return pts.join(' ');
+}
+
+function board(){
+  svg.innerHTML='';
+  pos={};
+  const hub=artPoint(hubArt);
+  pos.c=hub;
+
+  // Distància fixa portal -> primera/última casella de l'anell
+  const ringMargin = 146; // mateix marge a tots els costats
+
+  for(let sector=0;sector<6;sector++){
+    const start=portalArt[sector], finish=portalArt[(sector+1)%6];
+    pos['r'+(sector*6)] = artPoint(start); // portal
+    let edgeStart=start, edgeFinish=finish;
+    // Ajust visual només als dos braços que entren al portal lila.
+    // Desplacem cap enfora l'extrem virtual de la passarel·la 14 px,
+    // però el portal real (r18) no es mou.
+    if(sector===2 || sector===3){
+      const vx=finish[0]-start[0], vy=finish[1]-start[1];
+      const L=Math.hypot(vx,vy)||1;
+      const nx=-vy/L, ny=vx/L;
+      const sign=(sector===2)?-1:1;
+      edgeStart=[start[0]+nx*14*sign,start[1]+ny*14*sign];
+      edgeFinish=[finish[0]+nx*14*sign,finish[1]+ny*14*sign];
+    }
+    const pts = ptsWithMargins(edgeStart, edgeFinish, 5, ringMargin, ringMargin);
+    if(sector===3){pts[0][1]+=28;pts[1][1]+=22;pts[2][1]+=18;pts[3][1]+=17;pts[4][1]+=18;} // v2.5.5: tota la barra taronja-lila baixada; portals intactes
+
+    for(let j=1;j<=5;j++){
+      pos['r'+(sector*6+j)] = artPoint(pts[j-1]);
+    }
+  }
+
+  for(let i=0;i<36;i++) line(pos['r'+i], pos['r'+((i+1)%36)]);
+
+  // Radis: mateix marge al portal exterior i més aire al centre
+  const spokeOuterMargin = 176;
+  const spokeCenterMargin = 190;
+
+  for(let sector=0;sector<6;sector++){
+    let prev='r'+(sector*6), p=portalArt[sector];
+
+    // Apliquem a tots els radis la separació que funcionava al lila.
+    const outerM = 135;
+    const centerM = 145;
+
+    const rawPts = ptsWithMargins(p, hubArt, 4, outerM, centerM);
+  // El radial lila (sector 3) és el patró visual. Als altres sectors
+  // compactem les 4 caselles al mateix tram proporcional del lila.
+  let spts=rawPts;
+  if(sector!==3){
+    const violetP=portalArt[3];
+    const violetLen=Math.hypot(hubArt[0]-violetP[0],hubArt[1]-violetP[1]);
+    const thisLen=Math.hypot(hubArt[0]-p[0],hubArt[1]-p[1]);
+    const violetUsable=violetLen-outerM-centerM;
+    const thisUsable=thisLen-outerM-centerM;
+    const ratio=thisUsable>0 ? violetUsable/thisUsable : 1;
+    const ux=(hubArt[0]-p[0])/thisLen, uy=(hubArt[1]-p[1])/thisLen;
+    const gap=(violetUsable/3);
+    spts=[];
+    for(let k=0;k<4;k++){
+      const d=outerM+gap*k;
+      spts.push([p[0]+ux*d,p[1]+uy*d]);
+    }
+  }
+    spts.forEach((pt,j)=>{
+      const id=`s${sector}_${j+1}`;
+      pos[id]=artPoint(pt);
+      line(pos[prev],pos[id]);
+      prev=id;
+    });
+    line(pos[prev],hub);
+  }
+
+  for(let i=0;i<36;i++){
+    const id='r'+i, portal=i%6===0, rr=i%6===3;
+    const category=portal ? Math.floor(i/6) : ringCats[i];
+    const xy=pos[id];
+    let cell=E('circle',{
+      cx:xy[0], cy:xy[1], r:portal?24:11,
+      class:'space '+(portal?'portal':rr?'reroll':'normal'),
+      fill:rr?'#f7fbff':cats[category][1]
+    });
+    cell.dataset.node=id;
+    cell.setAttribute('aria-label', portal?'Portal '+cats[category][0]:rr?'Dau':cats[category][0]);
+    svg.appendChild(cell);
+    if(rr){
+      let t=E('text',{x:xy[0],y:xy[1]+5,'text-anchor':'middle','font-size':14,'pointer-events':'none'});
+      t.textContent='🎲';
+      svg.appendChild(t)
+    }
+  }
+
+  for(let sector=0;sector<6;sector++) for(let j=1;j<=4;j++){
+    const id=`s${sector}_${j}`, xy=pos[id], category=spokeCats[sector][j-1];
+    let cell=E('circle',{
+      cx:xy[0], cy:xy[1], r:11,
+      class:'space normal',
+      fill:cats[category][1]
+    });
+    cell.dataset.node=id;
+    cell.setAttribute('aria-label',cats[category][0]);
+    svg.appendChild(cell);
+  }
+
+  let cen=E('circle',{cx:hub[0],cy:hub[1],r:48,class:'center'});
+  cen.dataset.node='c';
+  svg.appendChild(cen);
+
+  let t=E('text',{
+    x:hub[0], y:hub[1]+7, 'text-anchor':'middle',
+    'font-size':19, fill:'white', 'font-weight':900,
+    'pointer-events':'none', style:'filter:drop-shadow(0 1px 3px #001322)'
+  });
+  t.textContent='FINAL';
+  svg.appendChild(t);
+
+  tokens();
+}
+
+const characterImgs=["assets/fasiaprisma/character-hulk.webp", "assets/fasiaprisma/character-shark.webp", "assets/fasiaprisma/character-golden.webp", "assets/fasiaprisma/character-zebra.webp", "assets/fasiaprisma/character-lion.webp", "assets/fasiaprisma/character-owl.webp", "assets/fasiaprisma/character-elephant.webp", "assets/fasiaprisma/character-fox.webp"];let selectedCharacter=0;let cpuCharacter=1;
+document.querySelectorAll('#characters img[data-char]').forEach(img=>{
+  img.src=characterImgs[Number(img.dataset.char)];
+});
+
+function tokens(){updatePortalSeal();
+  svg.querySelectorAll('.token,.playerMini,.cpuMini').forEach(x=>x.remove());
+  svg.querySelectorAll('.occupied').forEach(x=>x.classList.remove('occupied'));
+  [P.p,C.p].forEach(id=>{let n=svg.querySelector(`[data-node="${id}"]`);if(n)n.classList.add('occupied')});
+  let pp=pos[P.p], cp=pos[C.p];
+  const same=P.p===C.p;
+  let pimg=E('image',{x:pp[0]-(same?28:17),y:pp[1]-22,width:34,height:44,class:'playerMini',href:characterImgs[selectedCharacter],preserveAspectRatio:'xMidYMid meet'});svg.appendChild(pimg);
+  let cimg=E('image',{x:cp[0]+(same?0:-17),y:cp[1]-22,width:34,height:44,class:'cpuMini',href:characterImgs[cpuCharacter],preserveAspectRatio:'xMidYMid meet'});svg.appendChild(cimg);
+}
+function setFlowScreen(id){document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));let el=document.getElementById(id);if(el)el.classList.add('active')}
+function showLevels(){setFlowScreen('levels')}
+function goHome(){setFlowScreen('home')}
+function chooseDifficulty(rate,name){cpuRate=rate;levelName=name;setFlowScreen('characters')}
+function chooseCharacter(i){selectedCharacter=i;startGame()}
+function start(rate,name){chooseDifficulty(rate,name)}
+function startGame(){
+  cpuCharacter=Math.floor(Math.random()*characterImgs.length);if(cpuCharacter===selectedCharacter)cpuCharacter=(cpuCharacter+1)%characterImgs.length;
+  setDieFace(1);setStartDice(1,1);setFlowScreen('game');
+  P={p:'c',cr:new Set()};C={p:'c',cr:new Set()};turn='P';busy=1;gameOver=false;
+  board();drawCr();tokens();
+  levelTxt.textContent=`CPU · ${levelName} · ${Math.round(cpuRate*100)}%`;
+  ot.textContent='';ob.disabled=false;opening.classList.add('show');
+}
+function openRoll(){let a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);setStartDice(a,b);if(a==b){ot.textContent='Empat! Torneu a tirar.';return}turn=a>b?'P':'C';ot.textContent=turn=='P'?'Comences tu!':'Comença la CPU!';ob.disabled=true;setTimeout(()=>{opening.classList.remove('show');busy=0;state();if(turn=='C')setTimeout(cpu,400)},800)}
+function state(){if(gameOver)return;document.getElementById('status').textContent=turn=='P'?'EL TEU TORN':'TORN DE LA CPU';rollBtn.disabled=busy||turn!='P';hint.textContent=turn=='P'?'Tira el dau per avançar.':'La CPU està jugant...'}
+function neigh(id){if(id=='c')return[0,1,2,3,4,5].map(k=>`s${k}_4`);if(id[0]=='r'){let i=+id.slice(1),a=['r'+((i+35)%36),'r'+((i+1)%36)];if(i%6==0)a.push(`s${i/6}_1`);return a}let m=id.match(/s(\d)_(\d)/),k=+m[1],j=+m[2];if(j==1)return['r'+k*6,`s${k}_2`];if(j==4)return[`s${k}_3`,'c'];return[`s${k}_${j-1}`,`s${k}_${j+1}`]}
+function choose(o,cur,prev){let a=neigh(cur).filter(x=>x!=prev);if(!a.length)a=neigh(cur);if(o.cr.size==6)return a.sort((x,y)=>dc(x)-dc(y))[0];let targets=cats.map((_,k)=>'r'+k*6).filter((_,k)=>!o.cr.has(k));return a.sort((x,y)=>near(x,targets)-near(y,targets))[0]}function dc(x){let p=pos[x];return Math.hypot(p[0]-pos.c[0],p[1]-pos.c[1])}function near(x,ts){let p=pos[x];return Math.min(...ts.map(t=>Math.hypot(p[0]-pos[t][0],p[1]-pos[t][1])))}
+function roll(){if(busy)return;busy=1;let n=1+Math.floor(Math.random()*6);setDieFace(n);showDestinations(n)}
+function clearDestinations(){svg.querySelectorAll('.destination').forEach(x=>{x.classList.remove('destination');x.onclick=null})}
+function legalPaths(start,steps){let results=[];function walk(cur,left,path,visited){if(left===0){results.push(path.slice());return}for(const nx of neigh(cur)){if(visited.has(nx))continue;visited.add(nx);path.push(nx);walk(nx,left-1,path,visited);path.pop();visited.delete(nx)}}walk(start,steps,[start],new Set([start]));return results}
+function showDestinations(n){clearDestinations();let paths=legalPaths(P.p,n),byDest=new Map();for(const path of paths){let dest=path[path.length-1];if(!byDest.has(dest))byDest.set(dest,path)}hint.textContent=`Has tret ${n}. Tria una de les ${byDest.size} caselles il·luminades.`;for(const [dest,path] of byDest){let c=svg.querySelector(`[data-node="${dest}"]`);if(!c)continue;c.classList.add('destination');c.onclick=()=>{clearDestinations();animatePlayerPath(path.slice(1))}}if(!byDest.size){busy=0;state()}}
+function animatePlayerPath(path){let i=0;(function step(){if(i>=path.length){land(P,'P');return}P.p=path[i++];tokens();setTimeout(step,140)})()}
+function move(o,n,w){let prev=null,cur=o.p,i=0;(function go(){if(i>=n){land(o,w);return}let nx=choose(o,cur,prev);prev=cur;cur=nx;o.p=cur;tokens();i++;setTimeout(go,80)})()}
+function catAt(id){if(id[0]=='r'){let i=+id.slice(1);return i%6===0?Math.floor(i/6):ringCats[i]}if(id[0]=='s'){let m=id.match(/s(\d)_(\d)/);return spokeCats[+m[1]][+m[2]-1]}return Math.floor(Math.random()*6)}function portal(id){return id[0]=='r'&&+id.slice(1)%6==0}function reroll(id){return id[0]=='r'&&+id.slice(1)%6==3}
+function land(o,w){if(o.p=='c'&&o.cr.size==6){startFinal(o,w);return}if(reroll(o.p)){if(w=='P'){busy=0;state();hint.textContent='🎲 Torn extra! Torna a tirar.'}else setTimeout(cpu,250);return}ask(catAt(o.p),o,w,portal(o.p))}
+function finishGame(w){gameOver=true;busy=1;winTitle.textContent=w=='P'?'🏆 VICTÒRIA!':'🤖 VICTÒRIA DE LA CPU';winText.textContent=w=='P'?'Has reunit els 6 cristalls i has superat el Portal Final.':'La CPU ha reunit els 6 cristalls i ha superat el Portal Final.';winm.classList.add('show');document.getElementById('status').textContent='PARTIDA ACABADA';rollBtn.disabled=true;if(w=='P'&&gameMode==='solo'){const reward=soloVictoryReward();winText.textContent+=' Recompensa: +'+reward+' monedes.';awardSoloVictoryCoins().then(saved=>{if(saved===-1)winText.textContent='Has guanyat! No s’han pogut guardar les monedes. Torna-ho a provar des de Fasia Verse.'})}}
+function startFinal(o,w){busy=1;let fc=shuffle([0,1,2,3,4,5]).slice(0,3);if(w=='C'){let h=0,i=0;(function go(){if(i>=3){if(h>=2)finishGame('C');else end('C',0);return}if(Math.random()<cpuRate)h++;i++;setTimeout(go,300)})();return}let h=0,i=0;fm.classList.add('show');function nq(){if(i>=3){fprogress.textContent=h+'/3';fcat.textContent=h>=2?'PORTAL SUPERAT':'PORTAL NO SUPERAT';fqt.textContent=h>=2?'Has superat la prova final!':'Necessites 2 encerts. Conserves els 6 cristalls i ho podràs tornar a intentar.';fans.innerHTML='';fres.textContent='';setTimeout(()=>{fm.classList.remove('show');if(h>=2)finishGame('P');else end('P',0)},1400);return}let c=fc[i],q=nextQ(c);fprogress.textContent=(i+1)+'/3 · Encerts: '+h;fcat.textContent=cats[c][0];fcat.style.color=cats[c][1];fqt.textContent=q[1];fans.innerHTML='';fres.textContent='';shuffle(q.slice(2).map((x,k)=>[x,k==0])).forEach(opt=>{let b=document.createElement('button');b.className='answer';b.textContent=opt[0];b.onclick=()=>{[...fans.children].forEach(x=>x.disabled=true);b.classList.add(opt[1]?'good':'bad');if(opt[1])h++;fres.textContent=opt[1]?'✓ Correcte!':'✕ Incorrecte.';i++;setTimeout(nq,650)};fans.appendChild(b)})}nq()}
+function ask(c,o,w,po){let q=nextQ(c);if(w=='C'){setTimeout(()=>{let ok=Math.random()<cpuRate;if(ok&&po)o.cr.add(c);
+refreshCrystalVisualsNow(o);maybeShowSixCrystalPopup(o);drawCr();end('C',ok)},350);return}qcat.textContent=(po?'PORTAL · ':'')+cats[c][0];qcat.style.color=cats[c][1];qt.textContent=q[1];res.textContent='';ans.innerHTML='';shuffle(q.slice(2).map((x,i)=>[x,i==0])).forEach(o2=>{let b=document.createElement('button');b.className='answer';b.textContent=o2[0];b.onclick=()=>{[...ans.children].forEach(x=>x.disabled=true);b.classList.add(o2[1]?'good':'bad');if(o2[1]&&po)o.cr.add(c);
+refreshCrystalVisualsNow(o);maybeShowSixCrystalPopup(o);res.textContent=o2[1]?(po?'💎 Correcte! Cristall aconseguit.':'✓ Correcte! Tornes a tirar.'):'✕ Incorrecte. Canvi de torn.';drawCr();setTimeout(()=>{qm.classList.remove('show');end('P',o2[1])},750)};ans.appendChild(b)});qm.classList.add('show')}
+function end(w,ok){if(w=='P'&&ok){busy=0;turn='P';state();return}turn=w=='P'?'C':'P';busy=0;state();if(turn=='C')setTimeout(cpu,350)}function cpu(){if(turn!='C'||gameOver)return;busy=1;state();let n=1+Math.floor(Math.random()*6);setDieFace(n);move(C,n,'C')}
+function drawCr(){
+  crystals.innerHTML='';
+  cats.forEach((c,i)=>{
+    let d=document.createElement('div');
+    d.className='crystal'+(P.cr.has(i)?' got':'');
+    let im=document.createElement('img');
+    im.src=crystalImgs[i];
+    im.alt=c[0];
+    d.appendChild(im);
+    d.title=c[0];
+    crystals.appendChild(d)
+  });
+  pc.textContent=P.cr.size+'/6';
+  cc.textContent=C.cr.size+'/6'
+}
+
+
+function updatePortalSeal(){
+ let seal=document.getElementById('portalSeal');
+ if(!seal){
+   seal=document.createElementNS('http://www.w3.org/2000/svg','g');
+   seal.setAttribute('id','portalSeal');
+   seal.setAttribute('class','portalSeal');
+   seal.setAttribute('pointer-events','none');
+   seal.innerHTML=`
+    <circle cx="400" cy="400" r="56" class="sealOuter"/>
+    <circle cx="400" cy="400" r="43" class="sealInner"/>
+    <path d="M400 363 L412 386 L438 390 L419 409 L423 436 L400 423 L377 436 L381 409 L362 390 L388 386 Z" class="sealRune"/>
+    <circle cx="400" cy="341" r="7" class="sealGem sg0"/>
+    <circle cx="451" cy="371" r="7" class="sealGem sg1"/>
+    <circle cx="451" cy="429" r="7" class="sealGem sg2"/>
+    <circle cx="400" cy="459" r="7" class="sealGem sg3"/>
+    <circle cx="349" cy="429" r="7" class="sealGem sg4"/>
+    <circle cx="349" cy="371" r="7" class="sealGem sg5"/>`;
+   svg.appendChild(seal);
+ }
+ const got=(typeof P!=='undefined' && P.cr)?P.cr:new Set();
+ for(let i=0;i<6;i++){
+   const g=seal.querySelector('.sg'+i);
+   if(g)g.classList.toggle('on',got.has(i));
+ }
+ seal.classList.toggle('open',got.size===6);
+}
+
+
+let gameMode='solo';
+let localPlayerCount=2;
+let localPlayers=[];
+let localPickIndex=0;
+
+function copyFlowLogo(){
+  const src=document.querySelector('#levels .flowLogo')?.src || document.querySelector('#characters .flowLogo')?.src;
+  if(src)document.querySelectorAll('.modeLogo').forEach(x=>x.src=src);
+}
+function showModes(){copyFlowLogo();setFlowScreen('modes')}
+function startSoloFlow(){gameMode='solo';showLevels()}
+function showLocalCount(){gameMode='local';copyFlowLogo();setFlowScreen('localCount')}
+
+function prepareLocalNames(n){
+  localPlayerCount=n;
+  const box=document.getElementById('localNameRows');
+  box.innerHTML='';
+  for(let i=0;i<n;i++){
+    const row=document.createElement('div');
+    row.className='localNameRow';
+    row.innerHTML=`<b>JUGADOR ${i+1}</b><input id="localName${i}" maxlength="18" placeholder="Escriu el nom">`;
+    box.appendChild(row);
+  }
+  copyFlowLogo();setFlowScreen('localNames');
+  setTimeout(()=>document.getElementById('localName0')?.focus(),50);
+}
+function saveLocalNames(){
+  const arr=[];
+  for(let i=0;i<localPlayerCount;i++){
+    const input=document.getElementById('localName'+i);
+    const name=input.value.trim();
+    if(!name){input.focus();return}
+    arr.push({name:name,character:null});
+  }
+  localPlayers=arr;localPickIndex=0;
+  buildLocalCharacters();copyFlowLogo();setFlowScreen('localCharacters');
+}
+function buildLocalCharacters(){
+  const names=['Hulk','Tauró','Golden','Zebra','Lleó','Mussol','Elefant','Guineu'];
+  const used=new Set(localPlayers.map(p=>p.character).filter(v=>v!==null));
+  const grid=document.getElementById('localCharGrid');
+  grid.innerHTML='';
+  characterImgs.forEach((src,i)=>{
+    const b=document.createElement('button');
+    b.className='charCard'+(used.has(i)?' taken':'');
+    b.innerHTML=`<img src="${src}" alt="${names[i]}"><span>${names[i]}</span>`;
+    if(!used.has(i))b.onclick=()=>pickLocalCharacter(i);
+    grid.appendChild(b);
+  });
+  document.getElementById('localCharWho').textContent=localPlayers[localPickIndex].name+', tria la teva fitxa';
+}
+function pickLocalCharacter(i){
+  localPlayers[localPickIndex].character=i;
+  localPickIndex++;
+  if(localPickIndex<localPlayers.length)buildLocalCharacters();
+  else startLocalConfiguredGame();
+}
+function startLocalConfiguredGame(){
+  startLocalGame();
+}
+
+
+let localTurnIndex=0;
+
+function startLocalGame(){
+  gameMode='local';
+  localPlayers.forEach(p=>{p.p='c';p.cr=new Set()});
+  localTurnIndex=0;
+  P=localPlayers[0];
+  C={p:'c',cr:new Set()};
+  turn='P';busy=1;gameOver=false;
+  selectedCharacter=P.character;
+  setDieFace(1);
+  setFlowScreen('game');
+  board();drawCr();tokens();
+  levelTxt.textContent='MULTIJUGADOR LOCAL · '+localPlayers.length+' JUGADORS';
+  setupLocalOpening();
+}
+
+function setupLocalOpening(){
+  const list=document.getElementById('localOpeningList');
+  list.innerHTML='';
+  localPlayers.forEach((p,i)=>{
+    const r=document.createElement('div');r.className='localOpeningRow';
+    r.innerHTML=`<b>${p.name}</b><span class="localOpeningDie" id="lod${i}">–</span>`;
+    list.appendChild(r);
+  });
+  localOpeningText.textContent='Tireu els daus per decidir qui comença.';
+  localOpeningBtn.disabled=false;
+  localOpeningBtn.textContent='TIRAR DAUS';
+  localOpeningBtn.onclick=rollLocalOpening;
+  localOpening.classList.add('show');
+}
+
+function rollLocalOpening(){
+  const rolls=localPlayers.map(()=>1+Math.floor(Math.random()*6));
+  rolls.forEach((n,i)=>document.getElementById('lod'+i).textContent=n);
+  const max=Math.max(...rolls), winners=rolls.map((n,i)=>n===max?i:-1).filter(i=>i>=0);
+  if(winners.length>1){
+    localOpeningText.textContent='Empat entre '+winners.map(i=>localPlayers[i].name).join(', ')+'. Torneu a tirar.';
+    return;
+  }
+  localTurnIndex=winners[0]; P=localPlayers[localTurnIndex]; selectedCharacter=P.character;
+  localOpeningText.textContent='Comença '+P.name+'!';
+  localOpeningBtn.disabled=true;
+  setTimeout(()=>{localOpening.classList.remove('show');busy=0;drawCr();tokens();state()},800);
+}
+
+const soloTokens=tokens;
+tokens=function(){
+  if(gameMode!=='local')return soloTokens();
+  updatePortalSeal();
+  svg.querySelectorAll('.token,.playerMini,.cpuMini').forEach(x=>x.remove());
+  svg.querySelectorAll('.occupied').forEach(x=>x.classList.remove('occupied'));
+  const groups={};
+  localPlayers.forEach((p,i)=>{(groups[p.p]??=[]).push(i);let n=svg.querySelector(`[data-node="${p.p}"]`);if(n)n.classList.add('occupied')});
+  Object.entries(groups).forEach(([node,idxs])=>{
+    const pp=pos[node], total=idxs.length;
+    idxs.forEach((pi,j)=>{
+      const ang=total===1?-Math.PI/2:(Math.PI*2*j/total-Math.PI/2);
+      const rad=total===1?0:16;
+      const x=pp[0]+Math.cos(ang)*rad, y=pp[1]+Math.sin(ang)*rad;
+      const im=E('image',{x:x-15,y:y-20,width:30,height:40,class:'playerMini',href:characterImgs[localPlayers[pi].character],preserveAspectRatio:'xMidYMid meet'});
+      svg.appendChild(im);
+    });
+  });
+}
+
+const soloState=state;
+state=function(){
+  if(gameMode!=='local')return soloState();
+  if(gameOver)return;
+  document.getElementById('status').textContent='TORN DE '+P.name.toUpperCase();
+  rollBtn.disabled=busy;
+  hint.textContent=busy?'':'Tira el dau per avançar.';
+  selectedCharacter=P.character;
+  updateLocalScore();
+}
+
+function updateLocalScore(){
+  if(gameMode!=='local')return;
+  const card=levelTxt.closest('.card');
+  let box=document.getElementById('localScoreRows');
+  if(!box){box=document.createElement('div');box.id='localScoreRows';box.className='localScoreRows';card.insertBefore(box,levelTxt.parentElement)}
+  box.innerHTML=localPlayers.map((p,i)=>`<div class="localScoreRow"><span>${i===localTurnIndex?'▶ ':''}${p.name}</span><b>${p.cr.size}/6</b></div>`).join('');
+  const oldRows=card.querySelectorAll('.row');oldRows.forEach(r=>r.style.display='none');
+  pc.textContent=P.cr.size+'/6';
+  cc.textContent='';
+}
+
+const soloDrawCr=drawCr;
+drawCr=function(){
+  if(gameMode!=='local')return soloDrawCr();
+  crystals.innerHTML='';
+  cats.forEach((c,i)=>{
+    let d=document.createElement('div');d.className='crystal'+(P.cr.has(i)?' got':'');
+    let im=document.createElement('img');im.src=crystalImgs[i];im.alt=c[0];d.appendChild(im);d.title=c[0];crystals.appendChild(d);
+  });
+  pc.textContent=P.cr.size+'/6';cc.textContent='';
+  updateLocalScore();
+}
+
+const soloEnd=end;
+end=function(w,ok){
+  if(gameMode!=='local')return soloEnd(w,ok);
+  if(ok){busy=0;turn='P';drawCr();state();return}
+  localTurnIndex=(localTurnIndex+1)%localPlayers.length;
+  P=localPlayers[localTurnIndex];selectedCharacter=P.character;turn='P';busy=0;
+  drawCr();tokens();state();
+}
+
+const soloFinishGame=finishGame;
+finishGame=function(w){
+  if(gameMode!=='local')return soloFinishGame(w);
+  gameOver=true;busy=1;
+  winTitle.textContent='🏆 VICTÒRIA!';
+  winText.textContent=P.name+' ha reunit els 6 cristalls i ha superat el Portal Final.';
+  winm.classList.add('show');
+  document.getElementById('status').textContent='PARTIDA ACABADA';
+  rollBtn.disabled=true;
+}
+
+const soloLand=land;
+land=function(o,w){
+  if(gameMode!=='local')return soloLand(o,w);
+  if(o.p==='c'&&o.cr.size===6){startFinal(o,'P');return}
+  if(reroll(o.p)){busy=0;state();hint.textContent='🎲 Torn extra! '+P.name+' torna a tirar.';return}
+  ask(catAt(o.p),o,'P',portal(o.p));
+}
+
+
+let sixCrystalPopupShown=new WeakSet();
+function refreshCrystalVisualsNow(owner){
+ if(gameMode==='local'){P=owner;selectedCharacter=P.character}
+ drawCr();updatePortalSeal();tokens();
+}
+function maybeShowSixCrystalPopup(owner){
+ if(!owner||!owner.cr||owner.cr.size!==6||sixCrystalPopupShown.has(owner))return false;
+ sixCrystalPopupShown.add(owner);busy=1;allCrystalsModal.classList.add('show');
+ allCrystalsContinue.onclick=()=>{allCrystalsModal.classList.remove('show');busy=0;state()};
+ return true;
+}
+function addOccupiedDestinationHalos(){
+ svg.querySelectorAll('.occupiedDestHalo').forEach(x=>x.remove());
+ svg.querySelectorAll('.destination.occupied').forEach(n=>{
+  const id=n.dataset.node;if(!id||!pos[id])return;
+  const [x,y]=pos[id];svg.appendChild(E('circle',{cx:x,cy:y,r:22,class:'occupiedDestHalo'}));
+ });
+}
+const destinationObserver=new MutationObserver(()=>requestAnimationFrame(()=>{lockCenterUntilSix();addOccupiedDestinationHalos()}));
+document.addEventListener('DOMContentLoaded',()=>{if(svg)destinationObserver.observe(svg,{subtree:true,attributes:true,attributeFilter:['class']})});
+
+
+function lockCenterUntilSix(){
+  if(!P || !P.cr || P.cr.size>=6)return;
+  const center=svg.querySelector('[data-node="c"]');
+  if(center){
+    center.classList.remove('destination');
+    center.style.pointerEvents='none';
+  }
+}
+
+
+const stateBeforeCenterLock=state;
+state=function(){
+  const r=stateBeforeCenterLock.apply(this,arguments);
+  if(gameMode==='solo' || gameMode==='local')lockCenterUntilSix();
+  return r;
+}
+
+</script></body></html>
