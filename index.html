@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.94 · PREU JUST R10-R12</title>
+<title>Fasia Verse · V0.14.96 · Castaween i avatars</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -1899,7 +1899,7 @@ input.text{width:100%;padding:13px 14px;border:2px solid var(--border);border-ra
 .game-choice-prisma .game-choice-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0}
 .game-choice-prisma::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(3,12,24,.92),rgba(3,12,24,.08) 64%);pointer-events:none;z-index:1}
 .game-choice-prisma .game-choice-content,.game-choice-prisma .game-choice-arrow{z-index:2}
-</style>
+.game-choice-castaween{background:linear-gradient(to top,#130c24ee,#130c2422),url("assets/castaween/portada.webp") center/cover no-repeat;color:white}</style>
 
 <style>
 .rich-drag.text-only{
@@ -4063,8 +4063,8 @@ button.profile-collection-card{cursor:pointer}
   <div class="challenge-reward-modal">
     <div class="challenge-reward-icon">🎉</div>
     <div class="challenge-reward-kicker">NOVETATS A FASIA VERSE!</div>
-    <h2 id="fvNewsTitle">EI! TENIU NOUS JOCS I DESAFIAMENTS!</h2>
-    <p>🏎️ Nous jocs per descobrir<br>🏆 Nous desafiaments<br>🎁 Nous avatars, títols i marcs exclusius</p>
+    <h2 id="fvNewsTitle">LA FESTA DE CASTAWEEN JA ÉS AQUÍ!</h2>
+    <p>🌰 Atrapa castanyes<br>🍪 Prepara panellets<br>👻 Explora el bosc encantat<br>🎵 La disco monstruosa<br>🎁 Aconsegueix 8 avatars exclusius</p>
     <div class="challenge-reward-special">JUGA, COMPLETA ELS REPTES I DESBLOQUEJA LES NOVES RECOMPENSES!</div>
     <button id="fvNewsContinue" class="btn" type="button">DESCOBRIR NOVETATS</button>
   </div>
@@ -4128,7 +4128,7 @@ button.profile-collection-card{cursor:pointer}
       </div>
     </button>
 
-    <button id="openMultifasia" class="game-choice game-choice-multifasia" type="button">
+    <button id="openCastaween" class="game-choice game-choice-castaween" type="button"><div class="game-choice-arrow">›</div><div class="game-choice-content"><span class="game-choice-tag">4 MINIJOCS</span><h3>LA FESTA DE CASTAWEEN</h3><p>Castanyes, panellets i aventures de Halloween.</p></div></button><button id="openMultifasia" class="game-choice game-choice-multifasia" type="button">
       <div class="game-choice-arrow">›</div>
       <div class="game-choice-content">
         <span class="game-choice-tag">JOC INDIVIDUAL</span>
@@ -5035,7 +5035,7 @@ function renderChallenges(){
 async function openChallengesScreen(){
   if(!currentProfile?.id)return;try{await refreshCurrentProfile()}catch(e){}const s=challengeState();syncHistoricalPurchasedSkins(s);await saveChallengeState(s);await evaluateChallenges(s);renderChallenges();show("challengesHome");
 }
-const FV_NEWS_POPUP_VERSION="v1_multifasia_rush_nexus";
+const FV_NEWS_POPUP_VERSION='castaween_2026';
 function fvNewsKey(){return `fv_news_seen_${FV_NEWS_POPUP_VERSION}_${currentProfile?.id||"guest"}`}
 function maybeShowFvNews(){
   if(!currentProfile?.id)return;
@@ -5425,6 +5425,9 @@ const SHOP_CONFIG={
   ]
 };
 
+
+// Avatars exclusius de Castaween
+for(const reward of [{"id": "capi_castanyera", "name": "CAPI CASTANYERA", "character": "capibara"}, {"id": "iguana_esquelet", "name": "IGUANA ESQUELET", "character": "iguana"}, {"id": "gat_pastisser", "name": "GAT PASTISSER", "character": "gat"}, {"id": "golden_halloween", "name": "GOLDEN HALLOWEEN", "character": "golden"}, {"id": "hulk_cacafantasmes", "name": "HULK CAÇAFANTASMES", "character": "gos"}, {"id": "tauro_vampir", "name": "TAURÓ VAMPIR", "character": "tauro"}, {"id": "hulk_frankenstein", "name": "HULK FRANKENSTEIN", "character": "gos"}, {"id": "gat_bruixot", "name": "GAT BRUIXOT", "character": "gat"}]){const ch=SHOP_CONFIG.characters.find(c=>c.id===reward.character||c.name.toLowerCase().includes(reward.character));if(!ch)continue;const existing=ch.skins.find(s=>s.id===reward.id);if(existing){existing.castaweenExclusive=true;existing.exclusiveChallenge=true;existing.price=0;existing.available=true;existing.event=null;}else ch.skins.push({id:reward.id,name:reward.name,price:0,available:true,event:null,exclusiveChallenge:true,castaweenExclusive:true,image:'assets/avatars/'+reward.id+'.webp',cropIndex:null});}
 const FREE_SKIN_IDS=new Set(
   SHOP_CONFIG.characters.flatMap(c=>c.skins.filter(s=>s.free).map(s=>s.id))
 );
@@ -5808,7 +5811,7 @@ function renderCharacterSkins(c){
         : owned
           ? `<span class="skin-state owned">A LA COL·LECCIÓ</span>`
           : s.exclusiveChallenge
-            ? `<div class="event-coming"><strong>🔒 EXCLUSIU</strong><small>ACONSEGUEIX-LO AMB DESAFIAMENTS</small></div>`
+            ? `<div class="event-coming"><strong>🔒 EXCLUSIU</strong><small>${s.castaweenExclusive?"ACONSEGUEIX-LO A CASTAWEEN":"ACONSEGUEIX-LO AMB DESAFIAMENTS"}</small></div>`
             : `<div class="skin-price">${s.price} <span class="coin-img" aria-label="moneda"></span></div>`;
     body.innerHTML=`<div class="skin-shop-name">${s.name}</div>${state}`;
     const actions=document.createElement("div");actions.className="skin-shop-actions";
@@ -5823,7 +5826,7 @@ function renderCharacterSkins(c){
       const locked=document.createElement("button");
       locked.className="btn secondary";
       locked.disabled=true;
-      locked.textContent="🔒 DESAFIAMENT";
+      locked.textContent=s.castaweenExclusive?"🔒 CASTAWEEN":"🔒 DESAFIAMENT";
       actions.appendChild(locked);
     }else if(owned){
       const equip=document.createElement("button");
@@ -7007,6 +7010,7 @@ $("#openNexus4").onclick=()=>{
   window.location.href="games/nexus4.html?profile="+encodeURIComponent(pid);
 };
 
+$("#openCastaween").onclick=()=>{if(!currentProfile?.id)return;sessionStorage.setItem("fasiaVerseProfileId",String(currentProfile.id));sessionStorage.setItem("fasiaVerseReturnToProfile","1");location.href="games/castaween.html?profile="+encodeURIComponent(currentProfile.id);};
 $("#openMultifasia").onclick=()=>{
   if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
     alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
