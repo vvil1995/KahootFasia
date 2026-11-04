@@ -1,7 +1,7 @@
-<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fasia Prisma · v2.6.3 ASSETS RUTES FIX</title>
+<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fasia Prisma · v2.6.5 DESAFIAMENTS</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 30%,#173554,#07111f 55%,#02060b);color:#f7fbff;font-family:Arial,sans-serif;min-height:100vh}button{font:inherit;color:inherit;cursor:pointer}.screen{display:none;min-height:100vh}.active{display:flex}#home{align-items:center;justify-content:center;text-align:center}.hero{width:min(760px,92vw);padding:42px 24px;border:1px solid #34516d;border-radius:28px;background:#0b1929e8;box-shadow:0 30px 80px #0009}.logo{display:flex;justify-content:center;align-items:center}.logo img{display:block;width:min(520px,88vw);max-height:230px;object-fit:contain}.topLogo{height:48px;width:auto;max-width:210px;object-fit:contain;display:block}.btn{border:0;border-radius:15px;padding:14px 22px;font-weight:800;background:linear-gradient(135deg,#42b9ff,#735cff)}#game{padding:12px;flex-direction:column}.top{width:min(1150px,100%);margin:auto;display:flex;justify-content:space-between;align-items:center;padding:8px}.layout{width:min(1150px,100%);margin:auto;display:grid;grid-template-columns:1fr 280px;gap:14px}.boardbox{aspect-ratio:1;border-radius:26px;background:#071321 url('../assets/fasiaprisma/board.webp') center center / 100% 100% no-repeat;border:1px solid #29445f;overflow:hidden;box-shadow:0 20px 55px #0008}svg{width:100%;height:100%}.edge{stroke:transparent;stroke-width:2;stroke-linecap:round}.space{stroke:#ffffffd8;stroke-width:2.1;fill-opacity:.88;filter:drop-shadow(0 2px 3px #0008)}.normal{}.reroll{fill:#f7fbff!important;stroke:#a9bdd0;stroke-width:2}.destination{stroke:#fff;stroke-width:8;filter:drop-shadow(0 0 14px #fff);cursor:pointer;animation:pulse 1s infinite alternate}@keyframes pulse{to{stroke-width:12}}.portal{stroke:#fff;stroke-width:4;opacity:0;fill:none!important;fill-opacity:0!important;pointer-events:none}.portal.destination{opacity:1;fill:none!important;fill-opacity:0!important;stroke-width:8;pointer-events:auto;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}.portal.occupied:not(.destination){opacity:0;fill:none!important;fill-opacity:0!important}.center{fill:none!important;stroke:#fff;stroke-width:6;opacity:0;pointer-events:none}
-.center.destination{fill:none!important;opacity:1;stroke-width:8;pointer-events:auto;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}
+.center.destination{fill:none!important;opacity:1;stroke-width:8;pointer-events:auto!important;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}
 .center.occupied:not(.destination){opacity:0}.choice{stroke:#fff;stroke-width:7;filter:drop-shadow(0 0 10px #fff);cursor:pointer}.token{stroke:#fff;stroke-width:3}.player{fill:#67d7ff}.cpu{fill:#ff6577}.side{display:flex;flex-direction:column;gap:12px}.card{background:#0c1a2ae8;border:1px solid #29455f;border-radius:20px;padding:16px}.card h3{margin-top:0}.die{width:82px;height:82px;background:white;color:#102033;border-radius:18px;display:grid;place-items:center;margin:8px auto 12px;font-size:42px;font-weight:900}.wide{width:100%}.crystals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.crystal{aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-size:24px;opacity:.18;border:2px solid #fff8}.crystal.got{opacity:1;box-shadow:0 0 18px currentColor}.row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #ffffff14}.muted{color:#a9bdd0;font-size:13px}.modal{display:none;position:fixed;inset:0;background:#02060bdd;z-index:5;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.box{width:min(700px,96vw);background:#0c1929;border:1px solid #36536f;border-radius:24px;padding:24px}.cat{font-size:13px;letter-spacing:2px;font-weight:900;text-transform:uppercase}.question{font-size:clamp(21px,4vw,30px);font-weight:900;margin:10px 0 18px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{min-height:68px;text-align:left;border:1px solid #3b536a;background:#14283b;border-radius:15px;padding:14px;font-weight:700}.answer.good{background:#174c36}.answer.bad{background:#542330}.rolls{display:flex;justify-content:center;gap:18px;text-align:center}.roll{padding:16px 24px;background:#13283b;border-radius:16px}.big{font-size:42px;font-weight:900}@media(max-width:800px){.layout{grid-template-columns:1fr}.answers{grid-template-columns:1fr}}
 
 .diffs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.diff{border:1px solid #45627d;background:#11263a;border-radius:18px;padding:18px 10px;font-weight:900}.diff small{display:block;margin-top:6px;color:#a9bdd0}.finalScore{font-size:48px;font-weight:900;margin:8px 0}@media(max-width:600px){.diffs{grid-template-columns:1fr}}
@@ -219,17 +219,33 @@ function soloVictoryReward(){
   if(cpuRate<=.55)return 7;
   return 10;
 }
+function prismaDifficultyKey(){
+  if(cpuRate<=.30)return "easyWins";
+  if(cpuRate<=.55)return "normalWins";
+  return "hardWins";
+}
 async function awardSoloVictoryCoins(){
   if(gameMode!=="solo"||fvRewardSaved||!fvProfileId)return 0;
   fvRewardSaved=true;
   const reward=soloVictoryReward();
   try{
-    const rows=await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=coins&limit=1`);
+    let rows;
+    try{rows=await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=coins,challenge_state&limit=1`)}
+    catch(_){rows=await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=coins&limit=1`)}
     if(!rows||!rows[0])throw new Error("Perfil no trobat");
     const total=Number(rows[0].coins||0)+reward;
-    await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}`,{method:"PATCH",body:JSON.stringify({coins:total})});
+    const patch={coins:total};
+    if(rows[0].challenge_state!==undefined){
+      const st=(rows[0].challenge_state&&typeof rows[0].challenge_state==="object")?rows[0].challenge_state:{};
+      st.stats=(st.stats&&typeof st.stats==="object")?st.stats:{};
+      st.stats.prisma={easyWins:0,normalWins:0,hardWins:0,...(st.stats.prisma||{})};
+      const key=prismaDifficultyKey();
+      st.stats.prisma[key]=Number(st.stats.prisma[key]||0)+1;
+      patch.challenge_state=st;
+    }
+    await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}`,{method:"PATCH",body:JSON.stringify(patch)});
     return reward;
-  }catch(e){console.error("Fasia Prisma: no s'han pogut guardar les monedes",e);fvRewardSaved=false;return -1}
+  }catch(e){console.error("Fasia Prisma: no s'han pogut guardar la victòria i les monedes",e);fvRewardSaved=false;return -1}
 }
 const diceFaces=["../assets/fasiaprisma/dice-1.webp", "../assets/fasiaprisma/dice-2.webp", "../assets/fasiaprisma/dice-3.webp", "../assets/fasiaprisma/dice-4.webp", "../assets/fasiaprisma/dice-5.webp", "../assets/fasiaprisma/dice-6.webp"];
 const crystalImgs=["../assets/fasiaprisma/crystal-blue.webp", "../assets/fasiaprisma/crystal-yellow.webp", "../assets/fasiaprisma/crystal-green.webp", "../assets/fasiaprisma/crystal-purple.webp", "../assets/fasiaprisma/crystal-orange.webp", "../assets/fasiaprisma/crystal-pink.webp"];
@@ -937,12 +953,15 @@ document.addEventListener('DOMContentLoaded',()=>{if(svg)destinationObserver.obs
 
 
 function lockCenterUntilSix(){
-  if(!P || !P.cr || P.cr.size>=6)return;
+  if(!P || !P.cr)return;
   const center=svg.querySelector('[data-node="c"]');
-  if(center){
-    center.classList.remove('destination');
-    center.style.pointerEvents='none';
+  if(!center)return;
+  if(P.cr.size>=6){
+    center.style.pointerEvents='';
+    return;
   }
+  center.classList.remove('destination');
+  center.style.pointerEvents='none';
 }
 
 
