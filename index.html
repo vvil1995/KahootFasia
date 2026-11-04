@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.99 · PRISMA REPTES + AVATARS</title>
+<title>Fasia Verse · V0.15.00 · MESTRE DEL PRISMA</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4842,7 +4842,8 @@ const CHALLENGE_CATALOG=[
   {id:"prisma_veteran5",area:"prisma",icon:"👑",name:"VETERÀ DEL PRISMA",condition:"Guanya 5 partides de Fasia Prisma en mode 1 jugador.",stat:"prisma.totalWins",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"prisma_easy3",area:"prisma",icon:"🦈",name:"SAVI DEL PRISMA · FÀCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Fàcil.",stat:"prisma.easyWins",target:3,reward:{type:"exclusive",id:"tauro_savi_prisma",label:"🦈 Tauró Savi del Prisma · skin exclusiva"}},
   {id:"prisma_normal3",area:"prisma",icon:"🐕",name:"SAVI DEL PRISMA · MITJÀ",condition:"Guanya 3 partides de Fasia Prisma en mode Mitjà.",stat:"prisma.normalWins",target:3,reward:{type:"exclusive",id:"golden_savi_prisma",label:"🐕 Golden Savi del Prisma · skin exclusiva"}},
-  {id:"prisma_hard3",area:"prisma",icon:"🦊",name:"SÀVIA DEL PRISMA · DIFÍCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Difícil.",stat:"prisma.hardWins",target:3,reward:{type:"exclusive",id:"guineu_savia_prisma",label:"🦊 Guineu Sàvia del Prisma · skin exclusiva"}}
+  {id:"prisma_hard3",area:"prisma",icon:"🦊",name:"SÀVIA DEL PRISMA · DIFÍCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Difícil.",stat:"prisma.hardWins",target:3,reward:{type:"exclusive",id:"guineu_savia_prisma",label:"🦊 Guineu Sàvia del Prisma · skin exclusiva"}},
+  {id:"prisma_master",area:"prisma",icon:"💎",name:"MESTRE DEL PRISMA",condition:"Completa els tres desafiaments Savi del Prisma: Fàcil, Mitjà i Difícil.",stat:"prisma.saviCompleted",target:3,reward:{type:"exclusive_frame",id:"marc_fasia_prisma",label:"🖼️ Marc exclusiu Fàsia Prisma"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4887,7 +4888,8 @@ const CHALLENGE_REWARD_ASSETS={
   marc_multifasia:"assets/marcs/marc_multifasia.webp",
   tauro_savi_prisma:"assets/avatars/exclusius/tauro_prisma.png",
   golden_savi_prisma:"assets/avatars/exclusius/golden_prisma.png",
-  guineu_savia_prisma:"assets/avatars/exclusius/guineu_prisma.png"
+  guineu_savia_prisma:"assets/avatars/exclusius/guineu_prisma.png",
+  marc_fasia_prisma:"assets/marcs/marc_fasia_prisma.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
@@ -4940,6 +4942,10 @@ async function saveChallengeState(state){
 }
 function challengeGetStat(state,path){
   if(path==="pj.distinctRecipes")return new Set(state.stats.pj.recipes||[]).size;
+  if(path==="prisma.saviCompleted"){
+    const p=state.stats?.prisma||{};
+    return [p.easyWins,p.normalWins,p.hardWins].filter(v=>Number(v||0)>=3).length;
+  }
   const [a,b]=path.split(".");return Number(state.stats?.[a]?.[b]||0);
 }
 function challengeQueue(state,item){state.pending=Array.isArray(state.pending)?state.pending:[];state.pending.push({...item,at:Date.now()})}
@@ -5771,7 +5777,8 @@ const FRAME_CATALOG=[
 {id:"marc_llegenda_portals",name:"LLEGENDA DELS PORTALS",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_llegenda_portals.webp"},
 {id:"marc_fasia_rush",name:"FASIA RUSH",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_fasia_rush.webp"},
 {id:"marc_nexus4",name:"NEXUS 4",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_nexus4.webp"},
-{id:"marc_multifasia",name:"MULTIFASIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_multifasia.webp"}];
+{id:"marc_multifasia",name:"MULTIFASIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_multifasia.webp"},
+{id:"marc_fasia_prisma",name:"FÀSIA PRISMA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_fasia_prisma.webp"}];
 function frameById(id){return FRAME_CATALOG.find(f=>f.id===id)||null}
 async function saveFrameProfile(patch){const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(patch)});currentProfile=normalizeShopProfile({...currentProfile,...((rows&&rows[0])||patch)})}
 async function openFramesShop(){
