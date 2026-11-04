@@ -3941,6 +3941,12 @@ button.profile-collection-card{cursor:pointer}
 <style>
 #openCastaween{background:linear-gradient(to top,rgba(19,12,36,.92),rgba(19,12,36,.08) 70%),url("assets/castaween/portada.webp") center/cover no-repeat!important;background-color:#281633!important;color:white!important}
 #openCastaween .game-choice-content,#openCastaween h3,#openCastaween p{color:white!important}
+</style><style>
+.game-choice-hulkdoku{background:linear-gradient(90deg,rgba(5,20,14,.70),rgba(11,34,22,.50)),url('assets/jocs/hulkdoku_portada.webp') center/cover!important;color:white!important}
+.game-choice-hulkdoku h3,.game-choice-hulkdoku p{color:white!important;text-shadow:0 2px 8px #10251c}
+.skin-shop-card.owned .skin-shop-media img,.skin-shop-card.equipped .skin-shop-media img,
+.frame-shop-card.owned .frame-preview img,.frame-shop-card.equipped .frame-preview img{filter:none!important;-webkit-filter:none!important;opacity:1!important;transform:none!important}
+.skin-shop-card.owned .skin-lock-veil,.skin-shop-card.equipped .skin-lock-veil{display:none!important}
 </style></head>
 <body>
 <div class="app">
@@ -4058,6 +4064,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="nexus" type="button">🔗 NEXUS 4</button>
     <button class="challenge-tab" data-challenge-area="multifasia" type="button">✖️ MULTIFASIA</button>
     <button class="challenge-tab" data-challenge-area="rush" type="button">🏁 FASIA RUSH</button>
+    <button class="challenge-tab" data-challenge-area="hulkdoku" type="button">🐶 HULKDOKU</button>
     <button class="challenge-tab" data-challenge-area="prisma" type="button">💎 FASIA PRISMA</button>
   </div>
   <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
@@ -4129,6 +4136,12 @@ button.profile-collection-card{cursor:pointer}
       </div>
     </button>
 
+    <button id="openHulkdoku" class="game-choice game-choice-hulkdoku" type="button">
+      <div class="game-choice-arrow">›</div><div class="game-choice-content">
+        <span class="game-choice-tag">JOC INDIVIDUAL · 1.000 NIVELLS</span>
+        <h3>HULKDOKU</h3><p>Resol els puzles, guanya monedes i desbloqueja tres Hulks i un marc exclusiu.</p>
+      </div>
+    </button>
     <button id="openNexus4" class="game-choice game-choice-nexus" type="button">
       <div class="game-choice-arrow">›</div>
       <div class="game-choice-content">
@@ -4715,6 +4728,23 @@ button.profile-collection-card{cursor:pointer}
 <script id="fv-challenges-v1-script">
 /* ===== FASIA VERSE · MOTOR GENÈRIC DE DESAFIAMENTS V1 ===== */
 const CHALLENGE_CATALOG=[
+  {id:"hd_3",area:"hulkdoku",icon:"🐾",name:"PRIMERS PASSOS",condition:"Supera 3 nivells.",stat:"hulkdoku.levels",target:3,reward:{type:"coins",amount:2,label:"🪙 2 monedes"}},
+  {id:"hd_10",area:"hulkdoku",icon:"🐾",name:"APRENENT",condition:"Supera 10 nivells.",stat:"hulkdoku.levels",target:10,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
+  {id:"hd_perfect3",area:"hulkdoku",icon:"✨",name:"TRES PERFECTES",condition:"Supera 3 nivells sense errors.",stat:"hulkdoku.perfect",target:3,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
+  {id:"hd_lives5",area:"hulkdoku",icon:"🦴",name:"OSSOS INTACTES",condition:"Supera 5 nivells amb les 3 vides.",stat:"hulkdoku.fullLives",target:5,reward:{type:"coins",amount:4,label:"🪙 4 monedes"}},
+  {id:"hd_six5",area:"hulkdoku",icon:"🧩",name:"MESTRE DEL 6×6",condition:"Supera 5 taulers de 6×6.",stat:"hulkdoku.six",target:5,reward:{type:"coins",amount:4,label:"🪙 4 monedes"}},
+  {id:"hd_seven",area:"hulkdoku",icon:"✨",name:"SET PERFECTE",condition:"Supera un 7×7 sense errors.",stat:"hulkdoku.sevenPerfect",target:1,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"hd_25",area:"hulkdoku",icon:"🐾",name:"EXPLORADOR DE TAULERS",condition:"Supera 25 nivells.",stat:"hulkdoku.levels",target:25,reward:{type:"coins",amount:5,label:"🪙 5 monedes"}},
+  {id:"hd_eight",area:"hulkdoku",icon:"✨",name:"VUIT PERFECTE",condition:"Supera un 8×8 sense errors.",stat:"hulkdoku.eightPerfect",target:1,reward:{type:"coins",amount:6,label:"🪙 6 monedes"}},
+  {id:"hd_streak",area:"hulkdoku",icon:"🔥",name:"IMPARABLE",condition:"Supera 10 nivells seguits sense errors.",stat:"hulkdoku.bestStreak",target:10,reward:{type:"coins",amount:6,label:"🪙 6 monedes"}},
+  {id:"hd_ten",area:"hulkdoku",icon:"✨",name:"DEU PERFECTE",condition:"Supera un 10×10 sense errors.",stat:"hulkdoku.tenPerfect",target:1,reward:{type:"coins",amount:7,label:"🪙 7 monedes"}},
+  {id:"hd_twelve",area:"hulkdoku",icon:"🏆",name:"EL GRAN TAULER",condition:"Supera un 12×12.",stat:"hulkdoku.twelve",target:1,reward:{type:"coins",amount:8,label:"🪙 8 monedes"}},
+  {id:"hd_perfect50",area:"hulkdoku",icon:"💎",name:"CINQUANTA IMPECABLES",condition:"Supera 50 nivells sense errors acumulats.",stat:"hulkdoku.perfect",target:50,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
+  {id:"hd_100",area:"hulkdoku",icon:"🧭",name:"HULK EXPLORADOR",condition:"Supera 100 nivells.",stat:"hulkdoku.levels",target:100,reward:{type:"exclusive",id:"hulkdoku_explorador",label:"🐶 Hulk explorador"}},
+  {id:"hd_250",area:"hulkdoku",icon:"🪄",name:"MAG DELS PORTALS",condition:"Supera 250 nivells.",stat:"hulkdoku.levels",target:250,reward:{type:"exclusive",id:"hulkdoku_mag",label:"🐶 Hulk mag dels portals"}},
+  {id:"hd_500",area:"hulkdoku",icon:"🛡️",name:"HULK CAVALLER",condition:"Supera 500 nivells.",stat:"hulkdoku.levels",target:500,reward:{type:"exclusive",id:"hulkdoku_cavaller",label:"🐶 Hulk cavaller"}},
+  {id:"hd_1000",area:"hulkdoku",icon:"👑",name:"MESTRE HULKDOKU",condition:"Supera els 1.000 nivells.",stat:"hulkdoku.levels",target:1000,reward:{type:"exclusive_frame",id:"marc_hulkdoku",label:"🏆 Marc Mestre Hulkdoku"}},
+
   {id:"global_colleccionista",area:"global",icon:"🛍️",name:"COL·LECCIONISTA",condition:"Compra 5 skins a la botiga.",stat:"global.skinPurchases",target:5,reward:{type:"title",id:"colleccionista",label:"🏷️ Títol COL·LECCIONISTA"}},
 
   {id:"kh_cientific",area:"kahoot",icon:"🧪",name:"CIENTÍFIC/A",condition:"Juga 5 Kahoots de ciències.",stat:"kahoot.played",target:5,reward:{type:"title",id:"cientific",label:"🏷️ Títol CIENTÍFIC/A"}},
@@ -4805,6 +4835,10 @@ const PUZZLE_CONFIG={
 };
 
 const CHALLENGE_REWARD_ASSETS={
+  hulkdoku_explorador:"assets/avatars/exclusius/hulkdoku_explorador.webp",
+  hulkdoku_mag:"assets/avatars/exclusius/hulkdoku_mag.webp",
+  hulkdoku_cavaller:"assets/avatars/exclusius/hulkdoku_cavaller.webp",
+  marc_hulkdoku:"assets/marcs/marc_hulkdoku.webp",
   medusa_cientifica:"assets/avatars/exclusius/medusa_cientifica.webp",
   tuca_caixer:"assets/avatars/exclusius/tuca_caixer.webp",
   lleo_viatger_temps:"assets/avatars/exclusius/lleo_viatger_temps.webp",
@@ -4843,7 +4877,7 @@ function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0},prisma:{easyWins:0,normalWins:0,hardWins:0,totalWins:0,bestCorrectStreak:0,perfectFinals:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0},prisma:{easyWins:0,normalWins:0,hardWins:0,totalWins:0,bestCorrectStreak:0,perfectFinals:0},hulkdoku:{levels:0,perfect:0,fullLives:0,six:0,sevenPerfect:0,eightPerfect:0,bestStreak:0,tenPerfect:0,twelve:0,streak:0,countedLevels:[]}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -4944,7 +4978,30 @@ function syncPortalChallengeStats(state){
   ps.legendAng=completedSets.some(x=>x.lang==="en"&&x.diff==="easy"&&x.full)?1:0;
   return state;
 }
+async function syncHulkdokuChallenges(){
+  if(!currentProfile?.id)return;
+  const key=`fv_hulkdoku_events_${currentProfile.id}`;
+  let events=[];try{events=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){}
+  if(!Array.isArray(events)||!events.length)return;
+  const state=challengeState(),h=state.stats.hulkdoku||(state.stats.hulkdoku={});
+  const counted=new Set(h.countedLevels||[]);let changed=false;
+  for(const e of events){
+    const id=Number(e.level);if(!Number.isInteger(id)||id<1||id>1000||counted.has(id))continue;
+    counted.add(id);changed=true;
+    h.levels=counted.size;
+    if(e.perfect){h.perfect=(h.perfect||0)+1;h.fullLives=(h.fullLives||0)+1;h.streak=(h.streak||0)+1;h.bestStreak=Math.max(h.bestStreak||0,h.streak)}
+    else h.streak=0;
+    if(e.size===6)h.six=(h.six||0)+1;
+    if(e.size===7&&e.perfect)h.sevenPerfect=1;
+    if(e.size===8&&e.perfect)h.eightPerfect=1;
+    if(e.size===10&&e.perfect)h.tenPerfect=1;
+    if(e.size===12)h.twelve=1;
+  }
+  if(changed){h.countedLevels=[...counted];await saveChallengeState(state)}
+  localStorage.removeItem(key);
+}
 async function evaluateChallenges(state=challengeState()){
+  await syncHulkdokuChallenges();state=challengeState();
   syncPortalChallengeStats(state);
   const completed=new Set(state.completed||[]);let changed=false;
   for(const ch of CHALLENGE_CATALOG){
@@ -5431,6 +5488,10 @@ const SHOP_CONFIG={
   {id:"medusa_cientifica",name:"MEDUSA CIENTÍFICA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/medusa_cientifica.webp",cropIndex:null},
   {id:"fasia_rush_medusa_blava",name:"MEDUSA BLAVA FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_medusa-blava.webp",cropIndex:null}
 ]},
+{id:"hulkdoku",name:"HULKDOKU",emoji:"🐶",exclusive:true,skins:[
+{id:"hulkdoku_explorador",name:"HULK EXPLORADOR",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_explorador.webp",cropIndex:null},
+{id:"hulkdoku_mag",name:"HULK MAG DELS PORTALS",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_mag.webp",cropIndex:null},
+{id:"hulkdoku_cavaller",name:"HULK CAVALLER",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_cavaller.webp",cropIndex:null}]},
 {id:"guepard",name:"GUEPARD",emoji:"🐆",exclusive:true,skins:[{id:"fasia_rush_guepard_f1",name:"GUEPARD F1 FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_guepard_f1.webp",cropIndex:null}]},
 {id:"multifasia_mul",name:"MUL",emoji:"✨",exclusive:true,skins:[{id:"multifasia_mul",name:"MUL GUARDIÀ",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_mul.webp",cropIndex:null}]},
 {id:"multifasia_null",name:"NULL",emoji:"🌑",exclusive:true,skins:[{id:"multifasia_null",name:"NULL MULTIFASIA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_null.webp",cropIndex:null}]},
@@ -5670,6 +5731,7 @@ async function openTitlesScreen(){
 }
 
 const FRAME_CATALOG=[
+{id:"marc_hulkdoku",name:"MESTRE HULKDOKU",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_hulkdoku.webp"},
 {id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"},
 {id:"marc_ciencia",name:"CIÈNCIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_ciencia.webp"},
 {id:"marc_preu_just",name:"PREU JUST",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_preu_just.webp"},
@@ -5684,8 +5746,8 @@ async function openFramesShop(){
  $("#framesCoins").textContent=Number(currentProfile.coins||0);
  const owned=new Set(currentProfile.owned_frames||[]);
  const unlockedExclusive=new Set((challengeState().unlockedExclusiveFrames||[]));
- $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const challengeHas=f.exclusiveChallenge&&unlockedExclusive.has(f.id),has=owned.has(f.id)||challengeHas,eq=currentProfile.equipped_frame===f.id,locked=f.exclusiveChallenge&&!challengeHas;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""} ${locked?"challenge-exclusive-locked":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${locked?"🔒 EXCLUSIU · DESAFIAMENT":challengeHas?"DESBLOQUEJAT":has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button" ${locked?"disabled":""}>${locked?"🔒 DESAFIAMENT":eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
- $("#framesGrid").querySelectorAll(".frame-action").forEach(btn=>btn.onclick=async()=>{const f=frameById(btn.dataset.frame),ownedNow=new Set(currentProfile.owned_frames||[]),unlockedNow=new Set(challengeState().unlockedExclusiveFrames||[]),challengeHas=f.exclusiveChallenge&&unlockedNow.has(f.id);if(f.exclusiveChallenge&&!challengeHas)return;btn.disabled=true;try{if(!ownedNow.has(f.id)&&!challengeHas){const coins=Number(currentProfile.coins||0);if(coins<f.price){alert("NO TENS PROU MONEDES");btn.disabled=false;return}ownedNow.add(f.id);await saveFrameProfile({coins:coins-f.price,owned_frames:[...ownedNow],equipped_frame:f.id})}else await saveFrameProfile({equipped_frame:f.id});$("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img"></span>`;renderProfileHeroVisuals();openFramesShop()}catch(e){console.error(e);alert("NO S'HA POGUT GUARDAR EL MARC");btn.disabled=false}});
+ $("#framesGrid").innerHTML=FRAME_CATALOG.map(f=>{const challengeHas=f.exclusiveChallenge&&(unlockedExclusive.has(f.id)||owned.has(f.id)),has=owned.has(f.id)||challengeHas,eq=currentProfile.equipped_frame===f.id,locked=f.exclusiveChallenge&&!has;return `<article class="frame-shop-card ${has?"owned":""} ${eq?"equipped":""} ${locked?"challenge-exclusive-locked":""}"><div class="frame-preview"><img src="${f.img}" alt="Marc ${f.name}"></div><h3>${f.name}</h3><div class="frame-price">${locked?"🔒 EXCLUSIU · DESAFIAMENT":challengeHas?"DESBLOQUEJAT":has?"COMPRAT":f.price+" 🪙"}</div><button class="frame-action ${has?"":"buy"} ${eq?"equipped":""}" data-frame="${f.id}" type="button" ${locked?"disabled":""}>${locked?"🔒 DESAFIAMENT":eq?"✓ EQUIPAT":has?"EQUIPAR":"COMPRAR"}</button></article>`}).join("");
+ $("#framesGrid").querySelectorAll(".frame-action").forEach(btn=>btn.onclick=async()=>{const f=frameById(btn.dataset.frame),ownedNow=new Set(currentProfile.owned_frames||[]),unlockedNow=new Set(challengeState().unlockedExclusiveFrames||[]),challengeHas=f.exclusiveChallenge&&(unlockedNow.has(f.id)||ownedNow.has(f.id));if(f.exclusiveChallenge&&!challengeHas)return;btn.disabled=true;try{if(!ownedNow.has(f.id)&&!challengeHas){const coins=Number(currentProfile.coins||0);if(coins<f.price){alert("NO TENS PROU MONEDES");btn.disabled=false;return}ownedNow.add(f.id);await saveFrameProfile({coins:coins-f.price,owned_frames:[...ownedNow],equipped_frame:f.id})}else await saveFrameProfile({equipped_frame:f.id});$("#profileCoins").innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img"></span>`;renderProfileHeroVisuals();openFramesShop()}catch(e){console.error(e);alert("NO S'HA POGUT GUARDAR EL MARC");btn.disabled=false}});
  show("framesHome");
 }
 
@@ -5773,7 +5835,7 @@ function renderCharactersGrid(){
 
     const media=document.createElement("div");media.className="character-card-media";
     const visual=makeImageOrFallback(preview?.image,c.name,c.emoji,preview?.cropIndex);
-    const lockedChallengePreview=!!(preview?.exclusiveChallenge && !challengeState().unlockedExclusives?.includes(preview.id));
+    const lockedChallengePreview=!!(preview?.exclusiveChallenge && !isSkinOwned(preview.id));
     if(lockedChallengePreview && visual.img){
       visual.img.style.setProperty("filter","blur(18px) brightness(.28) saturate(.08)","important");
       visual.img.style.setProperty("-webkit-filter","blur(18px) brightness(.28) saturate(.08)","important");
@@ -7029,6 +7091,12 @@ $("#openWordSearch").onclick=()=>{
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/portals-lletres.html?profile="+encodeURIComponent(pid);
 };
+$("#openHulkdoku").onclick=()=>{
+  if(!currentProfile?.id || currentProfile.role!=="student")return alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+  const pid=String(currentProfile.id);sessionStorage.setItem("fasiaVerseProfileId",pid);
+  sessionStorage.setItem("fasiaVerseReturnToProfile","1");
+  location.href="games/hulkdoku.html?profile="+encodeURIComponent(pid);
+};
 $("#openNexus4").onclick=()=>{
   if(!currentProfile || currentProfile.role!=="student" || !currentProfile.id){
     alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
@@ -7793,6 +7861,7 @@ $("#startGame").onclick=async()=>{
     if($('#profileTrophyBreakdown')) $('#profileTrophyBreakdown').textContent='TOCA PER VEURE LES COPES';
 
     await captureAnimalSnakeReturnStats(params);
+    await evaluateChallenges();
     await enterProfileWithChallengeRewards();
     requestAnimationFrame(()=>{
       updateProfileCharacterSummary();
