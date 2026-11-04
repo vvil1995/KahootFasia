@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.97 · Portada Castaween</title>
+<title>Fasia Verse · V0.14.98 · FASIA PRISMA DESAFIAMENTS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -4057,6 +4057,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="nexus" type="button">🔗 NEXUS 4</button>
     <button class="challenge-tab" data-challenge-area="multifasia" type="button">✖️ MULTIFASIA</button>
     <button class="challenge-tab" data-challenge-area="rush" type="button">🏁 FASIA RUSH</button>
+    <button class="challenge-tab" data-challenge-area="prisma" type="button">💎 FASIA PRISMA</button>
   </div>
   <div id="challengePuzzlePanel" class="challenge-puzzle-panel hidden"></div>
   <div id="challengesGrid" class="challenges-grid"></div>
@@ -4781,7 +4782,11 @@ const CHALLENGE_CATALOG=[
   {id:"rush_total50",area:"rush",icon:"🛣️",name:"50 KM DE VERSE",condition:"Recorre 50 km totals a Fasia Rush.",stat:"rush.totalKm",target:50,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"rush_total100",area:"rush",icon:"🌍",name:"100 KM DE VERSE",condition:"Recorre 100 km totals a Fasia Rush.",stat:"rush.totalKm",target:100,reward:{type:"coins",amount:15,label:"🪙 15 monedes"}},
   {id:"rush_extreme_pb5",area:"rush",icon:"👑",name:"SUPERA'T",condition:"Supera el teu propi rècord del Mode Extrem 5 vegades.",stat:"rush.extremePB",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
-  {id:"rush_extreme_lap1",area:"rush",icon:"🐆",name:"REI DEL MODE EXTREM",condition:"Completa una volta sencera de 50 km al Mode Extrem.",stat:"rush.extremeLaps",target:1,reward:{type:"exclusive",id:"fasia_rush_guepard_f1",label:"🐆 Guepard F1 Fasia Rush · avatar exclusiu"}}
+  {id:"rush_extreme_lap1",area:"rush",icon:"🐆",name:"REI DEL MODE EXTREM",condition:"Completa una volta sencera de 50 km al Mode Extrem.",stat:"rush.extremeLaps",target:1,reward:{type:"exclusive",id:"fasia_rush_guepard_f1",label:"🐆 Guepard F1 Fasia Rush · avatar exclusiu"}},
+
+  {id:"prisma_easy3",area:"prisma",icon:"🦈",name:"SAVI DEL PRISMA · FÀCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Fàcil.",stat:"prisma.easyWins",target:3,reward:{type:"exclusive",id:"tauro_savi_prisma",label:"🦈 Tauró Savi del Prisma · skin exclusiva"}},
+  {id:"prisma_normal3",area:"prisma",icon:"🐕",name:"SAVI DEL PRISMA · MITJÀ",condition:"Guanya 3 partides de Fasia Prisma en mode Mitjà.",stat:"prisma.normalWins",target:3,reward:{type:"exclusive",id:"golden_savi_prisma",label:"🐕 Golden Savi del Prisma · skin exclusiva"}},
+  {id:"prisma_hard3",area:"prisma",icon:"🦊",name:"SÀVIA DEL PRISMA · DIFÍCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Difícil.",stat:"prisma.hardWins",target:3,reward:{type:"exclusive",id:"guineu_savia_prisma",label:"🦊 Guineu Sàvia del Prisma · skin exclusiva"}}
 ];
 const PUZZLE_CONFIG={
   kahoot:{name:"PUZLE KAHOOT",reward:"MEDUSA CIENTÍFICA",exclusiveId:"medusa_cientifica"},
@@ -4819,13 +4824,16 @@ const CHALLENGE_REWARD_ASSETS={
   multifasia_hulk:"assets/avatars/exclusius/multifasia_hulk.webp",
   multifasia_mul:"assets/avatars/exclusius/multifasia_mul.webp",
   multifasia_null:"assets/avatars/exclusius/multifasia_null.webp",
-  marc_multifasia:"assets/marcs/marc_multifasia.webp"
+  marc_multifasia:"assets/marcs/marc_multifasia.webp",
+  tauro_savi_prisma:"assets/avatars/exclusius/tauro_savi_prisma.webp",
+  golden_savi_prisma:"assets/avatars/exclusius/golden_savi_prisma.webp",
+  guineu_savia_prisma:"assets/avatars/exclusius/guineu_savia_prisma.webp"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0},prisma:{easyWins:0,normalWins:0,hardWins:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -5347,7 +5355,8 @@ const SHOP_CONFIG={
 {id:"tauro",name:"TAURÓ",emoji:"🦈",skins:[
       {id:"tauro_rosa",name:"TAURÓ ROSA",price:15,available:true,event:null,image:"assets/avatars/tauro_rosa.webp"},
       {id:"tauro_metge",name:"TAURÓ METGE",price:20,available:true,event:null,image:"assets/avatars/tauro_metge.webp"},
-      {id:"tauro_futbolista",name:"TAURÓ FUTBOLISTA",price:25,available:true,event:null,image:"assets/avatars/tauro_futbolista.webp"}
+      {id:"tauro_futbolista",name:"TAURÓ FUTBOLISTA",price:25,available:true,event:null,image:"assets/avatars/tauro_futbolista.webp"},
+      {id:"tauro_savi_prisma",name:"TAURÓ SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tauro_savi_prisma.webp"}
     ]},
 {id:"lleo",name:"LLEÓ",emoji:"🦁",skins:[
       {id:"lleo_groc",name:"LLEÓ ESTILÓS",price:15,available:true,event:null,image:"assets/avatars/lleo_estilos.webp"},
@@ -5376,7 +5385,8 @@ const SHOP_CONFIG={
 {id:"golden",name:"GOLDEN RETRIEVER",emoji:"🐕",skins:[
   {id:"golden_explorador",name:"GOLDEN EXPLORADOR",price:15,available:true,event:null,image:"assets/avatars/golden_explorador.webp",cropIndex:null},
   {id:"golden_bomber",name:"GOLDEN BOMBER",price:20,available:true,event:null,image:"assets/avatars/golden_bomber.webp",cropIndex:null},
-  {id:"golden_halloween",name:"GOLDEN HALLOWEEN",price:10,available:false,event:"halloween",image:"assets/avatars/golden_halloween.webp",cropIndex:null}
+  {id:"golden_halloween",name:"GOLDEN HALLOWEEN",price:10,available:false,event:"halloween",image:"assets/avatars/golden_halloween.webp",cropIndex:null},
+  {id:"golden_savi_prisma",name:"GOLDEN SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/golden_savi_prisma.webp",cropIndex:null}
 ]},
 {id:"bulldog",name:"BULLDOG FRANCÈS",emoji:"🐶",skins:[
   {id:"bulldog_frances",name:"BULLDOG FRANCÈS",price:15,available:true,event:null,image:"assets/avatars/bulldog_frances.webp",cropIndex:null},
@@ -5407,9 +5417,9 @@ const SHOP_CONFIG={
 {id:"guepard",name:"GUEPARD",emoji:"🐆",exclusive:true,skins:[{id:"fasia_rush_guepard_f1",name:"GUEPARD F1 FASIA RUSH",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/fasia_rush_guepard_f1.webp",cropIndex:null}]},
 {id:"multifasia_mul",name:"MUL",emoji:"✨",exclusive:true,skins:[{id:"multifasia_mul",name:"MUL GUARDIÀ",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_mul.webp",cropIndex:null}]},
 {id:"multifasia_null",name:"NULL",emoji:"🌑",exclusive:true,skins:[{id:"multifasia_null",name:"NULL MULTIFASIA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_null.webp",cropIndex:null}]},
-{id:"portals_cat",name:"LLEGENDA CAT",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"DRAC DELS PORTALS CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
-{id:"portals_esp",name:"LLEGENDA ESP",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LINX DELS PORTALS ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
-{id:"portals_ang",name:"LLEGENDA ANG",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"GUINEU DELS PORTALS ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null}]},
+{id:"portals_cat",name:"DRAC",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"LLEGENDA CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
+{id:"portals_esp",name:"LINX",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LLEGENDA ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
+{id:"portals_ang",name:"GUINEU",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"LLEGENDA ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null},{id:"guineu_savia_prisma",name:"GUINEU SÀVIA DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_savia_prisma.webp",cropIndex:null}]},
 {id:"rinoceront",name:"RINOCERONT",emoji:"🦏",skins:[
   {id:"rinoceront_boxejador",name:"RINOCERONT BOXEJADOR",price:15,available:true,event:null,image:"assets/avatars/rinoceront_boxejador.webp",cropIndex:null},
   {id:"rinoceront_ballet",name:"RINOCERONT BALLARÍ DE BALLET",price:20,available:true,event:null,image:"assets/avatars/rinoceront_ballari_de_ballet.webp",cropIndex:null},
