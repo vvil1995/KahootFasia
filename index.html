@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Fasia Verse · V0.14.98 · FASIA PRISMA DESAFIAMENTS</title>
+<title>Fasia Verse · V0.14.99 · PRISMA REPTES + AVATARS</title>
 <style>
 :root{--bg:#f5f3ef;--card:#fff;--text:#17192b;--muted:#6d7280;--accent:#5b4ce0;--border:#ddd9d2;--ok:#22c55e}
 *{box-sizing:border-box}
@@ -3816,6 +3816,7 @@ button.profile-collection-card{cursor:pointer}
 .challenge-card-icon{width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;background:#eee9ff}.challenge-card.done .challenge-card-icon{background:#dcfce7}.challenge-card h3{margin:1px 0 5px;font-size:20px}.challenge-condition{font-size:13px;color:#6e6876;font-weight:800;min-height:31px}.challenge-progress-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px;font-weight:950}.challenge-progress-track{height:10px;background:#eee9e3;border-radius:999px;overflow:hidden;margin-top:6px}.challenge-progress-fill{height:100%;background:linear-gradient(90deg,#6647e8,#aa54ef);border-radius:999px}.challenge-card.done .challenge-progress-fill{background:linear-gradient(90deg,#24a35a,#5bd483)}.challenge-reward{margin-top:11px;padding-top:10px;border-top:1px solid #ebe6e1;font-size:13px;font-weight:950;color:#4a3e65}.challenge-done-label{color:#168447}
 .challenge-puzzle-panel{margin:0 0 16px;padding:18px;border-radius:23px;background:linear-gradient(135deg,#17132e,#30205d);color:#fff;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}.challenge-puzzle-visual{height:112px;border-radius:18px;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 38%,#9d8cff 0 12%,#483a7e 13% 32%,#17132e 33%);filter:blur(5px);opacity:.72}.challenge-puzzle-visual:after{content:"?";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:55px;font-weight:1000;filter:blur(0);color:#fff}.challenge-puzzle-panel h3{margin:0 0 6px;font-size:25px}.challenge-puzzle-count{font-size:34px;font-weight:1000;color:#ffd45d}.challenge-puzzle-panel p{margin:4px 0;color:#d9d1f6;font-weight:800}.challenge-puzzle-panel.complete{background:linear-gradient(135deg,#183b2a,#4a2b79)}
 .challenge-reward-overlay{position:fixed;inset:0;z-index:120000;background:rgba(7,5,20,.78);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}.challenge-reward-modal{width:min(520px,100%);background:linear-gradient(145deg,#fff,#f4efff);border:3px solid #8466ef;border-radius:30px;padding:28px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.35)}.challenge-reward-icon{font-size:64px}.challenge-reward-kicker{font-size:13px;font-weight:1000;color:#7250de;letter-spacing:.08em;margin-top:4px}.challenge-reward-modal h2{font-size:34px;margin:8px 0}.challenge-reward-modal p{font-size:17px;font-weight:800;color:#5d5668}.challenge-reward-special{margin:18px auto;padding:20px;border-radius:22px;background:#1d1639;color:#fff;font-size:20px;font-weight:1000}.challenge-reward-image{width:min(300px,76vw);max-height:320px;object-fit:contain;display:block;margin:16px auto 8px;border-radius:20px;filter:drop-shadow(0 14px 28px rgba(25,15,65,.28))}.challenge-reward-image.hidden{display:none!important}.challenge-reward-modal .btn{width:100%;margin-top:12px}.challenge-reward-overlay.hidden{display:none!important}
+.prisma-news-avatars{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 8px}.prisma-news-avatar{background:#130f2b;border:2px solid #8068ec;border-radius:16px;overflow:hidden}.prisma-news-avatar img{width:100%;aspect-ratio:.82;object-fit:cover;object-position:center 18%;display:block}.prisma-news-avatar b{display:block;padding:7px 4px;font-size:11px;color:#fff}.prisma-news-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.prisma-news-actions .btn{margin-top:10px}@media(max-width:480px){.prisma-news-avatar b{font-size:9px}.prisma-news-actions{grid-template-columns:1fr}}
 @media(max-width:800px){.challenge-tabs{grid-template-columns:repeat(2,1fr)}.challenges-grid{grid-template-columns:1fr}.challenge-puzzle-panel{grid-template-columns:100px 1fr}.challenge-puzzle-visual{height:90px}}
 </style>
 
@@ -4065,12 +4066,17 @@ button.profile-collection-card{cursor:pointer}
 
 <div id="fvNewsOverlay" class="challenge-reward-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="fvNewsTitle">
   <div class="challenge-reward-modal">
-    <div class="challenge-reward-icon">🎉</div>
+    <div class="challenge-reward-icon">💎</div>
     <div class="challenge-reward-kicker">NOVETATS A FASIA VERSE!</div>
-    <h2 id="fvNewsTitle">LA FESTA DE CASTAWEEN JA ÉS AQUÍ!</h2>
-    <p>🌰 Atrapa castanyes<br>🍪 Prepara panellets<br>👻 Explora el bosc encantat<br>🎵 La disco monstruosa<br>🎁 Aconsegueix 8 avatars exclusius</p>
-    <div class="challenge-reward-special">JUGA, COMPLETA ELS REPTES I DESBLOQUEJA LES NOVES RECOMPENSES!</div>
-    <button id="fvNewsContinue" class="btn" type="button">DESCOBRIR NOVETATS</button>
+    <h2 id="fvNewsTitle">NOUS DESAFIAMENTS DE FASIA PRISMA!</h2>
+    <p>Completa nous assoliments, guanya <b>monedes</b> i desbloqueja <b>3 skins exclusives</b>.</p>
+    <div class="prisma-news-avatars">
+      <div class="prisma-news-avatar"><img src="assets/avatars/exclusius/tauro_prisma.png" alt="Tauró Savi del Prisma"><b>TAURÓ SAVI</b></div>
+      <div class="prisma-news-avatar"><img src="assets/avatars/exclusius/golden_prisma.png" alt="Golden Savi del Prisma"><b>GOLDEN SAVI</b></div>
+      <div class="prisma-news-avatar"><img src="assets/avatars/exclusius/guineu_prisma.png" alt="Guineu Sàvia del Prisma"><b>GUINEU SÀVIA</b></div>
+    </div>
+    <div class="challenge-reward-special">3 VICTÒRIES FÀCIL · MITJÀ · DIFÍCIL = NOVES SKINS DEL PRISMA</div>
+    <div class="prisma-news-actions"><button id="fvNewsContinue" class="btn secondary" type="button">MÉS TARD</button><button id="fvNewsPrisma" class="btn" type="button">VEURE DESAFIAMENTS</button></div>
   </div>
 </div>
 
@@ -4784,6 +4790,10 @@ const CHALLENGE_CATALOG=[
   {id:"rush_extreme_pb5",area:"rush",icon:"👑",name:"SUPERA'T",condition:"Supera el teu propi rècord del Mode Extrem 5 vegades.",stat:"rush.extremePB",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"rush_extreme_lap1",area:"rush",icon:"🐆",name:"REI DEL MODE EXTREM",condition:"Completa una volta sencera de 50 km al Mode Extrem.",stat:"rush.extremeLaps",target:1,reward:{type:"exclusive",id:"fasia_rush_guepard_f1",label:"🐆 Guepard F1 Fasia Rush · avatar exclusiu"}},
 
+  {id:"prisma_first_win",area:"prisma",icon:"🏆",name:"PRIMERA VICTÒRIA",condition:"Guanya la teva primera partida de Fasia Prisma.",stat:"prisma.totalWins",target:1,reward:{type:"coins",amount:4,label:"🪙 4 monedes"}},
+  {id:"prisma_streak5",area:"prisma",icon:"⚡",name:"RATXA PRISMÀTICA",condition:"Aconsegueix 5 respostes correctes consecutives en mode 1 jugador.",stat:"prisma.bestCorrectStreak",target:5,reward:{type:"coins",amount:4,label:"🪙 4 monedes"}},
+  {id:"prisma_final_perfect",area:"prisma",icon:"🌈",name:"FINAL PERFECTA",condition:"Supera el Portal Final encertant les 3 preguntes.",stat:"prisma.perfectFinals",target:1,reward:{type:"coins",amount:8,label:"🪙 8 monedes"}},
+  {id:"prisma_veteran5",area:"prisma",icon:"👑",name:"VETERÀ DEL PRISMA",condition:"Guanya 5 partides de Fasia Prisma en mode 1 jugador.",stat:"prisma.totalWins",target:5,reward:{type:"coins",amount:10,label:"🪙 10 monedes"}},
   {id:"prisma_easy3",area:"prisma",icon:"🦈",name:"SAVI DEL PRISMA · FÀCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Fàcil.",stat:"prisma.easyWins",target:3,reward:{type:"exclusive",id:"tauro_savi_prisma",label:"🦈 Tauró Savi del Prisma · skin exclusiva"}},
   {id:"prisma_normal3",area:"prisma",icon:"🐕",name:"SAVI DEL PRISMA · MITJÀ",condition:"Guanya 3 partides de Fasia Prisma en mode Mitjà.",stat:"prisma.normalWins",target:3,reward:{type:"exclusive",id:"golden_savi_prisma",label:"🐕 Golden Savi del Prisma · skin exclusiva"}},
   {id:"prisma_hard3",area:"prisma",icon:"🦊",name:"SÀVIA DEL PRISMA · DIFÍCIL",condition:"Guanya 3 partides de Fasia Prisma en mode Difícil.",stat:"prisma.hardWins",target:3,reward:{type:"exclusive",id:"guineu_savia_prisma",label:"🦊 Guineu Sàvia del Prisma · skin exclusiva"}}
@@ -4825,15 +4835,15 @@ const CHALLENGE_REWARD_ASSETS={
   multifasia_mul:"assets/avatars/exclusius/multifasia_mul.webp",
   multifasia_null:"assets/avatars/exclusius/multifasia_null.webp",
   marc_multifasia:"assets/marcs/marc_multifasia.webp",
-  tauro_savi_prisma:"assets/avatars/exclusius/tauro_savi_prisma.webp",
-  golden_savi_prisma:"assets/avatars/exclusius/golden_savi_prisma.webp",
-  guineu_savia_prisma:"assets/avatars/exclusius/guineu_savia_prisma.webp"
+  tauro_savi_prisma:"assets/avatars/exclusius/tauro_prisma.png",
+  golden_savi_prisma:"assets/avatars/exclusius/golden_prisma.png",
+  guineu_savia_prisma:"assets/avatars/exclusius/guineu_prisma.png"
 };
 function challengeRewardAsset(id){return CHALLENGE_REWARD_ASSETS[id]||""}
 
 let activeChallengeArea="global";
 
-function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0},prisma:{easyWins:0,normalWins:0,hardWins:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
+function challengeDefaultState(){return {version:1,stats:{global:{skinPurchases:0},kahoot:{played:0,wins:0,podiums:0,bestCorrectStreak:0,fastCorrect:0,perfectGames:0},pj:{within15:0,exact:0,closest:0,recipes:[],within5:0,currentUnderStreak:0,bestUnderStreak:0,podiums:0,wins:0},snake:{maxAnimals:0,tucanTotal:0,paradoxGames:0,tucanGameMax:0,survivalMaxSec:0},portals:{completedDistinct:0,wordsFound:0,underMinute:0,languagesCompleted:0,fullModes:0,legendCat:0,legendEsp:0,legendAng:0},nexus:{pincher:0,gat:0,gorilla:0,zebra:0,tuca:0,camaleo:0,mussol:0,capibara:0,allCharactersWon:0},multifasia:{firstThree:0,null456:0,timeTables:0,infiniteBest:0,fullPortals:0},rush:{gp1:0,gp2:0,gp3:0,gp4:0,gp5:0,km3:0,km5:0,km75:0,gpCompletions:0,totalKm:0,extremePB:0,extremeLaps:0},prisma:{easyWins:0,normalWins:0,hardWins:0,totalWins:0,bestCorrectStreak:0,perfectFinals:0}},completed:[],fragments:{kahoot:[],pj:[],snake:[]},puzzlesCompleted:[],unlockedExclusives:[],unlockedExclusiveFrames:[],pending:[],processed:{kahoot:[],pj:[],snake:[]}}}
 function challengeMergeState(raw){
   const base=challengeDefaultState(), r=(raw&&typeof raw==="object"&&!Array.isArray(raw))?raw:{};
   const out={...base,...r};
@@ -5046,7 +5056,7 @@ function renderChallenges(){
 async function openChallengesScreen(){
   if(!currentProfile?.id)return;try{await refreshCurrentProfile()}catch(e){}const s=challengeState();syncHistoricalPurchasedSkins(s);await saveChallengeState(s);await evaluateChallenges(s);renderChallenges();show("challengesHome");
 }
-const FV_NEWS_POPUP_VERSION='castaween_2026';
+const FV_NEWS_POPUP_VERSION='prisma_reptes_2026_v1';
 function fvNewsKey(){return `fv_news_seen_${FV_NEWS_POPUP_VERSION}_${currentProfile?.id||"guest"}`}
 function maybeShowFvNews(){
   if(!currentProfile?.id)return;
@@ -5073,6 +5083,13 @@ document.addEventListener("DOMContentLoaded",()=>{
   $$(".challenge-tab").forEach(b=>b.addEventListener("click",()=>{$$(".challenge-tab").forEach(x=>x.classList.toggle("active",x===b));activeChallengeArea=b.dataset.challengeArea;renderChallenges()}));
   $("#challengeRewardContinue")?.addEventListener("click",dismissChallengeReward);
   $("#fvNewsContinue")?.addEventListener("click",dismissFvNews);
+  $("#fvNewsPrisma")?.addEventListener("click",async()=>{
+    if(currentProfile?.id)localStorage.setItem(fvNewsKey(),"1");
+    $("#fvNewsOverlay")?.classList.add("hidden");
+    activeChallengeArea="prisma";
+    $$(".challenge-tab").forEach(x=>x.classList.toggle("active",x.dataset.challengeArea==="prisma"));
+    await openChallengesScreen();
+  });
 });
 </script>
 
@@ -5356,7 +5373,7 @@ const SHOP_CONFIG={
       {id:"tauro_rosa",name:"TAURÓ ROSA",price:15,available:true,event:null,image:"assets/avatars/tauro_rosa.webp"},
       {id:"tauro_metge",name:"TAURÓ METGE",price:20,available:true,event:null,image:"assets/avatars/tauro_metge.webp"},
       {id:"tauro_futbolista",name:"TAURÓ FUTBOLISTA",price:25,available:true,event:null,image:"assets/avatars/tauro_futbolista.webp"},
-      {id:"tauro_savi_prisma",name:"TAURÓ SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tauro_savi_prisma.webp"}
+      {id:"tauro_savi_prisma",name:"TAURÓ SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/tauro_prisma.png"}
     ]},
 {id:"lleo",name:"LLEÓ",emoji:"🦁",skins:[
       {id:"lleo_groc",name:"LLEÓ ESTILÓS",price:15,available:true,event:null,image:"assets/avatars/lleo_estilos.webp"},
@@ -5386,7 +5403,7 @@ const SHOP_CONFIG={
   {id:"golden_explorador",name:"GOLDEN EXPLORADOR",price:15,available:true,event:null,image:"assets/avatars/golden_explorador.webp",cropIndex:null},
   {id:"golden_bomber",name:"GOLDEN BOMBER",price:20,available:true,event:null,image:"assets/avatars/golden_bomber.webp",cropIndex:null},
   {id:"golden_halloween",name:"GOLDEN HALLOWEEN",price:10,available:false,event:"halloween",image:"assets/avatars/golden_halloween.webp",cropIndex:null},
-  {id:"golden_savi_prisma",name:"GOLDEN SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/golden_savi_prisma.webp",cropIndex:null}
+  {id:"golden_savi_prisma",name:"GOLDEN SAVI DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/golden_prisma.png",cropIndex:null}
 ]},
 {id:"bulldog",name:"BULLDOG FRANCÈS",emoji:"🐶",skins:[
   {id:"bulldog_frances",name:"BULLDOG FRANCÈS",price:15,available:true,event:null,image:"assets/avatars/bulldog_frances.webp",cropIndex:null},
@@ -5419,7 +5436,7 @@ const SHOP_CONFIG={
 {id:"multifasia_null",name:"NULL",emoji:"🌑",exclusive:true,skins:[{id:"multifasia_null",name:"NULL MULTIFASIA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_null.webp",cropIndex:null}]},
 {id:"portals_cat",name:"DRAC",emoji:"🐉",exclusive:true,skins:[{id:"drac_portals_cat",name:"LLEGENDA CAT",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/drac_portals_cat.webp",cropIndex:null}]},
 {id:"portals_esp",name:"LINX",emoji:"🐾",exclusive:true,skins:[{id:"linx_portals_esp",name:"LLEGENDA ESP",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/linx_portals_esp.webp",cropIndex:null}]},
-{id:"portals_ang",name:"GUINEU",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"LLEGENDA ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null},{id:"guineu_savia_prisma",name:"GUINEU SÀVIA DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_savia_prisma.webp",cropIndex:null}]},
+{id:"portals_ang",name:"GUINEU",emoji:"🦊",exclusive:true,skins:[{id:"guineu_portals_ang",name:"LLEGENDA ANG",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_portals_ang.webp",cropIndex:null},{id:"guineu_savia_prisma",name:"GUINEU SÀVIA DEL PRISMA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/guineu_prisma.png",cropIndex:null}]},
 {id:"rinoceront",name:"RINOCERONT",emoji:"🦏",skins:[
   {id:"rinoceront_boxejador",name:"RINOCERONT BOXEJADOR",price:15,available:true,event:null,image:"assets/avatars/rinoceront_boxejador.webp",cropIndex:null},
   {id:"rinoceront_ballet",name:"RINOCERONT BALLARÍ DE BALLET",price:20,available:true,event:null,image:"assets/avatars/rinoceront_ballari_de_ballet.webp",cropIndex:null},
