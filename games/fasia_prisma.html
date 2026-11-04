@@ -1,4 +1,4 @@
-<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fasia Prisma · v2.6.5 DESAFIAMENTS</title>
+<!doctype html><html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fasia Prisma · v2.6.6 REPTES COMPLETS</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 30%,#173554,#07111f 55%,#02060b);color:#f7fbff;font-family:Arial,sans-serif;min-height:100vh}button{font:inherit;color:inherit;cursor:pointer}.screen{display:none;min-height:100vh}.active{display:flex}#home{align-items:center;justify-content:center;text-align:center}.hero{width:min(760px,92vw);padding:42px 24px;border:1px solid #34516d;border-radius:28px;background:#0b1929e8;box-shadow:0 30px 80px #0009}.logo{display:flex;justify-content:center;align-items:center}.logo img{display:block;width:min(520px,88vw);max-height:230px;object-fit:contain}.topLogo{height:48px;width:auto;max-width:210px;object-fit:contain;display:block}.btn{border:0;border-radius:15px;padding:14px 22px;font-weight:800;background:linear-gradient(135deg,#42b9ff,#735cff)}#game{padding:12px;flex-direction:column}.top{width:min(1150px,100%);margin:auto;display:flex;justify-content:space-between;align-items:center;padding:8px}.layout{width:min(1150px,100%);margin:auto;display:grid;grid-template-columns:1fr 280px;gap:14px}.boardbox{aspect-ratio:1;border-radius:26px;background:#071321 url('../assets/fasiaprisma/board.webp') center center / 100% 100% no-repeat;border:1px solid #29445f;overflow:hidden;box-shadow:0 20px 55px #0008}svg{width:100%;height:100%}.edge{stroke:transparent;stroke-width:2;stroke-linecap:round}.space{stroke:#ffffffd8;stroke-width:2.1;fill-opacity:.88;filter:drop-shadow(0 2px 3px #0008)}.normal{}.reroll{fill:#f7fbff!important;stroke:#a9bdd0;stroke-width:2}.destination{stroke:#fff;stroke-width:8;filter:drop-shadow(0 0 14px #fff);cursor:pointer;animation:pulse 1s infinite alternate}@keyframes pulse{to{stroke-width:12}}.portal{stroke:#fff;stroke-width:4;opacity:0;fill:none!important;fill-opacity:0!important;pointer-events:none}.portal.destination{opacity:1;fill:none!important;fill-opacity:0!important;stroke-width:8;pointer-events:auto;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}.portal.occupied:not(.destination){opacity:0;fill:none!important;fill-opacity:0!important}.center{fill:none!important;stroke:#fff;stroke-width:6;opacity:0;pointer-events:none}
 .center.destination{fill:none!important;opacity:1;stroke-width:8;pointer-events:auto!important;filter:drop-shadow(0 0 14px #fff);animation:pulse 1s infinite alternate}
@@ -205,6 +205,7 @@ const FV_SUPABASE_KEY="sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu";
 const fvParams=new URLSearchParams(location.search);
 const fvProfileId=fvParams.get("profile")||sessionStorage.getItem("fasiaVerseProfileId")||"";
 let fvRewardSaved=false;
+let prismaCorrectStreak=0,prismaBestCorrectStreak=0,prismaFinalPerfectThisWin=false,prismaStreakSaved=false;
 async function fvApi(path,options={}){
   const r=await fetch(FV_SUPABASE_URL+"/rest/v1/"+path,{...options,headers:{"apikey":FV_SUPABASE_KEY,"Authorization":"Bearer "+FV_SUPABASE_KEY,"Content-Type":"application/json","Prefer":options.prefer||"return=representation",...(options.headers||{})}});
   if(!r.ok)throw new Error(await r.text());
@@ -224,6 +225,26 @@ function prismaDifficultyKey(){
   if(cpuRate<=.55)return "normalWins";
   return "hardWins";
 }
+function recordPrismaAnswer(ok){
+  if(gameMode!=="solo")return;
+  if(ok){
+    prismaCorrectStreak++;
+    prismaBestCorrectStreak=Math.max(prismaBestCorrectStreak,prismaCorrectStreak);
+    if(prismaBestCorrectStreak>=5&&!prismaStreakSaved){prismaStreakSaved=true;savePrismaStreakMilestone()}
+  }else prismaCorrectStreak=0;
+}
+async function savePrismaStreakMilestone(){
+  if(!fvProfileId)return;
+  try{
+    const rows=await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}&select=challenge_state&limit=1`);
+    if(!rows||!rows[0]||rows[0].challenge_state===undefined)return;
+    const st=(rows[0].challenge_state&&typeof rows[0].challenge_state==="object")?rows[0].challenge_state:{};
+    st.stats=(st.stats&&typeof st.stats==="object")?st.stats:{};
+    st.stats.prisma={easyWins:0,normalWins:0,hardWins:0,totalWins:0,bestCorrectStreak:0,perfectFinals:0,...(st.stats.prisma||{})};
+    st.stats.prisma.bestCorrectStreak=Math.max(Number(st.stats.prisma.bestCorrectStreak||0),prismaBestCorrectStreak);
+    await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}`,{method:"PATCH",body:JSON.stringify({challenge_state:st})});
+  }catch(e){console.warn("Fasia Prisma: no s'ha pogut guardar la ratxa",e);prismaStreakSaved=false}
+}
 async function awardSoloVictoryCoins(){
   if(gameMode!=="solo"||fvRewardSaved||!fvProfileId)return 0;
   fvRewardSaved=true;
@@ -238,9 +259,12 @@ async function awardSoloVictoryCoins(){
     if(rows[0].challenge_state!==undefined){
       const st=(rows[0].challenge_state&&typeof rows[0].challenge_state==="object")?rows[0].challenge_state:{};
       st.stats=(st.stats&&typeof st.stats==="object")?st.stats:{};
-      st.stats.prisma={easyWins:0,normalWins:0,hardWins:0,...(st.stats.prisma||{})};
+      st.stats.prisma={easyWins:0,normalWins:0,hardWins:0,totalWins:0,bestCorrectStreak:0,perfectFinals:0,...(st.stats.prisma||{})};
       const key=prismaDifficultyKey();
       st.stats.prisma[key]=Number(st.stats.prisma[key]||0)+1;
+      st.stats.prisma.totalWins=Number(st.stats.prisma.totalWins||0)+1;
+      st.stats.prisma.bestCorrectStreak=Math.max(Number(st.stats.prisma.bestCorrectStreak||0),prismaBestCorrectStreak);
+      if(prismaFinalPerfectThisWin)st.stats.prisma.perfectFinals=Number(st.stats.prisma.perfectFinals||0)+1;
       patch.challenge_state=st;
     }
     await fvApi(`profiles?id=eq.${encodeURIComponent(fvProfileId)}`,{method:"PATCH",body:JSON.stringify(patch)});
@@ -689,9 +713,9 @@ function move(o,n,w){let prev=null,cur=o.p,i=0;(function go(){if(i>=n){land(o,w)
 function catAt(id){if(id[0]=='r'){let i=+id.slice(1);return i%6===0?Math.floor(i/6):ringCats[i]}if(id[0]=='s'){let m=id.match(/s(\d)_(\d)/);return spokeCats[+m[1]][+m[2]-1]}return Math.floor(Math.random()*6)}function portal(id){return id[0]=='r'&&+id.slice(1)%6==0}function reroll(id){return id[0]=='r'&&+id.slice(1)%6==3}
 function land(o,w){if(o.p=='c'&&o.cr.size==6){startFinal(o,w);return}if(reroll(o.p)){if(w=='P'){busy=0;state();hint.textContent='🎲 Torn extra! Torna a tirar.'}else setTimeout(cpu,250);return}ask(catAt(o.p),o,w,portal(o.p))}
 function finishGame(w){gameOver=true;busy=1;winTitle.textContent=w=='P'?'🏆 VICTÒRIA!':'🤖 VICTÒRIA DE LA CPU';winText.textContent=w=='P'?'Has reunit els 6 cristalls i has superat el Portal Final.':'La CPU ha reunit els 6 cristalls i ha superat el Portal Final.';winm.classList.add('show');document.getElementById('status').textContent='PARTIDA ACABADA';rollBtn.disabled=true;if(w=='P'&&gameMode==='solo'){const reward=soloVictoryReward();winText.textContent+=' Recompensa: +'+reward+' monedes.';awardSoloVictoryCoins().then(saved=>{if(saved===-1)winText.textContent='Has guanyat! No s’han pogut guardar les monedes. Torna-ho a provar des de Fasia Verse.'})}}
-function startFinal(o,w){busy=1;let fc=shuffle([0,1,2,3,4,5]).slice(0,3);if(w=='C'){let h=0,i=0;(function go(){if(i>=3){if(h>=2)finishGame('C');else end('C',0);return}if(Math.random()<cpuRate)h++;i++;setTimeout(go,300)})();return}let h=0,i=0;fm.classList.add('show');function nq(){if(i>=3){fprogress.textContent=h+'/3';fcat.textContent=h>=2?'PORTAL SUPERAT':'PORTAL NO SUPERAT';fqt.textContent=h>=2?'Has superat la prova final!':'Necessites 2 encerts. Conserves els 6 cristalls i ho podràs tornar a intentar.';fans.innerHTML='';fres.textContent='';setTimeout(()=>{fm.classList.remove('show');if(h>=2)finishGame('P');else end('P',0)},1400);return}let c=fc[i],q=nextQ(c);fprogress.textContent=(i+1)+'/3 · Encerts: '+h;fcat.textContent=cats[c][0];fcat.style.color=cats[c][1];fqt.textContent=q[1];fans.innerHTML='';fres.textContent='';shuffle(q.slice(2).map((x,k)=>[x,k==0])).forEach(opt=>{let b=document.createElement('button');b.className='answer';b.textContent=opt[0];b.onclick=()=>{[...fans.children].forEach(x=>x.disabled=true);b.classList.add(opt[1]?'good':'bad');if(opt[1])h++;fres.textContent=opt[1]?'✓ Correcte!':'✕ Incorrecte.';i++;setTimeout(nq,650)};fans.appendChild(b)})}nq()}
+function startFinal(o,w){busy=1;let fc=shuffle([0,1,2,3,4,5]).slice(0,3);if(w=='C'){let h=0,i=0;(function go(){if(i>=3){if(h>=2)finishGame('C');else end('C',0);return}if(Math.random()<cpuRate)h++;i++;setTimeout(go,300)})();return}let h=0,i=0;fm.classList.add('show');function nq(){if(i>=3){if(w=='P'&&gameMode==='solo')prismaFinalPerfectThisWin=(h===3);fprogress.textContent=h+'/3';fcat.textContent=h>=2?'PORTAL SUPERAT':'PORTAL NO SUPERAT';fqt.textContent=h>=2?'Has superat la prova final!':'Necessites 2 encerts. Conserves els 6 cristalls i ho podràs tornar a intentar.';fans.innerHTML='';fres.textContent='';setTimeout(()=>{fm.classList.remove('show');if(h>=2)finishGame('P');else end('P',0)},1400);return}let c=fc[i],q=nextQ(c);fprogress.textContent=(i+1)+'/3 · Encerts: '+h;fcat.textContent=cats[c][0];fcat.style.color=cats[c][1];fqt.textContent=q[1];fans.innerHTML='';fres.textContent='';shuffle(q.slice(2).map((x,k)=>[x,k==0])).forEach(opt=>{let b=document.createElement('button');b.className='answer';b.textContent=opt[0];b.onclick=()=>{[...fans.children].forEach(x=>x.disabled=true);b.classList.add(opt[1]?'good':'bad');recordPrismaAnswer(!!opt[1]);if(opt[1])h++;fres.textContent=opt[1]?'✓ Correcte!':'✕ Incorrecte.';i++;setTimeout(nq,650)};fans.appendChild(b)})}nq()}
 function ask(c,o,w,po){let q=nextQ(c);if(w=='C'){setTimeout(()=>{let ok=Math.random()<cpuRate;if(ok&&po)o.cr.add(c);
-refreshCrystalVisualsNow(o);maybeShowSixCrystalPopup(o);drawCr();end('C',ok)},350);return}qcat.textContent=(po?'PORTAL · ':'')+cats[c][0];qcat.style.color=cats[c][1];qt.textContent=q[1];res.textContent='';ans.innerHTML='';shuffle(q.slice(2).map((x,i)=>[x,i==0])).forEach(o2=>{let b=document.createElement('button');b.className='answer';b.textContent=o2[0];b.onclick=()=>{[...ans.children].forEach(x=>x.disabled=true);b.classList.add(o2[1]?'good':'bad');if(o2[1]&&po)o.cr.add(c);
+refreshCrystalVisualsNow(o);maybeShowSixCrystalPopup(o);drawCr();end('C',ok)},350);return}qcat.textContent=(po?'PORTAL · ':'')+cats[c][0];qcat.style.color=cats[c][1];qt.textContent=q[1];res.textContent='';ans.innerHTML='';shuffle(q.slice(2).map((x,i)=>[x,i==0])).forEach(o2=>{let b=document.createElement('button');b.className='answer';b.textContent=o2[0];b.onclick=()=>{[...ans.children].forEach(x=>x.disabled=true);b.classList.add(o2[1]?'good':'bad');recordPrismaAnswer(!!o2[1]);if(o2[1]&&po)o.cr.add(c);
 refreshCrystalVisualsNow(o);maybeShowSixCrystalPopup(o);res.textContent=o2[1]?(po?'💎 Correcte! Cristall aconseguit.':'✓ Correcte! Tornes a tirar.'):'✕ Incorrecte. Canvi de torn.';drawCr();setTimeout(()=>{qm.classList.remove('show');end('P',o2[1])},750)};ans.appendChild(b)});qm.classList.add('show')}
 function end(w,ok){if(w=='P'&&ok){busy=0;turn='P';state();return}turn=w=='P'?'C':'P';busy=0;state();if(turn=='C')setTimeout(cpu,350)}function cpu(){if(turn!='C'||gameOver)return;busy=1;state();let n=1+Math.floor(Math.random()*6);setDieFace(n);move(C,n,'C')}
 function drawCr(){
