@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="#091e2d" name="theme-color"/><title>Fàsia Bubble · Un món de bombolles</title>
+<style>
+:root{color-scheme:dark;--ink:#f4faf8;--muted:#b3cbc9;--mint:#85f3be;--panel:#102d3a;--line:#ffffff20;--bg:#071d2d;--warm:#ffdd86}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;font-size:17px;min-height:100svh;background-image:radial-gradient(ellipse at 10% 0,#23545280,transparent 65%);overflow-x:hidden}button,a{font:inherit;-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:inherit}button:disabled{cursor:default;opacity:.48}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:4px solid var(--warm);outline-offset:5px}button{border:1px solid var(--line);background:#ffffff09;border-radius:18px;min-height:52px;padding:12px 22px;font-weight:700;transition:background .2s,transform .2s}button:hover:not(:disabled){background:#ffffff18;transform:translateY(-2px)}button.primary{background:var(--mint);color:#092b2d;border:0;box-shadow:0 5px 0 #32795d}button.primary:hover{background:#b2ffd6}button.warm{background:var(--warm);color:#302617;border:0}button.small{padding:10px 15px}a{color:var(--mint)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(54px,9vw,105px);letter-spacing:-.065em;line-height:.94}h2{font-size:clamp(28px,4vw,44px);letter-spacing:-.035em;margin-bottom:12px}h3{font-size:23px;letter-spacing:-.02em}.muted{color:var(--muted)}.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:bold;color:var(--mint)}.pill{display:inline-flex;gap:9px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:30px;font-size:13px;color:var(--muted);background:#051d2780}.dot{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px #85f3be88}.wrap{max-width:1100px;margin:auto;padding:24px 30px 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:32px}.brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:-.03em;font-size:20px}.brand-mark{width:32px;height:32px;border-radius:50%;border:2px solid var(--mint);box-shadow:inset 4px 5px 0 #ffffff22,10px -5px 0 -6px var(--warm)}.actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px}.screen{display:none}.screen.active{display:block}.hero{min-height:620px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px}.hero-copy{z-index:1}.hero h1 span{color:var(--mint)}.hero-copy p{line-height:1.7;max-width:390px;font-size:19px}.hero-copy .actions{justify-content:flex-start}.hero-copy .primary{padding:17px 38px;font-size:20px}.hero-art{position:relative;height:500px;border:1px solid var(--line);border-radius:48% 48% 44% 44%;background:radial-gradient(ellipse at 45% 30%,#295d5c,#102f3a 60%,#0b2332);box-shadow:0 0 100px #63d7aa12;overflow:hidden}.orbit{position:absolute;border:1px dashed #a3f5ce24;border-radius:50%;width:420px;height:420px;left:50%;top:50%;transform:translate(-50%,-50%)}.orbit.inner{width:280px;height:280px}.hero-ball{position:absolute;width:112px;height:112px;border-radius:50%;border:3px solid #ffffffa0;background:var(--ball);box-shadow:inset 6px 8px 12px #ffffff77,inset -5px -8px 16px #0005,0 18px 30px #0004;overflow:hidden;animation:bob 5s ease-in-out infinite}.hero-ball img{position:absolute;max-width:none;pointer-events:none}.hero-spark{position:absolute;color:var(--warm);font-size:24px}.hero-note{position:absolute;bottom:33px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:13px;color:#d4ede5}.bottom-strip{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px;font-size:14px;color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}.world{text-align:left;min-height:220px;padding:24px;position:relative;overflow:hidden;background:linear-gradient(145deg,var(--world),#0b2332);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end}.world::before{content:"";position:absolute;width:170px;height:170px;border:24px solid #ffffff09;border-radius:50%;right:-34px;top:-40px}.world h3{margin:12px 0 8px}.world p{font-size:14px;color:#d1e8e5;margin-bottom:0}.world .eyebrow{color:var(--tint)}.world:disabled{opacity:.7}.world:first-child{grid-column:span 2}.world .pill{margin-bottom:auto}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px}.level-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:28px 0}.level{min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#153640}.level .num{font-size:30px}.level .stars{letter-spacing:3px;font-size:16px;color:var(--warm)}.level:disabled{background:#0c2531}.notice{line-height:1.6;padding:18px 22px;border:1px solid var(--line);border-radius:18px;background:#ffffff04;color:var(--muted);font-size:15px}.game-layout{display:grid;grid-template-columns:1fr 432px 1fr;gap:24px;align-items:start;justify-content:center}.game-side{padding:24px 0;min-width:0}.game-side p{font-size:15px;line-height:1.65}.guide-step{display:flex;gap:12px;align-items:center;margin-bottom:20px}.step-num{flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#85f3be14;color:var(--mint);font-size:14px}.game-board{width:100%;position:relative;border-radius:26px;overflow:hidden;background:linear-gradient(#102f3a,#0a2333);border:1px solid #ffffff25;box-shadow:0 24px 70px #0004}canvas{display:block;width:100%;height:auto;touch-action:none;outline-offset:-5px!important}.hud{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:#061e2ab0}.hud b{font-size:20px}.hud small{display:block;text-transform:uppercase;font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:4px}.hud .counter{text-align:right}.game-controls{display:flex;gap:10px;align-items:center;justify-content:center;margin:16px 0}.game-controls button{padding:10px 17px}.game-controls .primary{flex:1}.status{min-height:26px;text-align:center;color:var(--mint);font-size:14px;line-height:1.5}.animal-key{display:flex;gap:8px;align-items:center;font-size:14px;margin:13px 0}.animal-key img{width:40px;height:40px;object-fit:cover;border-radius:50%;border:2px solid var(--animal)}.legend-bubble{width:13px;height:13px;border-radius:50%;background:var(--animal)}.game-top{margin-bottom:18px}.game-title{font-size:17px}.game-title small{display:block;font-weight:normal;color:var(--muted);font-size:12px;margin-top:4px}dialog{color:var(--ink);background:#102e3d;border:1px solid #ffffff30;border-radius:28px;padding:32px;width:min(460px,calc(100vw - 32px));box-shadow:0 30px 100px #0008;text-align:center;max-height:90svh;overflow:auto}dialog::backdrop{background:#02121bd9;backdrop-filter:blur(8px)}dialog h2{font-size:32px}dialog p{line-height:1.65;color:var(--muted)}dialog .actions{flex-direction:column}dialog button{width:100%}.result-stars{font-size:56px;color:var(--warm);letter-spacing:7px;margin-bottom:18px;filter:drop-shadow(0 3px 10px #ffdd8633)}.stats-row{display:flex;justify-content:space-around;gap:12px;border-block:1px solid var(--line);padding:18px 0;margin:22px 0}.stats-row b{display:block;font-size:25px}.stats-row small{color:var(--muted);font-size:12px}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.asset-error{display:none;border:1px solid #ffdd8650;color:var(--warm);padding:12px;border-radius:14px;margin:12px 0;font-size:14px}.asset-error.active{display:block}.hint{font-size:12px;color:var(--muted);text-align:center;line-height:1.5}.kbd{font-size:12px;padding:2px 5px;border:1px solid var(--line);border-radius:4px}@keyframes bob{50%{transform:translateY(-12px)}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}@media(min-width:900px) and (max-height:850px){.game-layout{grid-template-columns:1fr min(390px,calc((100svh - 210px)*.66)) 1fr}.wrap:has(#game.active){padding-top:14px}.game-top{margin-bottom:10px}.game-controls{margin:10px 0}.game-controls button{min-height:46px}}@media(max-width:900px){.game-layout{grid-template-columns:minmax(0,432px)}.game-side{display:none}.hero{gap:20px}.hero-art{height:430px}.cards{grid-template-columns:repeat(2,1fr)}.world:first-child{grid-column:span 2}}@media(max-width:600px){.wrap{padding:16px 16px 25px}.top{margin-bottom:24px}.brand{font-size:17px}.top button{font-size:13px;padding:10px 13px}.hero{display:flex;flex-direction:column-reverse;min-height:0;gap:30px}.hero-art{width:100%;height:300px;border-radius:40px}.hero-copy{text-align:center}.hero h1{font-size:66px}.hero-copy p{font-size:17px;margin-inline:auto}.hero-copy .actions{justify-content:center}.hero-ball{scale:.8;transform-origin:top left}.hero-note{bottom:15px}.hero-copy .eyebrow{margin-bottom:16px}.bottom-strip{margin-top:35px;justify-content:center;text-align:center;font-size:12px}.level-grid{grid-template-columns:repeat(4,1fr);gap:10px}.level{min-height:95px;padding:10px}.level .num{font-size:25px}.cards{grid-template-columns:1fr}.world:first-child{grid-column:auto}.world{min-height:175px}.section-head{display:block}.wrap:has(#game.active){padding:10px 12px}.game-top{margin-bottom:10px}.game-top button{min-height:44px}.game-title{font-size:15px}.game-board{border-radius:20px}.game-layout{grid-template-columns:minmax(0,min(432px,calc((100svh - 235px)*.665)))}.hud{padding:10px 14px}.hud b{font-size:17px}.game-controls{margin:10px 0}.game-controls button{min-height:48px}.game-controls .primary{font-size:15px}.status{font-size:12px}.hint{font-size:11px}.game-top .brand-mark{display:none}}@media(max-width:360px){.game-top{gap:5px}.game-top button{padding:8px 10px}.game-title{font-size:13px}}
+.pressure{text-align:center;font-size:13px;line-height:1.5;padding:7px 10px;background:#153d40;color:#b9f3d0;border-bottom:1px solid #ffffff18}.pressure.urgent{background:#684224;color:#fff0b4;font-weight:bold}
+.hero-ball{border:0;background:transparent;box-shadow:none;overflow:visible}
+h2[tabindex="-1"]:focus{outline:none}
+
+/* Portada i mapes integrats en base64 */
+/* Portada: asset únic, sense capes antigues ni CSS base64 malformat */
+
+
+
+
+@media(max-width:600px){.bubble-cover{border-radius:16px;gap:12px;padding-bottom:18px}.bubble-cover .cover-play{min-height:56px!important}}
+
+
+
+
+.cover-help{margin-top:12px;background:#081d3cbb;border:1px solid #ffffff70;border-radius:30px;min-height:40px;padding:8px 22px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.world{min-height:230px;background-image:linear-gradient(180deg,#0013290a,#001225aa),var(--map-image)!important;background-size:cover!important;background-position:center!important;border:2px solid #ffffff30;box-shadow:inset 0 -70px 75px #0013278c,0 8px 22px #0003}
+.world::before{display:none}.world .pill{background:#06182dcf;border-color:#ffffff50;color:white;font-weight:800}.world h3{font-size:clamp(22px,3vw,29px);text-shadow:0 3px 8px #000,0 1px 3px #000}.world p,.world .eyebrow{color:white!important;text-shadow:0 2px 6px #000,0 1px 2px #000;font-weight:800}.world:disabled{opacity:.65;filter:saturate(.55)}
+@media(max-width:600px){.bubble-cover{min-height:calc(100svh - 185px);max-height:800px;border-radius:18px;padding:36px 10px 32px;background-position:center}.cover-logo{width:84%}.cover-play{width:74%}.world{min-height:215px}.world:first-child{grid-column:span 1}.cards{grid-template-columns:1fr!important}}
+
+/* Els mapes ja inclouen els noms i les decoracions: no duplicar-los */
+#world-cards.cards{display:flex!important;flex-direction:column;align-items:center;gap:17px;width:100%;max-width:860px;margin:22px auto}
+#world-cards .world-banner{display:block!important;width:100%;min-height:0!important;aspect-ratio: 768 / 340;padding:0!important;border-radius:20px;border:2px solid #ffffff55;background-image:var(--map-image)!important;background-size:100% 100%!important;background-position:center!important;box-shadow:0 8px 22px #0005;position:relative;overflow:hidden;transition:transform .18s,filter .18s}
+#world-cards .world-banner:first-child{grid-column:auto}
+#world-cards .world-banner::before{display:none!important}
+#world-cards .world-banner:disabled{opacity:1!important;filter:grayscale(.65) brightness(.65);cursor:not-allowed}
+#world-cards .world-banner:not(:disabled):hover{transform:translateY(-3px) scale(1.01)}
+#world-cards .world-progress{position:absolute;right:12px;top:12px;background:#071d2ddc;border:1px solid #ffffff99;border-radius:30px;padding:7px 13px;color:white;font-weight:900;font-size:clamp(12px,2vw,17px);text-shadow:0 1px 3px #000;line-height:1.2}
+@media(max-width:600px){#world-cards.cards{gap:12px}#world-cards .world-banner{border-radius:13px}#world-cards .world-progress{right:7px;top:7px;padding:5px 8px}}
+
+/* Portada única: la il·lustració original, sense cap altra imatge superposada */
+
+
+
+@media(max-width:600px){#home .bubble-cover{width:100%;border-radius:0!important;min-height:0!important;aspect-ratio:1536/864}#home .cover-play{font-size:clamp(13px,4vw,22px);border-width:2px!important}}
+
+/* Fons comuns i portada simplificada */
+body{background:#d6a6f2!important;background-image:url("../assets/bubble/bubble_01_58ee80911b24.webp")!important;background-size:cover!important;background-position:center top!important;background-attachment:fixed!important;color:#2b1746!important}
+.wrap{background:transparent!important}
+
+
+
+
+#worlds,#levels,#game{background:transparent!important}
+#worlds .muted,#levels .muted{color:#49325e!important}
+#worlds h2,#levels h2,#worlds .top,#levels .top{color:#261440!important}
+#worlds .top button,#levels .top button,#worlds .pill,#levels .pill{background:#ffffffaa!important;color:#2d1943!important;border-color:#ffffffb0!important}
+.game-board{background:#bc8be4!important}
+#game .top{color:#261440!important}
+#game .top button{background:#ffffffb5!important;color:#28143c!important}
+
+/* Fàsia Bubble — revisió de portada, mons circulars i fons */
+body{background:#05265a!important;background-image:url("../assets/bubble/bubble_02_35e8ac775ca4.png")!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;background-attachment:fixed!important}
+
+
+
+
+#world-cards.cards{display:flex!important;flex-direction:column!important;align-items:center!important;gap:18px!important;padding:10px 0 30px!important}
+#world-cards .world-banner{width:min(83vw,350px)!important;height:auto!important;aspect-ratio:1/1!important;min-height:0!important;border:0!important;border-radius:50%!important;background-color:transparent!important;background-image:var(--map-image)!important;background-size:100% 100%!important;background-repeat:no-repeat!important;box-shadow:none!important;overflow:visible!important;flex-shrink:0!important}
+#world-cards .world-banner:disabled{filter:grayscale(.65) brightness(.67)!important;opacity:1!important}
+#world-cards .world-banner .world-progress{top:8%!important;right:7%!important}
+#game .game-board{background:#0b426b!important}
+#game .hud{background:#0a315ecf!important;color:white!important}
+#game .hud b,#game .hud small{color:white!important}
+@media(min-width:800px){#home .new-home-art{width:auto!important;max-width:100%!important}}
+
+/* Retorn al perfil: accessible des de la portada */
+#home .bubble-return-profile{position:absolute;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));z-index:90;display:flex;align-items:center;gap:9px;padding:11px 17px;border:2px solid #a9f7ff;border-radius:999px;background:linear-gradient(145deg,#0756a9,#13b7f0);color:white;font-weight:800;font-size:clamp(12px,2.5vw,16px);box-shadow:0 4px 16px #001b4f99;cursor:pointer}#home .bubble-return-profile:hover{filter:brightness(1.15)}
+</style>
+<style>
+/* Portada exclusiva: sense contenidors, gradients ni botons CSS antics */
+html,body{margin:0}
+#home.screen.active{display:block!important;position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;overflow:hidden!important;margin:0!important;padding:0!important;background:#061b36!important;z-index:30!important}
+#home .fasia-cover{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;overflow:hidden}
+#home .fasia-cover-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+#home .fasia-cover-button{position:absolute;left:50%;bottom:max(8%,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(70vw,350px);padding:0;border:0;background:transparent!important;box-shadow:none!important;cursor:pointer;z-index:2;line-height:0}
+#home .fasia-cover-button img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 12px #001b4d9a)}
+#home .fasia-cover-button:active{transform:translateX(-50%) scale(.96)}
+</style><style id="bubble-worlds-final-fix">
+#world-cards.cards{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;max-width:650px!important;padding:4px 10px!important}
+#world-cards .world-banner{width:100%!important;aspect-ratio:1!important;min-height:0!important;border:0!important;border-radius:50%!important;background-color:transparent!important;background-image:var(--map-image)!important;background-size:contain!important;background-position:center!important;background-repeat:no-repeat!important;box-shadow:none!important;overflow:visible!important}
+#world-cards .world-banner:disabled{filter:grayscale(.55) brightness(.65)!important;opacity:1!important}
+#world-cards .world-progress{right:5%!important;top:3%!important;z-index:3!important}
+#home .fasia-cover-button{pointer-events:auto!important;z-index:50!important}
+#home .fasia-cover-button img{pointer-events:none}
+@media(max-width:480px){#world-cards.cards{gap:12px!important}}
+</style><style id="bubble-desktop-layout">
+/* Distribució d'ordinador. Reutilitza la portada, els mons i el marcador originals. */
+@media (min-width:901px){
+  #home .fasia-cover{inset:50% auto auto 50%;width:min(100vw,177.7778dvh);height:auto;aspect-ratio:16/9;transform:translate(-50%,-50%)}
+  #home .fasia-cover-image{object-fit:contain}
+  #world-cards.cards{grid-template-columns:repeat(6,minmax(0,1fr))!important;max-width:1040px!important;gap:18px!important}
+  #world-cards .world-banner{grid-column:span 2!important}
+  #world-cards .world-banner:nth-child(4){grid-column:2/span 2!important}
+  #world-cards .world-banner:nth-child(5){grid-column:4/span 2!important}
+  .wrap:has(#game.active){max-width:1040px;padding:14px 24px 24px}
+  #game .game-top{margin-bottom:12px}
+  #game .game-layout{display:block;max-width:calc(clamp(480px,calc((100svh - 200px)*.664615),720px) + 180px);margin-inline:auto}
+  #game .game-side{display:none}
+  #game .game-layout>main{position:relative;padding-right:180px;min-width:0}
+  #game .game-board{overflow:visible;border:0;box-shadow:none;border-radius:0;background:transparent!important}
+  #game #board{border:1px solid #ffffff70;border-radius:0 0 22px 22px;box-shadow:0 12px 30px #0003;background:#0b426b}
+  #game .pressure{border-radius:14px 14px 0 0;font-size:12px;padding:5px 8px}
+  #game .hud{position:absolute;left:calc(100% + 16px);top:0;width:164px;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:8px 14px;border:1px solid #ffffff70;border-radius:18px;box-shadow:0 8px 24px #0003}
+  #game .hud>div{padding:12px 0}
+  #game .hud>div+div{border-top:1px solid #ffffff30}
+  #game .hud .counter{text-align:left}
+  #game .hud b{font-size:23px;overflow-wrap:anywhere}
+  #game .hud small{font-size:10px;line-height:1.5}
+  #game .game-controls{margin:10px 0}
+  #game .hint{margin-bottom:0}
+  #levels .level{color:#fff;background:#19374e;border:2px solid #ffffff90;opacity:1}
+  #levels .level:disabled{background:#293148;border-color:#ffffff45;opacity:1}
+  #levels .level .num{color:#fff;font-size:34px;font-weight:900;text-shadow:0 2px 4px #000}
+  #levels .level .stars{color:#ffe39d}
+}
+</style><style id="bubble-viewport-fit">
+@media(min-width:901px){
+ .wrap:has(#game.active){padding:8px 24px;max-width:1100px}
+ #game .game-layout{max-width:calc(min(720px,calc((100dvh - 88px)*.664615)) + 180px)}
+ #game #board{border-radius:20px}
+ #game .hud{top:0;padding:10px 12px;max-height:calc(100dvh - 16px);overflow-y:auto}
+ #game .hud>.game-top{position:static;display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0 0 10px}
+ #game .hud>.game-top button{padding:8px;min-height:40px;font-size:13px;flex:1}
+ #game .hud .game-title{order:3;width:100%;font-size:19px;color:#fff;margin-top:6px}
+ #game .hud .brand-mark{display:none}
+ #game .hud .game-title small{color:#e1eef9;line-height:1.4;font-size:12px}
+ #game .hud>div{padding:9px 0}
+ #game .hud b{font-size:21px}
+ #game .hud .pressure{border:1px solid #ffffff40;border-radius:10px;padding:8px;font-size:12px;line-height:1.5;text-align:left}
+ #game .hud .status{font-size:12px;min-height:0;text-align:left;line-height:1.4}
+ #game .hud .hint{font-size:11px;text-align:left;line-height:1.4;color:#e1eef9;margin:8px 0 0}
+ #game .game-controls{gap:8px;margin:8px 0 0}
+ #game .game-controls button{min-height:48px;padding:8px 14px}
+}
+</style><style id="bubble-readable-colors">
+/* Textos foscos sobre superfícies clares i colors d'animals diferenciats. */
+#worlds .eyebrow,#levels .eyebrow{color:#251747!important;font-weight:900}
+#level-world{display:inline-block;background:#f1faff;border:1px solid #50668e;border-radius:10px;padding:8px 12px;letter-spacing:.09em}
+#levels .level,#levels .level:disabled{color:#241840!important;background:#ecf7ff!important;border:2px solid #526580!important;opacity:1!important}
+#levels .level:disabled{background:#d5e1ed!important;border-style:dashed!important}
+#levels .level .num{color:#241840!important;text-shadow:none!important;font-weight:900}
+#levels .level .stars{color:#755009!important}
+#levels .notice{background:#f0f8ff;color:#2c2845;border-color:#657991}
+#game .hud{background:#eef8ff!important;color:#20243f!important;border-color:#526580!important}
+#game .hud b,#game .hud small,#game .hud .game-title,#game .hud .game-title small,#game .hud .hint,#game .hud .status{color:#20243f!important}
+#game .hud>div+div{border-top-color:#74879d55}
+#game .hud .game-world{font-size:14px!important;font-weight:900;line-height:1.4;letter-spacing:0;text-transform:none;margin:0 0 8px}
+#game .pressure{background:#d8eee3!important;color:#193a31!important;border-color:#467866!important}
+#game .pressure.urgent{background:#ffe4b4!important;color:#593306!important}
+#game .game-controls button:not(.primary){background:#eff8ff;color:#20243f;border-color:#526580}
+#game .hud .kbd{border-color:#526580}
+dialog{background:#eff8ff;color:#251747;border-color:#526580}
+dialog p,dialog .muted,dialog .eyebrow,dialog .notice,dialog .stats-row small{color:#34334d}
+dialog button:not(.primary):not(.warm){color:#251747;background:#dbeafa;border-color:#526580}
+</style><style id="bubble-explicit-rules">
+#shot-rule{font-size:12px;line-height:1.45;color:#20243f;background:#e0edf7;border-radius:10px;padding:8px!important;margin:6px 0}
+#shot-rule.special{background:#ffebbb;border:2px solid #8b5914;font-weight:800}
+@media(max-width:900px){#game .hud{flex-wrap:wrap}#shot-rule{flex-basis:100%;margin:0;padding:6px!important}}
+@media(min-width:901px){#game .hud .hint{font-size:10px}#game .hud>div{padding:7px 0}}
+</style><style id="bubble-blue-background-text">
+/* Textos de les pantalles de selecció sobre el nou fons blau. */
+#worlds h2,#levels h2,#worlds .top,#levels .top,#worlds .muted,#levels .muted{color:#f4faff!important;text-shadow:0 1px 4px #001438}
+#worlds .eyebrow{color:#d6f5ff!important}
+</style></head>
+<body>
+<div class="wrap">
+<section aria-labelledby="home-title" class="screen active" id="home"><main aria-label="Portada Fàsia Bubble" class="fasia-cover"><button type="button" class="bubble-return-profile" onclick="returnProfile()" aria-label="Tornar al perfil"><span aria-hidden="true">❮</span> Tornar al perfil</button><img alt="Portada Fàsia Bubble" class="fasia-cover-image" src="../assets/bubble/bubble_03_77d9ac4f0227.webp"/><button aria-label="Jugar" class="fasia-cover-button" data-action="worlds" type="button"><img alt="JUGAR" src="../assets/bubble/bubble_04_bd126af76f7c.webp"/></button></main></section>
+<section aria-labelledby="world-title" class="screen" id="worlds"><header class="top"><button data-action="home">← Portada</button><span class="pill" id="total-stars"></span></header><h2 id="world-title" tabindex="-1">Tria un món</h2><p class="muted">Completa els nivells per desbloquejar els mons següents.</p><div class="cards" id="world-cards"></div></section>
+<section aria-labelledby="level-title" class="screen" id="levels"><header class="top"><button data-action="worlds">← Mons</button><span class="pill" id="level-world-number">Món 01 / 05</span></header><div class="section-head"><div><p class="eyebrow" id="level-world">El bosc dels amics</p><h2 id="level-title" tabindex="-1">Cada bombolla, un descobriment.</h2><p class="muted">Completa un nivell per obrir el següent.</p></div><span class="pill" id="forest-stars"></span></div><div class="level-grid" id="level-grid"></div><div class="notice">★ Completa el nivell.   ★★ Aconsegueix un 60% d’encerts.   ★★★ Aconsegueix un 80% d’encerts.<br/>Eliminar bombolles o preparar una parella compta com a encert.</div></section>
+<section aria-labelledby="game-heading" class="screen" id="game"><header class="top game-top"><button class="small" data-action="leave">← Mapa</button><div class="brand game-title" id="game-heading"><span aria-hidden="true" class="brand-mark"></span><span id="game-name"></span></div><button class="small" data-action="pause">Pausa <span aria-hidden="true">||</span></button></header><div class="game-layout"><aside class="game-side"><p class="eyebrow">Junts fem màgia</p><h3>Apunta.<br/>Uneix.<br/>Somriu.</h3><div class="guide-step"><span class="step-num">1</span><p>Mou la guia amb el dit o el ratolí.</p></div><div class="guide-step"><span class="step-num">2</span><p>Ajunta 3 cares del mateix animal.</p></div><div class="guide-step"><span class="step-num">3</span><p>Les bombolles sense suport cauen!</p></div><p class="muted">Pots intercanviar la bombolla amb la següent tantes vegades com vulguis.</p></aside><main><div class="game-board"><div class="hud"><div><small>Puntuació</small><b id="score">0</b></div><div><small>Encerts</small><b id="accuracy">—</b></div><div class="counter"><small>Dispars restants</small><b id="remaining">Sense límit</b></div><div id="shot-rule" aria-live="polite"></div></div><div class="pressure" id="pressure" role="status"></div><canvas aria-label="Tauler de bombolles. Arrossega el canó per apuntar i deixa anar per disparar. Fletxes per apuntar, espai per disparar, X per intercanviar i P per pausar." height="650" id="board" tabindex="0" width="432">Fes servir els botons per apuntar i disparar. Uneix tres bombolles del mateix animal.</canvas></div><div class="game-controls"><button aria-label="Apunta a l’esquerra" data-action="left">←</button><button class="primary" data-action="fire">Disparar</button><button aria-label="Apunta a la dreta" data-action="right">→</button><button aria-label="Intercanvia la bombolla actual i la següent" data-action="swap">⇄</button></div><div aria-live="polite" class="status" id="status" role="status"></div><p class="hint">Mou el canó i deixa anar per disparar · <span class="kbd">← →</span> apuntar · <span class="kbd">espai</span> disparar<br/><span id="ammo-description"></span><br/><span id="fairness-note"></span></p></main><aside class="game-side"><p class="eyebrow">Els teus amics</p><div id="animal-legend"></div><div class="notice" id="star-targets" style="margin-top:24px"></div><p class="muted" id="power-help"></p><button class="small sound" data-action="sound">So: desactivat</button></aside></div></section>
+</div>
+<dialog aria-labelledby="modal-title" id="modal"><div id="modal-content"></div></dialog>
+<script>
+const ASSET_MODE='local';
+/* Fàsia Bubble — motor determinista, independent del DOM. */
+(function(root){
+'use strict';
+const R=24,W=432,TOP=32,STEP=Math.sqrt(3)*R,ORIGIN={x:W/2,y:590},DANGER=520;
+const key=(r,c)=>`${r},${c}`;
+const cols=(r,phase=0)=>(r+phase)%2?8:9;
+const valid=(r,c,phase=0)=>Number.isInteger(r)&&Number.isInteger(c)&&r>=0&&r<=12&&c>=0&&c<cols(r,phase);
+const pos=(r,c,phase=0)=>({x:R+2*R*c+((r+phase)%2?R:0),y:TOP+STEP*r});
+function neighbors(r,c,phase=0){const a=[[r,c-1],[r,c+1],[r-1,c],[r+1,c],[r-1,c+((r+phase)%2?1:-1)],[r+1,c+((r+phase)%2?1:-1)]];return a.filter(([r,c])=>valid(r,c,phase));}
+function flood(board,seeds,predicate=()=>true){const seen=new Set(),stack=[...seeds];while(stack.length){const k=stack.pop(),b=board.get(k);if(!b||seen.has(k)||!predicate(b))continue;seen.add(k);for(const [r,c]of neighbors(b.r,b.c,board.phase||0))stack.push(key(r,c));}return seen;}
+function connected(board){return flood(board,[...board].filter(([,b])=>b.r===0).map(([k])=>k));}
+function animals(board){return [...new Set([...board.values()].filter(b=>b.kind!=='stone').map(b=>b.animal))];}
+function group(board,k,animal){return flood(board,[k],b=>b.kind!=='stone'&&b.animal===animal);}
+function aimVector(angle){angle=Math.max(-1.35,Math.min(1.35,angle));return {x:Math.sin(angle),y:-Math.cos(angle)};}
+// Ray/circle intersections give the same swept collisions for previews and shots.
+function trace(board,angle){let p={...ORIGIN},v=aimVector(angle),segments=[];for(let bounce=0;bounce<12;bounce++){
+ let t=(TOP-p.y)/v.y,kind='ceiling',hit=null;
+ const wall=v.x>1e-8?(W-R-p.x)/v.x:v.x< -1e-8?(R-p.x)/v.x:Infinity;
+ if(wall>=0&&wall<t){t=wall;kind='wall';}
+ for(const [k,b]of board){const q=pos(b.r,b.c,board.phase||0),dx=p.x-q.x,dy=p.y-q.y,dot=dx*v.x+dy*v.y,disc=dot*dot-(dx*dx+dy*dy-4*R*R);if(disc<0)continue;const near=-dot-Math.sqrt(disc);if(near>=-1e-6&&near<t){t=Math.max(0,near);kind='bubble';hit=k;}}
+ if(!Number.isFinite(t)||t<0)throw Error('Trajectòria invàlida');
+ const end={x:p.x+v.x*t,y:p.y+v.y*t};segments.push({from:{...p},to:end,length:t,kind,hit});
+ if(kind!=='wall')return {segments,impact:end,hit,kind};p=end;v.x=-v.x;
+ }throw Error('Massa rebots');}
+function snap(board,path){let candidates=[];if(path.hit){const b=board.get(path.hit);candidates=neighbors(b.r,b.c,board.phase||0);}else{for(let c=0;c<cols(0,board.phase||0);c++)candidates.push([0,c]);}
+ return candidates.filter(([r,c])=>!board.has(key(r,c))).map(([r,c])=>({r,c,d:Math.hypot(pos(r,c,board.phase||0).x-path.impact.x,pos(r,c,board.phase||0).y-path.impact.y)})).sort((a,b)=>a.d-b.d||a.r-b.r||a.c-b.c)[0]||null;}
+function settle(board,path,shot){const cell=snap(board,path);if(!cell)return {blocked:true,removed:[],dropped:[],points:0,useful:false};const {r,c}=cell,k=key(r,c);let animal=shot.animal;board.set(k,{r,c,animal});
+ if(shot.power==='rainbow'){
+  let best=-1;for(const a of animals(board)){board.get(k).animal=a;const n=group(board,k,a).size;if(n>best){best=n;animal=a;}}board.get(k).animal=animal;
+ }
+ let matched=group(board,k,animal),remove=new Set();if(matched.size>=3)remove=matched;
+ if(shot.power==='blast'){const p=pos(r,c,board.phase||0);remove=new Set([...board].filter(([,b])=>Math.hypot(pos(b.r,b.c,board.phase||0).x-p.x,pos(b.r,b.c,board.phase||0).y-p.y)<=R*3.6).map(([k])=>k));}
+ if(shot.power==='lightning')remove=new Set([...board].filter(([,b])=>b.r===r).map(([k])=>k));
+ const removed=[...remove].map(k=>({...board.get(k),...pos(board.get(k).r,board.get(k).c,board.phase||0)}));for(const k of remove)board.delete(k);
+ const linked=connected(board),dropped=[];for(const [k,b]of board)if(!linked.has(k)){dropped.push({...b,...pos(b.r,b.c,board.phase||0)});board.delete(k);}
+ return {cell:{r,c},animal,power:shot.power||null,removed,dropped,useful:matched.size>=2||removed.length>1||dropped.length>0,points:(removed.length*100+dropped.length*150)*(shot.power==='multiply'?2:1),blocked:false};}
+// A phase bit flips the stagger after each single-row descent. Existing x stays fixed.
+function danger(board){return [...board.values()].some(b=>pos(b.r,b.c,board.phase||0).y+R>DANGER);}
+function pressure(board,level,shots){
+ const every=level.descentEvery;if(!board.size||!every||!shots||shots%every)return {descended:false,added:0,lost:danger(board)};
+ if([...board.values()].some(b=>b.r+1>12))return {descended:true,added:0,lost:true};
+ const phase=1-(board.phase||0),ids=animals(board),wave=Math.floor(shots/every),shifted=new Map();
+ for(const b of board.values()){const q={...b,r:b.r+1};shifted.set(key(q.r,q.c),q);}
+ const added=cols(0,phase);for(let c=0;c<added;c++)shifted.set(key(0,c),{r:0,c,animal:ids[(Math.floor(c/2)+wave)%ids.length]});
+ board.clear();board.phase=phase;for(const [k,b]of shifted)board.set(k,b);
+ return {descended:true,added,lost:danger(board)};
+}
+// A positive witness must use the actual collision, snapping and matching rules.
+// Uncertain/unfound opportunities are treated generously: they cannot create a penalty.
+// Enumerate reachable landing cells using the real collision and rebound rules.
+function reachableLandings(board){
+ if(!board.size)return [];const angles=[],phase=board.phase||0,targets=new Set();
+ for(const b of board.values())for(const [r,c]of neighbors(b.r,b.c,phase))if(!board.has(key(r,c)))targets.add(key(r,c));
+ for(const k of targets){const [r,c]=k.split(',').map(Number),p=pos(r,c,phase);for(let mirror=-3;mirror<=3;mirror++){
+  const width=W-2*R,local=p.x-R,xx=R+mirror*width+(Math.abs(mirror)%2?width-local:local),angle=Math.atan2(xx-ORIGIN.x,ORIGIN.y-p.y);
+  if(Math.abs(angle)<=1.35)angles.push(angle);
+ }}
+ for(let i=-270;i<=270;i++)angles.push(i*.005);
+ const seen=new Set(),landings=[];
+ for(const angle of angles){const path=trace(board,angle),cell=snap(board,path);if(!cell)continue;const k=key(cell.r,cell.c);if(seen.has(k))continue;seen.add(k);landings.push({angle,path,cell});}
+ return landings;
+}
+function lightningAllowed(board){
+ // Do not offer a row-clearing power when the ceiling row can be reached:
+ // removing it would drop everything attached below it.
+ return board.size>0&&!reachableLandings(board).some(({path,cell})=>cell.r===0||(path.hit&&board.get(path.hit)?.r===0));
+}
+function findUsefulShot(board,shots){
+ const landings=reachableLandings(board);
+ for(const shot of shots){if(!shot)continue;for(const {angle,path} of landings){const copy=new Map([...board].map(([k,b])=>[k,{...b}]));copy.phase=board.phase||0;const result=settle(copy,path,shot);if(!result.blocked&&result.useful&&!danger(copy))return {angle,shot:{...shot}};}}
+ return null;
+}
+// Unavoidable preparation shots are excluded from both hits and misses.
+function stars(shots,useful,neutral=0){if(!Number.isFinite(shots)||shots<1)return 0;const rated=shots-Math.max(0,Math.min(shots,Number(neutral)||0));if(rated===0)return 3;useful=Math.max(0,Math.min(rated,Number(useful)||0));return useful*5>=rated*4?3:useful*5>=rated*3?2:1;}
+const API={R,W,TOP,STEP,ORIGIN,DANGER,key,cols,valid,pos,neighbors,flood,connected,animals,group,aimVector,trace,snap,settle,stars,pressure,danger,findUsefulShot,reachableLandings,lightningAllowed};root.BubbleCore=API;if(typeof module!=='undefined')module.exports=API;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+(function(root){const data=[{"pattern":["AABBCCABC","BBAACCBB","AABBCC..."],"limit":null},{"pattern":["AABBCCABC","BBAACCBB","CCAABBCCA","AABBCC.."],"limit":null},{"pattern":["AABBCCABC","BBAACCBB","CCAABBCCA","BBCCAABB"],"limit":36},{"pattern":["AABBCCABC","BBAACCBB","CCAABBCCA","BBCCAABB","AABBCCABC"],"limit":36},{"pattern":["CCAABBCCA","AABBCCAA","BBCCAABBC","CCAABBCC","AABBCCABC"],"limit":37},{"pattern":["AABBCCABC","CCBBAACC","BBAACCABC","CCAABBCC","AABBCCABC","BBCCAABB"],"limit":37},{"pattern":["CCAABBCCA","BBAACCBB","AABBCCABC","CCBBAACC","BBCCAABBC","AABBCCAA"],"limit":37},{"pattern":["BBCCAABBC","AABBCCAA","CCAABBCCA","BBAACCBB","AABBCCABC","CCBBAACC"],"limit":37},{"pattern":["CCAABBCCA","BBAACCBB","AABBCCABC","CCBBAACC","BBCCAABBC","AABBCCAA","CCAABBCCA"],"limit":37},{"pattern":["AABBCCABC","CCBBAACC","BBCCAABBC","AABBCCAA","CCAABBCCA","BBAACCBB","AABBCCABC"],"limit":38},{"pattern":["AACCCCDDD","AABBCCCA","DDDBBBBBC","BBBBBBBB","CCCCCCCCC"],"limit":38},{"pattern":["CCCDDBBDD","AABBBBCC","DDAAAAAAA","BBBBBBBD","CCCAABBAA"],"limit":38},{"pattern":["CCBBBAAAA","DDBBBCCD","CCCDDBBBC",".AAAAAAA",".CCCCAAAA"],"limit":38},{"pattern":["BBAAADDDB","DDDDBBBA","DDBBBCCCB","AAAACCCC","CCBBBB..."],"limit":38},{"pattern":["BBDDCCBBC","AADDBBBB","BBDDDDDDD","CCCCCCBB","AACCAAADD"],"limit":39},{"pattern":["CCBBDDAAB","DDDDDAAD","AABBCCBBD","BBCCAAAB","CCAADDDDB"],"limit":39},{"pattern":["DDCCAACCC","BBAAACCC","DDBBDDBBB",".CBBDDDD",".DCCAADDB"],"limit":39},{"pattern":["AAAAADDDD","BBCCBBDD","CCAAAAADD","AACCBBBC","CCDDAAAD."],"limit":39},{"pattern":["DDAAAAACC","BBBBBDDD","CCCCDDCCC","CCCCAACC","BBBBBDDDB"],"limit":39},{"pattern":["CCDDCCDDB","DDDCCCBB","DDBBAAAAC","BBBAAAAA","DDCCCCBBB"],"limit":40},{"pattern":["CCBBBBAAD","AAAACCCC","AABBDDDBB",".AAADDD.",".BBBBBBA."],"limit":40},{"pattern":["DDBBCCBBB","BBBCCBBA","CCBBBDDBB","BBDDAAAA","AAAAABB.."],"limit":40},{"pattern":["CCDDDBBBA","CCCAADDC","AAABBAAAA","CCAABBAA","BBDDAABBD"],"limit":40},{"pattern":["AACCCAACC","CCCAADDD","BBCCCAAAB","CCDDDCCC","DDDDDDDDC"],"limit":40},{"pattern":["BBAACCBBB","DDDDBBBA","DDDDDBBBB",".CCCCDDD",".BAAAAADD"],"limit":41},{"pattern":["BBCCDDDAA","EEECCCDD","EEEEEEEDD","EECCBBBB","CCCCCEEEE","BBDDC..."],"limit":41},{"pattern":["BBAACCAAD","DDAAAACC","DDDDDCCBB","AAAABBBB","EEECCBBCC","AAAAACCC"],"limit":41},{"pattern":["BBBDDAAAB","BBBEEBBC","AACCEEBBA","AAEEAAAA","DDAAAAACC","CCCCCCCE"],"limit":41},{"pattern":["CCCAAAEEC","EEAADDDD","DDCCAAEEE","DDEEDDDE",".EDDEEEAA",".BEEEEEB"],"limit":41},{"pattern":["CCCDDDDCC","DDCCAAEE","BBBBBBBCC","CCCDDDCC","DDDDDDCCC","AAAAABB."],"limit":42},{"pattern":["CCBBCCDDB","DDDBBBAA","EEAACCCAA","BBCCBBBC","CCDDAAAAA","EEDDDDDD"],"limit":42},{"pattern":["DDDDAAEEE","AAEEDDBB","CCCEEECCD","AACCAABB","BBDDDDAAE","AAAAAAAD"],"limit":42},{"pattern":["DDBBEEEEE","DDAAAAAC","AAEEDDCCE","BBBEEAAA",".ACCCBBA.",".DCCCCC."],"limit":42},{"pattern":["EEEEEDDAA","BBBBBCCD","CCDDEEAAD","AAADDDEE","EECCCEEEA","CCEEEE.."],"limit":42},{"pattern":["EEBBBBBBB","AACCDDAA","AAACCCAAD","CCAACCDD","DDCCCCAAC","BBBBBDDA"],"limit":43},{"pattern":["EEEEAACCC","DDDDAABB","DDCCAAABB","BBBEEBBB","CCCCCCBBE","BBEEDDDD"],"limit":43},{"pattern":["AACCEECCB","EEECCCCB","BBBBBEEAA","DDDAABBB",".CEEEEAAB",".BCCCCCD"],"limit":43},{"pattern":["CCDDDEECC","DDEEEBBC","BBBCCCBBD","DDDDDBBB","EEDDAADDC","EEEAA..."],"limit":43},{"pattern":["BBBCCCBBE","DDBBAAEE","CCAADDBBD","CCDDDEEE","BBAAAEEEE","AAAAABBB"],"limit":43},{"pattern":["BBBAAAAAE","BBDDDCCC","AAAAEEEEE","EECCBBCC","DDDDDBBBD","EEEDDCCC"],"limit":44},{"pattern":["BBBCCEEAA","AAEEEEBB","DDDDDEECC","BBAAABBC",".DDBBBBBE",".DEEEEEA"],"limit":44},{"pattern":["EEDDDDDAA","BBEEDDCC","CCEEEEEAA","EEEAAACC","AAAAAAEEE","BBBBCCC."],"limit":44},{"pattern":["EEBBBCCBB","AAAAAAAD","AAEEEAAEE","DDEEBBAA","EEEEEEEEB","BBBBBCCC"],"limit":44},{"pattern":["EEEEEBBBC","DDBBBCCE","DDDDDBBCC","CCEEAAEE","DDDEECCBB","AAADDEEB"],"limit":44},{"pattern":["AAABBAACC","CCCCEEAA","BBCCBBAAA","BBDDDEED",".CDDAAAB.",".AAAABB."],"limit":45},{"pattern":["AAAEEDDDD","AADDAABB","EEBBCCDDA","CCDDDCCC","BBDDDDBBE","CCDDBB.."],"limit":45},{"pattern":["EEDDBBBEE","AAAAEEED","BBEEEEBBE","BBBBCCCC","EEAAADDEE","CCBBDDAA"],"limit":45},{"pattern":["BBEEEBBEE","CCAAEEEE","AAAAAEEEA","DDBBBBAA","EEDDAAAAD","BBBCCAAC"],"limit":45},{"pattern":["EEDDDDDBB","CCCCDDBB","BBBDDBBBD","CCAAEEEA",".AEEEBBDD",".CBBAACC"],"limit":45},{"pattern":["AABBCCBBB","AAEEEEEC","EECCBBBBB","EEDDEEEE","EEEECCCCC","DDCCB..."],"limit":46},{"pattern":["AAAEEBBDD","EEEAAACC","EEEDDCCCD","FFAAEECC","EEEEEEDDD","BBBBFFBB","EEFFAAEEE"],"limit":46},{"pattern":["BBBCCAAAE","CCCBBEEE","FFAAABBEE","DDFFDDDB","DDDDDEEBB","DDDAADDC","AAAFFFBBC"],"limit":53},{"pattern":["BBBFFEEEE","AAACCAAA","EEAAAFFAA","DDDCCAAB","CCEEFFDDF",".AEEAAAA",".EEEEEEBB"],"limit":46},{"pattern":["CCCCCCCCF","EEEEEECC","CCCBBFFAA","EEECCCCF","AAAAAEEDD","CCFFFCCA","FFBBBBBA."],"limit":46},{"pattern":["CCFFBBAAC","FFEEDDFF","FFBBCCCBB","BBBDDFFF","DDDAACCEE","FFDDFFCC","DDDDEECCC"],"limit":47},{"pattern":["CCCCFFBBB","AAAAAAAE","CCEEECCAA","AAAAACCE","EEEDDDEEE","CCDDDBBF","EEDDAAAFF"],"limit":47},{"pattern":["DDAAEEECC","EEECCCCC","AAAADDCCE","EEFFBBBD","DDDDDCCCC",".CCEECC.",".DDEEEDD."],"limit":47},{"pattern":["DDDDCCDDD","CCCDDEEB","DDDCCDDCC","DDEEAACC","CCCDDAACC","BBBAAEEE","DDDFFFF.."],"limit":47},{"pattern":["EEAAABBBD","AAAEEAAA","DDDBBBBBE","FFCCCDDD","FFFBBBBCC","DDCCBBBD","BBBCCAACC"],"limit":47},{"pattern":["EEDDFFEEE","AAACCEEE","AAFFFDDDA","CCDDAAAA","CCBBBBAAA","FFFDDDCC","BBBFFBBBE"],"limit":48},{"pattern":["FFAAEEFFD","BBEEFFFC","AAAAABBBF","CCCCEEEE","CCFFFBBBF",".CAABBCC",".BBDDEEEE"],"limit":48},{"pattern":["FFDDCCAAB","CCBBBBFF","FFBBFFEEE","BBBBBBDD","DDCCCDDBB","EEEEEECC","BBDDDE..."],"limit":48},{"pattern":["AAABBBBBB","FFEEDDCC","DDDEECCDD","DDAAAAAC","CCBBBAABB","DDDBBEEA","EEBBBBBEE"],"limit":48},{"pattern":["AAAEEEFFF","CCDDFFFF","DDDAADDDD","AABBFFFF","BBBBBBEEB","CCCDDDBB","FFFFFEEDD"],"limit":48},{"pattern":["BBBBBDDDD","BBAAABBF","EECCEEEEE","AAAEEEEA","AABBCCCBB",".CCAADDF",".AAAAAFFE"],"limit":49},{"pattern":["BBBEECCCD","FFCCDDDA","BBBCCFFFC","FFDDDCCF","FFBBAAAAB","DDDAAEEB","DDBBBEEE."],"limit":54},{"pattern":["BBBBAAEED","DDFFCCFF","BBAAAAADD","CCBBBEEE","EEAAEEAAA","FFCCEECC","AADDDEEBB"],"limit":49},{"pattern":["CCEEEFFFF","BBEEEBBD","CCAABBEEE","CCCCCAAC","CCAABBAAF","CCCFFDDD","CCFFEEEEF"],"limit":49},{"pattern":["FFFAAAEEF","DDEEEAAA","DDCCCBBBA","CCCAABBB","AAFFEEBBD",".EBBBBA.",".AFFFFFE."],"limit":49},{"pattern":["DDFFCCBBD","BBFFAADD","EEDDFFAAA","EEAAAAAA","DDDAAEEBB","EEECCCFF","CCCDDEE.."],"limit":50},{"pattern":["DDCCAAACC","BBCCCBBB","BBBBBDDEE","DDEEEFFD","FFFFFFFBB","AADDDDAA","BBAAEEFFE"],"limit":50},{"pattern":["EEFFFFCCF","EEDDCCEE","DDDFFFBBD","EEBBBEEE","EEEFFEEFF","CCAAADDD","BBBBBBBBB"],"limit":50},{"pattern":["EECCCDDDD","DDFFFFFE","CCCCAAFFF","CCDDDAAD","DDDFFCCFF",".BCCFFFA",".CEEDDDEE"],"limit":50},{"pattern":["FFAAACCEE","BBAAACCF","FFBBBBDDD","AAADDFFC","CCCEEAAAF","AAFFFBBA","DDAAAF..."],"limit":50},{"pattern":["FFFDDAAFF","FFBBEEBB","DDAABBAAF","CCEEBBBB","EEEEFFFFB","EEFFFEEE","DDBBEEEED"],"limit":51},{"pattern":["AAAAAFFFA","EEDDAACC","BBGGDDFFF","BBDDGGGG","FFFCCGGGG","FFFBBFFF","GGAAEEFFB"],"limit":51},{"pattern":["GGAAGGGGG","EECCDDDC","CCDDBBDDC","BBGGCCAA","AADDFFEEB",".CFFEEEE",".BEEEEBBB"],"limit":51},{"pattern":["DDFFFDDBB","EEFFFBBE","EEEAADDAA","BBAAADDC","BBCCCGGCC","DDAAFFFB","EEEAAAGG."],"limit":51},{"pattern":["EECCCBBCC","BBAAEEGG","BBGGFFFFG","GGBBBBBA","CCCDDCCCC","DDBBBAAF","DDBBEECCF"],"limit":51},{"pattern":["FFFGGGGGD","GGBBGGBB","FFFFFGGCC","FFFFAAAA","FFBBAABBB","GGEEEGGG","GGGEEEEEG"],"limit":52},{"pattern":["CCEEDDFFG","EEFFDDDA","BBBBGGEED","DDAAAADD","DDFFBBFFB",".CCFFBB.",".CCEEEAA."],"limit":53},{"pattern":["DDBBBBGGE","GGGAAFFE","AADDEEDDD","CCCCCFFF","FFDDAAEEA","BBEEBBBG","EEEEEEE.."],"limit":52},{"pattern":["GGGDDDBBG","GGGGGAAF","DDCCCCCCC","AACCDDDD","BBBBAABBF","BBGGEEDD","BBEEEEEEE"],"limit":52},{"pattern":["EECCCFFBB","GGGCCFFB","FFGGFFGGA","AAAGGDDD","CCCCCEEEF","AACCCAAC","EECCEEFFF"],"limit":52},{"pattern":["EEFFDDCCE","DDDBBBDD","DDFFFGGDD","FFFGGFFF","BBBBCCGGE",".EDDFFFG",".DDAAEEEE"],"limit":53},{"pattern":["FFCCBBDDC","FFDDEEEA","EEAABBBEE","FFDDAAAA","CCEEEEDDG","BBBGGEED","GGGEEG..."],"limit":57},{"pattern":["BBEEBBBDD","EEEFFCCF","GGFFGGFFB","FFEEEEED","GGDDAAACC","GGGDDCCC","AAAAAGGEE"],"limit":53},{"pattern":["GGGCCCFFF","FFEEEBBB","BBBBBBCCC","CCCDDBBB","DDDBBFFEE","BBFFFDDB","FFAAEEEGG"],"limit":53},{"pattern":["AAAGGGDDG","CCCCCDDC","FFFBBDDDA","GGCCGGDD","DDDBBDDDD",".ABBDDEE",".BFFGGEEE"],"limit":53},{"pattern":["DDBBCCGGE","DDDDDDDE","CCDDFFEEC","AAAAAGGG","FFCCCGGGG","BBFFAAEE","CCGGEEEE."],"limit":54},{"pattern":["FFHHGGFFC","BBDDBBAA","BBBHHEEAA","DDDHHCCC","EEHHHHDDE","AAGGGDDE","AAACCCDDD"],"limit":54},{"pattern":["BBEEFFCCC","AAEEEAAE","GGAAHHHCC","HHHDDDHH","HHAACCCDD","FFEEFFCC","FFBBAAFFF"],"limit":54},{"pattern":["CCAAADDDD","AACCHHCC","AAFFFBBFF","AAGGBBGG","GGAAHHDDE",".HAABBB.",".ECCCFFF."],"limit":54},{"pattern":["DDBBBBBHH","HHEEEAAF","AAAAAABBD","CCBBFFEE","EEDDAAAHH","AAGGGHHE","DDEEHHD.."],"limit":54},{"pattern":["DDBBHHHFF","CCFFFFFF","CCCCDDDHH","FFEEEGGG","DDDDHHBBC","CCGGHHAA","BBDDDAAFF"],"limit":55},{"pattern":["EEFFFFGGA","HHHHHHHH","GGBBBFFEE","DDDDEEBB","BBHHGGGCC","BBBBCCHH","CCHHCCFFF"],"limit":55},{"pattern":["EEBBDDDAA","FFBBCCCB","DDDAAGGBB","BBBBBDDA","AAGGGEECC",".HEEEFFF",".GDDDDDFF"],"limit":55},{"pattern":["HHHHHGGGG","CCGGCCHH","GGHHCCCHH","FFDDBBBB","FFHHHHHGG","FFFEEGGB","EEAAHH..."],"limit":55},{"pattern":["HHDDEEHHA","AAFFFBBD","GGGDDDEEE","DDDBBAAA","DDGGFFFFF","EEEHHBBB","FFEEECCDD"],"limit":55},{"pattern":["GGGGGFFFD","FFGGDDHH","BBBFFCCCA","EEEGGGGG","DDDDFFDDB","EEHHHHHE","HHFFFFFEE"],"limit":56}];root.BubbleCampaign=data;if(typeof module!=='undefined')module.exports=data;})(globalThis);
+
+/* Fàsia Bubble — catàleg dels vuit sprites originals de l’usuari. */
+(function(root){'use strict';
+const animals=[
+ {id:'hulk',name:'Hulk',color:'#f52a9a'},
+ {id:'tauro',name:'Tauró',color:'#1645c9'},
+ {id:'lleo',name:'Lleó',color:'#ffe02b'},
+ {id:'camaleo',name:'Camaleó',color:'#91ec27'},
+ {id:'mussol',name:'Mussol',color:'#8545dd'},
+ {id:'axolot',name:'Axolot',color:'#c75cff'},
+ {id:'capibara',name:'Capibara',color:'#ef4055'},
+ {id:'foca',name:'Foca',color:'#00d9ad'}
+].map(a=>({...a,file:a.id+'.webp',crop:[0,0,376,376]}));
+const worlds=[
+ {name:'El bosc dels amics',subtitle:'Petites passes, grans descobertes',colors:['#123e42','#071d2d'],accent:'#85f3be',animals:['hulk','tauro','lleo','camaleo','mussol','axolot','capibara','foca'],motif:'leaf'},
+ {name:'L’oceà de cristall',subtitle:'Un viatge sota les onades',colors:['#164c70','#091d3c'],accent:'#80e5ff',animals:['tauro','foca','axolot','capibara','mussol','hulk','lleo','camaleo'],motif:'wave'},
+ {name:'La vall dels colors',subtitle:'Cada animal té el seu lloc',colors:['#5b366b','#1b203d'],accent:'#f3b8ff',animals:['camaleo','lleo','capibara','hulk','axolot','foca','mussol','tauro'],motif:'hill'},
+ {name:'El cel dels somnis',subtitle:'Descobrim nous horitzons',colors:['#303d79','#131a35'],accent:'#bdc5ff',animals:['mussol','axolot','tauro','camaleo','lleo','foca','hulk','capibara'],motif:'star'},
+ {name:'El portal Fàsia',subtitle:'Tots els amics, una aventura',colors:['#624a30','#20172e'],accent:'#ffe3a0',animals:['hulk','tauro','lleo','camaleo','mussol','axolot','capibara','foca'],motif:'portal'}
+];
+const initialPatterns=[
+ ['AABBCCABC','BBAACCBB','AABBCC...'],
+ ['AABBCCABC','BBAACCBB','CCAABBCCA','AABBCC..'],
+ ['AABBCCABC','BBAACCBB','CCAABBCCA','BBCCAABB'],
+ ['AABBCCABC','BBAACCBB','CCAABBCCA','BBCCAABB','AABBCCABC'],
+ ['CCAABBCCA','AABBCCAA','BBCCAABBC','CCAABBCC','AABBCCABC'],
+ ['AABBCCABC','CCBBAACC','BBAACCABC','CCAABBCC','AABBCCABC','BBCCAABB'],
+ ['CCAABBCCA','BBAACCBB','AABBCCABC','CCBBAACC','BBCCAABBC','AABBCCAA'],
+ ['BBCCAABBC','AABBCCAA','CCAABBCCA','BBAACCBB','AABBCCABC','CCBBAACC'],
+ ['CCAABBCCA','BBAACCBB','AABBCCABC','CCBBAACC','BBCCAABBC','AABBCCAA','CCAABBCCA'],
+ ['AABBCCABC','CCBBAACC','BBCCAABBC','AABBCCAA','CCAABBCCA','BBAACCBB','AABBCCABC']
+];
+const firstNames=['Hola, bombolles!','Coneix els amics','Fem una pinya','Rebot i encerta','Amics que volen','Un toc de màgia','La gran explosió','Un llamp de llum','El doble de somriures','La festa del bosc'];
+const names=[['Camins verds','Fulles que volen','La clariana','Els arbres savis','La pinya del bosc'],['La primera onada','Coralls brillants','La dansa de les foques','El tresor blau','La gran marea'],['Petits arcs de colors','Camaleons en festa','La muntanya de caramel','El pont dels amics','La vall resplendent'],['Estrelles amigues','Núvols de cotó','El vol del mussol','La lluna de colors','La constel·lació'],['La porta daurada','El cercle dels vuit','Un univers de colors','La màgia del portal','La gran festa Fàsia']];
+function settingsFor(n){const world=Math.floor((n-1)/20),local=(n-1)%20,count=n<=10?3:n<=25?4:n<=50?5:n<=75?6:n<=90?7:8;
+ const powers=n<=5?[]:n===6?['rainbow']:n===7?['blast']:n===8?['lightning']:n===9?['multiply']:['rainbow','blast','lightning','multiply'];
+ return {id:n,world,available:true,name:firstNames[n-1]||names[world][Math.floor(local/4)]+` · ${local+1}`,animalCount:count,animalIds:worlds[world].animals.slice(0,count),powers,powerEvery:4,descentEvery:4,limit:n<=2?null:36+Math.floor(n/5),targets:{three:80,two:60},obstacles:[]};
+}
+const records=typeof module!=='undefined'?require('./campaign-data.js'):root.BubbleCampaign;
+const levels=Array.from({length:100},(_,i)=>({...settingsFor(i+1),...(records?.[i]||{}),pattern:records?.[i]?.pattern||initialPatterns[i]||null,descentEvery:4,targets:{three:80,two:60}}));
+function boardFor(level){if(!level.available||!level.pattern)throw Error('No hi ha tauler per a aquest nivell');const board=new Map();board.phase=0;level.pattern.forEach((line,r)=>[...line].forEach((v,c)=>{if(v!=='.'){const animal=level.animalIds[v.charCodeAt(0)-65];if(!animal)throw Error('Animal de nivell desconegut');board.set(`${r},${c}`,{r,c,animal});}}));return board;}
+const API={animals,worlds,levels,boardFor,settingsFor,initialPatterns};root.BubbleCatalog=API;if(typeof module!=='undefined')module.exports=API;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+/* Interfície, àudio original i persistència local. Cap dependència externa. */
+(()=>{'use strict';
+const C=BubbleCore,K=BubbleCatalog,$=s=>document.querySelector(s),canvas=$('#board'),ctx=canvas.getContext('2d'),modal=$('#modal');
+const byId=Object.fromEntries(K.animals.map(a=>[a.id,a])),images={},reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const launcherImage=new Image();
+let launcherKickUntil=0;
+launcherImage.onload=()=>{if(game)draw();};
+launcherImage.src='../assets/bubble/bubble_05_e9aa1a48f570.png';
+const powerNames={rainbow:'Arc de Sant Martí',blast:'Explosiva',lightning:'Llampec',multiply:'Multiplicadora ×2'};
+const powerDescriptions={rainbow:'Adopta l’animal que ajuda a fer la combinació més gran.',blast:'Elimina les bombolles properes al punt on arriba.',lightning:'Elimina tota la fila on s’enganxa.',multiply:'Duplica els punts de la combinació i de les caigudes.'};
+const read=(store,k,fallback)=>{try{return store.getItem(k)||fallback;}catch{return fallback;}};
+let profile='guest';try{profile=new URLSearchParams(location.search).get('profile')||read(sessionStorage,'fasiaVerseProfileId','guest');if(profile!=='guest')sessionStorage.setItem('fasiaVerseProfileId',profile);}catch{}
+const saveKey=`fasia_bubble_v1_${profile}`;let progress={stars:{},best:{},perfectLevels:[]};
+try{const p=JSON.parse(localStorage.getItem(saveKey));if(p&&typeof p.stars==='object'&&p.stars){for(let n=1;n<=100;n++)if(Number.isInteger(p.stars[n])&&p.stars[n]>=1&&p.stars[n]<=3)progress.stars[n]=p.stars[n];if(p.best&&typeof p.best==='object')progress.best=p.best;if(Array.isArray(p.perfectLevels))progress.perfectLevels=[...new Set(p.perfectLevels.map(Number).filter(n=>Number.isInteger(n)&&n>=1&&n<=100))];}}catch{}
+let muted=true;try{muted=localStorage.getItem('fasia_bubble_muted')!=='false';}catch{}
+let selectedWorld=0;let screen='home',game=null,paused=false,angle=0,flight=null,particles=[],last=0,raf=0,audioContext=null,statusTimer=null,pointer=null;
+function sound(type){if(muted)return;try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});const notes={fire:[480],bounce:[290],pop:[620,830],drop:[390,260],win:[523,659,784,1046],lose:[330,261]}[type]||[500];notes.forEach((f,i)=>{const o=audioContext.createOscillator(),g=audioContext.createGain(),t=audioContext.currentTime+i*.095;o.type='sine';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.8,t+.09);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.055,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+.15);o.connect(g).connect(audioContext.destination);o.start(t);o.stop(t+.17);});}catch{}}
+function syncSound(){document.querySelectorAll('.sound').forEach(b=>{b.textContent=muted?'So: desactivat':'So: activat';b.setAttribute('aria-pressed',String(!muted));});}
+function toggleSound(){muted=!muted;try{localStorage.setItem('fasia_bubble_muted',String(muted));}catch{}syncSound();if(!muted)sound('pop');if(modal.open&&modal.dataset.mode==='pause')pauseDialog();}
+const EMBEDDED_BUBBLES={"axolot.webp":"../assets/bubble/bubble_06_1e15c60f8f4c.webp","camaleo.webp":"../assets/bubble/bubble_07_7fb163aab0cb.webp","capibara.webp":"../assets/bubble/bubble_08_004aab8b7b5e.png","foca.webp":"../assets/bubble/bubble_09_2da66c1eeeea.png","hulk.webp":"../assets/bubble/bubble_10_dd0b5af87074.webp","lleo.webp":"../assets/bubble/bubble_11_6d27d52e3cbe.webp","mussol.webp":"../assets/bubble/bubble_12_8557d552bb64.png","tauro.webp":"../assets/bubble/bubble_13_f72805962b00.webp"};
+function assetURL(a){return EMBEDDED_BUBBLES[a.file];}
+function loadImages(){K.animals.forEach(a=>{const im=new Image();images[a.id]=im;im.onload=()=>{renderHero();if(game)draw();};im.onerror=()=>{$('#asset-error').classList.add('active');};im.src=assetURL(a);});renderHero();}
+function renderHero(){const host=$('#hero-balls');host.innerHTML='';const layout=[[9,14,1],[40,5,.86],[66,23,.94],[29,35,1.1],[3,56,.88],[57,53,1],[31,71,.76],[78,73,.58]];['hulk','lleo','tauro','camaleo','mussol','axolot','capibara','foca'].forEach((id,i)=>{const a=byId[id],b=document.createElement('div');b.className='hero-ball';b.style.cssText=`left:${layout[i][0]}%;top:${layout[i][1]}%;width:${112*layout[i][2]}px;height:${112*layout[i][2]}px;--ball:${a.color};animation-delay:${-i}s`;const cv=document.createElement('canvas');cv.width=cv.height=180;cv.style.width='100%';cv.style.height='100%';drawFace(cv.getContext('2d'),a,90,90,90);b.append(cv);host.append(b);});}
+function drawFace(g,a,x,y,r){const im=images[a.id];g.save();if(im&&im.complete&&im.naturalWidth){g.drawImage(im,x-r,y-r,2*r,2*r);}else{g.fillStyle=a.color;g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fill();g.fillStyle='#102534';g.font=`bold ${r*.5}px system-ui`;g.textAlign='center';g.textBaseline='middle';g.fillText(a.name.slice(0,3),x,y);}g.restore();}
+function totalStars(){return Object.values(progress.stars).reduce((a,b)=>a+b,0);}
+function unlocked(n){return n===1||Boolean(progress.stars[n-1]);}
+function switchScreen(name){if(raf){cancelAnimationFrame(raf);raf=0;}screen=name;document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===name));if(name==='worlds')renderWorlds();if(name==='levels')renderLevels();if(name!=='game'){flight=null;game=null;}window.scrollTo(0,0);const h=$(`#${name} h2`);if(h)h.focus({preventScroll:true});if(name==='game'){last=0;raf=requestAnimationFrame(frame);}}
+function worldOpen(i){return i===0||Boolean(progress.stars[i*20]);}
+const WORLD_MAP_ASSETS=['../assets/bubble/bubble_14_84cec216a47a.webp','../assets/bubble/bubble_15_f00b23fe34df.webp','../assets/bubble/bubble_16_5191ce5f0f82.webp','../assets/bubble/bubble_17_717f2cca7822.webp','../assets/bubble/bubble_18_90137fa103a8.webp'];
+const WORLD_BUBBLE_ASSETS=["../assets/bubble/bubble_19_b7d95c005bd8.webp", "../assets/bubble/bubble_20_12f42c6f5d57.webp", "../assets/bubble/bubble_21_1c9a66ff5b63.webp", "../assets/bubble/bubble_22_0686b0e9a759.webp", "../assets/bubble/bubble_23_a1d92a9aa67b.webp"];
+function renderWorlds(){
+ $('#total-stars').textContent=`★ ${totalStars()} / 300`;
+ $('#world-cards').innerHTML=K.worlds.map((w,i)=>{
+  const stars=K.levels.slice(i*20,i*20+20).reduce((sum,l)=>sum+(progress.stars[l.id]||0),0);
+  const opened=worldOpen(i);
+  return `<button class="world world-banner" style="--map-image:url('${WORLD_BUBBLE_ASSETS[i]}')" data-world="${i}" ${opened?'':'disabled'} aria-label="${w.name}. ${opened?`Disponible, ${stars} de 60 estrelles`:'Bloquejat'}"><span class="world-progress">${opened?`★ ${stars}/60`:'🔒'}</span></button>`;
+ }).join('');
+}
+function renderLevels(){const w=K.worlds[selectedWorld],list=K.levels.slice(selectedWorld*20,selectedWorld*20+20);$('#level-world').textContent=w.name;$('#level-world-number').textContent=`Món 0${selectedWorld+1} / 05`;$('#level-title').textContent=w.subtitle;$('#forest-stars').textContent=`★ ${list.reduce((s,l)=>s+(progress.stars[l.id]||0),0)} / 60`;$('#level-grid').innerHTML=list.map(l=>{const s=progress.stars[l.id]||0;return `<button class="level" data-level="${l.id}" ${!unlocked(l.id)?'disabled':''} aria-label="Nivell ${l.id}, ${l.name}, ${s} estrelles"><span class="num">${l.id}</span><span class="stars" aria-hidden="true">${!unlocked(l.id)?'Tancat':'★'.repeat(s)+'☆'.repeat(3-s)}</span></button>`;}).join('');}
+function dialog(content,mode){modal.dataset.mode=mode;$('#modal-content').innerHTML=content;if(!modal.open)modal.showModal();}
+function closeDialog(){if(modal.open)modal.close();}
+function intro(n){const l=K.levels[n-1];if(!l?.available||!unlocked(n))return;dialog(`<p class="eyebrow">Nivell ${n} · ${K.worlds[l.world].name}</p><h2 id="modal-title">${l.name}</h2><p>Buida el tauler ajuntant 3 cares del mateix animal.${l.limit?` Tens ${l.limit} dispars.`:' Pots disparar sense límit.'}</p><p>Atenció: cada ${l.descentEvery} dispars entra una fila i el tauler baixa. Si una bombolla passa la línia límit, perds.</p><div class="notice" style="margin:20px 0">★ Buida el tauler<br>★★ 60% d’encerts o més<br>★★★ 80% d’encerts o més<br><small>Un encert elimina bombolles o uneix cares iguals. Preparar una parella també compta. Si la bombolla que dispares no té cap encert accessible, el dispar no penalitza.</small></div>${l.powers.length?`<p>Nova ajuda: ${l.powers.map(p=>powerNames[p]+': '+powerDescriptions[p]).join('<br>')}<br>Una de cada ${l.powerEvery} bombolles és especial.</p>`:''}<div class="actions"><button class="primary" data-start="${n}">Som-hi!</button><button data-action="close">Tornar</button></div>`,'intro');}
+function nextAnimal(){const ids=C.animals(game.board);if(!ids.length)return null;const id=ids[game.ammoIndex%ids.length];game.ammoIndex++;return id;}
+function createShot(index){const ids=C.animals(game.board);if(!ids.length)return null;const powers=game.level.powers,isPower=powers.length&&index%game.level.powerEvery===0;const selectedPower=isPower?powers[(Math.floor(index/game.level.powerEvery)-1)%powers.length]:null;return {animal:nextAnimal(),power:selectedPower==='lightning'&&!C.lightningAllowed(game.board)?null:selectedPower};}
+function sanitizeAmmo(){const ids=C.animals(game.board);if(!ids.length)return;for(const name of ['current','next']){if(!game[name])game[name]=createShot(game.shots+(name==='current'?1:2));else if(!ids.includes(game[name].animal))game[name].animal=nextAnimal();if(game[name]?.power==='lightning'&&!C.lightningAllowed(game.board))game[name].power=null;}}
+function start(n){const l=K.levels[n-1];if(!l?.available||!unlocked(n))return;closeDialog();selectedWorld=l.world;const w=K.worlds[l.world];document.body.style.setProperty('--mint',w.accent);document.body.style.setProperty('--bg',w.colors[1]);const board=K.boardFor(l);game={level:l,board,shots:0,useful:0,neutral:0,opportunity:null,waves:0,descentAnim:null,score:0,initial:board.size,cleared:0,ammoIndex:0,current:null,next:null,ended:false};game.current=createShot(1);game.next=createShot(2);refreshOpportunity();paused=false;flight=null;particles=[];angle=0;pointer=null;
+ $('#game-name').innerHTML=`<small class="game-world">${w.name}</small>Nivell ${n}<small>${l.name}</small>`;$('#animal-legend').innerHTML=l.animalIds.map(id=>`<div class="animal-key"><span class="legend-bubble" style="--animal:${byId[id].color}"></span>${byId[id].name}</div>`).join('');$('#star-targets').innerHTML=`★ Completa el nivell<br>★★ ≥ 60% d’encerts<br>★★★ ≥ 80% d’encerts<br><small>Preparar una parella també compta. Si la bombolla que dispares no té cap encert accessible, el dispar no penalitza.</small>`;$('#power-help').textContent=l.powers.length?`Una de cada ${l.powerEvery} bombolles és especial. ${l.powers.map(p=>powerNames[p]+': '+powerDescriptions[p]).join(' ')}`:'Sense límit de temps. Les cares t’ajuden a reconèixer cada animal.';updateHUD();switchScreen('game');status('Apunta i uneix 3 amics del mateix animal.');}
+function status(text){clearTimeout(statusTimer);$('#status').textContent=text;}
+function refreshOpportunity(){game.opportunity=C.findUsefulShot(game.board,[game.current]);}
+function updateHUD(){const left=game.level.descentEvery-game.shots%game.level.descentEvery;const imminent=Boolean(flight)&&game.shots%game.level.descentEvery===0;$('#pressure').textContent=imminent?'↓ El tauler baixarà en acabar aquest dispar':`↓ Baixada d’1 fila en ${left} ${left===1?'dispar':'dispars'}`;$('#pressure').classList.toggle('urgent',left<=2||imminent);const resolved=game.shots-Number(Boolean(flight))-game.neutral;$('#accuracy').textContent=resolved?`${Math.floor(100*game.useful/resolved)}%`:'—';$('#score').textContent=game.score.toLocaleString('ca');$('#remaining').textContent=game.level.limit===null?'Sense límit':Math.max(0,game.level.limit-game.shots);const a=game.current,b=game.next;const shown=flight?.shot||a;const rule=$('#shot-rule');rule.classList.toggle('special',Boolean(shown?.power));rule.textContent=shown?.power?powerNames[shown.power]+': '+powerDescriptions[shown.power]:'Bombolla normal: només esclaten grups de 3 o més del mateix animal.';$('#fairness-note').textContent=game.opportunity?'Si aquesta bombolla no té cap encert accessible, el dispar no penalitza.':'Jugada de preparació: cap encert accessible amb aquesta bombolla, no penalitza les estrelles.';$('#ammo-description').textContent=a?`Ara: ${a.power?powerNames[a.power]+' · ':''}${byId[a.animal].name}. Següent: ${b?.power?powerNames[b.power]+' · ':''}${b?byId[b.animal].name:''}.`:'';document.querySelectorAll('[data-action="fire"],[data-action="swap"]').forEach(b=>b.disabled=Boolean(flight)||Boolean(game.descentAnim)||game.ended);}
+function shoot(){if(screen!=='game'||!game||paused||flight||game.descentAnim||game.ended)return;sanitizeAmmo();refreshOpportunity();const path=C.trace(game.board,angle);flight={path,hadOpportunity:Boolean(game.opportunity),shot:{...game.current},segment:0,distance:0,x:C.ORIGIN.x,y:C.ORIGIN.y};game.shots++;launcherKickUntil=performance.now()+150;sound('fire');updateHUD();if(flight.shot.power)status(powerNames[flight.shot.power]+': '+powerDescriptions[flight.shot.power]);}
+function swap(){if(!game||paused||flight||game.descentAnim||game.ended)return;[game.current,game.next]=[game.next,game.current];refreshOpportunity();updateHUD();status(`Ara: ${byId[game.current.animal].name}${game.current.power?' · '+powerNames[game.current.power]:''}`);}
+function effect(items,fall){if(reduced)return;for(const b of items){const color=byId[b.animal]?.color||'#e8e8e8';if(fall){particles.push({x:b.x,y:b.y,vx:0,vy:80,life:1.1,max:1.1,animal:b.animal,fall:true});}else for(let i=0;i<5;i++){const t=i*Math.PI*2/5;particles.push({x:b.x,y:b.y,vx:Math.cos(t)*65,vy:Math.sin(t)*65,life:.5,max:.5,color});}}particles=particles.slice(-160);}
+function shotOutcome(shot,result){
+ const removed=result.removed.length,dropped=result.dropped.length;
+ const cause=shot.power==='rainbow'?'Comodí: s’ha convertit en '+byId[result.animal].name+'. ':shot.power==='blast'?'Explosiva: elimina animals de qualsevol color al voltant. ':shot.power==='lightning'?'Llampec: elimina tota la fila, de qualsevol color. ':shot.power==='multiply'?'Punts ×2. ':'';
+ const match=removed?(shot.power==='blast'||shot.power==='lightning'?removed+' bombolles eliminades. ':removed+' bombolles del mateix animal. '):result.useful?'Parella preparada; encara no són 3. ':'Sense grup de 3: la bombolla queda enganxada. ';
+ return cause+match+(dropped?dropped+' més cauen perquè han perdut la connexió amb el sostre.':'');
+}
+function land(){const f=flight;flight=null;const result=C.settle(game.board,f.path,f.shot);if(result.blocked){finish(false);return;}if(result.useful)game.useful++;else if(!f.hadOpportunity)game.neutral++;game.score+=result.points;game.cleared+=result.removed.length+result.dropped.length;effect(result.removed,false);effect(result.dropped,true);if(result.removed.length)sound('pop');if(result.dropped.length)sound('drop');status(shotOutcome(f.shot,result));
+ if(!game.board.size){updateHUD();finish(true);return;}if(C.danger(game.board)||(game.level.limit!==null&&game.shots>=game.level.limit)){updateHUD();finish(false);return;}
+ const wave=C.pressure(game.board,game.level,game.shots);if(wave.descended){game.waves++;game.descentAnim=reduced?null:{elapsed:0,duration:.45};status('El tauler baixa una fila. Vigila la línia límit!');if(wave.lost){game.descentAnim=null;finish(false);return;}}
+ game.current=game.next;game.next=createShot(game.shots+2);sanitizeAmmo();refreshOpportunity();updateHUD();}
+function finish(won){game.ended=true;flight=null;updateHUD();const g=game,n=g.level.id,stars=won?C.stars(g.shots,g.useful,g.neutral):0;let saved=true;if(won){if(g.shots>0&&g.useful===g.shots-g.neutral&&!progress.perfectLevels.includes(n))progress.perfectLevels.push(n);progress.stars[n]=Math.max(stars,progress.stars[n]||0);progress.best[n]=Math.max(g.score,Number(progress.best[n])||0);try{localStorage.setItem(saveKey,JSON.stringify(progress));}catch{saved=false;}
+ // An explicit extension point; no network writes or automatic rewards.
+ window.dispatchEvent(new CustomEvent('fasia-bubble:complete',{detail:{version:1,profileId:profile,level:n,stars,score:g.score,shots:g.shots,rewards:[]}}));}
+ sound(won?'win':'lose');dialog(`<p class="eyebrow">Nivell ${n} · ${won?'Completat':'Tornem-hi amb calma'}</p><h2 id="modal-title">${won?'Ho has aconseguit!':'Cada intent ensenya.'}</h2>${won?`<div class="result-stars" aria-label="${stars} de 3 estrelles">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>`:`<p>${g.level.limit&&g.shots>=g.level.limit?'S’han acabat els dispars.':'Les bombolles han arribat a la línia.'} Pots repetir el nivell tantes vegades com vulguis.</p>`}<p>Encerts: <strong>${g.useful} de ${g.shots-g.neutral} avaluables (${Math.floor(100*g.useful/Math.max(1,g.shots-g.neutral))}%)</strong>${g.neutral?`<br><small>${g.neutral} ${g.neutral===1?'dispar de preparació exclòs':'dispars de preparació exclosos'}: sense cap encert disponible.</small>`:''}</p><div class="stats-row"><div><b>${g.score}</b><small>Punts</small></div><div><b>${g.shots}</b><small>Dispars</small></div><div><b>${g.cleared}</b><small>Eliminades</small></div></div>${won?`<p>${stars===3?'Un equip fantàstic!':'Per a 3 estrelles: 80% d’encerts o més. Preparar una parella també compta.'}</p>`:''}${!saved?'<p>El navegador no permet desar. El progrés es manté mentre tinguis el joc obert.</p>':''}${won&&n%20===0&&n<100?`<p>Has completat ${K.worlds[g.level.world].name}! Ja pots descobrir ${K.worlds[g.level.world+1].name}.</p>`:''}${won&&n===100?'<p>Has completat els 100 nivells i els cinc mons. Quina aventura amb els vuit amics!</p>':''}<div class="actions">${won&&n<100?`<button class="primary" data-next="${n+1}">${n%20===0?'Següent món':'Següent nivell'} →</button>`:''}<button class="${won?'':'primary'}" data-start="${n}">Repetir</button><button data-action="map">Tornar al mapa</button></div>`,'result');}
+function pauseDialog(){if(!game||game.ended)return;paused=true;dialog(`<p class="eyebrow">Sense presses</p><h2 id="modal-title">Fem una pausa.</h2><p>Les bombolles t’esperen. Torna quan vulguis.</p><div class="actions"><button class="primary" data-action="resume">Continuar</button><button data-action="sound">${muted?'Activar':'Desactivar'} el so</button><button data-action="restart">Reiniciar nivell</button><button data-action="map">Tornar al mapa</button></div>`,'pause');}
+function leave(){if(!game||game.ended){closeDialog();switchScreen('levels');return;}paused=true;dialog('<h2 id="modal-title">Tornem al mapa?</h2><p>El nivell actual tornarà a començar quan hi entris. Les estrelles aconseguides es conserven.</p><div class="actions"><button class="primary" data-action="resume">Continuar jugant</button><button data-action="map">Tornar al mapa</button></div>','leave');}
+function help(){dialog('<p class="eyebrow">Un petit gest, una gran pinya</p><h2 id="modal-title">Juguem junts.</h2><p>1. Mou el dit o el ratolí per apuntar.<br>2. Deixa anar per disparar, o prem «Disparar».<br>3. Ajunta 3 cares del mateix animal.<br>Les bombolles sense connexió amb el sostre cauen.</p><p>El comptador anuncia quan baixa el tauler. Cada baixada afegeix una fila. Si les bombolles passen la línia límit, perds.</p><p>La línia mostra on anirà la bombolla, també quan rebota. El botó ⇄ canvia la bombolla amb la següent.</p><p>Teclat: ← → per apuntar, espai per disparar, X per canviar i P per pausar. No hi ha límit de temps.</p><div class="actions"><button class="primary" data-action="close">Entesos!</button></div>','help');}
+function returnProfile(){let u=new URL('https://vvil1995.github.io/KahootFasia/index.html');if(location.protocol!=='file:'&&location.pathname.includes('/games/'))u=new URL('../index.html',location.href);u.searchParams.set('return','profile');if(profile!=='guest')u.searchParams.set('profile',profile);location.href=u.href;}
+function bubble(g,x,y,id,r=23,power=null,opacity=1){const a=byId[id];g.save();g.globalAlpha=opacity;g.shadowColor='#0007';g.shadowBlur=5;g.shadowOffsetY=3;drawFace(g,a,x,y,r);g.shadowBlur=0;g.shadowOffsetY=0;if(power){g.fillStyle={rainbow:'#e6c6ff',blast:'#ffbca0',lightning:'#fff08a',multiply:'#a5efcf'}[power];g.beginPath();g.arc(x+r*.43,y+r*.43,12,0,Math.PI*2);g.fill();g.strokeStyle='#182744';g.lineWidth=1.5;g.stroke();g.font='bold 15px system-ui';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#182744';g.fillText({rainbow:'✦',blast:'✹',lightning:'ϟ',multiply:'×2'}[power],x+r*.43,y+r*.43);}g.restore();}
+const worldBackdropSources=['../assets/bubble/bubble_24_8bfabf5da220.webp','../assets/bubble/bubble_25_64f13ae6e257.webp','../assets/bubble/bubble_26_b48fa8cc9edb.webp','../assets/bubble/bubble_27_7fdf2bfe25ca.webp','../assets/bubble/bubble_28_49db02455130.webp'];const worldBackdropImages=worldBackdropSources.map(src=>{const img=new Image();img.src=src;img.onload=()=>{if(typeof draw==='function')draw()};return img;});
+function drawLauncher(g,aim,now=performance.now()){
+ const kick=paused?0:Math.max(0,(launcherKickUntil-now)/150)*4;
+ g.save();g.translate(C.ORIGIN.x,C.ORIGIN.y);g.rotate(aim);
+ if(launcherImage.complete&&launcherImage.naturalWidth){
+  // Socket center is the pivot and the real projectile launch position.
+  g.drawImage(launcherImage,-56,-61.6+kick,112,112);
+ }else{
+  g.fillStyle='#1554b6';g.strokeStyle='#edb83c';g.lineWidth=4;
+  g.beginPath();g.roundRect(-14,-58,28,58,8);g.fill();g.stroke();
+  g.beginPath();g.arc(0,0,29,0,Math.PI*2);g.fill();g.stroke();
+ }
+ g.restore();
+}
+function draw(){if(!game||screen!=='game')return;ctx.clearRect(0,0,432,650);const w=K.worlds[game.level.world];const backdrop=worldBackdropImages[game.level.world];if(backdrop&&backdrop.complete&&backdrop.naturalWidth){ctx.drawImage(backdrop,0,0,432,650);ctx.fillStyle='rgba(8,16,34,.19)';ctx.fillRect(0,0,432,650);}else{ctx.fillStyle=w.colors[0];ctx.fillRect(0,0,432,650);}
+ ctx.strokeStyle='#99e6c310';ctx.lineWidth=1;for(let r=0;r<12;r++)for(let c=0;c<C.cols(r,game.board.phase||0);c++){const p=C.pos(r,c,game.board.phase||0);ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.stroke();}
+ ctx.fillStyle='#ffffff09';ctx.fillRect(0,0,432,8);ctx.setLineDash([5,8]);const nearLine=[...game.board.values()].some(b=>C.pos(b.r,b.c,game.board.phase||0).y+C.R>C.DANGER-2*C.STEP);ctx.strokeStyle=nearLine?'#ff8d7c':'#f2b77d55';ctx.beginPath();ctx.moveTo(12,C.DANGER);ctx.lineTo(420,C.DANGER);ctx.stroke();ctx.setLineDash([]);
+ ctx.font='10px system-ui';ctx.fillStyle=nearLine?'#ffab9e':'#c9a98d';ctx.textAlign='left';ctx.fillText(nearLine?'PERILL · LÍNIA LÍMIT':'LÍNIA LÍMIT',16,C.DANGER+15);
+ if(!flight&&!game.descentAnim&&!game.ended){const path=C.trace(game.board,angle);ctx.strokeStyle='#c9ffdd80';ctx.lineWidth=2;ctx.setLineDash([2,10]);ctx.lineCap='round';ctx.beginPath();ctx.moveTo(C.ORIGIN.x,C.ORIGIN.y);path.segments.forEach(s=>ctx.lineTo(s.to.x,s.to.y));ctx.stroke();ctx.setLineDash([]);const cell=C.snap(game.board,path);if(cell){const p=C.pos(cell.r,cell.c,game.board.phase||0);ctx.strokeStyle='#b4ffd18a';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(p.x,p.y,21,0,Math.PI*2);ctx.stroke();}}
+ ctx.save();ctx.beginPath();ctx.rect(0,8,432,580);ctx.clip();const descentOffset=game.descentAnim?C.STEP*Math.pow(1-game.descentAnim.elapsed/game.descentAnim.duration,2):0;for(const b of game.board.values()){const p=C.pos(b.r,b.c,game.board.phase||0);bubble(ctx,p.x,p.y-descentOffset,b.animal);}ctx.restore();
+ for(const p of particles){ctx.save();ctx.globalAlpha=Math.max(0,p.life/p.max);if(p.fall)bubble(ctx,p.x,p.y,p.animal,21,null,p.life/p.max);else{ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();}ctx.restore();}
+ // Launcher and the next bubble.
+ drawLauncher(ctx,angle);
+ if(flight)bubble(ctx,flight.x,flight.y,flight.shot.animal,23,flight.shot.power);else if(game.current)bubble(ctx,C.ORIGIN.x,C.ORIGIN.y,game.current.animal,22,game.current.power);
+ if(game.next)bubble(ctx,333,599,game.next.animal,20,game.next.power);ctx.font='bold 11px system-ui';ctx.textAlign='center';for(const [label,x] of [['SEGÜENT',333],[game.current?.power?({rainbow:'COMODÍ',blast:'BOMBA',lightning:'LLAMPEC',multiply:'PUNTS ×2'}[game.current.power]):'ARA',216]]){ctx.fillStyle='#eaf8ffff';ctx.fillRect(x-31,632,62,17);ctx.fillStyle='#182d48';ctx.fillText(label,x,644);}
+}
+function frame(now){raf=0;if(screen!=='game'||!game)return;const dt=last?Math.min((now-last)/1000,.04):0;last=now;if(!paused&&!game.ended){if(game.descentAnim){game.descentAnim.elapsed=Math.min(game.descentAnim.duration,game.descentAnim.elapsed+dt);if(game.descentAnim.elapsed>=game.descentAnim.duration){game.descentAnim=null;updateHUD();}}if(flight){let move=dt*680;while(flight&&move>=0){const f=flight,s=f.path.segments[f.segment],left=s.length-f.distance;if(move>=left){f.x=s.to.x;f.y=s.to.y;move-=left;if(f.segment===f.path.segments.length-1){land();break;}sound('bounce');f.segment++;f.distance=0;if(move===0)break;}else{f.distance+=move;const t=s.length?f.distance/s.length:1;f.x=s.from.x+(s.to.x-s.from.x)*t;f.y=s.from.y+(s.to.y-s.from.y)*t;break;}}}for(const p of particles){p.life-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=p.fall?500*dt:60*dt;}particles=particles.filter(p=>p.life>0);}draw();raf=requestAnimationFrame(frame);}
+function aimAt(e){const box=canvas.getBoundingClientRect(),x=(e.clientX-box.left)*432/box.width,y=(e.clientY-box.top)*650/box.height;if(y>C.ORIGIN.y-20&&pointer!==e.pointerId)return;angle=Math.max(-1.35,Math.min(1.35,Math.atan2(x-C.ORIGIN.x,Math.max(36,C.ORIGIN.y-y))));}
+canvas.addEventListener('pointerdown',e=>{if(e.button!==0||paused||flight||!game||game.ended)return;pointer=e.pointerId;canvas.setPointerCapture(e.pointerId);aimAt(e);e.preventDefault();});
+canvas.addEventListener('pointermove',e=>{if(!paused&&!flight&&game&&!game.ended&&(e.pointerType==='mouse'||e.pointerId===pointer))aimAt(e);});
+canvas.addEventListener('pointerup',e=>{if(e.pointerId!==pointer)return;pointer=null;const b=canvas.getBoundingClientRect();if(e.clientX>=b.left&&e.clientX<=b.right&&e.clientY>=b.top&&e.clientY<=b.bottom){aimAt(e);shoot();}if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);});
+canvas.addEventListener('pointercancel',()=>pointer=null);canvas.addEventListener('lostpointercapture',()=>pointer=null);
+document.addEventListener('keydown',e=>{if(screen!=='game'||!game)return;if(modal.open){return;}if(e.code==='ArrowLeft'||e.code==='ArrowRight'){e.preventDefault();if(!flight)angle=Math.max(-1.35,Math.min(1.35,angle+(e.code==='ArrowLeft'?-.05:.05)));}if(e.code==='Space'&&e.target.tagName!=='BUTTON'){e.preventDefault();shoot();}if(e.code==='KeyX')swap();if(e.code==='KeyP'||e.code==='Escape')pauseDialog();});
+modal.addEventListener('cancel',e=>{e.preventDefault();if(['pause','leave'].includes(modal.dataset.mode)){closeDialog();paused=false;}else if(modal.dataset.mode!=='result')closeDialog();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&screen==='game'&&game&&!game.ended&&!modal.open)pauseDialog();});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;if(b.dataset.world!==undefined){const i=Number(b.dataset.world);if(Number.isInteger(i)&&i>=0&&i<5&&worldOpen(i)){selectedWorld=i;closeDialog();switchScreen('levels');}return;}if(b.dataset.level){intro(Number(b.dataset.level));return;}if(b.dataset.start){start(Number(b.dataset.start));return;}if(b.dataset.next){intro(Number(b.dataset.next));return;}const a=b.dataset.action;switch(a){case'home':case'worlds':case'levels':closeDialog();switchScreen(a);break;case'help':help();break;case'sound':toggleSound();break;case'close':closeDialog();if(game?.ended)switchScreen('levels');break;case'fire':shoot();break;case'swap':swap();break;case'left':if(!paused&&!flight)angle=Math.max(-1.35,angle-.08);break;case'right':if(!paused&&!flight)angle=Math.min(1.35,angle+.08);break;case'pause':pauseDialog();break;case'leave':leave();break;case'resume':closeDialog();paused=false;last=0;break;case'restart':start(game.level.id);break;case'map':closeDialog();paused=false;switchScreen('levels');break;case'profile':returnProfile();break;}});
+// Read-only diagnostics are available for reproducible browser checks.
+window.FasiaBubble={getSnapshot:()=>game?{level:game.level.id,shots:game.shots,score:game.score,useful:game.useful,neutral:game.neutral,hasOpportunity:Boolean(game.opportunity),phase:game.board.phase||0,board:[...game.board.values()].map(b=>({...b})),current:{...game.current},next:{...game.next},paused,inFlight:!!flight,descending:!!game.descentAnim,waves:game.waves,descentEvery:game.level.descentEvery,ended:game.ended,angle,screen}: {screen},getProgress:()=>JSON.parse(JSON.stringify(progress))};
+
+// Fàsia Verse: progrés Bubble al perfil existent (challenge_state de Supabase).
+// No concedeix monedes ni avatars aquí: això correspon a la plataforma.
+const BUBBLE_SB_URL='https://gzbvcxputhkyunemxzjm.supabase.co';
+const BUBBLE_SB_KEY='sb_publishable_z4HQxyjRZCoczb-o276Qvw_FKiGXQJu';
+async function bubbleProfileRequest(method,body){
+ if(profile==='guest')return null;
+ const url=BUBBLE_SB_URL+'/rest/v1/profiles?id=eq.'+encodeURIComponent(profile)+(method==='GET'?'&select=challenge_state&limit=1':'');
+ const response=await fetch(url,{method,headers:{apikey:BUBBLE_SB_KEY,Authorization:'Bearer '+BUBBLE_SB_KEY,'Content-Type':'application/json',Prefer:'return=representation'},...(body?{body:JSON.stringify(body)}:{})});
+ if(!response.ok)throw Error('Supabase '+response.status);
+ return response.json();
+}
+function mergeBubbleProgress(remote){
+ if(!remote||typeof remote!=='object')return;
+ for(const n of (remote.perfectLevels||[])){const id=Number(n);if(Number.isInteger(id)&&id>=1&&id<=100&&!progress.perfectLevels.includes(id))progress.perfectLevels.push(id);}
+ for(let n=1;n<=100;n++){
+  const value=Number(remote.stars?.[n]||0);
+  if(Number.isInteger(value)&&value>=1&&value<=3)progress.stars[n]=Math.max(progress.stars[n]||0,value);
+  const score=Number(remote.best?.[n]||0);
+  if(Number.isFinite(score)&&score>=0)progress.best[n]=Math.max(progress.best[n]||0,score);
+ }
+ try{localStorage.setItem(saveKey,JSON.stringify(progress));}catch{}
+ if(screen==='worlds')renderWorlds();if(screen==='levels')renderLevels();
+}
+let bubbleWrite=Promise.resolve();
+async function saveBubbleCloud(){
+ if(profile==='guest')return;
+ // Recarreguem challenge_state per preservar les dades dels altres jocs.
+ const rows=await bubbleProfileRequest('GET');
+ const state=rows?.[0]?.challenge_state||{};
+ mergeBubbleProgress(state.bubble);
+ await bubbleProfileRequest('PATCH',{challenge_state:{...state,bubble:{...state.bubble,version:1,stars:{...progress.stars},best:{...progress.best},perfectLevels:[...progress.perfectLevels]}}});
+}
+window.addEventListener('fasia-bubble:complete',()=>{
+ bubbleWrite=bubbleWrite.then(saveBubbleCloud).catch(e=>console.warn('Fàsia Bubble: pendent sincronització Supabase',e));
+});
+(async()=>{try{const rows=await bubbleProfileRequest('GET');mergeBubbleProgress(rows?.[0]?.challenge_state?.bubble);}catch(e){console.warn('Fàsia Bubble: progrés local disponible; no s’ha pogut llegir Supabase',e);}})();
+
+syncSound();loadImages();
+})();
+
+</script>
+<script>
+(()=>{
+ const hud=document.querySelector('#game .hud');
+ const nodes=['#game .game-top','#pressure','#status','#game .hint'].map(selector=>{
+  const node=document.querySelector(selector),anchor=document.createComment('responsive-home');
+  node.before(anchor);return {node,anchor};
+ });
+ const mq=matchMedia('(min-width:901px)');
+ function arrange(){
+  if(mq.matches){hud.prepend(nodes[0].node);nodes.slice(1).forEach(({node})=>hud.append(node));}
+  else nodes.forEach(({node,anchor})=>anchor.after(node));
+ }
+ mq.addEventListener('change',arrange);arrange();
+})();
+</script></body></html>
