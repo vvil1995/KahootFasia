@@ -4064,6 +4064,7 @@ button.profile-collection-card{cursor:pointer}
     <button class="challenge-tab" data-challenge-area="nexus" type="button">🔗 NEXUS 4</button>
     <button class="challenge-tab" data-challenge-area="multifasia" type="button">✖️ MULTIFASIA</button>
     <button class="challenge-tab" data-challenge-area="rush" type="button">🏁 FASIA RUSH</button>
+    <button class="challenge-tab" data-challenge-area="bubble" type="button">🫧 FÀSIA BUBBLE</button>
     <button class="challenge-tab" data-challenge-area="hulkdoku" type="button">🐶 HULKDOKU</button>
     <button class="challenge-tab" data-challenge-area="prisma" type="button">💎 FASIA PRISMA</button>
   </div>
@@ -4088,6 +4089,13 @@ button.profile-collection-card{cursor:pointer}
 </div>
 
 
+<div id="bubbleNewsOverlay" class="challenge-reward-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bubbleNewsTitle">
+  <div class="challenge-reward-card"><div class="challenge-reward-icon">🫧</div>
+    <h2 id="bubbleNewsTitle">JA POTS JUGAR A FÀSIA BUBBLE!</h2>
+    <p>100 nivells i nous desafiaments per desbloquejar <b>Foca Bubble, Axolot Bubble, Hulk Bubble</b> i el <b>marc Mestre Bubble</b>.</p>
+    <div class="prisma-news-actions"><button id="bubbleNewsLater" class="btn secondary" type="button">MÉS TARD</button><button id="bubbleNewsChallenges" class="btn" type="button">VEURE DESAFIAMENTS</button></div>
+  </div>
+</div>
 <div id="hulkdokuNewsOverlay" class="challenge-reward-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="hulkdokuNewsTitle">
   <div class="challenge-reward-modal">
     <div class="challenge-reward-icon">🐶</div>
@@ -4152,6 +4160,9 @@ button.profile-collection-card{cursor:pointer}
       </div>
     </button>
 
+    <button id="openFasiaBubble" class="game-choice" type="button" style="background:linear-gradient(125deg,#075eab,#1cadd8,#6239be);color:white">
+      <div class="game-choice-content"><h3>FÀSIA BUBBLE 🫧</h3><p>100 nivells, 5 mons i 4 recompenses exclusives!</p></div><span class="game-choice-arrow">➜</span>
+    </button>
     <button id="openHulkdoku" class="game-choice game-choice-hulkdoku" type="button">
       <div class="game-choice-arrow">›</div><div class="game-choice-content">
         <span class="game-choice-tag">JOC INDIVIDUAL · 1.000 NIVELLS</span>
@@ -4744,6 +4755,18 @@ button.profile-collection-card{cursor:pointer}
 <script id="fv-challenges-v1-script">
 /* ===== FASIA VERSE · MOTOR GENÈRIC DE DESAFIAMENTS V1 ===== */
 const CHALLENGE_CATALOG=[
+  {id:"bubble_coins_10",area:"bubble",icon:"🫧",name:"PRIMERES BOMBOLLES",condition:"Supera 10 nivells.",stat:"bubble.levels",target:10,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_20",area:"bubble",icon:"🦭",name:"EXPLORADOR DE BOMBOLLES",condition:"Supera 20 nivells.",stat:"bubble.levels",target:20,reward:{"type":"exclusive","id":"bubble_foca","label":"🦭 Foca Bubble"}},
+  {id:"bubble_coins_30",area:"bubble",icon:"🪙",name:"TRENTA NIVELLS",condition:"Supera 30 nivells.",stat:"bubble.levels",target:30,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_50",area:"bubble",icon:"🦎",name:"DOMINADOR DE BOMBOLLES",condition:"Supera 50 nivells.",stat:"bubble.levels",target:50,reward:{"type":"exclusive","id":"bubble_axolot","label":"🦎 Axolot Bubble"}},
+  {id:"bubble_coins_60",area:"bubble",icon:"🪙",name:"SEIXANTA NIVELLS",condition:"Supera 60 nivells.",stat:"bubble.levels",target:60,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_coins_80",area:"bubble",icon:"🪙",name:"VUITANTA NIVELLS",condition:"Supera 80 nivells.",stat:"bubble.levels",target:80,reward:{"type":"coins","amount":10,"label":"🪙 10 monedes"}},
+  {id:"bubble_100",area:"bubble",icon:"🐶",name:"LLEGENDA BUBBLE",condition:"Supera 100 nivells.",stat:"bubble.levels",target:100,reward:{"type":"exclusive","id":"bubble_hulk","label":"🐶 Hulk Bubble"}},
+  {id:"bubble_coins_stars100",area:"bubble",icon:"⭐",name:"COL·LECCIONISTA D’ESTRELLES",condition:"Aconsegueix 100 estrelles.",stat:"bubble.stars",target:100,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_coins_stars150",area:"bubble",icon:"⭐",name:"ESTRELLES BRILLANTS",condition:"Aconsegueix 150 estrelles.",stat:"bubble.stars",target:150,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_coins_stars200",area:"bubble",icon:"🌟",name:"GALÀXIA DE BOMBOLLES",condition:"Aconsegueix 200 estrelles.",stat:"bubble.stars",target:200,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
+  {id:"bubble_300",area:"bubble",icon:"🏆",name:"MESTRE BUBBLE",condition:"Aconsegueix 300 estrelles.",stat:"bubble.stars",target:300,reward:{"type":"exclusive_frame","id":"marc_bubble","label":"🏆 Marc Mestre Bubble"}},
+  {id:"bubble_perfect5",area:"bubble",icon:"🎯",name:"PUNTERIA PERFECTA",condition:"Supera 5 nivells sense errors.",stat:"bubble.perfect",target:5,reward:{"type":"coins","amount":5,"label":"🪙 5 monedes"}},
   {id:"hd_3",area:"hulkdoku",icon:"🐾",name:"PRIMERS PASSOS",condition:"Supera 3 nivells.",stat:"hulkdoku.levels",target:3,reward:{type:"coins",amount:2,label:"🪙 2 monedes"}},
   {id:"hd_10",area:"hulkdoku",icon:"🐾",name:"APRENENT",condition:"Supera 10 nivells.",stat:"hulkdoku.levels",target:10,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
   {id:"hd_perfect3",area:"hulkdoku",icon:"✨",name:"TRES PERFECTES",condition:"Supera 3 nivells sense errors.",stat:"hulkdoku.perfect",target:3,reward:{type:"coins",amount:3,label:"🪙 3 monedes"}},
@@ -4852,6 +4875,7 @@ const PUZZLE_CONFIG={
 };
 
 const CHALLENGE_REWARD_ASSETS={
+  bubble_foca:"assets/avatars/exclusius/bubble_foca.webp",bubble_axolot:"assets/avatars/exclusius/bubble_axolot.webp",bubble_hulk:"assets/avatars/exclusius/bubble_hulk.webp",marc_bubble:"assets/marcs/marc_bubble.webp",
   hulkdoku_explorador:"assets/avatars/exclusius/hulkdoku_explorador.webp",
   hulkdoku_mag:"assets/avatars/exclusius/hulkdoku_mag.webp",
   hulkdoku_cavaller:"assets/avatars/exclusius/hulkdoku_cavaller.webp",
@@ -4933,6 +4957,9 @@ function challengeState(){
     const first=Array.isArray(rp.firstGpRewards)?rp.firstGpRewards.map(Number):[];
     state.stats.rush={...state.stats.rush,gp1:first.includes(1)?1:0,gp2:first.includes(2)?1:0,gp3:first.includes(3)?1:0,gp4:first.includes(4)?1:0,gp5:first.includes(5)?1:0,km3:Number(rp.thresholdRuns?.km3||0),km5:Number(rp.thresholdRuns?.km5||0),km75:Number(rp.thresholdRuns?.km75||0),gpCompletions:Number(rp.gpCompletions||0),totalKm:Number(rp.totalKm||0),extremePB:Number(rp.extremeRecordBeats||0),extremeLaps:Number(rp.extremeRewardedLaps||rp.extremeCompletedLapsTotal||0)};
   }catch(e){}
+  const bubble=state.bubble||{};
+  const vals=Object.values(bubble.stars||{}).map(Number).filter(v=>v>=1&&v<=3);
+  state.stats.bubble={levels:vals.length,stars:vals.reduce((a,b)=>a+b,0),perfect:new Set((bubble.perfectLevels||[]).map(Number).filter(n=>Number.isInteger(n)&&n>=1&&n<=100)).size};
   return state;
 }
 async function saveChallengeState(state){
@@ -5024,6 +5051,17 @@ async function syncHulkdokuChallenges(){
 }
 async function evaluateChallenges(state=challengeState()){
   await syncHulkdokuChallenges();state=challengeState();
+  // Bubble: 1 moneda per nivell nou (màxim 100), només una vegada.
+  const bubbleIds=Object.entries(state.bubble?.stars||{}).filter(([id,v])=>Number(id)>=1&&Number(id)<=100&&Number(v)>0).map(([id])=>String(id));
+  const paid=new Set(state.bubble?.paidLevels||[]);
+  const unpaid=bubbleIds.filter(id=>!paid.has(id));
+  if(unpaid.length&&currentProfile?.id){
+    // Guardem els identificadors abans de concedir monedes per reduir duplicats en reentrades.
+    state.bubble={...state.bubble,paidLevels:[...paid,...unpaid]};
+    await saveChallengeState(state);
+    currentProfile.coins=await addCoinsToProfile(currentProfile.id,unpaid.length);
+  }
+
   syncPortalChallengeStats(state);
   const completed=new Set(state.completed||[]);let changed=false;
   for(const ch of CHALLENGE_CATALOG){
@@ -5139,8 +5177,18 @@ const FV_NEWS_POPUP_VERSION='prisma_reptes_2026_v1';
 const FV_HULKDOKU_NEWS_VERSION='hulkdoku_llancament_2026_v1';
 function fvNewsKey(){return `fv_news_seen_${FV_NEWS_POPUP_VERSION}_${currentProfile?.id||"guest"}`}
 function hulkdokuNewsKey(){return `fv_news_seen_${FV_HULKDOKU_NEWS_VERSION}_${currentProfile?.id||"guest"}`}
+function bubbleNewsKey(){return `fv_news_seen_bubble_2026_v1_${currentProfile?.id||"guest"}`}
+function maybeShowBubbleNews(){
+ if(!currentProfile?.id||localStorage.getItem(bubbleNewsKey())==="1"||challengeState().bubbleNewsSeen)return false;
+ const ov=$("#bubbleNewsOverlay");if(!ov)return false;ov.classList.remove("hidden");return true;
+}
+async function dismissBubbleNews(){
+ if(currentProfile?.id){localStorage.setItem(bubbleNewsKey(),"1");const st=challengeState();st.bubbleNewsSeen=true;await saveChallengeState(st)}
+ $("#bubbleNewsOverlay")?.classList.add("hidden");setTimeout(showNextChallengeReward,100);
+}
 function maybeShowHulkdokuNews(){
-  if(!currentProfile?.id||localStorage.getItem(fvNewsKey())!=="1"||localStorage.getItem(hulkdokuNewsKey())==="1")return false;
+  if(!currentProfile?.id||localStorage.getItem(fvNewsKey())!=="1")return false;
+  if(localStorage.getItem(hulkdokuNewsKey())==="1")return maybeShowBubbleNews();
   const ov=$("#hulkdokuNewsOverlay");if(!ov)return false;ov.classList.remove("hidden");return true;
 }
 function maybeShowFvNews(){
@@ -5156,11 +5204,11 @@ function dismissFvNews(){
 function dismissHulkdokuNews(){
   if(currentProfile?.id)localStorage.setItem(hulkdokuNewsKey(),"1");
   $("#hulkdokuNewsOverlay")?.classList.add("hidden");
-  setTimeout(showNextChallengeReward,100);
+  if(!maybeShowBubbleNews())setTimeout(showNextChallengeReward,100);
 }
 async function enterProfileWithChallengeRewards(){
   show("profileHome");try{updateProfileCharacterSummary();renderProfileHeroVisuals();renderEquippedProfileTitle()}catch(e){}
-  setTimeout(()=>{maybeShowFvNews();if($("#fvNewsOverlay")?.classList.contains("hidden")&&$("#hulkdokuNewsOverlay")?.classList.contains("hidden"))showNextChallengeReward()},120);
+  setTimeout(()=>{maybeShowFvNews();if($("#fvNewsOverlay")?.classList.contains("hidden")&&$("#hulkdokuNewsOverlay")?.classList.contains("hidden")&&$("#bubbleNewsOverlay")?.classList.contains("hidden"))showNextChallengeReward()},120);
 }
 async function showNextChallengeReward(){
   if(!currentProfile?.id)return;const state=challengeState();if(!state.pending?.length)return;const item=state.pending[0],ov=$("#challengeRewardOverlay");if(!ov)return;
@@ -5181,6 +5229,12 @@ document.addEventListener("DOMContentLoaded",()=>{
     $$(".challenge-tab").forEach(x=>x.classList.toggle("active",x.dataset.challengeArea==="prisma"));
     await openChallengesScreen();
     maybeShowHulkdokuNews();
+  });
+  $("#bubbleNewsLater")?.addEventListener("click",dismissBubbleNews);
+  $("#bubbleNewsChallenges")?.addEventListener("click",async()=>{
+    await dismissBubbleNews();activeChallengeArea="bubble";
+    $$(".challenge-tab").forEach(x=>x.classList.toggle("active",x.dataset.challengeArea==="bubble"));
+    await openChallengesScreen();
   });
   $("#hulkdokuNewsLater")?.addEventListener("click",dismissHulkdokuNews);
   $("#hulkdokuNewsChallenges")?.addEventListener("click",async()=>{
@@ -5457,7 +5511,8 @@ const SHOP_CONFIG={
   events:{halloween:false,christmas:false},
   characters:[
 {id:"gat",name:"GAT",emoji:"🐱",free:true,skins:variantData["GAT"].map((x,i)=>({id:`gat_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gat",name:"GAT NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gat.webp"}])},
-{id:"gos",name:"GOS",emoji:"🐶",free:true,skins:variantData["GOS"].map((x,i)=>({id:`gos_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gos",name:"GOS NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gos.webp"},{id:"multifasia_hulk",name:"HULK MESTRE MULTIFASIA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_hulk.webp",cropIndex:null}].concat([{id:"hulkdoku_explorador",name:"HULK EXPLORADOR",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_explorador.webp",cropIndex:null},{id:"hulkdoku_mag",name:"HULK MAG DELS PORTALS",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_mag.webp",cropIndex:null},{id:"hulkdoku_cavaller",name:"HULK CAVALLER",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_cavaller.webp",cropIndex:null}]))},
+{id:"gos",name:"GOS",emoji:"🐶",free:true,skins:variantData["GOS"].map((x,i)=>({id:`gos_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gos",name:"GOS NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gos.webp"},{id:"multifasia_hulk",name:"HULK MESTRE MULTIFASIA",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/multifasia_hulk.webp",cropIndex:null}].concat([{id:"bubble_hulk",name:"HULK BUBBLE",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/bubble_hulk.webp"},{id:"hulkdoku_explorador",name:"HULK EXPLORADOR",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_explorador.webp",cropIndex:null},{id:"hulkdoku_mag",name:"HULK MAG DELS PORTALS",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_mag.webp",cropIndex:null},{id:"hulkdoku_cavaller",name:"HULK CAVALLER",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/hulkdoku_cavaller.webp",cropIndex:null}]))},
+{id:"foca",name:"FOCA",emoji:"🦭",exclusive:true,skins:[{id:"bubble_foca",name:"FOCA BUBBLE",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/bubble_foca.webp"}]},
 {id:"gorilla",name:"GORIL·LA",emoji:"🦍",free:true,skins:variantData["GORIL·LA"].map((x,i)=>({id:`gorilla_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_gorilla",name:"GORIL·LA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_gorilla.webp"}])},
 {id:"zebra",name:"ZEBRA",emoji:"🦓",free:true,skins:variantData["ZEBRA"].map((x,i)=>({id:`zebra_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_zebra",name:"ZEBRA NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_zebra.webp"}])},
 {id:"mussol",name:"MUSSOL",emoji:"🦉",free:true,skins:variantData["MUSSOL"].map((x,i)=>({id:`mussol_${i}`,name:x[0],price:i<2?0:20,image:x[1],free:i<2,available:true,event:null})).concat([{id:"nexus4_mussol",name:"MUSSOL NEXUS 4",price:0,available:true,event:null,exclusiveChallenge:true,image:"assets/avatars/exclusius/nexus4_mussol.webp"}])},
@@ -5515,6 +5570,7 @@ const SHOP_CONFIG={
   {id:"iguana_esquelet",name:"IGUANA ESQUELET",price:10,available:false,event:"halloween",image:"assets/avatars/iguana_esquelet.webp",cropIndex:null}
 ]},
 {id:"axolot",name:"AXOLOT",emoji:"🦎",skins:[
+  {id:"bubble_axolot",name:"AXOLOT BUBBLE",price:0,available:true,exclusiveChallenge:true,image:"assets/avatars/exclusius/bubble_axolot.webp"},
   {id:"axolot_cientific",name:"AXOLOT CIENTÍFIC",price:15,available:true,event:null,image:"assets/avatars/axolot_cientific.webp",cropIndex:null},
   {id:"axolot_astronauta",name:"AXOLOT ASTRONAUTA",price:20,available:true,event:null,image:"assets/avatars/axolot_astronauta.webp",cropIndex:null},
   {id:"axolot_reno",name:"AXOLOT RENO",price:10,available:false,event:"christmas",image:"assets/avatars/axolot_reno.webp",cropIndex:null}
@@ -5769,6 +5825,7 @@ async function openTitlesScreen(){
 }
 
 const FRAME_CATALOG=[
+{id:"marc_bubble",name:"MESTRE BUBBLE",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_bubble.webp"},
 {id:"marc_hulkdoku",name:"MESTRE HULKDOKU",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_hulkdoku.webp"},
 {id:"bronze",name:"BRONZE",price:5,img:"assets/marcs/marc_bronze.webp"},{id:"selva",name:"SELVA",price:7,img:"assets/marcs/marc_selva.webp"},{id:"gel",name:"GEL",price:7,img:"assets/marcs/marc_gel.webp"},{id:"foc",name:"FOC",price:9,img:"assets/marcs/marc_foc.webp"},{id:"neo",name:"NEÓ",price:10,img:"assets/marcs/marc_neo.webp"},{id:"ocea",name:"OCEÀ",price:11,img:"assets/marcs/marc_ocea.webp"},{id:"espai",name:"ESPAI",price:13,img:"assets/marcs/marc_espai.webp"},{id:"reial",name:"REIAL",price:15,img:"assets/marcs/marc_reial.webp"},
 {id:"marc_ciencia",name:"CIÈNCIA",price:0,exclusiveChallenge:true,img:"assets/marcs/marc_ciencia.webp"},
@@ -7000,7 +7057,7 @@ $('#enterBtn').onclick=async()=>{
       renderEquippedProfileTitle();
       updateProfileCharacterSummary();
       renderProfileHeroVisuals();
-      setTimeout(()=>{maybeShowFvNews();if($("#fvNewsOverlay")?.classList.contains("hidden")&&$("#hulkdokuNewsOverlay")?.classList.contains("hidden"))showNextChallengeReward()},150);
+      setTimeout(()=>{maybeShowFvNews();if($("#fvNewsOverlay")?.classList.contains("hidden")&&$("#hulkdokuNewsOverlay")?.classList.contains("hidden")&&$("#bubbleNewsOverlay")?.classList.contains("hidden"))showNextChallengeReward()},150);
     });
   }catch(e){
     console.error(e);
@@ -7129,6 +7186,12 @@ $("#openWordSearch").onclick=()=>{
   sessionStorage.setItem("fasiaVerseProfileId", pid);
   sessionStorage.setItem("fasiaVerseReturnToProfile", "1");
   window.location.href="games/portals-lletres.html?profile="+encodeURIComponent(pid);
+};
+$("#openFasiaBubble").onclick=()=>{
+ if(!currentProfile?.id||currentProfile.role!=="student")return alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
+ const pid=String(currentProfile.id);sessionStorage.setItem("fasiaVerseProfileId",pid);
+ sessionStorage.setItem("fasiaVerseReturnToProfile","1");
+ location.href="games/fasia_bubble.html?profile="+encodeURIComponent(pid);
 };
 $("#openHulkdoku").onclick=()=>{
   if(!currentProfile?.id || currentProfile.role!=="student")return alert("NO S'HA POGUT IDENTIFICAR EL PERFIL");
