@@ -3970,6 +3970,26 @@ button.profile-collection-card{cursor:pointer}
 
 
 
+
+<style>
+#tomasBirthdayOverlay{position:fixed;inset:0;z-index:12000;background:rgba(2,5,22,.88);display:flex;align-items:center;justify-content:center;padding:18px}
+#tomasBirthdayOverlay.hidden{display:none}
+.tomas-birthday-card{width:min(680px,100%);max-height:90dvh;overflow:auto;background:linear-gradient(145deg,#191443,#102044);color:white;border:2px solid #bc9cff;border-radius:26px;padding:26px;text-align:center;box-shadow:0 0 50px #793bf355}
+.tomas-birthday-card h2{color:#ffe49a;font-size:clamp(24px,5vw,36px);margin:10px 0}.tomas-birthday-card p{font-size:18px;line-height:1.5}
+.tomas-birthday-preview{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin:18px 0}.tomas-birthday-preview img{width:100%;border-radius:9px;display:block}
+@media(max-width:480px){.tomas-birthday-preview{grid-template-columns:repeat(3,minmax(0,1fr))}.tomas-birthday-card{padding:18px}}
+</style>
+<div id="tomasBirthdayOverlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="tomasBirthdayTitle">
+ <div class="tomas-birthday-card">
+  <div aria-hidden="true">🎂 🎉 🐻</div><h2 id="tomasBirthdayTitle">Felicitats, Tomás!</h2>
+  <p>Dilluns va ser l’aniversari del <strong>Tomás</strong>! Per celebrar-ho, tenim nous personatges al <strong>Fàsia Verse</strong>!</p>
+  <div class="tomas-birthday-preview"><img src="assets/avatars/os_sith.webp" alt="Ós Sith"><img src="assets/avatars/os_jedi.webp" alt="Ós Jedi"><img src="assets/avatars/os_c3po.webp" alt="Ós C-3PO"><img src="assets/avatars/os_mandaloria.webp" alt="Ós Mandalorià"><img src="assets/avatars/os_pilot_rebel.webp" alt="Ós Pilot Rebel"><img src="assets/avatars/os_soldat_imperial.webp" alt="Ós Soldat Imperial"></div>
+  <p>🎁 Teniu <strong>6 avatars de regal per a tothom</strong> i <strong>6 avatars nous a la tenda</strong> per <strong>20 monedes cadascun</strong>.</p>
+  <p><strong>Felicitats, Tomás! T’estimem! ❤️</strong></p>
+  <button id="tomasBirthdayClose" type="button" class="btn" onclick="dismissTomasBirthdayNews()">SOM-HI! 🎉</button>
+ </div>
+</div>
+
 <section id="profileHome" class="screen profile-v12"><div class="inner profile-shell">
   <div class="profile-top-card">
     <div class="profile-avatar-zone">
@@ -5173,6 +5193,20 @@ function renderChallenges(){
 async function openChallengesScreen(){
   if(!currentProfile?.id)return;try{await refreshCurrentProfile()}catch(e){}const s=challengeState();syncHistoricalPurchasedSkins(s);await saveChallengeState(s);await evaluateChallenges(s);renderChallenges();show("challengesHome");
 }
+function tomasBirthdayNewsKey(){return `fv_news_tomas_birthday_2026_${currentProfile?.id||'guest'}`}
+function maybeShowTomasBirthdayNews(){
+  if(!currentProfile?.id||localStorage.getItem(tomasBirthdayNewsKey())==='1')return false;
+  const ov=document.getElementById('tomasBirthdayOverlay');
+  ov.classList.remove('hidden');document.getElementById('tomasBirthdayClose').focus();return true;
+}
+function dismissTomasBirthdayNews(){
+  localStorage.setItem(tomasBirthdayNewsKey(),'1');
+  document.getElementById('tomasBirthdayOverlay').classList.add('hidden');
+  maybeShowFvNews();
+  if(['fvNewsOverlay','hulkdokuNewsOverlay','bubbleNewsOverlay'].every(id=>document.getElementById(id)?.classList.contains('hidden')))setTimeout(showNextChallengeReward,100);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('tomasBirthdayOverlay').classList.contains('hidden'))dismissTomasBirthdayNews()});
+
 const FV_NEWS_POPUP_VERSION='prisma_reptes_2026_v1';
 const FV_HULKDOKU_NEWS_VERSION='hulkdoku_llancament_2026_v1';
 function fvNewsKey(){return `fv_news_seen_${FV_NEWS_POPUP_VERSION}_${currentProfile?.id||"guest"}`}
@@ -5193,6 +5227,7 @@ function maybeShowHulkdokuNews(){
 }
 function maybeShowFvNews(){
   if(!currentProfile?.id)return;
+  if(maybeShowTomasBirthdayNews())return;
   if(localStorage.getItem(fvNewsKey())==="1"){maybeShowHulkdokuNews();return;}
   const ov=$("#fvNewsOverlay");if(ov)ov.classList.remove("hidden");
 }
@@ -5207,10 +5242,12 @@ function dismissHulkdokuNews(){
   if(!maybeShowBubbleNews())setTimeout(showNextChallengeReward,100);
 }
 async function enterProfileWithChallengeRewards(){
+  try{await grantTomasBirthdayGifts()}catch(e){console.error("No s’han pogut desar els regals d’aniversari",e)}
   show("profileHome");try{updateProfileCharacterSummary();renderProfileHeroVisuals();renderEquippedProfileTitle()}catch(e){}
   setTimeout(()=>{maybeShowFvNews();if($("#fvNewsOverlay")?.classList.contains("hidden")&&$("#hulkdokuNewsOverlay")?.classList.contains("hidden")&&$("#bubbleNewsOverlay")?.classList.contains("hidden"))showNextChallengeReward()},120);
 }
 async function showNextChallengeReward(){
+  if(document.getElementById("tomasBirthdayOverlay")&&!document.getElementById("tomasBirthdayOverlay").classList.contains("hidden"))return;
   if(!currentProfile?.id)return;const state=challengeState();if(!state.pending?.length)return;const item=state.pending[0],ov=$("#challengeRewardOverlay");if(!ov)return;
   $("#challengeRewardIcon").textContent=item.icon||"🎉";$("#challengeRewardKicker").textContent=item.kind==="puzzle"?"🧩 PUZLE COMPLETAT!":"🎯 DESAFIAMENT COMPLETAT!";$("#challengeRewardTitle").textContent=item.title||"RECOMPENSA!";$("#challengeRewardText").textContent=item.text||"";const ri=$("#challengeRewardImage");if(ri){const route=item.image||challengeRewardAsset(item.rewardId);if(route){ri.src=route;ri.classList.remove("hidden")}else{ri.removeAttribute("src");ri.classList.add("hidden")}}const sp=$("#challengeRewardSpecial");if(item.special){sp.textContent=item.special;sp.classList.remove("hidden")}else{sp.classList.add("hidden");sp.textContent=""}ov.classList.remove("hidden");
 }
@@ -5611,6 +5648,35 @@ const SHOP_CONFIG={
 };
 
 
+// Aniversari del Tomás · sis regals per a tothom i sis skins de botiga.
+const TOMAS_BIRTHDAY_FREE_IDS=['os_sith','os_jedi','os_c3po','os_mandaloria','os_pilot_rebel','os_soldat_imperial'];
+const TOMAS_BIRTHDAY_SHOP_IDS=['os_polar_penguin','os_polar_bane','os_polar_jafar','os_polar_sindrome','os_polar_lotso','os_polar_linguini'];
+SHOP_CONFIG.characters.push(
+  {id:'os',name:'ÓS',emoji:'🐻',free:true,skins:[
+    ['os_sith','ÓS SITH'],['os_jedi','ÓS JEDI'],['os_c3po','ÓS C-3PO'],
+    ['os_mandaloria','ÓS MANDALORIÀ'],['os_pilot_rebel','ÓS PILOT REBEL'],['os_soldat_imperial','ÓS SOLDAT IMPERIAL']
+  ].map(([id,name])=>({id,name,price:0,free:true,available:true,event:null,image:`assets/avatars/${id}.webp`,cropIndex:null}))},
+  {id:'os_polar',name:'ÓS POLAR',emoji:'🐻‍❄️',skins:[
+    ['os_polar_penguin','ÓS POLAR PENGUIN'],['os_polar_bane','ÓS POLAR BANE'],['os_polar_jafar','ÓS POLAR JAFAR'],
+    ['os_polar_sindrome','ÓS POLAR SÍNDROME'],['os_polar_lotso','ÓS POLAR LOTSO'],['os_polar_linguini','ÓS POLAR CUINER']
+  ].map(([id,name])=>({id,name,price:20,available:true,event:null,image:`assets/avatars/${id}.webp`,cropIndex:null}))}
+);
+function isTomasBirthdayRecipient(profile){
+  return profile?.role==='student' && normalizeName(profile.name)==='tomas';
+}
+async function grantTomasBirthdayGifts(){
+  if(!currentProfile?.id||currentProfile.role!=='student')return;
+  const gifts=[...TOMAS_BIRTHDAY_FREE_IDS,...(isTomasBirthdayRecipient(currentProfile)?TOMAS_BIRTHDAY_SHOP_IDS:[])];
+  const owned=new Set(normalizeOwnedSkins(currentProfile.owned_skins));
+  if(gifts.every(id=>owned.has(id)))return;
+  gifts.forEach(id=>owned.add(id));
+  // Persist shared ownership so games using the profile also see these gifts.
+  const rows=await api(`profiles?id=eq.${encodeURIComponent(currentProfile.id)}`,{
+    method:'PATCH',headers:{Prefer:'return=representation'},body:JSON.stringify({owned_skins:[...owned]})
+  });
+  currentProfile=normalizeShopProfile({...currentProfile,...(rows?.[0]||{owned_skins:[...owned]})});
+}
+
 // Avatars exclusius de Castaween
 for(const reward of [{"id": "capi_castanyera", "name": "CAPI CASTANYERA", "character": "capibara"}, {"id": "iguana_esquelet", "name": "IGUANA ESQUELET", "character": "iguana"}, {"id": "gat_pastisser", "name": "GAT PASTISSER", "character": "gat"}, {"id": "golden_halloween", "name": "GOLDEN HALLOWEEN", "character": "golden"}, {"id": "hulk_cacafantasmes", "name": "HULK CAÇAFANTASMES", "character": "gos"}, {"id": "tauro_vampir", "name": "TAURÓ VAMPIR", "character": "tauro"}, {"id": "hulk_frankenstein", "name": "HULK FRANKENSTEIN", "character": "gos"}, {"id": "gat_bruixot", "name": "GAT BRUIXOT", "character": "gat"}]){const ch=SHOP_CONFIG.characters.find(c=>c.id===reward.character||c.name.toLowerCase().includes(reward.character));if(!ch)continue;const existing=ch.skins.find(s=>s.id===reward.id);if(existing){existing.castaweenExclusive=true;existing.exclusiveChallenge=true;existing.price=0;existing.available=true;existing.event=null;}else ch.skins.push({id:reward.id,name:reward.name,price:0,available:true,event:null,exclusiveChallenge:true,castaweenExclusive:true,image:'assets/avatars/'+reward.id+'.webp',cropIndex:null});}
 const FREE_SKIN_IDS=new Set(
@@ -5637,6 +5703,7 @@ function findShopSkin(skinId){
 function ownedSkinSet(){
   const purchased=new Set(normalizeOwnedSkins(currentProfile?.owned_skins));
   FREE_SKIN_IDS.forEach(id=>purchased.add(id));
+  if(isTomasBirthdayRecipient(currentProfile))TOMAS_BIRTHDAY_SHOP_IDS.forEach(id=>purchased.add(id));
   return purchased;
 }
 function isSkinOwned(skinId){
@@ -7047,6 +7114,7 @@ $('#enterBtn').onclick=async()=>{
     const p=await loadProfileByName(raw);
     if(!p||p.role!=='student'){$('#homeMsg').textContent='NOM NO RECONEGUT';return}
     currentProfile=p;
+    try{await grantTomasBirthdayGifts()}catch(e){console.error("No s’han pogut desar els regals d’aniversari",e)}
     $('#profileName').textContent=currentProfile.display_name;
     $('#profileCoins').innerHTML=`${Number(currentProfile.coins||0)} <span class="coin-img" aria-label="moneda"></span>`;
     /* No carreguem palmarès ni cap partida abans de mostrar el perfil. */
